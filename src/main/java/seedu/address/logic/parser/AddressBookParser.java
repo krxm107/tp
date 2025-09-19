@@ -63,7 +63,7 @@ public class AddressBookParser {
         }
 
         case RemarkCommand.COMMAND_WORD: {
-            return new RemarkCommand();
+            return (new RemarkCommandParser()).parse(arguments);
         }
 
         case DeleteCommand.COMMAND_WORD: {
