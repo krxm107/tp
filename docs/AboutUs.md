@@ -14,35 +14,35 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/johndoe.png" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/djgmh9)]
+[[github](https://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
 
-### Trinh Hoang Hai
+### Jane Doe
 
-<img src="images/hai0506.png" width="200px">
+<img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/hai0506)]
+[[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
 
-### Kan Rui Xian Matthew
+### Johnny Doe
 
-<img src="images/krxm107.png" width="200px">
+<img src="images/johndoe.png" width="200px">
 
-[[github](https://github.com/krxm107)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Data
 
-### Chen Ziming
+### Jean Doe
 
-<img src="images/zmzzz3.png" width="200px">
+<img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/Zmzzz3)]
+[[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
