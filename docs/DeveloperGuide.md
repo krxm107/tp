@@ -436,13 +436,20 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 12. Data should be saved up to the latest action even if the app is not exited conventionally.
 13. Save file should not be encrypted and should be in a human editable text file.
 14. Command syntax should be consistent and predictable, especially between commands for contacts and commands for clubs.
-15. The application should be optimized to run smoothly on standard hardware.
+15. The application should be optimized to run smoothly on _standard hardware._
 16. The application size should be less than 100MB to facilitate easy distribution and storage.
 17. The application does not need to support multi-user operations.
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **CLI**: Command Line Interface, a text-only interface for using the program
+* **(G)UI**: (Graphical) User Interface, a visual interface for using the program, with elements like menus and buttons
+* **Club**: Association of people, minimally requires a name, description and owner
+* **Member**: Participant of a club
+* **Management**: Senior role in the club with administrative permissions, also known as committee members
+* **Command**: Text instruction for using the program via CLI
+* **Mainstream OS**: Windows, Linux, Unix, MacOS that is up to date (version within the past year)
+* **Standard hardware**: Any modern, store-bought laptop or personal computer (not including mobile devices)
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
