@@ -286,33 +286,30 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | 4  | user                             | edit contacts                                            | update contact details of members when the members change their phone number | ***   |
 | 5  | user                             | delete contacts                                          | remove contact details of members who have left the club                     | ***   |
 | 6  | user                             | add multiple phone numbers                               | add all the contact’s different phone numbers e.g. mobile, home, office      | **    |
-| 7  | management                       | download the address book data from a file               | forward the address book file to members in the management committee         | *     |
-| 8  | member                           | import address book data from a file                     | easily get the data that someone sent me into my app                         | *     |
+| 7  | user                             | download the address book data from a file               | forward the address book file to members in the management committee         | *     |
+| 8  | user                             | import address book data from a file                     | easily get the data that someone sent me into my app                         | *     |
 | 9  | user                             | add notes to a contact                                   | record extra details about the person                                        | **    |
 | 10 | user                             | view a contact’s full profile in a screen                | easily see all the info about a person                                       | **    |
-| 11 | management                       | create a club with management                            | group members together                                                       | ***   |
-| 12 | management                       | assign a contact to multiple clubs                       | know which clubs they belong to                                              | ***   |
-| 13 | member                           | view all members of a club                               | get the full list of members of a club                                       | ***   |
-| 14 | management                       | edit a club                                              | update club details                                                          | ***   |
-| 15 | management                       | delete a club                                            | remove clubs that no longer exist                                            | ***   |
-| 16 | management                       | record when someone joined a club                        | track how long they have been in the club                                    | **    |
-| 17 | member                           | search for a club by name                                | look up a club quickly                                                       | ***   |
-| 18 | management                       | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where the club takes place    | **    |
-| 19 | management                       | tag a contact as a club committee member                 | know that this contact is a committee member of a certain club               | **    |
-| 20 | member                           | view all committee members of a club                     | quickly find their information when I need to contact them about their clubs | **    |
+| 11 | user                             | create a club with management                            | group members together                                                       | ***   |
+| 12 | user                             | assign a contact to multiple clubs                       | know which clubs they belong to                                              | ***   |
+| 13 | user                             | view all members of a club                               | get the full list of members of a club                                       | ***   |
+| 14 | user                             | edit a club                                              | update club details                                                          | ***   |
+| 15 | user                             | delete a club                                            | remove clubs that no longer exist                                            | ***   |
+| 16 | user                             | record when someone joined a club                        | track how long they have been in the club                                    | **    |
+| 17 | user                             | search for a club by name                                | look up a club quickly                                                       | ***   |
+| 18 | user                             | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where the club takes place    | **    |
+| 19 | user                             | tag a contact as a club committee member                 | know that this contact is a committee member of a certain club               | **    |
+| 20 | user                             | view all committee members of a club                     | quickly find their information when I need to contact them about their clubs | **    |
 | 21 | user                             | sort contacts by name                                    | view my contacts in an order that is intuitive                               | **    |
 | 22 | user                             | sort club members by join date                           | see new and old members more easily                                          | **    |
 | 23 | user                             | delete multiple contacts at once                         | delete faster                                                                | **    |
 | 24 | user                             | create a profile photo for contacts                      | easily identify people, even if they share names                             | **    |
 | 25 | user                             | bookmark or save important contacts                      | easily access them                                                           | **    |
 | 26 | user                             | quickly copy a contact to my clipboard                   | more quickly access contacts                                                 | **    |
-| 27 | management                       | create events and tag contacts                           | attach contact details to real world club events                             | **    |
+| 27 | user                             | create events and tag contacts                           | attach contact details to real world club events                             | **    |
 | 28 | user                             | tag multiple contacts at once                            | speed up tagging                                                             | **    |
 | 29 | user                             | search by multiple fields at once                        | more precisely find contacts                                                 | **    |
 | 30 | user                             | undo my last action                                      | easily go back on my mistakes                                                | **    |
-
-
-*More to be added…*
 
 
 
