@@ -445,8 +445,6 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 * **CLI**: Command Line Interface, a text-only interface for using the program
 * **(G)UI**: (Graphical) User Interface, a visual interface for using the program, with elements like menus and buttons
 * **Club**: Association of people, minimally requires a name, description and owner
-* **Member**: Participant of a club
-* **Management**: Senior role in the club with administrative permissions, also known as committee members
 * **Command**: Text instruction for using the program via CLI
 * **Mainstream OS**: Windows, Linux, Unix, MacOS that is up to date (version within the past year)
 * **Standard hardware**: Any modern, store-bought laptop or personal computer (not including mobile devices)
