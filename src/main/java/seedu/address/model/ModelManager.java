@@ -29,6 +29,10 @@ public class ModelManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(addressBook, userPrefs);
 
@@ -50,10 +54,6 @@ public class ModelManager implements Model {
     public void updateFilteredClubList(Predicate<Club> predicate) {
         requireNonNull(predicate);
         filteredClubs.setPredicate(predicate);
-    }
-
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
