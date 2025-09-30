@@ -45,17 +45,6 @@ public class ModelManager implements Model {
         this.filteredClubs = new FilteredList<>(addressBook.getClubList());
     }
 
-    @Override
-    public ObservableList<Club> getFilteredClubList() {
-        return filteredClubs;
-    }
-
-    @Override
-    public void updateFilteredClubList(Predicate<Club> predicate) {
-        requireNonNull(predicate);
-        filteredClubs.setPredicate(predicate);
-    }
-
     //=========== UserPrefs ==================================================================================
 
     @Override
@@ -156,6 +145,19 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Club List Accessors =============================================================
+
+    @Override
+    public ObservableList<Club> getFilteredClubList() {
+        return filteredClubs;
+    }
+
+    @Override
+    public void updateFilteredClubList(Predicate<Club> predicate) {
+        requireNonNull(predicate);
+        filteredClubs.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -170,7 +172,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredClubs.equals(otherModelManager.filteredClubs);
     }
 
 }
