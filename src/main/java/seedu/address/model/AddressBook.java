@@ -33,7 +33,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         clubs = new UniqueClubList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -69,13 +71,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setClubs(newData.getClubList());
-
-        //resetDataDummyHelper();
-    }
-
-    private void resetDataDummyHelper() {
-        setPersons(SampleDataUtil.getSampleAddressBook().getPersonList());
-        setClubs(SampleDataUtil.getSampleAddressBook().getClubList());
     }
 
     //// club-level operations
