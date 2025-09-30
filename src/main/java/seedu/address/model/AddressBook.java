@@ -10,6 +10,7 @@ import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * Wraps all data at the address-book level
@@ -68,6 +69,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setClubs(newData.getClubList());
+
+        // setPersons(SampleDataUtil.getSampleAddressBook().getPersonList());
     }
 
     //// club-level operations
