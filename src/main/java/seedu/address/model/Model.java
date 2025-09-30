@@ -15,6 +15,12 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    Predicate<Club> PREDICATE_SHOW_ALL_CLUBS = unused -> true;
+
+    ObservableList<Club> getFilteredClubList();
+
+    void updateFilteredClubList(Predicate<Club> predicate);
+
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */

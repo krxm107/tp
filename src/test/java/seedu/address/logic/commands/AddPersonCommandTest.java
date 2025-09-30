@@ -168,6 +168,16 @@ public class AddPersonCommandTest {
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public ObservableList<Club> getFilteredClubList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredClubList(Predicate<Club> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

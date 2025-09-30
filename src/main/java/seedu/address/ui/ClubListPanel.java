@@ -8,7 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
+import seedu.address.model.club.Club;
 
 /**
  * Panel containing the list of clubs.
@@ -18,30 +18,30 @@ public class ClubListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(ClubListPanel.class);
 
     @FXML
-    private ListView<Person> personListView;
+    private ListView<Club> clubListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code ClubListPanel} with the given {@code ObservableList}.
      */
-    public ClubListPanel(ObservableList<Person> personList) {
+    public ClubListPanel(ObservableList<Club> clubList) {
         super(FXML);
-        personListView.setItems(personList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        clubListView.setItems(clubList);
+        clubListView.setCellFactory(listView -> new ClubListViewCell());
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Club} using a {@code ClubCard}.
      */
-    class PersonListViewCell extends ListCell<Person> {
+    class ClubListViewCell extends ListCell<Club> {
         @Override
-        protected void updateItem(Person person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(Club club, boolean empty) {
+            super.updateItem(club, empty);
 
-            if (empty || person == null) {
+            if (empty || club == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(person, getIndex() + 1).getRoot());
+                setGraphic(new ClubCard(club, getIndex() + 1).getRoot());
             }
         }
     }
