@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.club.Club;
+import seedu.address.model.club.UniqueClubList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -16,6 +18,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueClubList clubs;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        clubs = new UniqueClubList();
     }
 
     public AddressBook() {}
@@ -55,6 +59,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+    }
+
+    //// club-level operations
+
+    /**
+     * Returns true if a person with the same identity as {@code club} exists in the address book.
+     */
+    public boolean hasClub(Club club) {
+        requireNonNull(club);
+        return clubs.contains(club);
+    }
+
+    public void addClub(Club club) {
+        clubs.add(club);
     }
 
     //// person-level operations

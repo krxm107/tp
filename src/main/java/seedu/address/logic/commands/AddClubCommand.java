@@ -11,16 +11,16 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.club.Club;
 
 /**
- * Adds a person to the address book.
+ * Adds a club to the address book.
  */
 public class AddClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "add_club";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a club to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -35,28 +35,28 @@ public class AddClubCommand extends Command {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "New club added: %1$s";
+    public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book";
 
-    private final Person toAdd;
+    private final Club toAdd;
 
     /**
-     * Creates an AddPersonCommand to add the specified {@code Person}
+     * Creates an AddClubCommand to add the specified {@code Club}
      */
-    public AddClubCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public AddClubCommand(Club club) {
+        requireNonNull(club);
+        toAdd = club;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (model.hasClub(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CLUB);
         }
 
-        model.addPerson(toAdd);
+        model.addClub(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
@@ -71,8 +71,8 @@ public class AddClubCommand extends Command {
             return false;
         }
 
-        AddClubCommand otherAddPersonCommand = (AddClubCommand) other;
-        return toAdd.equals(otherAddPersonCommand.toAdd);
+        AddClubCommand otherAddClubCommand = (AddClubCommand) other;
+        return toAdd.equals(otherAddClubCommand.toAdd);
     }
 
     @Override

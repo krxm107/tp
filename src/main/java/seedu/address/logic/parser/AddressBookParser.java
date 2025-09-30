@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddClubCommand;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -53,8 +54,12 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddPersonCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        // The use of magic literal here signals a legacy feature.
+        case "add", AddPersonCommand.COMMAND_WORD:
+            return new AddPersonCommandParser().parse(arguments);
+
+        case AddClubCommand.COMMAND_WORD:
+            return new AddClubCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
