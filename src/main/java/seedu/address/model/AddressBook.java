@@ -53,12 +53,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the club list with {@code club}.
+     * {@code club} must not contain duplicate clubs.
+     */
+    public void setClubs(List<Club> clubs) {
+        this.clubs.setClubs(clubs);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setClubs(newData.getClubList());
     }
 
     //// club-level operations
