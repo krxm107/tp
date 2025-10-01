@@ -71,6 +71,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setClubs(newData.getClubList());
+
+        // resetToDummyData();
+    }
+
+    // This method is for private testing purposes, do not remove.
+    private void resetToDummyData() {
+        setPersons(SampleDataUtil.getSampleAddressBook().getPersonList());
+        setClubs(SampleDataUtil.getSampleAddressBook().getClubList());
     }
 
     //// club-level operations
