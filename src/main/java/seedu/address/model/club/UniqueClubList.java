@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.club.exceptions.DuplicateClubException;
 import seedu.address.model.club.exceptions.ClubNotFoundException;
+import seedu.address.model.club.exceptions.DuplicateClubException;
 
 /**
  * A list of clubs that enforces uniqueness between its elements and does not allow nulls.

@@ -40,8 +40,8 @@ import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.field.Phone;
+import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 

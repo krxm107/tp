@@ -10,8 +10,8 @@ import seedu.address.model.club.Club;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.field.Phone;
+import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -43,11 +43,11 @@ public class SampleDataUtil {
 
     public static Club[] getSampleClubs() {
         return new Club[] {
-           new Club(new Name("Tennis Club"), new Phone("81234567"), new Email("tennisclub@example.com"),
-                        new Address("20 Bishan Street 21"), Set.of()),
+            new Club(new Name("Tennis Club"), new Phone("81234567"), new Email("tennisclub@example.com"),
+                     new Address("20 Bishan Street 21"), Set.of()),
 
-                new Club(new Name("Basketball Club"), new Phone("92345678"), new Email("basketballclub@example.com"),
-                        new Address("15 Ang Mo Kio Street 13"), Set.of())
+            new Club(new Name("Basketball Club"), new Phone("92345678"), new Email("basketballclub@example.com"),
+                     new Address("15 Ang Mo Kio Street 13"), Set.of())
         };
     }
 

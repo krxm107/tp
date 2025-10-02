@@ -27,12 +27,19 @@ public class ModelManager implements Model {
     private final FilteredList<Club> filteredClubs;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the default values of addressBook and userPrefs.
      */
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
 
+    /**
+     * @param addressBook
+     *     The dependency-injected addressBook to be managed. It cannot be null.
+     *
+     * @param userPrefs
+     *     The user preferences to be managed. It cannot be null.
+     */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(addressBook, userPrefs);
 
