@@ -263,14 +263,14 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * manages multiple clubs
-* has a need to manage a significant number of contacts
+* has a need to manage a significant number of persons
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
 **Value proposition**: 
-manage multiple clubs & clubs' contacts faster than a typical mouse/GUI driven app
+manage multiple clubs & clubs' persons faster than a typical mouse/GUI driven app
 
 ### User stories
 
@@ -281,34 +281,34 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | #  | As a …                           | I can …                                                  | So that I can …                                                              | Notes |
 |----|----------------------------------|----------------------------------------------------------|------------------------------------------------------------------------------|-------|
 | 1  | potential user exploring the app | see the app populated with sample data                   | easily see how the app will look like when it is in use                      | ***   |
-| 2  | user                             | add contacts                                             | add contact details of fellow members                                        | ***   |
-| 3  | user                             | search for contacts                                      | quickly locate them from their information                                   | ***   |
-| 4  | user                             | edit contacts                                            | update contact details of members when the members change their phone number | ***   |
-| 5  | user                             | delete contacts                                          | remove contact details of members who have left the club                     | ***   |
-| 6  | user                             | add multiple phone numbers                               | add all the contact’s different phone numbers e.g. mobile, home, office      | **    |
+| 2  | user                             | add persons                                             | add person details of fellow members                                        | ***   |
+| 3  | user                             | search for persons                                      | quickly locate them from their information                                   | ***   |
+| 4  | user                             | edit persons                                            | update person details of members when the members change their phone number | ***   |
+| 5  | user                             | delete persons                                          | remove person details of members who have left the club                     | ***   |
+| 6  | user                             | add multiple phone numbers                               | add all the person’s different phone numbers e.g. mobile, home, office      | **    |
 | 7  | management                       | download the address book data from a file               | forward the address book file to members in the management committee         | *     |
 | 8  | member                           | import address book data from a file                     | easily get the data that someone sent me into my app                         | *     |
-| 9  | user                             | add notes to a contact                                   | record extra details about the person                                        | **    |
-| 10 | user                             | view a contact’s full profile in a screen                | easily see all the info about a person                                       | **    |
+| 9  | user                             | add notes to a person                                   | record extra details about the person                                        | **    |
+| 10 | user                             | view a person’s full profile in a screen                | easily see all the info about a person                                       | **    |
 | 11 | management                       | create a club with management                            | group members together                                                       | ***   |
-| 12 | management                       | assign a contact to multiple clubs                       | know which clubs they belong to                                              | ***   |
+| 12 | management                       | assign a person to multiple clubs                       | know which clubs they belong to                                              | ***   |
 | 13 | member                           | view all members of a club                               | get the full list of members of a club                                       | ***   |
 | 14 | management                       | edit a club                                              | update club details                                                          | ***   |
 | 15 | management                       | delete a club                                            | remove clubs that no longer exist                                            | ***   |
 | 16 | management                       | record when someone joined a club                        | track how long they have been in the club                                    | **    |
 | 17 | member                           | search for a club by name                                | look up a club quickly                                                       | ***   |
 | 18 | management                       | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where the club takes place    | **    |
-| 19 | management                       | tag a contact as a club committee member                 | know that this contact is a committee member of a certain club               | **    |
-| 20 | member                           | view all committee members of a club                     | quickly find their information when I need to contact them about their clubs | **    |
-| 21 | user                             | sort contacts by name                                    | view my contacts in an order that is intuitive                               | **    |
+| 19 | management                       | tag a person as a club committee member                 | know that this person is a committee member of a certain club               | **    |
+| 20 | member                           | view all committee members of a club                     | quickly find their information when I need to person them about their clubs | **    |
+| 21 | user                             | sort persons by name                                    | view my persons in an order that is intuitive                               | **    |
 | 22 | user                             | sort club members by join date                           | see new and old members more easily                                          | **    |
-| 23 | user                             | delete multiple contacts at once                         | delete faster                                                                | **    |
-| 24 | user                             | create a profile photo for contacts                      | easily identify people, even if they share names                             | **    |
-| 25 | user                             | bookmark or save important contacts                      | easily access them                                                           | **    |
-| 26 | user                             | quickly copy a contact to my clipboard                   | more quickly access contacts                                                 | **    |
-| 27 | management                       | create events and tag contacts                           | attach contact details to real world club events                             | **    |
-| 28 | user                             | tag multiple contacts at once                            | speed up tagging                                                             | **    |
-| 29 | user                             | search by multiple fields at once                        | more precisely find contacts                                                 | **    |
+| 23 | user                             | delete multiple persons at once                         | delete faster                                                                | **    |
+| 24 | user                             | create a profile photo for persons                      | easily identify people, even if they share names                             | **    |
+| 25 | user                             | bookmark or save important persons                      | easily access them                                                           | **    |
+| 26 | user                             | quickly copy a person to my clipboard                   | more quickly access persons                                                 | **    |
+| 27 | management                       | create events and tag persons                           | attach person details to real world club events                             | **    |
+| 28 | user                             | tag multiple persons at once                            | speed up tagging                                                             | **    |
+| 29 | user                             | search by multiple fields at once                        | more precisely find persons                                                 | **    |
 | 30 | user                             | undo my last action                                      | easily go back on my mistakes                                                | **    |
 
 
@@ -320,29 +320,29 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 (For all use cases below, the **System** is the `ClubHub` and the **Actor** is the `user`, unless specified otherwise)
 
-#### **Use case: Delete a contact**
+#### **Use case: Delete a person**
 
-**Scope:** The user wants to remove a contact from the contact book. The `del_contact` command allows deletion by the contact's name.
+**Scope:** The user wants to remove a person from the contact book. The `del_person` command allows deletion by the person's name.
 
 **MSS**
 
-1.  The user requests to list contacts using the `list_contacts` command to find the name of the contact to be deleted.
-2.  The contact book app displays a list of all contacts.
-3.  The user issues the `del_contact NAME` command with the name of an existing contact.
-4.  The contact book app deletes the contact from the system and all associated clubs, displaying a confirmation message: "Contact deleted: <NAME>; Phone: <PHONE_NUMBER>; Email: <EMAIL>".
+1.  The user requests to list persons using the `list_persons` command to find the name of the person to be deleted.
+2.  The contact book app displays a list of all persons.
+3.  The user issues the `del_person NAME` command with the name of an existing person.
+4.  The contact book app deletes the person from the system and all associated clubs, displaying a confirmation message: "person deleted: <NAME>; Phone: <PHONE_NUMBER>; Email: <EMAIL>".
 
     Use case ends.
 
 **Extensions**
 
-*   2a. The contact list is empty.
-    *   2a1. The contact book app shows the message: "You do not have any contacts saved."
+*   2a. The person list is empty.
+    *   2a1. The contact book app shows the message: "You do not have any persons saved."
         Use case ends.
-*   3a. The contact name provided does not exist in the contact book.
-    *   3a1. The contact book app shows an error message: "Contact not found".
+*   3a. The person name provided does not exist in the contact book.
+    *   3a1. The contact book app shows an error message: "person not found".
         Use case resumes at step 1.
 *   3b. The user provides an invalid command format.
-    *   3b1. The contact book app shows an error message: "Invalid command format. Usage: `del_contact NAME`".
+    *   3b1. The contact book app shows an error message: "Invalid command format. Usage: `del_person NAME`".
         Use case resumes at step 1.
 
 #### **Use case: Add a new person**
@@ -358,14 +358,14 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **Extensions**
 
-*   2a. A contact with the same name already exists in the address book.
+*   2a. A person with the same name already exists in the address book.
     *   2a1. The contact book app shows a relevant error message, such as "This person already exists in the address book"
         Use case ends.
 *   2b. One of the provided fields is invalid (e.g., name is too long, phone number has non-digit characters, or email format is incorrect).
     *   2b1. The contact book app shows the corresponding error message for the invalid parameter (e.g., "Name too long (70 characters)").
         Use case ends.
 *   2c. The user provides an invalid command format.
-    *   2c1. The contact book app shows an error message: (e.g. "Invalid command format. Usage: `add_contact n/NAME p/PHONE_NUMBER e/EMAIL a/address t/TAG1 t/TAG2 ...`").
+    *   2c1. The contact book app shows an error message: (e.g. "Invalid command format. Usage: `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/address t/TAG1 t/TAG2 ...`").
         Use case ends.
 
 #### **Use case: Add a new club**
@@ -431,7 +431,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 11. Application should never corrupt save file.
 12. Data should be saved up to the latest action even if the app is not exited conventionally.
 13. Save file should not be encrypted and should be in a human editable text file.
-14. Command syntax should be consistent and predictable, especially between commands for contacts and commands for clubs.
+14. Command syntax should be consistent and predictable, especially between commands for persons and commands for clubs.
 15. The application should be optimized to run smoothly on _standard hardware._
 16. The application size should be less than 100MB to facilitate easy distribution and storage.
 17. The application does not need to support multi-user operations.
@@ -444,7 +444,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 * **Command**: Text instruction for using the program via CLI
 * **Mainstream OS**: Windows, Linux, Unix, MacOS that is up to date (version within the past year)
 * **Standard hardware**: Any modern, store-bought laptop or personal computer (not including mobile devices)
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Private person detail**: A person detail that is not meant to be shared with others
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -463,7 +463,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file Expected: Shows the GUI with a set of sample persons. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -481,7 +481,7 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First person is deleted from the list. Details of the deleted person shown in the status message. Timestamp in the status bar is updated.
 
    1. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
