@@ -370,12 +370,12 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 #### **Use case: Add a new club**
 
-**Scope:** The user wants to create a new club in the contact book.
+**Scope:** The user wants to create a new club in the address book.
 
 **MSS**
 
-1.  The user issues the `add_club CLUB_NAME` command with a valid and unique club name.
-2.  The contact book app creates the new club and displays a success message: "Club added: <CLUB_NAME>".
+1.  The user issues the `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...` command with a valid and unique club name. Note that there can be any number of tags, including 0.
+2.  The address book app creates the new club and displays a success message: "Club added: <CLUB_NAME>".
 
     Use case ends.
 
