@@ -358,7 +358,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **Extensions**
 
-*   2a. A contact with the same name, phone number, or email already exists.
+*   2a. A contact with the same name exists.
     *   2a1. The contact book app shows a relevant error message, such as "This person already exists in the address book"
         Use case ends.
 *   2b. One of the provided fields is invalid (e.g., name is too long, phone number has non-digit characters, or email format is incorrect).
@@ -381,7 +381,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **Extensions**
 
-*   2a. The specified club name, 
+*   2a. The specified club name exists.
     *   2a1. The contact book app shows an error message (e.g "Club <NAME> already exists.")
         Use case ends.
 *   2b. The provided club name is invalid (e.g., it is blank or exceeds 70 characters).
