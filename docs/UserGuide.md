@@ -93,6 +93,14 @@ Adds a club to the address book.
 
 Format: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+A club can have any number of tags (including 0)
+</div>
+
+Examples:
+* `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
+* `add_person n/Cycling t/recreational e/cycling@example.com a/45 Cycling Street p/1234567 t/alllevels`
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
