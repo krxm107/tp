@@ -375,14 +375,14 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 **MSS**
 
 1.  The user issues the `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...` command with a valid and unique club name. Note that there can be any number of tags, including 0.
-2.  The address book app creates the new club and displays a success message: "Club added: <CLUB_NAME>".
+2.  The address book app creates the new club and displays a success message: "New club added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
 
     Use case ends.
 
 **Extensions**
 
-*   2a. The specified club name already exists.
-    *   2a1. The contact book app shows an error message: "Club <NAME> already exists."
+*   2a. The specified club name, 
+    *   2a1. The contact book app shows an error message (e.g "Club <NAME> already exists.")
         Use case ends.
 *   2b. The provided club name is invalid (e.g., it is blank or exceeds 70 characters).
     *   2b1. The contact book app shows the relevant error message (e.g., "Name cannot be blank").
