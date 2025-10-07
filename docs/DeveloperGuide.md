@@ -345,31 +345,27 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
     *   3b1. The contact book app shows an error message: "Invalid command format. Usage: `del_contact NAME`".
         Use case resumes at step 1.
 
-#### **Use case: Add a new contact**
+#### **Use case: Add a new person**
 
-**Scope:** The user wants to add a new contact to a club in the contact book.
+**Scope:** The user wants to add a new person to the address book.
 
 **MSS**
 
-1.  The user issues the command `add_contact n/NAME p/PHONE_NUMBER e/EMAIL c/CLUB`.
-2.  The contact book app validates the fields and confirms the specified club exists.
-3.  The app creates the new contact, associates it with the specified club, and displays a success message: "Contact added: <NAME>; Phone: <PHONE_NUMBER>; Email: <EMAIL> to <CLUB>".
+1.  The user issues the command `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`. Note that there can be any number of tags, including 0.
+2.  The app creates the new person, then displays a success message: "New person added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
 
     Use case ends.
 
 **Extensions**
 
 *   2a. A contact with the same name, phone number, or email already exists.
-    *   2a1. The contact book app shows a relevant error message, such as "Contact name <NAME> already exists."
+    *   2a1. The contact book app shows a relevant error message, such as "This person already exists in the address book"
         Use case ends.
 *   2b. One of the provided fields is invalid (e.g., name is too long, phone number has non-digit characters, or email format is incorrect).
     *   2b1. The contact book app shows the corresponding error message for the invalid parameter (e.g., "Name too long (70 characters)").
         Use case ends.
-*   2c. The specified club name does not exist.
-    *   2c1. The contact book app creates the new club and then adds the contact to it, showing the success message from MSS step 3.
-        Use case ends.
-*   2d. The user provides an invalid command format.
-    *   2d1. The contact book app shows an error message: "Invalid command format. Usage: `add_contact n/NAME p/PHONE_NUMBER e/EMAIL`".
+*   2c. The user provides an invalid command format.
+    *   2c1. The contact book app shows an error message: (e.g. "Invalid command format. Usage: `add_contact n/NAME p/PHONE_NUMBER e/EMAIL a/address t/TAG1 t/TAG2 ...`").
         Use case ends.
 
 #### **Use case: Add a new club**
