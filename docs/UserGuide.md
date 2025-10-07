@@ -28,7 +28,7 @@ ClubHub is a **desktop app for managing contacts, optimized for use via a Comman
 
    * `list` : Lists all contacts.
 
-   * `add_club n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -85,7 +85,7 @@ A person can have any number of tags (including 0)
 
 Examples:
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add_person n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add_person n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison p/1234567`
 
 ### Adding a club: `add_club`
 
@@ -99,7 +99,7 @@ A club can have any number of tags (including 0)
 
 Examples:
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
-* `add_club n/Cycling t/recreational e/cycling@example.com a/45 Cycling Street p/1234567 t/alllevels`
+* `add_club n/Cycling e/cycling@example.com a/45 Cycling Street p/1234567`
 
 ### Listing all persons : `list`
 
