@@ -358,7 +358,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **Extensions**
 
-*   2a. A contact with the same name exists.
+*   2a. A contact with the same name already exists in the address book.
     *   2a1. The contact book app shows a relevant error message, such as "This person already exists in the address book"
         Use case ends.
 *   2b. One of the provided fields is invalid (e.g., name is too long, phone number has non-digit characters, or email format is incorrect).
@@ -381,14 +381,14 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **Extensions**
 
-*   2a. The specified club name exists.
-    *   2a1. The contact book app shows an error message (e.g "Club <NAME> already exists.")
+*   2a. The specified club name already exists in the address book.
+    *   2a1. The contact book app shows an error message (e.g "This club already exists in the address book")
         Use case ends.
-*   2b. The provided club name is invalid (e.g., it is blank or exceeds 70 characters).
+*   2b. The provided club name is invalid (e.g., it is blank)
     *   2b1. The contact book app shows the relevant error message (e.g., "Name cannot be blank").
         Use case ends.
 *   2c. The command format is invalid.
-    *   2c1. The contact book app shows an error message: "Invalid command format. Usage: `add_club CLUB_NAME`".
+    *   2c1. The contact book app shows an error message: "Invalid command format. Usage: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`".
         Use case ends.
 
 #### **Use case: Delete a club**
