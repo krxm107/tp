@@ -87,6 +87,12 @@ Examples:
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add_person n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+### Adding a club: `add_club`
+
+Adds a club to the address book.
+
+Format: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
