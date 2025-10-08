@@ -31,7 +31,7 @@ public class ListClubCommandTest {
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        //showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        //showClubAtIndex(model, INDEX_FIRST_CLUB);
         assertCommandSuccess(new ListClubCommand(), model, ListClubCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

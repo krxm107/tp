@@ -4,15 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-// import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-// import static seedu.address.logic.commands.CommandTestUtil.showClubAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLUB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.commons.core.index.Index;
-// import seedu.address.logic.Messages;
+import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -31,7 +30,7 @@ public class ListMemberCommandTest {
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
 
-        String expectedMessage = String.format(ListMemberCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(ListMemberCommand.MESSAGE_LIST_SUCCESS,
                 Messages.format(personToDelete));
         String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
 
@@ -49,8 +48,7 @@ public class ListMemberCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
         ListMemberCommand listMemberCommand = new ListMemberCommand(outOfBoundIndex);
 
-        // assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        assertCommandFailure(listMemberCommand, model, "Bad index");
+        assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     @Test
@@ -61,7 +59,7 @@ public class ListMemberCommandTest {
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
 
-        String expectedMessage = String.format(ListMemberCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(ListMemberCommand.MESSAGE_LIST_SUCCESS,
                 Messages.format(personToDelete));
         String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
 
@@ -86,8 +84,7 @@ public class ListMemberCommandTest {
 
         ListMemberCommand listMemberCommand = new ListMemberCommand(outOfBoundIndex);
 
-        // assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        assertCommandFailure(listMemberCommand, model, "Bad index");
+        assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     @Test
