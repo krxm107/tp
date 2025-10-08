@@ -11,7 +11,7 @@ import seedu.address.model.club.Club;
 import java.util.List;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all members in a club identified using it's displayed index from the address book.
  */
 public class ListMemberCommand extends Command {
 
@@ -20,7 +20,7 @@ public class ListMemberCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all clubs";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all members of a club indicated by its index in the club list.\n"
+            + ": List all members of a club identified by the index number used in the displayed club list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

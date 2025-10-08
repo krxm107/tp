@@ -19,6 +19,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListClubCommand;
 import seedu.address.logic.commands.ListContactCommand;
+import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -79,6 +80,9 @@ public class AddressBookParser {
 
         case ListContactCommand.COMMAND_WORD:
             return new ListContactCommand();
+
+        case ListMemberCommand.COMMAND_WORD:
+            return new ListMemberCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
