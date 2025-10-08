@@ -76,6 +76,12 @@ public interface Model {
     void deletePerson(Person target);
 
     /**
+     * Deletes the given club.
+     * The club must exist in the address book.
+     */
+    void deleteClub(Club target);
+
+    /**
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
