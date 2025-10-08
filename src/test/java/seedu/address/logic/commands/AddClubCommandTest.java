@@ -167,6 +167,11 @@ public final class AddClubCommandTest {
         }
 
         @Override
+        public void deleteClub(Club target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
         }
