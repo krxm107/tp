@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
 /**
@@ -48,4 +49,20 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code club} for display to the user.
+     */
+    public static String format(Club club) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(club.getName())
+                .append("; Phone: ")
+                .append(club.getPhone())
+                .append("; Email: ")
+                .append(club.getEmail())
+                .append("; Address: ")
+                .append(club.getAddress())
+                .append("; Tags: ");
+        club.getTags().forEach(builder::append);
+        return builder.toString();
+    }
 }

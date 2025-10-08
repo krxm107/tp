@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,10 +22,23 @@ public class ModelManager implements Model {
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
+
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Club> filteredClubs;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the default values of addressBook and userPrefs.
+     */
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * @param addressBook
+     *     The dependency-injected addressBook to be managed. It cannot be null.
+     *
+     * @param userPrefs
+     *     The user preferences to be managed. It cannot be null.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(addressBook, userPrefs);
@@ -33,11 +47,9 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-    }
+        this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this.filteredClubs = new FilteredList<>(this.addressBook.getClubList());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -94,6 +106,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasClub(final Club club) {
+        requireNonNull(club);
+        return addressBook.hasClub(club);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
@@ -102,6 +120,12 @@ public class ModelManager implements Model {
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
+    public void addClub(final Club club) {
+        addressBook.addClub(club);
+        updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
     }
 
     @Override
@@ -128,6 +152,19 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Club List Accessors =============================================================
+
+    @Override
+    public ObservableList<Club> getFilteredClubList() {
+        return filteredClubs;
+    }
+
+    @Override
+    public void updateFilteredClubList(Predicate<Club> predicate) {
+        requireNonNull(predicate);
+        filteredClubs.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -142,7 +179,8 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons);
+                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredClubs.equals(otherModelManager.filteredClubs);
     }
 
 }

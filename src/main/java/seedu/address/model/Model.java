@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
 /**
@@ -13,6 +14,12 @@ import seedu.address.model.person.Person;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    Predicate<Club> PREDICATE_SHOW_ALL_CLUBS = unused -> true;
+
+    ObservableList<Club> getFilteredClubList();
+
+    void updateFilteredClubList(Predicate<Club> predicate);
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -58,6 +65,11 @@ public interface Model {
     boolean hasPerson(Person person);
 
     /**
+     * Returns true if a club with the same identity as {@code club} exists in the address book.
+     */
+    boolean hasClub(final Club club);
+
+    /**
      * Deletes the given person.
      * The person must exist in the address book.
      */
@@ -68,6 +80,12 @@ public interface Model {
      * {@code person} must not already exist in the address book.
      */
     void addPerson(Person person);
+
+    /**
+     * Adds the given club.
+     * {@code club} must not already exist in the address book.
+     */
+    void addClub(final Club club);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

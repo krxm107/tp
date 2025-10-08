@@ -6,8 +6,11 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.club.Club;
+import seedu.address.model.club.UniqueClubList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * Wraps all data at the address-book level
@@ -16,6 +19,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueClubList clubs;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,9 +30,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        clubs = new UniqueClubList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -49,12 +56,43 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the contents of the club list with {@code club}.
+     * {@code club} must not contain duplicate clubs.
+     */
+    public void setClubs(List<Club> clubs) {
+        this.clubs.setClubs(clubs);
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setClubs(newData.getClubList());
+
+        // resetToDummyData();
+    }
+
+    // This method is for private testing purposes, do not remove.
+    private void resetToDummyData() {
+        setPersons(SampleDataUtil.getSampleAddressBook().getPersonList());
+        setClubs(SampleDataUtil.getSampleAddressBook().getClubList());
+    }
+
+    //// club-level operations
+
+    /**
+     * Returns true if a person with the same identity as {@code club} exists in the address book.
+     */
+    public boolean hasClub(Club club) {
+        requireNonNull(club);
+        return clubs.contains(club);
+    }
+
+    public void addClub(Club club) {
+        clubs.add(club);
     }
 
     //// person-level operations
@@ -106,6 +144,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Person> getPersonList() {
         return persons.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Club> getClubList() {
+        return clubs.asUnmodifiableObservableList();
     }
 
     @Override
