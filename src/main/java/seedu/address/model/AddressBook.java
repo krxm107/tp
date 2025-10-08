@@ -91,6 +91,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return clubs.contains(club);
     }
 
+    /**
+     * Adds a club to the address book.
+     * The club must not already exist in the address book.
+     */
     public void addClub(Club club) {
         clubs.add(club);
     }
@@ -130,6 +134,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeClub(Club key) {
+        clubs.remove(key);
     }
 
     //// util methods
