@@ -3,11 +3,11 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.club.Club;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
-import seedu.address.model.club.Club;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
