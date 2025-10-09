@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalClubs.ALICE;
+import static seedu.address.testutil.TypicalClubs.ARCHERY;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -81,8 +81,8 @@ public final class AddClubCommandTest {
 
     @Test
     public void toStringMethod() {
-        AddClubCommand addClubCommand = new AddClubCommand(ALICE);
-        String expected = AddClubCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        AddClubCommand addClubCommand = new AddClubCommand(ARCHERY);
+        String expected = AddClubCommand.class.getCanonicalName() + "{toAdd=" + ARCHERY + "}";
         assertEquals(expected, addClubCommand.toString());
     }
 
