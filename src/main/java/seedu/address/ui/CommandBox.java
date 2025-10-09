@@ -3,10 +3,17 @@ package seedu.address.ui;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
+
+import java.awt.event.ActionEvent;
+
+import static com.sun.glass.events.MouseEvent.DOWN;
+import static com.sun.glass.events.MouseEvent.UP;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -46,6 +53,26 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText("");
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+        }
+    }
+
+    /**
+     * Handles the UP / DOWN button pressed event.
+     */
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        String command = "";
+
+        switch (event.getCode()) {
+            case UP -> {
+                command = CommandList.getPrevCommand();
+                commandTextField.setText(command);
+            }
+            case DOWN -> {
+                command = CommandList.getNextCommand();
+                commandTextField.setText(command);
+            }
+            default -> {}
         }
     }
 
