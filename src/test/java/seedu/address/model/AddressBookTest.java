@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.club.Club;
+import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -113,6 +114,11 @@ public class AddressBookTest {
 
         @Override
         public Person getPersonByName(Name name) {
+            return null;
+        }
+
+        @Override
+        public Person getPersonByEmail(Email email) {
             return null;
         }
 

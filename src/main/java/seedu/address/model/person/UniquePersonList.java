@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -149,10 +150,19 @@ public class UniquePersonList implements Iterable<Person> {
         return true;
     }
 
-    public Person getPerson(Name name) {
+    public Person getPersonByName(Name name) {
         return internalList.stream()
                 .filter(person ->
                         person.getName().equals(name)
+                )
+                .findFirst()
+                .get();
+    }
+
+    public Person getPersonByEmail(Email email) {
+        return internalList.stream()
+                .filter(person ->
+                        person.getEmail().equals(email)
                 )
                 .findFirst()
                 .get();

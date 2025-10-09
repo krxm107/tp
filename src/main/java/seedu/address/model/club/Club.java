@@ -143,6 +143,9 @@ public class Club {
                 });
     }
 
+    public Set<Membership> getMemberships() {
+        return Collections.unmodifiableSet(memberships);
+    }
 
     /**
      * Returns true if both clubs have the same identity and data fields.

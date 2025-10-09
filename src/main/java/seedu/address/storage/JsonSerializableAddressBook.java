@@ -4,6 +4,7 @@ import static seedu.address.logic.commands.AddClubCommand.MESSAGE_DUPLICATE_CLUB
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -14,6 +15,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.club.Club;
+import seedu.address.model.field.Email;
+import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -23,22 +27,30 @@ import seedu.address.model.person.Person;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_INVALID_MEMBERSHIP_LINK =
+            "Data file contains an invalid membership link: A person or club could not be found.";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedClub> clubs = new ArrayList<>();
+    private final List<JsonAdaptedMembership> memberships = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAddressBook} with the given persons.
      */
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
-                                       @JsonProperty("clubs") List<JsonAdaptedClub> clubs) {
+                                       @JsonProperty("clubs") List<JsonAdaptedClub> clubs,
+                                       @JsonProperty("memberships") List<JsonAdaptedMembership> memberships) {
         if (persons != null) {
             this.persons.addAll(persons);
         }
 
         if (clubs != null) {
             this.clubs.addAll(clubs);
+        }
+
+        if (memberships != null) {
+            this.memberships.addAll(memberships);
         }
     }
 
@@ -50,6 +62,14 @@ class JsonSerializableAddressBook {
     public JsonSerializableAddressBook(ReadOnlyAddressBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         clubs.addAll(source.getClubList().stream().map(JsonAdaptedClub::new).collect(Collectors.toList()));
+
+        Set<Membership> allMemberships = source.getClubList().stream()
+                .flatMap(club -> club.getMemberships().stream())
+                .collect(Collectors.toSet());
+
+        memberships.addAll(allMemberships.stream()
+                .map(JsonAdaptedMembership::new)
+                .toList());
     }
 
     /**
@@ -75,7 +95,19 @@ class JsonSerializableAddressBook {
             addressBook.addClub(club);
         }
 
+        // Re-link persons and clubs using the membership data
+        for (final JsonAdaptedMembership jsonAdaptedMembership : memberships) {
+            // Find the already-loaded Person and Club objects from the address book
+            final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail()));
+            final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName()));
+
+            if (person == null || club == null) {
+                throw new IllegalValueException(MESSAGE_INVALID_MEMBERSHIP_LINK);
+            }
+
+            // Use the model's own logic to create the membership link.
+            club.addMember(person, jsonAdaptedMembership.getRole(), jsonAdaptedMembership.getJoinDate());
+        }
         return addressBook;
     }
-
 }
