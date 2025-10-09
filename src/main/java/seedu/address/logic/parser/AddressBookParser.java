@@ -86,7 +86,7 @@ public class AddressBookParser {
             return new ListMemberCommandParser().parse(arguments);
 
         case AddToCommand.COMMAND_WORD:
-            return new AddToCommand();
+            return new AddToCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

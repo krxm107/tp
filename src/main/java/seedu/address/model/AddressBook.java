@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
+import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.util.SampleDataUtil;
@@ -122,6 +123,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedPerson);
 
         persons.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public Person getPersonByName(Name target) {
+        requireNonNull(target);
+        return persons.getPerson(target);
     }
 
     /**
