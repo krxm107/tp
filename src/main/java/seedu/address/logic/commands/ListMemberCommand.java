@@ -6,6 +6,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
@@ -38,15 +39,13 @@ public class ListMemberCommand extends Command {
         List<Club> lastShownList = model.getFilteredClubList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            //throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            throw new CommandException("Bad index");
+            throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
         }
 
         Club clubToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredClubList(club -> club.equals(clubToDisplay));
         model.updateFilteredPersonList(person -> true);
-        //return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
-        return new CommandResult("Success");
+        return new CommandResult(MESSAGE_LIST_SUCCESS);
     }
 
     @Override
