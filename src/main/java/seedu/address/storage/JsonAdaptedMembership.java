@@ -1,10 +1,11 @@
 package seedu.address.storage;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import seedu.address.model.membership.Membership;
 
-import java.time.LocalDate;
+import seedu.address.model.membership.Membership;
 
 /**
  * Jackson-friendly version of {@link Membership}.

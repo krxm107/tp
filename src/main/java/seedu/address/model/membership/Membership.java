@@ -1,11 +1,15 @@
 package seedu.address.model.membership;
 
-import seedu.address.model.club.Club;
-import seedu.address.model.person.Person;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
+import seedu.address.model.club.Club;
+import seedu.address.model.person.Person;
+
+/**
+ * Represents a Membership of a Person in a Club.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 public class Membership {
 
     private final Person person;
@@ -13,6 +17,9 @@ public class Membership {
     private final LocalDate joinDate;
     private String role;
 
+    /**
+     * Every field must be present and not null.
+     */
     public Membership(Person person, Club club, LocalDate joinDate, String role) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);
@@ -45,11 +52,15 @@ public class Membership {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Membership that = (Membership) o;
-        return person.equals(that.person) &&
-                club.equals(that.club);
+        return person.equals(that.person)
+                && club.equals(that.club);
     }
 
     @Override

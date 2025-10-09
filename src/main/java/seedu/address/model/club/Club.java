@@ -82,6 +82,10 @@ public class Club {
                 && otherClub.getName().equals(getName());
     }
 
+    /**
+     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     public boolean addMember(Person person, String role) {
         Membership newMembership = new Membership(person, this, LocalDate.now(), role);
 
@@ -95,6 +99,15 @@ public class Club {
         return added;
     }
 
+    /**
+     * Adds a member to the club with a specified join date.
+     * This is useful for adding historical members.
+     *
+     * @param person   The person to be added as a member.
+     * @param role     The role of the member in the club.
+     * @param joinDate The date the member joined the club.
+     * @return true if the member was added successfully, false if they were already a member.
+     */
     public boolean addMember(Person person, String role, LocalDate joinDate) {
         Membership newMembership = new Membership(person, this, joinDate, role);
         boolean added = this.memberships.add(newMembership);
@@ -104,11 +117,21 @@ public class Club {
         return added;
     }
 
+    /**
+     * Checks if a person is a member of the club.
+     *
+     * @param person The person to check for membership.
+     * @return true if the person is a member, false otherwise.
+     */
     public boolean isMember(Person person) {
         return memberships.stream()
                 .anyMatch(membership -> membership.getPerson().equals(person));
     }
 
+    /**
+     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     public void removeMember(Person person) {
         // Find the specific membership object to remove
         memberships.stream()
