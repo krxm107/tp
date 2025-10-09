@@ -21,9 +21,10 @@ public class AddToCommandParser implements Parser<AddToCommand> {
                 PREFIX_CLUB, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLUB, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL);
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Name personName = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Name clubName = ParserUtil.parseName(argMultimap.getValue(PREFIX_CLUB).get());
 
-        return new AddToCommand(name);
+        return new AddToCommand(personName, clubName);
     }
 
 }

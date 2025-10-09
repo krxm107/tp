@@ -19,4 +19,6 @@ public interface ReadOnlyAddressBook {
     ObservableList<Club> getClubList();
 
     Person getPersonByName(Name name);
+
+    Club getClubByName(Name name);
 }

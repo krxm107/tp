@@ -131,6 +131,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getPerson(target);
     }
 
+    @Override
+    public Club getClubByName(Name target) {
+        requireNonNull(target);
+        return clubs.getClub(target);
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
