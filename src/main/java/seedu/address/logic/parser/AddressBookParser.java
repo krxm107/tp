@@ -20,8 +20,8 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListClubCommand;
-import seedu.address.logic.commands.ListPersonCommand;
 import seedu.address.logic.commands.ListMemberCommand;
+import seedu.address.logic.commands.ListPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
