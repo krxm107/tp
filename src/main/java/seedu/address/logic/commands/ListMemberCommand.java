@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -10,6 +11,8 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
+import seedu.address.model.person.Person;
 
 /**
  * Lists all members in a club identified using it's displayed index from the address book.
@@ -44,7 +47,9 @@ public class ListMemberCommand extends Command {
 
         Club clubToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredClubList(club -> club.equals(clubToDisplay));
-        model.updateFilteredPersonList(person -> true);
+        Predicate<Person> isInClub = person -> person.getMemberships().stream().map(Membership::getClub)
+                .anyMatch(club -> club.equals(clubToDisplay));
+        model.updateFilteredPersonList(isInClub);
         return new CommandResult(MESSAGE_LIST_SUCCESS);
     }
 
