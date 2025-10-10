@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
+import seedu.address.model.field.Email;
+import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.util.SampleDataUtil;
@@ -91,6 +93,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return clubs.contains(club);
     }
 
+    /**
+     * Adds a club to the address book.
+     * The club must not already exist in the address book.
+     */
     public void addClub(Club club) {
         clubs.add(club);
     }
@@ -124,12 +130,38 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    @Override
+    public Person getPersonByName(Name target) {
+        requireNonNull(target);
+        return persons.getPersonByName(target);
+    }
+
+    @Override
+    public Person getPersonByEmail(Email email) {
+        requireNonNull(email);
+        return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
+    }
+
+    @Override
+    public Club getClubByName(Name target) {
+        requireNonNull(target);
+        return clubs.getClub(target);
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeClub(Club key) {
+        clubs.remove(key);
     }
 
     //// util methods
