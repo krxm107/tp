@@ -17,6 +17,7 @@ public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
     public static final String MESSAGE_ARGUMENTS = "Person: %1$s";
     public static final String MESSAGE_SUCCESS = "%1$s added to %2$s";
+    //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a person to a specified club. "
             + "Parameters: ";
@@ -24,7 +25,6 @@ public class AddToCommand extends Command {
     private final Name personName;
     private final Name clubName;
 
-    //Todo: Update later
     /**
      * @param personName of the person in the filtered person list to edit
      * @param clubName of the club in the filtered club list to edit
