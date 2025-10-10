@@ -9,6 +9,9 @@ import seedu.address.model.club.Club;
 import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 
+/**
+ * Removes a Person from a Club
+ */
 public class RemoveFromCommand extends Command {
     public static final String COMMAND_WORD = "remove_from";
     public static final String MESSAGE_ARGUMENTS = "Person: %1$s";

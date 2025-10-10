@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 
 
 /**
- * Changes the remark of an existing person in the address book.
+ * Adds a Person to a Club
  */
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
