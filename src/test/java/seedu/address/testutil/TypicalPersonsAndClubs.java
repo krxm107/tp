@@ -1,7 +1,6 @@
 package seedu.address.testutil;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.club.Club;
 
 /**
  * A utility class containing a list of {@code Club} objects and {@code Person} objects to be used in tests.
