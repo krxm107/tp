@@ -25,6 +25,19 @@ public final class NameValidator {
 
     private NameValidator() {}
 
+    /**
+     * Validates and normalizes a raw name string entered by the user.
+     * <p>
+     * Ensures the name is non-null, within the allowed length range,
+     * contains only permitted ASCII characters, and includes at least one letter.
+     * <p>
+     * The normalized string that results removes unnecessary whitespaces and converts all characters to lowercase.
+     *
+     * @param raw
+     *     the raw input string to validate
+     * @return
+     *     a {@link ValidationResult} representing success or failure
+     */
     public static ValidationResult validate(String raw) {
         if (raw == null) {
             return ValidationResult.fail("Name is required.");
@@ -68,7 +81,9 @@ public final class NameValidator {
         return s.codePoints().anyMatch(Character::isLetter);
     }
 
-    // --- Validation result holder ---
+    /**
+     * 
+     */
     public static final class ValidationResult {
         private final boolean valid;
         private final String valueOrMessage;
