@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-final class NameValidatorTest {
+public final class NameValidatorTest {
 
     private static final String LONG_NAME = "A".repeat(101);
 
