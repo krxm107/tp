@@ -2,7 +2,9 @@
 
 package seedu.address.model.field.validator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.Stream;
 
@@ -17,16 +19,16 @@ final class NameValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "John Doe",
-            "Dr. Jane A. Doe",
-            "O’Connor",            // curly apostrophe
-            "Jean-Luc Picard",
-            "Ali s/o Ahmad",       // slash allowed
-            "Tan / Koh",           // slash with spaces
-            "  John   Doe  ",      // extra spaces
-            "Jr.",                  // suffix with period,
+        "John Doe",
+        "Dr. Jane A. Doe",
+        "O’Connor", // curly apostrophe
+        "Jean-Luc Picard",
+        "Ali s/o Ahmad", // slash allowed
+        "Tan / Koh", // slash with spaces
+        "  John   Doe  ", // extra spaces
+        "Jr.", // suffix with period,
     })
-    void valid_names_pass_and_normalize(String input) {
+    void validNamesPassAndNormalize(String input) {
         var res = NameValidator.validate(input);
         assertTrue(res.isValid(), () -> "Expected valid, got: " + res.get());
         String normalized = res.get();
@@ -38,18 +40,18 @@ final class NameValidatorTest {
     }
 
     @Test
-    void normalize_collapses_spaces() {
+    void normalizeCollapsesSpaces() {
         assertEquals("John A. Doe", NameValidator.normalize("  John    A.   Doe  "));
     }
 
     @Test
-    void nameKey_is_case_insensitive_and_space_collapsed() {
+    void nameKeyIsCaseInsensitiveAndSpaceCollapsed() {
         assertEquals(NameValidator.nameKey("JOHN   DOE"), NameValidator.nameKey("john doe"));
     }
 
     @ParameterizedTest
     @MethodSource("invalidNames")
-    void invalid_names_fail(String input) {
+    void invalidNamesFail(String input) {
         var res = NameValidator.validate(input);
         assertFalse(res.isValid(), "Expected invalid for: \"" + input + "\"");
     }
@@ -58,21 +60,24 @@ final class NameValidatorTest {
     static Stream<String> invalidNames() {
         return Stream.of(
                 "", " ", ".", "---", "'''", "....",
-                "A".repeat(101),      // ✅ dynamic value works here
-                "Jane@Doe",           // invalid symbol
-                "John Doe*",          // invalid symbol
-                "John\\Doe"           // backslash not allowed
+                "A".repeat(101), // ✅ dynamic value works here
+                "Jane@Doe", // invalid symbol
+                "John Doe*", // invalid symbol
+                "John\\Doe" // backslash not allowed
         );
     }
 
     @Test
-    void null_is_invalid() {
+    void nullIsInvalid() {
         var res = NameValidator.validate(null);
         assertFalse(res.isValid());
     }
 
+    /**
+     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     */
     @Test
-    void edge_case_length_100() {
+    void boundaryValueTestMaxLength() {
         String ninetyEight = "A".repeat(98);
         var res = NameValidator.validate(ninetyEight + " B");
         assertTrue(res.isValid());
