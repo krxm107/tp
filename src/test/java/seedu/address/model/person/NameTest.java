@@ -1,3 +1,5 @@
+//This class was written with the help of ChatGPT.
+
 package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.*;
