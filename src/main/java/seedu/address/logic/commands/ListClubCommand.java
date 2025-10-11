@@ -10,7 +10,7 @@ import seedu.address.model.Model;
  */
 public class ListClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "clubs";
+    public static final String COMMAND_WORD = "list_clubs";
 
     public static final String MESSAGE_SUCCESS = "Listed all clubs";
 
