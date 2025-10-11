@@ -42,9 +42,9 @@ public class Name {
         return NameValidator.validate(test).isValid();
     }
 
-    private String getNormalizedFullName() {
+    private String getNameKey() {
         if (normalizedFullName == null) {
-            normalizedFullName = NameValidator.normalize(fullName);
+            normalizedFullName = NameValidator.nameKey(fullName);
         }
 
         return normalizedFullName;
@@ -67,12 +67,12 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return getNormalizedFullName().equals(otherName.getNormalizedFullName());
+        return getNameKey().equals(otherName.getNameKey());
     }
 
     @Override
     public int hashCode() {
-        return getNormalizedFullName().hashCode();
+        return getNameKey().hashCode();
     }
 
 }
