@@ -2,7 +2,12 @@
 
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,22 +21,25 @@ public final class NameTest {
     // ---------- constructor & basic validation ----------
 
     @Test
-    void constructor_null_throwsNullPointerException() {
+    void constructorNullThrowsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Name(null));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "", "   ", ".", "---", "'''", "....",          // empty / only punctuation
-            "Jane@Doe", "John Doe*",                        // invalid symbols
-            "John\\Doe"                                     // backslash not allowed (forward slash is)
+        "", "   ", ".", "---", "'''", "....", // empty / only punctuation
+        "Jane@Doe", "John Doe*", // invalid symbols
+        "John\\Doe" // backslash not allowed (forward slash is)
     })
-    void constructor_invalidName_throwsIllegalArgumentException(String s) {
+    void constructorInvalidNameThrowsIllegalArgumentException(String s) {
         assertThrows(IllegalArgumentException.class, () -> new Name(s));
     }
 
+    /**
+     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     */
     @Test
-    void constructor_edgeCase_length100_isAllowed() {
+    void testMaxLengthIsAllowed() {
         // 98 'A' + " B" => 100 chars
         String s = "A".repeat(98) + " B";
         assertDoesNotThrow(() -> new Name(s));
@@ -42,26 +50,26 @@ public final class NameTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "John Doe",
-            "Dr. Jane A. Doe",
-            "O’Connor",
-            "Jean-Luc Picard",
-            "Ali s/o Ahmad",    // forward slash allowed
-            "Tan / Koh",        // slash with spaces
-            "  John   Doe  ",
-            "Jr."
+        "John Doe",
+        "Dr. Jane A. Doe",
+        "O’Connor",
+        "Jean-Luc Picard",
+        "Ali s/o Ahmad", // forward slash allowed
+        "Tan / Koh", // slash with spaces
+        "  John   Doe  ",
+        "Jr."
     })
-    void isValidName_valid_returnsTrue(String s) {
+    void isValidNameValidReturnsTrue(String s) {
         assertTrue(Name.isValidName(s), "Expected valid: " + s);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "", "   ", ".", "---", "'''", "....",
-            "Jane@Doe", "John Doe*",
-            "John\\Doe"
+        "", "   ", ".", "---", "'''", "....",
+        "Jane@Doe", "John Doe*",
+        "John\\Doe"
     })
-    void isValidName_invalid_returnsFalse(String s) {
+    void isValidNameInvalidReturnsFalse(String s) {
         assertFalse(Name.isValidName(s), "Expected invalid: " + s);
     }
 
@@ -71,7 +79,7 @@ public final class NameTest {
     class EqualityAndHashCode {
 
         @Test
-        void equal_when_only_spacing_differs() {
+        void equalWhen() {
             Name a = new Name("  John   Doe ");
             Name b = new Name("John Doe");
             assertEquals(a, b);
@@ -79,7 +87,7 @@ public final class NameTest {
         }
 
         @Test
-        void equal_when_case_differs_if_normalizer_is_caseInsensitive() {
+        void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
             // If your NameValidator.normalize lowercases for keying, these should be equal.
             // If it preserves case, feel free to delete this test.
             Name a = new Name("JOHN DOE");
@@ -88,7 +96,7 @@ public final class NameTest {
         }
 
         @Test
-        void notEqual_when_actual_names_differ() {
+        void notEqualWhenActualNamesDiffer() {
             Name a = new Name("Jane Doe");
             Name b = new Name("John Doe");
             assertNotEquals(a, b);
@@ -96,9 +104,8 @@ public final class NameTest {
     }
 
     // ---------- toString returns original (not normalized) ----------
-
     @Test
-    void toString_returnsOriginalInput_notNormalized() {
+    void toStringReturnsOriginalInputNotNormalized() {
         Name n = new Name("  John   A.   Doe  ");
         // equals/hashCode compare normalized versions,
         // but toString() should return the raw original per your class.
