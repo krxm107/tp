@@ -19,13 +19,12 @@ final class NameValidatorTest {
     @ValueSource(strings = {
             "John Doe",
             "Dr. Jane A. Doe",
-            "María-José Carreño Quiñones",
             "O’Connor",            // curly apostrophe
             "Jean-Luc Picard",
             "Ali s/o Ahmad",       // slash allowed
             "Tan / Koh",           // slash with spaces
             "  John   Doe  ",      // extra spaces
-            "Jr."                  // suffix with period
+            "Jr.",                  // suffix with period,
     })
     void valid_names_pass_and_normalize(String input) {
         var res = NameValidator.validate(input);
@@ -60,7 +59,6 @@ final class NameValidatorTest {
         return Stream.of(
                 "", " ", ".", "---", "'''", "....",
                 "A".repeat(101),      // ✅ dynamic value works here
-                "John Doe1",          // digits not allowed
                 "Jane@Doe",           // invalid symbol
                 "John Doe*",          // invalid symbol
                 "John\\Doe"           // backslash not allowed

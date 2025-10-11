@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * Validates and normalizes person names for add_person.
  * Rules:
  *  - 1–100 chars after trimming.
- *  - Allow Unicode letters, marks, spaces, hyphens, apostrophes, periods, and slashes (/).
+ *  - Allow ASCII letters A–Z, a–z, digits 0–9, marks, spaces, hyphens, apostrophes, periods, and slashes (/).
  *  - Collapse internal whitespace to single spaces.
  *  - Name key is case-insensitive and space-collapsed; useful for duplicate detection.
  */
@@ -18,7 +18,7 @@ public final class NameValidator {
 
     // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period, slash.
     private static final Pattern ALLOWED =
-            Pattern.compile("^[\\p{L}\\p{M} .\\-'’/]+$");
+            Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
     private static final int MAX_LEN = 100;

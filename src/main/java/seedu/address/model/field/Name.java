@@ -12,7 +12,7 @@ import seedu.address.model.field.validator.NameValidator;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain ASCII letters A–Z, a–z, digits 0–9, spaces, hyphens, apostrophes, periods, and slashes (/).";
 
     /*
      * The first character of the address must not be a whitespace,
