@@ -23,7 +23,9 @@ public final class NameValidator {
     private static final int MIN_LEN = 1;
     private static final int MAX_LEN = 100;
 
-    private NameValidator() {}
+    private NameValidator() {
+
+    }
 
     /**
      * Validates and normalizes a raw name string entered by the user.

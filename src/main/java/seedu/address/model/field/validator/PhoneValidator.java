@@ -22,7 +22,9 @@ public final class PhoneValidator {
     private static final Pattern DIGITS_ONLY = Pattern.compile("^\\d+$");
     private static final Pattern WS = Pattern.compile("\\s+");
 
-    private PhoneValidator() {}
+    private PhoneValidator() {
+
+    }
 
     public static ValidationResult validate(String raw) {
         if (raw == null) {
