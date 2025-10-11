@@ -1,62 +1,119 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 
-public class PhoneTest {
+public final class PhoneTest {
+
+    // ---------- constructor & basic validation ----------
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
+    void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Phone(null));
     }
 
-    @Test
-    public void constructor_invalidPhone_throwsIllegalArgumentException() {
-        String invalidPhone = "";
-        assertThrows(IllegalArgumentException.class, () -> new Phone(invalidPhone));
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "", "   ",                // empty
+            "12345",                  // too short (< MIN)
+            "1234567890123456",       // too long (> MAX)
+            "123-4567",               // non-digit
+            "+6581234567",            // plus not allowed per simplified spec
+            "(8123)4567",             // brackets not allowed
+            "81 23a 4567"             // contains letter
+    })
+    void constructor_invalid_throwsIllegalArgumentException(String s) {
+        assertThrows(IllegalArgumentException.class, () -> new Phone(s));
     }
 
     @Test
-    public void isValidPhone() {
-        // null phone number
-        assertThrows(NullPointerException.class, () -> Phone.isValidPhone(null));
+    void constructor_edgeCase_maxLength_isAllowed() {
+        String s = "1".repeat(PhoneValidator.MAX_DIGITS);
+        assertDoesNotThrow(() -> new Phone(s));
+        // If your Phone has getValue(), replace toString() with getValue()
+        assertEquals(s, new Phone(s).toString()); // toString returns original
+    }
 
-        // invalid phone numbers
-        assertFalse(Phone.isValidPhone("")); // empty string
-        assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("91")); // less than 3 numbers
-        assertFalse(Phone.isValidPhone("phone")); // non-numeric
-        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
+    // ---------- isValidPhone ----------
 
-        // valid phone numbers
-        assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
-        assertTrue(Phone.isValidPhone("93121534"));
-        assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "81234567",
+            "  8123 4567 ",
+            "123456",                 // exactly MIN
+            "123456789012345"         // exactly MAX
+    })
+    void isValidPhone_valid_returnsTrue(String s) {
+        assertTrue(Phone.isValidPhone(s), "Expected valid: " + s);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "", "   ",
+            "12345",
+            "1234567890123456",
+            "123-4567",
+            "+6581234567",
+            "(8123)4567",
+            "81 23a 4567"
+    })
+    void isValidPhone_invalid_returnsFalse(String s) {
+        assertFalse(Phone.isValidPhone(s), "Expected invalid: " + s);
+    }
+
+    // ---------- equals / hashCode use normalized phone ----------
+
+    @Nested
+    class EqualityAndHashCode {
+
+        @Test
+        void equal_when_only_whitespace_differs() {
+            Phone a = new Phone("  8123  4567 ");
+            Phone b = new Phone("81234567");
+            assertEquals(a, b);
+            assertEquals(a.hashCode(), b.hashCode());
+        }
+
+        @Test
+        void notEqual_when_numbers_differ() {
+            Phone a = new Phone("81234567");
+            Phone b = new Phone("81234568");
+            assertNotEquals(a, b);
+        }
+    }
+
+    // ---------- toString returns original (not normalized) ----------
+
+    @Test
+    void toString_returnsOriginalInput_notNormalized() {
+        Phone p = new Phone("  8123  4567 ");
+        assertEquals("  8123  4567 ", p.toString());
+    }
+
+    // ---------- boundary helpers ----------
+
+    @Test
+    void minDigits_accepted() {
+        String s = "1".repeat(PhoneValidator.MIN_DIGITS);
+        assertTrue(Phone.isValidPhone(s));
     }
 
     @Test
-    public void equals() {
-        Phone phone = new Phone("999");
+    void belowMinDigits_rejected() {
+        String s = "1".repeat(PhoneValidator.MIN_DIGITS - 1);
+        assertFalse(Phone.isValidPhone(s));
+    }
 
-        // same values -> returns true
-        assertTrue(phone.equals(new Phone("999")));
-
-        // same object -> returns true
-        assertTrue(phone.equals(phone));
-
-        // null -> returns false
-        assertFalse(phone.equals(null));
-
-        // different types -> returns false
-        assertFalse(phone.equals(5.0f));
-
-        // different values -> returns false
-        assertFalse(phone.equals(new Phone("995")));
+    @Test
+    void aboveMaxDigits_rejected() {
+        String s = "1".repeat(PhoneValidator.MAX_DIGITS + 1);
+        assertFalse(Phone.isValidPhone(s));
     }
 }
