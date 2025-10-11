@@ -15,12 +15,6 @@ public class Name {
             "Names should only contain ASCII letters A–Z, a–z, digits 0–9, "
                     + "spaces, hyphens, apostrophes, periods, and slashes (/).";
 
-    /**
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
-
     public final String fullName;
 
     private String normalizedFullName = null;
