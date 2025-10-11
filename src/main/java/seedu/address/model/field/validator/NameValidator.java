@@ -103,10 +103,24 @@ public final class NameValidator {
             this.valueOrMessage = valueOrMessage;
         }
 
+        /**
+         * @param normalized
+         *     The normalized String
+         *
+         * @return
+         *     A successful ValidationResult instance with the normalized String as the value.
+         */
         public static ValidationResult ok(String normalized) {
             return new ValidationResult(true, normalized);
         }
 
+        /**
+         * @param message
+         *     The error message.
+         *
+         * @return
+         *     A failure ValidationResult instance with the error message.
+         */
         public static ValidationResult fail(String message) {
             return new ValidationResult(false, message);
         }

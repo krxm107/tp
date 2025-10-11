@@ -37,11 +37,22 @@ public class Phone {
         return PhoneValidator.validate(test).isValid();
     }
 
+    /**
+     * @return
+     *     The normalized phone number for display to the user.
+     */
     @Override
     public String toString() {
         return value;
     }
 
+    /**
+     * @param other
+     *     the reference object with which to compare.
+     *
+     * @return
+     *     A boolean indicating whether the phone numbers are equal.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -57,6 +68,10 @@ public class Phone {
         return value.equals(otherPhone.value);
     }
 
+    /**
+     * @return
+     *     The normalized phone number's hashCode.
+     */
     @Override
     public int hashCode() {
         return value.hashCode();
