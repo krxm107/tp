@@ -103,11 +103,11 @@ public final class NameValidator {
             this.valueOrMessage = valueOrMessage;
         }
 
-        private static ValidationResult ok(String normalized) {
+        public static ValidationResult ok(String normalized) {
             return new ValidationResult(true, normalized);
         }
 
-        private static ValidationResult fail(String message) {
+        public static ValidationResult fail(String message) {
             return new ValidationResult(false, message);
         }
 
