@@ -54,7 +54,8 @@ public final class NameValidator {
         }
         if (!ALLOWED.matcher(normalized).matches()) {
             return ValidationResult.fail(
-                    "Name contains invalid characters. Allowed: letters, spaces, hyphens (-), apostrophes (' or ’), periods (.), and slashes (/)");
+                    "Name contains invalid characters. Allowed: letters, spaces, hyphens (-), "
+                            + "apostrophes (' or ’), periods (.), and slashes (/)");
         }
         if (!containsLetter(normalized)) {
             return ValidationResult.fail("Name must contain at least one letter.");
@@ -82,7 +83,14 @@ public final class NameValidator {
     }
 
     /**
-     * 
+     * Returns the result of validating an input string in the {@link #validate(String)} method.
+     * <p>
+     * This class carries 2 pieces of information.
+     * <p>
+     * The valid field tells us if the validation succeeded or failed.
+     * <p>
+     * The valueOrMessage field gives us the normalized String if the validation was a success,
+     * and a warning message otherwise.
      */
     public static final class ValidationResult {
         private final boolean valid;
@@ -101,7 +109,19 @@ public final class NameValidator {
             return new ValidationResult(false, message);
         }
 
-        public boolean isValid() { return valid; }
-        public String get() { return valueOrMessage; } // normalized or error message
+        /**
+         * Tells us if the validation was a success or a failure.
+         */
+        public boolean isValid() {
+            return valid;
+        }
+
+        /**
+         * @return
+         *     The valueOrMessage field
+         */
+        public String get() {
+            return valueOrMessage;
+        }
     }
 }
