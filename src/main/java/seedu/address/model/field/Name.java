@@ -3,6 +3,8 @@ package seedu.address.model.field;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.model.field.validator.NameValidator;
+
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -20,6 +22,8 @@ public class Name {
 
     public final String fullName;
 
+    private String normalizedFullName = null;
+
     /**
      * Constructs a {@code Name}.
      *
@@ -35,9 +39,16 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return NameValidator.validate(test).isValid();
     }
 
+    private String getNormalizedFullName() {
+        if (normalizedFullName == null) {
+            normalizedFullName = NameValidator.normalize(fullName);
+        }
+
+        return normalizedFullName;
+    }
 
     @Override
     public String toString() {
@@ -56,12 +67,12 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return fullName.equals(otherName.fullName);
+        return getNormalizedFullName().equals(otherName.getNormalizedFullName());
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return getNormalizedFullName().hashCode();
     }
 
 }
