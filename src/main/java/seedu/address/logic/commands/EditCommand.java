@@ -140,7 +140,7 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {
-            
+
         }
 
         /**
