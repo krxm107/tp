@@ -18,7 +18,7 @@ public class NewListPersonCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match any of "
             + "the specified search instructions and displays them as a list with index numbers.\n"
-            + "Parameters: \\SEARCH_KEYWORD1 [SEARCH_PARAMETER1] \\SEARCH_KEYWORD2 [SEARCH_PARAMETER2]...\n"
+            + "Parameters: \\SEARCH_KEYWORD1 [SEARCH_PARAMETERS1] \\SEARCH_KEYWORD2 [SEARCH_PARAMETERS2]...\n"
             + "Example: " + COMMAND_WORD + " \\n alice bob charlie";
 
     private final Predicate<Person> predicate;

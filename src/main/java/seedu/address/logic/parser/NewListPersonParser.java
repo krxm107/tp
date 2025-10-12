@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.commands.NewListPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.search.PersonNameParser;
 import seedu.address.model.person.Person;
 
 /**
@@ -17,7 +18,6 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public NewListPersonCommand parse(String args) throws ParseException {
-        // base case: essentially same as the current list
         if (args.trim().isEmpty()) {
             return new NewListPersonCommand(person -> true);
         }
@@ -30,18 +30,14 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
                 continue;
             }
 
-            // get next search keyword alongside search parameter
             String[] parts = segment.split("\\s+", 2);
             if (parts.length < 2) {
                 throw new ParseException("Expected value after keyword");
             }
-
             String searchKeyword = parts[0].trim();
             String searchParameter = parts[1].trim();
 
-            // only this switch statement needs to be edited when a new seach keyword is added
             switch (searchKeyword) {
-                // each "parser" here returns a predicate
                 case PersonNameParser.KEYWORD:
                     predicate = predicate.or(PersonNameParser.parse(searchParameter));
                     break;
