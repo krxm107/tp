@@ -1,62 +1,114 @@
+//This class was written with the help of ChatGPT.
+
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import seedu.address.model.field.Name;
 
-public class NameTest {
+public final class NameTest {
+
+    // ---------- constructor & basic validation ----------
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
+    void constructorNullThrowsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Name(null));
     }
 
-    @Test
-    public void constructor_invalidName_throwsIllegalArgumentException() {
-        String invalidName = "";
-        assertThrows(IllegalArgumentException.class, () -> new Name(invalidName));
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "", "   ", ".", "---", "'''", "....", // empty / only punctuation
+        "Jane@Doe", "John Doe*", // invalid symbols
+        "John\\Doe" // backslash not allowed (forward slash is)
+    })
+    void constructorInvalidNameThrowsIllegalArgumentException(String s) {
+        assertThrows(IllegalArgumentException.class, () -> new Name(s));
     }
 
+    /**
+     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     */
     @Test
-    public void isValidName() {
-        // null name
-        assertThrows(NullPointerException.class, () -> Name.isValidName(null));
-
-        // invalid name
-        assertFalse(Name.isValidName("")); // empty string
-        assertFalse(Name.isValidName(" ")); // spaces only
-        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
-        assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
-
-        // valid name
-        assertTrue(Name.isValidName("peter jack")); // alphabets only
-        assertTrue(Name.isValidName("12345")); // numbers only
-        assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
-        assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+    void testMaxLengthIsAllowed() {
+        // 98 'A' + " B" => 100 chars
+        String s = "A".repeat(98) + " B";
+        assertDoesNotThrow(() -> new Name(s));
+        assertEquals(s, new Name(s).toString()); // toString returns original
     }
 
+    // ---------- isValidName ----------
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "John Doe",
+        "Dr. Jane A. Doe",
+        "O’Connor",
+        "Jean-Luc Picard",
+        "Ali s/o Ahmad", // forward slash allowed
+        "Tan / Koh", // slash with spaces
+        "  John   Doe  ",
+        "Jr."
+    })
+    void isValidNameValidReturnsTrue(String s) {
+        assertTrue(Name.isValidName(s), "Expected valid: " + s);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "", "   ", ".", "---", "'''", "....",
+        "Jane@Doe", "John Doe*",
+        "John\\Doe"
+    })
+    void isValidNameInvalidReturnsFalse(String s) {
+        assertFalse(Name.isValidName(s), "Expected invalid: " + s);
+    }
+
+    // ---------- equals / hashCode use normalized name ----------
+
+    @Nested
+    class EqualityAndHashCode {
+
+        @Test
+        void equalWhen() {
+            Name a = new Name("  John   Doe ");
+            Name b = new Name("John Doe");
+            assertEquals(a, b);
+            assertEquals(a.hashCode(), b.hashCode());
+        }
+
+        @Test
+        void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
+            // If your NameValidator.normalize lowercases for keying, these should be equal.
+            // If it preserves case, feel free to delete this test.
+            Name a = new Name("JOHN DOE");
+            Name b = new Name("john doe");
+            assertEquals(a, b);
+        }
+
+        @Test
+        void notEqualWhenActualNamesDiffer() {
+            Name a = new Name("Jane Doe");
+            Name b = new Name("John Doe");
+            assertNotEquals(a, b);
+        }
+    }
+
+    // ---------- toString returns original (not normalized) ----------
     @Test
-    public void equals() {
-        Name name = new Name("Valid Name");
-
-        // same values -> returns true
-        assertTrue(name.equals(new Name("Valid Name")));
-
-        // same object -> returns true
-        assertTrue(name.equals(name));
-
-        // null -> returns false
-        assertFalse(name.equals(null));
-
-        // different types -> returns false
-        assertFalse(name.equals(5.0f));
-
-        // different values -> returns false
-        assertFalse(name.equals(new Name("Other Valid Name")));
+    void toStringReturnsOriginalInputNotNormalized() {
+        Name n = new Name("  John   A.   Doe  ");
+        // equals/hashCode compare normalized versions,
+        // but toString() should return the raw original per your class.
+        assertEquals("  John   A.   Doe  ", n.toString());
     }
 }

@@ -139,7 +139,9 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+
+        }
 
         /**
          * Copy constructor.
