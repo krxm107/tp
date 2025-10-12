@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -8,11 +13,6 @@ import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
-
-import java.util.List;
-import java.util.function.Predicate;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Lists all memberships of a person identified using it's displayed index from the address book.
