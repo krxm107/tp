@@ -96,12 +96,12 @@ public final class PhoneTest {
         }
     }
 
-    // ---------- toString returns original (not normalized) ----------
+    // ---------- toString returns normalized String ----------
 
     @Test
-    void toStringReturnsOriginalInputNotNormalized() {
+    void toStringReturnsOriginalInputNormalized() {
         Phone p = new Phone("  8123  4567 ");
-        assertEquals("  8123  4567 ", p.toString());
+        assertEquals("81234567", p.toString());
     }
 
     // ---------- boundary helpers ----------
