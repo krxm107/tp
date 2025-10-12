@@ -22,9 +22,13 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
 
         String[] searchModifiers = args.trim().split("\\\\");
 
-        for (int i = 0; i < searchModifiers.length; i++) {
+        for (String segment : searchModifiers) {
+            if (segment.isEmpty()) {
+                continue;
+            }
+
             // get next search keyword alongside search parameter
-            String[] parts = args.split("\\s+", 2);
+            String[] parts = segment.split("\\s+", 2);
             if (parts.length < 2) {
                 throw new ParseException("Expected value after keyword");
             }
