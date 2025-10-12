@@ -1,30 +1,22 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Arrays;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListMemberCommand;
-import seedu.address.logic.commands.ListPersonCommand;
-import seedu.address.logic.commands.NewListCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.NewListPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new NewListPersonCommand object
  */
-public class NewListParser implements Parser<NewListCommand> {
+public class NewListPersonParser implements Parser<NewListPersonCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the NewListPersonCommand
+     * and returns a NewListPersonCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public NewListCommand parse(String args) throws ParseException {
+    public NewListPersonCommand parse(String args) throws ParseException {
         // base case: essentially same as the current list
         Predicate<Person> predicate = x -> true;
 
@@ -43,8 +35,8 @@ public class NewListParser implements Parser<NewListCommand> {
             // only this switch statement needs to be edited when a new seach keyword is added
             switch (searchKeyword) {
                 // each "parser" here returns a predicate
-                case NameParser.KEYWORD:
-                    predicate = predicate.and(NameParser.parse(searchParameter));
+                case PersonNameParser.KEYWORD:
+                    predicate = predicate.and(PersonNameParser.parse(searchParameter));
                     break;
                     /*
                 case TagParser.KEYWORD:
@@ -56,7 +48,7 @@ public class NewListParser implements Parser<NewListCommand> {
             }
         }
 
-        return new NewListCommand(predicate);
+        return new NewListPersonCommand(predicate);
     }
 
 }

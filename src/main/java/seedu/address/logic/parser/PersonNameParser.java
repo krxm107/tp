@@ -11,9 +11,9 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments for a search by person name instruction
  */
-public class NameParser {
+public class PersonNameParser {
 
     public static final String KEYWORD = "n";
 

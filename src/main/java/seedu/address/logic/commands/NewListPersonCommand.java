@@ -7,25 +7,23 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Finds and lists all persons in address book matching any number of search instructions.
  */
-public class NewListCommand extends Command {
+public class NewListPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match any of "
+            + "the specified search instructions and displays them as a list with index numbers.\n"
+            + "Parameters: \\SEARCH_KEYWORD1 [SEARCH_PARAMETER1] \\SEARCH_KEYWORD2 [SEARCH_PARAMETER2]...\n"
+            + "Example: " + COMMAND_WORD + " \\n alice bob charlie";
 
     private final Predicate<Person> predicate;
 
-    public NewListCommand(Predicate<Person> predicate) {
+    public NewListPersonCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
     }
 
@@ -48,7 +46,7 @@ public class NewListCommand extends Command {
             return false;
         }
 
-        NewListCommand otherListCommand = (NewListCommand) other;
+        NewListPersonCommand otherListCommand = (NewListPersonCommand) other;
         return predicate.equals(otherListCommand.predicate);
     }
 
