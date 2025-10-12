@@ -18,11 +18,7 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public NewListPersonCommand parse(String args) throws ParseException {
-        if (args.trim().isEmpty()) {
-            return new NewListPersonCommand(person -> true);
-        }
-
-        Predicate<Person> predicate = person -> false;
+        Predicate<Person> predicate = person -> true;
         String[] searchModifiers = args.trim().split("\\\\");
 
         for (String segment : searchModifiers) {
