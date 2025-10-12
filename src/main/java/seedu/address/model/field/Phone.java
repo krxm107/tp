@@ -3,7 +3,6 @@ package seedu.address.model.field;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.model.field.validator.NameValidator;
 import seedu.address.model.field.validator.PhoneValidator;
 
 /**
@@ -27,7 +26,7 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = NameValidator.normalize(phone);
+        value = PhoneValidator.normalize(phone);
     }
 
     /**
