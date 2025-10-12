@@ -28,32 +28,32 @@ public class NewListParser implements Parser<NewListCommand> {
         // base case: essentially same as the current list
         Predicate<Person> predicate = x -> true;
 
-        while (!args.isBlank()) {
+        String[] searchModifiers = args.trim().split("\\\\");
+
+        for (int i = 0; i < searchModifiers.length; i++) {
             // get next search keyword alongside search parameter
-            String[] parts = args.trim().split(" ", 2);
+            String[] parts = args.split("\\s+", 2);
             if (parts.length < 2) {
                 throw new ParseException("Expected value after keyword");
             }
 
-            String keyword = parts[0];
-            parts = parts[1].trim().split("", 2);
-            String value = parts[0];
+            String searchKeyword = parts[0].trim();
+            String searchParameter = parts[1].trim();
 
             // only this switch statement needs to be edited when a new seach keyword is added
-            switch (keyword) {
+            switch (searchKeyword) {
                 // each "parser" here returns a predicate
                 case NameParser.KEYWORD:
-                    predicate = predicate.and(NameParser.parse(value));
+                    predicate = predicate.and(NameParser.parse(searchParameter));
                     break;
+                    /*
                 case TagParser.KEYWORD:
                     predicate = predicate.and(TagParser.parse(value));
                     break;
+                     */
                 default:
-                    throw new ParseException("Unknown keyword: " + keyword);
+                    throw new ParseException("Unknown search keyword");
             }
-
-            // After consuming the current keyword and value, remove them from args
-            args = parts[1];
         }
 
         return new NewListCommand(predicate);
