@@ -17,6 +17,11 @@ public class PersonNameParser {
 
     public static final String KEYWORD = "n";
 
+    /**
+     * Parses the given {@code String} of arguments in the context of a search by person name
+     * instruction and returns a corresponding {@code Predicate<Person>} object.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public static Predicate<Person> parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {

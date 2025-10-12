@@ -38,16 +38,16 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
             String searchParameter = parts[1].trim();
 
             switch (searchKeyword) {
-                case PersonNameParser.KEYWORD:
-                    predicate = predicate.or(PersonNameParser.parse(searchParameter));
-                    break;
-                    /*
-                case TagParser.KEYWORD:
-                    predicate = predicate.or(TagParser.parse(value));
-                    break;
-                     */
-                default:
-                    throw new ParseException("Unknown search keyword");
+            case PersonNameParser.KEYWORD:
+                predicate = predicate.or(PersonNameParser.parse(searchParameter));
+                break;
+            /*
+            case TagParser.KEYWORD:
+                predicate = predicate.or(TagParser.parse(value));
+                break;
+            */
+            default:
+                throw new ParseException("Unknown search keyword");
             }
         }
 
