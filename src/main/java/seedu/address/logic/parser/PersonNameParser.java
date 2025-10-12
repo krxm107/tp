@@ -25,7 +25,6 @@ public class PersonNameParser {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-
         return new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords));
     }
 
