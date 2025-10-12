@@ -40,11 +40,11 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
             switch (searchKeyword) {
                 // each "parser" here returns a predicate
                 case PersonNameParser.KEYWORD:
-                    predicate = predicate.and(PersonNameParser.parse(searchParameter));
+                    predicate = predicate.or(PersonNameParser.parse(searchParameter));
                     break;
                     /*
                 case TagParser.KEYWORD:
-                    predicate = predicate.and(TagParser.parse(value));
+                    predicate = predicate.or(TagParser.parse(value));
                     break;
                      */
                 default:
