@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -11,28 +10,25 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
-import seedu.address.model.membership.Membership;
-import seedu.address.model.person.Person;
+
 
 /**
- * Lists all members in a club identified using it's displayed index from the address book.
+ * Deletes a club identified using it's displayed index from the address book.
  */
-public class ListMemberCommand extends Command {
+public class DeleteClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "list_members";
-
-    public static final String MESSAGE_SUCCESS = "Listed all members";
+    public static final String COMMAND_WORD = "delete_club";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all members of a club identified by the index number used in the displayed club list.\n"
+            + ": Deletes the club identified by the index number used in the displayed club list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LIST_SUCCESS = "Listed all members";
+    public static final String MESSAGE_DELETE_CLUB_SUCCESS = "Deleted Club: %1$s";
 
     private final Index targetIndex;
 
-    public ListMemberCommand(Index targetIndex) {
+    public DeleteClubCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -45,12 +41,9 @@ public class ListMemberCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
         }
 
-        Club clubToDisplay = lastShownList.get(targetIndex.getZeroBased());
-        model.updateFilteredClubList(club -> club.equals(clubToDisplay));
-        Predicate<Person> isInClub = person -> person.getMemberships().stream().map(Membership::getClub)
-                .anyMatch(club -> club.equals(clubToDisplay));
-        model.updateFilteredPersonList(isInClub);
-        return new CommandResult(MESSAGE_LIST_SUCCESS);
+        Club clubToDelete = lastShownList.get(targetIndex.getZeroBased());
+        model.deleteClub(clubToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_CLUB_SUCCESS, Messages.format(clubToDelete)));
     }
 
     @Override
@@ -60,12 +53,12 @@ public class ListMemberCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ListMemberCommand)) {
+        if (!(other instanceof DeleteClubCommand)) {
             return false;
         }
 
-        ListMemberCommand otherListMemberCommand = (ListMemberCommand) other;
-        return targetIndex.equals(otherListMemberCommand.targetIndex);
+        DeleteClubCommand otherDeleteCommand = (DeleteClubCommand) other;
+        return targetIndex.equals(otherDeleteCommand.targetIndex);
     }
 
     @Override

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalClubs.ARCHERY;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -24,49 +24,49 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.ClubBuilder;
 
-public class AddPersonCommandTest {
+public final class AddClubCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddPersonCommand(null));
+    public void constructor_nullClub_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddClubCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_clubAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingClubAdded modelStub = new ModelStubAcceptingClubAdded();
+        Club validClub = new ClubBuilder().build();
 
-        CommandResult commandResult = new AddPersonCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new AddClubCommand(validClub).execute(modelStub);
 
-        assertEquals(String.format(AddPersonCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format(AddClubCommand.MESSAGE_SUCCESS, Messages.format(validClub)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validClub), modelStub.clubsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddPersonCommand addPersonCommand = new AddPersonCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_duplicateClub_throwsCommandException() {
+        Club validClub = new ClubBuilder().build();
+        AddClubCommand addClubCommand = new AddClubCommand(validClub);
+        ModelStub modelStub = new ModelStubWithClub(validClub);
 
         assertThrows(CommandException.class,
-                     AddPersonCommand.MESSAGE_DUPLICATE_PERSON, () -> addPersonCommand.execute(modelStub));
+                AddClubCommand.MESSAGE_DUPLICATE_CLUB, () -> addClubCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddPersonCommand addAliceCommand = new AddPersonCommand(alice);
-        AddPersonCommand addBobCommand = new AddPersonCommand(bob);
+        Club alice = new ClubBuilder().withName("Alice").build();
+        Club bob = new ClubBuilder().withName("Bob").build();
+        AddClubCommand addAliceCommand = new AddClubCommand(alice);
+        AddClubCommand addBobCommand = new AddClubCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddPersonCommand addAliceCommandCopy = new AddPersonCommand(alice);
+        AddClubCommand addAliceCommandCopy = new AddClubCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -75,15 +75,15 @@ public class AddPersonCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different club -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     @Test
     public void toStringMethod() {
-        AddPersonCommand addPersonCommand = new AddPersonCommand(ALICE);
-        String expected = AddPersonCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addPersonCommand.toString());
+        AddClubCommand addClubCommand = new AddClubCommand(ARCHERY);
+        String expected = AddClubCommand.class.getCanonicalName() + "{toAdd=" + ARCHERY + "}";
+        assertEquals(expected, addClubCommand.toString());
     }
 
     /**
@@ -146,7 +146,7 @@ public class AddPersonCommandTest {
         }
 
         @Override
-        public void setPerson(Person target, Person editedPerson) {
+        public void setPerson(Person target, Person editedClub) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -187,39 +187,39 @@ public class AddPersonCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single club.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
+    private class ModelStubWithClub extends ModelStub {
+        private final Club club;
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
+        ModelStubWithClub(Club club) {
+            requireNonNull(club);
+            this.club = club;
         }
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
+        public boolean hasClub(Club club) {
+            requireNonNull(club);
+            return this.club.isSameClub(club);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the club being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingClubAdded extends ModelStub {
+        final ArrayList<Club> clubsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+        public boolean hasClub(Club club) {
+            requireNonNull(club);
+            return clubsAdded.stream().anyMatch(club::isSameClub);
         }
 
         @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addClub(Club club) {
+            requireNonNull(club);
+            clubsAdded.add(club);
         }
 
         @Override
