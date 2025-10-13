@@ -30,9 +30,9 @@ ClubHub is a **desktop app for managing contacts, optimized for use via a Comman
 
    * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete_person 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   * `clear` : Deletes all data.
 
    * `exit` : Exits the app.
 
@@ -142,19 +142,31 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a person : `delete_person`
 
 Deletes the specified person from the address book.
 
-Format: `delete INDEX`
+Format: `delete_person INDEX`
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `list` followed by `delete_person 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
+
+### Deleting a club : `delete_club`
+
+Format: `delete_club INDEX`
+
+* Deletes the club at the specified `INDEX`.
+* The index refers to the index number shown in the displayed club list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd club in the address book.
+* `find Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
@@ -208,7 +220,8 @@ Action | Format, Examples
 **Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Delete Person** | `delete_person INDEX`<br> e.g., `delete_person 3`
+**Delete Club** | `delete_club INDEX`<br> e.g., `delete_club 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
