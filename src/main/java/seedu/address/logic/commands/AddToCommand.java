@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,12 +17,18 @@ import seedu.address.model.person.Person;
  */
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
-    public static final String MESSAGE_ARGUMENTS = "Person: %1$s";
     public static final String MESSAGE_SUCCESS = "%1$s added to %2$s";
     //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds a person to a specified club. "
-            + "Parameters: ";
+            + ": Adds a person to a specified club. \n" //I think a newline would look nice here
+            //Todo: reformat Message_usage of other commands as well
+            + "Parameters: "
+            + PREFIX_NAME + "PERSON NAME "
+            + PREFIX_CLUB + "CLUB NAME\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_CLUB + "Tennis Club";
+
 
     private final Name personName;
     private final Name clubName;
