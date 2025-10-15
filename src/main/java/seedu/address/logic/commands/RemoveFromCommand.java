@@ -16,7 +16,6 @@ import seedu.address.model.person.Person;
  */
 public class RemoveFromCommand extends Command {
     public static final String COMMAND_WORD = "remove_from";
-    public static final String MESSAGE_ARGUMENTS = "Person: %1$s";
     public static final String MESSAGE_SUCCESS = "%1$s removed from %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes a person from a specified club. "
