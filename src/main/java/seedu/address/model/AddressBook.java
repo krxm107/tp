@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
@@ -131,19 +132,19 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public Person getPersonByName(Name target) {
+    public Optional<Person> getPersonByName(Name target) {
         requireNonNull(target);
         return persons.getPersonByName(target);
     }
 
     @Override
-    public Person getPersonByEmail(Email email) {
+    public Optional<Person> getPersonByEmail(Email email) {
         requireNonNull(email);
         return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
     }
 
     @Override
-    public Club getClubByName(Name target) {
+    public Optional<Club> getClubByName(Name target) {
         requireNonNull(target);
         return clubs.getClub(target);
     }

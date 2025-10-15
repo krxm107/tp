@@ -98,8 +98,8 @@ class JsonSerializableAddressBook {
         // Re-link persons and clubs using the membership data
         for (final JsonAdaptedMembership jsonAdaptedMembership : memberships) {
             // Find the already-loaded Person and Club objects from the address book
-            final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail()));
-            final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName()));
+            final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail())).get();
+            final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName())).get();
 
             if (person == null || club == null) {
                 throw new IllegalValueException(MESSAGE_INVALID_MEMBERSHIP_LINK);

@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Optional;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
@@ -20,6 +22,8 @@ public class RemoveFromCommand extends Command {
             + ": Removes a person from a specified club. "
             + "Parameters: ";
 
+    public static final String MESSAGE_PERSON_NOT_FOUND = "Person not found";
+    public static final String MESSAGE_CLUB_NOT_FOUND = "Club not found";
     private final Name personName;
     private final Name clubName;
 
@@ -36,10 +40,20 @@ public class RemoveFromCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        Person person = model.getAddressBook().getPersonByName(personName);
-        Club club = model.getAddressBook().getClubByName(clubName);
+        Optional<Person> optionalPerson = model.getAddressBook().getPersonByName(personName);
+        Optional<Club> optionalClub = model.getAddressBook().getClubByName(clubName);
 
+        if (optionalPerson.isEmpty()) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
+        }
+        if (optionalClub.isEmpty()) {
+            throw new CommandException(MESSAGE_CLUB_NOT_FOUND);
+        }
+
+        Person person = optionalPerson.get();
+        Club club = optionalClub.get();
         club.removeMember(person);
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }

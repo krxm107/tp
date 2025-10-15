@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,13 +99,12 @@ public class UniqueClubList implements Iterable<Club> {
         internalList.setAll(clubs);
     }
 
-    public Club getClub(Name name) {
+    public Optional<Club> getClub(Name name) {
         return internalList.stream()
                 .filter(person ->
                         person.getName().equals(name)
                 )
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
     /**
