@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Optional;
 
@@ -11,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -60,9 +60,18 @@ public class AddToCommand extends Command {
         //Todo: Update role handling
         Person person = optionalPerson.get();
         Club club = optionalClub.get();
-        club.addMember(person, "member");
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        // Check if membership already exists
+        Membership toAdd = new Membership(person, club);
+        if (model.hasMembership(toAdd)) {
+            throw new CommandException("The person is already in the club");
+        }
+
+        club.addMembership(toAdd);
+        person.addMembership(toAdd);
+        // model keep track of the generic membership without role. may change this later
+        model.addMembership(toAdd);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }
 }

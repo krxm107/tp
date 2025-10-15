@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.ClubBuilder;
 
@@ -166,13 +167,28 @@ public final class AddClubCommandTest {
         }
 
         @Override
+        public void addMembership(Membership membership) {
+
+        }
+
+        @Override
         public void deleteClub(Club target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public void deleteMembership(Membership target) {
+
+        }
+
+        @Override
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasMembership(Membership membership) {
+            return false;
         }
 
         @Override
@@ -183,6 +199,16 @@ public final class AddClubCommandTest {
         @Override
         public void updateFilteredClubList(Predicate<Club> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Membership> getFilteredMembershipList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredMembershipList(Predicate<Membership> predicate) {
+
         }
     }
 
