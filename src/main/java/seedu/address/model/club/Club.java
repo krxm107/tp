@@ -82,6 +82,9 @@ public class Club {
                 && otherClub.getName().equals(getName());
     }
 
+    public boolean addMembership(Membership membership) {
+        return memberships.add(membership);
+    }
     /**
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -95,7 +98,6 @@ public class Club {
         if (added) {
             person.addMembership(newMembership);
         }
-
         return added;
     }
 
