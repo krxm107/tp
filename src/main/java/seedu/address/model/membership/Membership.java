@@ -17,6 +17,9 @@ public class Membership {
     private final LocalDate joinDate;
     private String role;
 
+    /**
+     * Every field must be present and not null.
+     */
     public Membership(Person person, Club club, LocalDate joinDate, String role) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);
@@ -27,6 +30,9 @@ public class Membership {
         this.role = role;
     }
 
+    /**
+     * Constructor that sets joinDate to current date and role to "member" by default.
+     */
     public Membership(Person person, Club club) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);

@@ -142,6 +142,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// membership-level operation
 
+    /**
+     * Returns true if a membership with the same identity as {@code membership} exists in the address book.
+     */
     public boolean hasMembership(Membership membership) {
         requireNonNull(membership);
         return memberships.contains(membership);

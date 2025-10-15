@@ -1,20 +1,28 @@
 package seedu.address.model.membership;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.model.field.Email;
-import seedu.address.model.field.Name;
-import seedu.address.model.membership.Membership;
-import seedu.address.model.membership.exceptions.DuplicateMembershipException;
-import seedu.address.model.membership.exceptions.MembershipNotFoundException;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Iterator;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.membership.exceptions.DuplicateMembershipException;
+import seedu.address.model.membership.exceptions.MembershipNotFoundException;
+
+/**
+ * A list of memberships that enforces uniqueness between its elements and does not allow nulls.
+ * A membership is considered unique by comparing using {@code Membership#equals(Object)}.
+ * As such, adding and updating of memberships uses Membership#equals(Object) for equality so as to ensure that
+ * the membership being added or updated is unique in terms of identity in the UniqueMembershipList.
+ * However, the removal of a membership also uses Membership#equals(Object) so as to ensure that the
+ * membership with exactly the same fields will be removed.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Membership#equals(Object)
+ */
 public class UniqueMembershipList implements Iterable<Membership> {
     private final ObservableList<Membership> internalList = FXCollections.observableArrayList();
     private final ObservableList<Membership> internalUnmodifiableList =
@@ -43,7 +51,8 @@ public class UniqueMembershipList implements Iterable<Membership> {
     /**
      * Replaces the membership {@code target} in the list with {@code editedMembership}.
      * {@code target} must exist in the list.
-     * The membership identity of {@code editedMembership} must not be the same as another existing membership in the list.
+     * The membership identity of {@code editedMembership} must not be the same as another
+     * existing membership in the list.
      */
     public void setMembership(Membership target, Membership editedMembership) {
         requireAllNonNull(target, editedMembership);

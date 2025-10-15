@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.club.Club;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
@@ -110,6 +111,11 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<Club> getClubList() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Membership> getMembershipList() {
             return null;
         }
 

@@ -8,12 +8,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.AddToCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.field.Name;
 
-import java.util.stream.Stream;
 
 /**
  * Parses input arguments and creates a new AddToCommand object
