@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEMBERSHIP;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Optional;
@@ -69,8 +70,11 @@ public class AddToCommand extends Command {
         }
 
         club.addMember(person, "member");
+        // model keep track of the generic membership without role. may change this later
         model.addMembership(toAdd);
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }
 }
