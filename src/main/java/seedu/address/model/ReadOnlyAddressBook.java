@@ -1,12 +1,13 @@
 package seedu.address.model;
 
+import java.util.Optional;
+
 import javafx.collections.ObservableList;
 import seedu.address.model.club.Club;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 
-import java.util.Optional;
 
 /**
  * Unmodifiable view of an address book
