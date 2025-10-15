@@ -65,7 +65,11 @@ public class RemoveFromCommand extends Command {
 
         // this is to keep track of the generic Membership without caring about role, etc
         Membership toDelete = new Membership(person, club);
-        // asert that toDelete must exist in model
+        // Check if membership doesn't exists
+        Membership toAdd = new Membership(person, club);
+        if (!model.hasMembership(toAdd)) {
+            throw new CommandException("The person is not in the club");
+        }
         model.deleteMembership(toDelete);
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
