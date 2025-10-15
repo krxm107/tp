@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -60,8 +61,15 @@ public class AddToCommand extends Command {
         //Todo: Update role handling
         Person person = optionalPerson.get();
         Club club = optionalClub.get();
-        club.addMember(person, "member");
 
+        // Check if membership already exists
+        Membership toAdd = new Membership(person, club);
+        if (model.hasMembership(toAdd)) {
+            throw new CommandException("The person is already in the club");
+        }
+
+        club.addMember(person, "member");
+        model.addMembership(toAdd);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }

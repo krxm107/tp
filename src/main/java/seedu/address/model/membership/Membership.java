@@ -17,9 +17,6 @@ public class Membership {
     private final LocalDate joinDate;
     private String role;
 
-    /**
-     * Every field must be present and not null.
-     */
     public Membership(Person person, Club club, LocalDate joinDate, String role) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);
@@ -28,6 +25,15 @@ public class Membership {
         this.club = club;
         this.joinDate = joinDate;
         this.role = role;
+    }
+
+    public Membership(Person person, Club club) {
+        Objects.requireNonNull(person);
+        Objects.requireNonNull(club);
+        this.person = person;
+        this.club = club;
+        this.joinDate = LocalDate.now();
+        this.role = "member";
     }
 
     public Person getPerson() {
