@@ -2,11 +2,13 @@ package seedu.address.ui;
 
 import java.util.Comparator;
 
+import javafx.collections.SetChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -57,9 +59,10 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
         person.getMemberships().stream()
-                .sorted(Comparator.comparing(membership -> membership.getClub().getName().toString()))
-                .forEach(membership
-                        -> memberships.getChildren().add(new Label(membership.getClub().getName().toString())));
+                .sorted(Comparator.comparing(Membership::getClubName))
+                .forEach(membership -> memberships.getChildren().add(new Label(membership.getClubName())));
+
     }
 }

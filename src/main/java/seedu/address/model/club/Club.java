@@ -99,6 +99,9 @@ public class Club {
         return added;
     }
 
+    public boolean addMembership(Membership membership) {
+        return memberships.add(membership);
+    }
     /**
      * Adds a member to the club with a specified join date.
      * This is useful for adding historical members.

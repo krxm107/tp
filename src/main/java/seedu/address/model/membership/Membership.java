@@ -56,6 +56,14 @@ public class Membership {
         this.role = role;
     }
 
+    public String getClubName() {
+        return club.getName().toString();
+    }
+
+    public String getPersonName() {
+        return person.getName().toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

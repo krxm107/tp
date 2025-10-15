@@ -72,8 +72,6 @@ public class RemoveFromCommand extends Command {
         }
         model.deleteMembership(toDelete);
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }
 }

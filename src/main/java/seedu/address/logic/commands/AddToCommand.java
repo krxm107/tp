@@ -69,12 +69,11 @@ public class AddToCommand extends Command {
             throw new CommandException("The person is already in the club");
         }
 
-        club.addMember(person, "member");
+        club.addMembership(toAdd);
+        person.addMembership(toAdd);
         // model keep track of the generic membership without role. may change this later
         model.addMembership(toAdd);
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }
 }
