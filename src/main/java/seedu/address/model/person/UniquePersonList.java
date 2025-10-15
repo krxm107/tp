@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -150,21 +151,19 @@ public class UniquePersonList implements Iterable<Person> {
         return true;
     }
 
-    public Person getPersonByName(Name name) {
+    public Optional<Person> getPersonByName(Name name) {
         return internalList.stream()
                 .filter(person ->
                         person.getName().equals(name)
                 )
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
-    public Person getPersonByEmail(Email email) {
+    public Optional<Person> getPersonByEmail(Email email) {
         return internalList.stream()
                 .filter(person ->
                         person.getEmail().equals(email)
                 )
-                .findFirst()
-                .get();
+                .findFirst();
     }
 }

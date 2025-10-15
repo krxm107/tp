@@ -6,6 +6,8 @@ import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.person.Person;
 
+import java.util.Optional;
+
 /**
  * Unmodifiable view of an address book
  */
@@ -19,9 +21,9 @@ public interface ReadOnlyAddressBook {
 
     ObservableList<Club> getClubList();
 
-    Person getPersonByName(Name name);
+    Optional<Person> getPersonByName(Name name);
 
-    Person getPersonByEmail(Email email);
+    Optional<Person> getPersonByEmail(Email email);
 
-    Club getClubByName(Name name);
+    Optional<Club> getClubByName(Name name);
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -113,17 +114,17 @@ public class AddressBookTest {
         }
 
         @Override
-        public Person getPersonByName(Name name) {
+        public Optional<Person> getPersonByName(Name name) {
             return null;
         }
 
         @Override
-        public Person getPersonByEmail(Email email) {
+        public Optional<Person> getPersonByEmail(Email email) {
             return null;
         }
 
         @Override
-        public Club getClubByName(Name name) {
+        public Optional<Club> getClubByName(Name name) {
             return null;
         }
     }
