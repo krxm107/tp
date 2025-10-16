@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CommandList;
@@ -60,16 +59,16 @@ public class CommandBox extends UiPart<Region> {
         String command = "";
 
         switch (event.getCode()) {
-            case UP:
-                command = CommandList.getPrevCommand();
-                commandTextField.setText(command);
-                break;
-            case DOWN:
-                command = CommandList.getNextCommand();
-                commandTextField.setText(command);
-                break;
-            default:
-                break;
+        case UP:
+            command = CommandList.getPrevCommand();
+            commandTextField.setText(command);
+            break;
+        case DOWN:
+            command = CommandList.getNextCommand();
+            commandTextField.setText(command);
+            break;
+        default:
+            break;
         }
     }
 
