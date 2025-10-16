@@ -3,11 +3,17 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
+import seedu.address.model.field.Email;
+import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.UniqueMembershipList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.util.SampleDataUtil;
@@ -17,9 +23,9 @@ import seedu.address.model.util.SampleDataUtil;
  * Duplicates are not allowed (by .isSamePerson comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
-
     private final UniquePersonList persons;
     private final UniqueClubList clubs;
+    private final UniqueMembershipList memberships;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -31,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         clubs = new UniqueClubList();
+        memberships = new UniqueMembershipList();
     }
 
     public AddressBook() {
@@ -63,6 +70,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.clubs.setClubs(clubs);
     }
 
+    public void setMemberships(List<Membership> memberships) {
+        this.memberships.setMemberships(memberships);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -71,6 +81,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setPersons(newData.getPersonList());
         setClubs(newData.getClubList());
+        setMemberships(newData.getMembershipList());
 
         // resetToDummyData();
     }
@@ -79,6 +90,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void resetToDummyData() {
         setPersons(SampleDataUtil.getSampleAddressBook().getPersonList());
         setClubs(SampleDataUtil.getSampleAddressBook().getClubList());
+        setMemberships(SampleDataUtil.getSampleAddressBook().getMembershipList());
     }
 
     //// club-level operations
@@ -128,6 +140,39 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //// membership-level operation
+
+    /**
+     * Returns true if a membership with the same identity as {@code membership} exists in the address book.
+     */
+    public boolean hasMembership(Membership membership) {
+        requireNonNull(membership);
+        return memberships.contains(membership);
+    }
+
+    public void addMembership(Membership membership) {
+        memberships.add(membership);
+    }
+
+    // get person by name directly from addressbook
+    @Override
+    public Optional<Person> getPersonByName(Name target) {
+        requireNonNull(target);
+        return persons.getPersonByName(target);
+    }
+
+    @Override
+    public Optional<Person> getPersonByEmail(Email email) {
+        requireNonNull(email);
+        return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
+    }
+
+    @Override
+    public Optional<Club> getClubByName(Name target) {
+        requireNonNull(target);
+        return clubs.getClub(target);
+    }
+
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
@@ -142,6 +187,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void removeClub(Club key) {
         clubs.remove(key);
+    }
+
+    public void removeMembership(Membership key) {
+        memberships.remove(key);
     }
 
     //// util methods
@@ -164,6 +213,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Membership> getMembershipList() {
+        return memberships.asUnmodifiableObservableList();
+    }
+
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -175,11 +230,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons);
+        return persons.equals(otherAddressBook.persons)
+                && clubs.equals(otherAddressBook.clubs)
+                && memberships.equals(otherAddressBook.memberships);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return Objects.hash(persons, clubs, memberships);
     }
 }

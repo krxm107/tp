@@ -7,11 +7,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +31,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final ObservableSet<Membership> memberships;
 
     /**
      * Every field must be present and not null.
@@ -39,6 +43,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.memberships = FXCollections.observableSet(new HashSet<>());
     }
 
     public Name getName() {
@@ -63,6 +68,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public ObservableSet<Membership> getMemberships() {
+        return this.memberships;
     }
 
     /**
@@ -118,4 +127,11 @@ public class Person {
                 .toString();
     }
 
+    public void addMembership(Membership membership) {
+        this.memberships.add(membership);
+    }
+
+    public void removeMembership(Membership membership) {
+        this.memberships.remove(membership);
+    }
 }

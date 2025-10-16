@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddClubCommand;
 import seedu.address.logic.commands.AddPersonCommand;
+import seedu.address.logic.commands.AddToCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteClubCommand;
@@ -19,8 +20,10 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListClubCommand;
-import seedu.address.logic.commands.ListContactCommand;
 import seedu.address.logic.commands.ListMemberCommand;
+import seedu.address.logic.commands.ListMembershipCommand;
+import seedu.address.logic.commands.ListPersonCommand;
+import seedu.address.logic.commands.RemoveFromCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -84,11 +87,20 @@ public class AddressBookParser {
         case ListClubCommand.COMMAND_WORD:
             return new ListClubCommand();
 
-        case ListContactCommand.COMMAND_WORD:
-            return new ListContactCommand();
+        case ListPersonCommand.COMMAND_WORD:
+            return new ListPersonCommand();
 
         case ListMemberCommand.COMMAND_WORD:
             return new ListMemberCommandParser().parse(arguments);
+
+        case ListMembershipCommand.COMMAND_WORD:
+            return new ListMembershipCommandParser().parse(arguments);
+
+        case AddToCommand.COMMAND_WORD:
+            return new AddToCommandParser().parse(arguments);
+
+        case RemoveFromCommand.COMMAND_WORD:
+            return new RemoveFromCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

@@ -5,9 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
+import seedu.address.model.field.Email;
+import seedu.address.model.field.Name;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -24,7 +29,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniquePersonList implements Iterable<Person> {
 
-    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    // Use an extractor here to fire update signal to ListView when the memberships change
+    private final Callback<Person, Observable[]> extractor = person -> new Observable[] {
+            person.getMemberships() // The ObservableSet itself is an Observable.
+    };
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList(extractor);
     private final ObservableList<Person> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
@@ -146,5 +155,21 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
         return true;
+    }
+
+    public Optional<Person> getPersonByName(Name name) {
+        return internalList.stream()
+                .filter(person ->
+                        person.getName().equals(name)
+                )
+                .findFirst();
+    }
+
+    public Optional<Person> getPersonByEmail(Email email) {
+        return internalList.stream()
+                .filter(person ->
+                        person.getEmail().equals(email)
+                )
+                .findFirst();
     }
 }

@@ -4,9 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showClubAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLUB;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersonsAndClubs.getTypicalAddressBook;
+
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +19,13 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
+import seedu.address.model.person.Person;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
- * {@code DeleteCommand}.
+ * {@code ListMemberCommand}.
  */
 public class ListMemberCommandTest {
 
@@ -26,21 +33,18 @@ public class ListMemberCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        /*
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
 
-        String expectedMessage = String.format(ListMemberCommand.MESSAGE_LIST_SUCCESS,
-                Messages.format(personToDelete));
         String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updateFilteredClubList(club -> club.equals(clubMembersToList));
-        expectedModel.updateFilteredPersonList(person -> true);
+        Predicate<Person> isInClub = person -> person.getMemberships().stream().map(Membership::getClub)
+                .anyMatch(club -> club.equals(clubMembersToList));
+        expectedModel.updateFilteredPersonList(isInClub);
 
         assertCommandSuccess(listMemberCommand, model, expectedMessage, expectedModel);
-         */
-        assertTrue(true);
     }
 
     @Test
@@ -53,34 +57,29 @@ public class ListMemberCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        /*
         showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
 
-        String expectedMessage = String.format(ListMemberCommand.MESSAGE_LIST_SUCCESS,
-                Messages.format(personToDelete));
         String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updateFilteredClubList(club -> club.equals(clubMembersToList));
-        expectedModel.updateFilteredPersonList(person -> true);
-        // Let the club include no persons
-        showNoPerson(expectedModel);
+        Predicate<Person> isInClub = person -> person.getMemberships().stream().map(Membership::getClub)
+                .anyMatch(club -> club.equals(clubMembersToList));
+        expectedModel.updateFilteredPersonList(isInClub);
 
         assertCommandSuccess(listMemberCommand, model, expectedMessage, expectedModel);
-         */
-        assertTrue(true);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        // showClubAtIndex(model, INDEX_FIRST_CLUB);
+        showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         Index outOfBoundIndex = INDEX_SECOND_CLUB;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        // assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
 
         ListMemberCommand listMemberCommand = new ListMemberCommand(outOfBoundIndex);
 
@@ -105,7 +104,7 @@ public class ListMemberCommandTest {
         // null -> returns false
         assertFalse(listMemberFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different club -> returns false
         assertFalse(listMemberFirstCommand.equals(listMemberSecondCommand));
     }
 
