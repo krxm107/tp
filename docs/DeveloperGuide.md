@@ -317,13 +317,13 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 #### **Use case: Delete a person**
 
-**Scope:** The user wants to remove a person from the contact book. The `del_person` command allows deletion by the person's name.
+**Scope:** The user wants to remove a person from the contact book. The `delete_person` command allows deletion by the person's name.
 
 **MSS**
 
 1.  The user requests to list persons using the `list_persons` command to find the name of the person to be deleted.
 2.  The contact book app displays a list of all persons.
-3.  The user issues the `del_person NAME` command with the name of an existing person.
+3.  The user issues the `delete_person INDEX` command with the index of an existing person.
 4.  The contact book app deletes the person from the system and all associated clubs, displaying a confirmation message: "person deleted: <NAME>; Phone: <PHONE_NUMBER>; Email: <EMAIL>".
 
     Use case ends.
@@ -394,7 +394,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 1.  The user requests to list all clubs using the `list_clubs` command.
 2.  The contact book app displays a list of all existing clubs.
-3.  The user issues the `del_club CLUB_NAME` command with the name of a club from the list.
+3.  The user issues the `delete_club INDEX` command with the index of a club from the list.
 4.  The contact book app deletes the specified club and shows a success message: "Club deleted: <NAME>".
 
     Use case ends.
@@ -475,13 +475,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
+   1. Test case: `delete+person 1`<br>
       Expected: First person is deleted from the list. Details of the deleted person shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
+   1. Test case: `delete_person 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete_person`, `delete_person x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
