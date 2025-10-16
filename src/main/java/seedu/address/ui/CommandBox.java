@@ -10,11 +10,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import java.awt.event.ActionEvent;
-
-import static com.sun.glass.events.MouseEvent.DOWN;
-import static com.sun.glass.events.MouseEvent.UP;
-
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
@@ -64,15 +59,16 @@ public class CommandBox extends UiPart<Region> {
         String command = "";
 
         switch (event.getCode()) {
-            case UP -> {
-                command = CommandList.getPrevCommand();
-                commandTextField.setText(command);
-            }
-            case DOWN -> {
-                command = CommandList.getNextCommand();
-                commandTextField.setText(command);
-            }
-            default -> {}
+        case UP:
+            command = CommandList.getPrevCommand();
+            commandTextField.setText(command);
+            break;
+        case DOWN:
+            command = CommandList.getNextCommand();
+            commandTextField.setText(command);
+            break;
+        default:
+            break;
         }
     }
 
