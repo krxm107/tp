@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.NewListPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.search.PersonNameParser;
+import seedu.address.logic.parser.search.PersonTagParser;
 import seedu.address.model.person.Person;
 
 /**
@@ -37,11 +38,9 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
             case PersonNameParser.KEYWORD:
                 predicate = predicate.and(PersonNameParser.parse(searchParameter));
                 break;
-            /*
-            case TagParser.KEYWORD:
-                predicate = predicate.and(TagParser.parse(value));
+            case PersonTagParser.KEYWORD:
+                predicate = predicate.and(PersonTagParser.parse(searchParameter));
                 break;
-            */
             default:
                 throw new ParseException("Unknown search keyword");
             }
