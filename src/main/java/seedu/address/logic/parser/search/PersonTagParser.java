@@ -3,12 +3,12 @@ package seedu.address.logic.parser.search;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
-
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments for a search by person name instruction
