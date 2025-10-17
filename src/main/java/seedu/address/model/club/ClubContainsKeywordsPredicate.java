@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.model.club;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -7,19 +7,19 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Tag}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Club}'s {@code Name} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Tag> {
+public class ClubContainsKeywordsPredicate implements Predicate<Club> {
     private final List<String> keywords;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
+    public ClubContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
-    public boolean test(Tag tag) {
+    public boolean test(Club club) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(club.getName().fullName, keyword));
     }
 
     @Override
@@ -29,11 +29,11 @@ public class TagContainsKeywordsPredicate implements Predicate<Tag> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TagContainsKeywordsPredicate)) {
+        if (!(other instanceof ClubContainsKeywordsPredicate)) {
             return false;
         }
 
-        TagContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (TagContainsKeywordsPredicate) other;
+        ClubContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (ClubContainsKeywordsPredicate) other;
         return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 
