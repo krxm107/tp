@@ -7,32 +7,32 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
+import seedu.address.model.club.Club;
 
 /**
- * Finds and lists all persons in address book matching any number of search instructions.
+ * Finds and lists all clubs in address book matching any number of search instructions.
  */
-public class NewListPersonCommand extends Command {
+public class NewListClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "listp";
+    public static final String COMMAND_WORD = "listc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clubs whose match any of "
             + "the specified search instructions and displays them as a list with index numbers.\n"
             + "Parameters: \\SEARCH_KEYWORD1 [SEARCH_PARAMETERS1] \\SEARCH_KEYWORD2 [SEARCH_PARAMETERS2]...\n"
             + "Example: " + COMMAND_WORD + " \\n alice bob charlie";
 
-    private final Predicate<Person> predicate;
+    private final Predicate<Club> predicate;
 
-    public NewListPersonCommand(Predicate<Person> predicate) {
+    public NewListClubCommand(Predicate<Club> predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredClubList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_CLUBS_LISTED_OVERVIEW, model.getFilteredClubList().size()));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class NewListPersonCommand extends Command {
             return false;
         }
 
-        NewListPersonCommand otherListCommand = (NewListPersonCommand) other;
+        NewListClubCommand otherListCommand = (NewListClubCommand) other;
         return predicate.equals(otherListCommand.predicate);
     }
 
