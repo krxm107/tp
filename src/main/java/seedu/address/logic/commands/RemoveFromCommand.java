@@ -21,14 +21,15 @@ public class RemoveFromCommand extends Command {
     public static final String COMMAND_WORD = "remove_from";
     public static final String MESSAGE_SUCCESS = "%1$s removed from %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a person from a club. \n" //I think a newline would look nice here
-            //Todo: reformat Message_usage of other commands as well
+            + ": Removes a person from a club\n"
+            + "Person identified by the index number used in the displayed person list.\n"
+            + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
-            + PREFIX_MEMBER + "PERSON NAME "
-            + PREFIX_CLUB + "CLUB NAME\n"
+            + PREFIX_MEMBER + "INDEX (must be a positive integer)\n"
+            + PREFIX_CLUB + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_MEMBER + "John Doe "
-            + PREFIX_CLUB + "Tennis Club";
+            + PREFIX_MEMBER + "1 "
+            + PREFIX_CLUB + "3";
 
     private final Index personIndex;
     private final Index clubIndex;
