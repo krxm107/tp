@@ -31,7 +31,7 @@ public class AddToCommand extends Command {
             + PREFIX_NAME + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 "
-            + PREFIX_NAME+ "3";
+            + PREFIX_NAME + "3";
     private final Index personIndex;
     private final Index clubIndex;
 
