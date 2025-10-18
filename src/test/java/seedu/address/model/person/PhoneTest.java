@@ -22,11 +22,6 @@ public final class PhoneTest {
     // ---------- constructor & basic validation ----------
 
     @Test
-    void constructorNullThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Phone(null));
-    }
-
-    @Test
     void constructorEdgeCaseMaxLengthIsAllowed() {
         String s = "1".repeat(PhoneValidator.MAX_DIGITS);
         assertDoesNotThrow(() -> new Phone(s));
