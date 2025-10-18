@@ -1,23 +1,24 @@
-package seedu.address.logic.parser.search;
+package seedu.address.logic.parser;
 
 import java.util.function.Predicate;
 
-import seedu.address.logic.commands.NewListClubCommand;
-import seedu.address.logic.parser.Parser;
+import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.search.ClubNameParser;
+import seedu.address.logic.parser.search.ClubTagParser;
 import seedu.address.model.club.Club;
 
 /**
- * Parses input arguments and creates a new NewListClubCommand object
+ * Parses input arguments and creates a new FindClubCommand object
  */
-public class NewListClubParser implements Parser<NewListClubCommand> {
+public class FindClubCommandParser implements Parser<FindClubCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the NewListClubCommand
-     * and returns a NewListClubCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindClubCommand
+     * and returns a FindClubCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public NewListClubCommand parse(String args) throws ParseException {
+    public FindClubCommand parse(String args) throws ParseException {
         Predicate<Club> predicate = club -> true;
         String[] searchModifiers = args.trim().split("\\\\");
 
@@ -45,7 +46,7 @@ public class NewListClubParser implements Parser<NewListClubCommand> {
             }
         }
 
-        return new NewListClubCommand(predicate);
+        return new FindClubCommand(predicate);
     }
 
 }

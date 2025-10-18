@@ -12,18 +12,20 @@ import seedu.address.model.person.Person;
 /**
  * Finds and lists all persons in address book matching any number of search instructions.
  */
-public class NewListPersonCommand extends Command {
+public class FindPersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "listp";
+    public static final String COMMAND_WORD = "findp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match each of "
             + "the specified search instructions and displays them as a list with index numbers.\n"
-            + "Parameters: \\SEARCH_KEYWORD1 [SEARCH_PARAMETERS1] \\SEARCH_KEYWORD2 [SEARCH_PARAMETERS2]...\n"
-            + "Example: " + COMMAND_WORD + " \\n alice bob charlie";
+            + "Parameters: /SEARCH_KEYWORD1 [SEARCH_PARAMETERS1] /SEARCH_KEYWORD2 [SEARCH_PARAMETERS2]...\n"
+            + "Search Keywords: /n - search by name /t - search by tag (name)\n"
+            + "Example: " + COMMAND_WORD + " /n alice bob /t friend"
+            + " - searches for all persons tagged as 'friend' with names containing 'alice' or 'bob'";
 
     private final Predicate<Person> predicate;
 
-    public NewListPersonCommand(Predicate<Person> predicate) {
+    public FindPersonCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
     }
 
@@ -46,7 +48,7 @@ public class NewListPersonCommand extends Command {
             return false;
         }
 
-        NewListPersonCommand otherListCommand = (NewListPersonCommand) other;
+        FindPersonCommand otherListCommand = (FindPersonCommand) other;
         return predicate.equals(otherListCommand.predicate);
     }
 

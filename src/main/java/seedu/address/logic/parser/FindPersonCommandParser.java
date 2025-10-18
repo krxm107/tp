@@ -2,23 +2,23 @@ package seedu.address.logic.parser;
 
 import java.util.function.Predicate;
 
-import seedu.address.logic.commands.NewListPersonCommand;
+import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.search.PersonNameParser;
 import seedu.address.logic.parser.search.PersonTagParser;
 import seedu.address.model.person.Person;
 
 /**
- * Parses input arguments and creates a new NewListPersonCommand object
+ * Parses input arguments and creates a new FindPersonCommand object
  */
-public class NewListPersonParser implements Parser<NewListPersonCommand> {
+public class FindPersonCommandParser implements Parser<FindPersonCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the NewListPersonCommand
-     * and returns a NewListPersonCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the FindPersonCommand
+     * and returns a FindPersonCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public NewListPersonCommand parse(String args) throws ParseException {
+    public FindPersonCommand parse(String args) throws ParseException {
         Predicate<Person> predicate = person -> true;
         String[] searchModifiers = args.trim().split("\\\\");
 
@@ -46,7 +46,7 @@ public class NewListPersonParser implements Parser<NewListPersonCommand> {
             }
         }
 
-        return new NewListPersonCommand(predicate);
+        return new FindPersonCommand(predicate);
     }
 
 }
