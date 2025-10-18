@@ -33,8 +33,8 @@ public class ClubContainsKeywordsPredicate implements Predicate<Club> {
             return false;
         }
 
-        ClubContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (ClubContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
+        ClubContainsKeywordsPredicate otherClubContainsKeywordsPredicate = (ClubContainsKeywordsPredicate) other;
+        return keywords.equals(otherClubContainsKeywordsPredicate.keywords);
     }
 
     @Override

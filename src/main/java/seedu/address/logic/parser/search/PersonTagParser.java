@@ -18,7 +18,7 @@ public class PersonTagParser {
     public static final String KEYWORD = "t";
 
     /**
-     * Parses the given {@code String} of arguments in the context of a search by person name
+     * Parses the given {@code String} of arguments in the context of a search by person tag
      * instruction and returns a corresponding {@code Predicate<Person>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -30,10 +30,8 @@ public class PersonTagParser {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        Predicate<Person> parsePersonTag = person -> {
-            return person.getTags().stream()
-                    .anyMatch(new TagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        };
+        Predicate<Person> parsePersonTag = person -> person.getTags().stream()
+                .anyMatch(new TagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         return parsePersonTag;
     }
 

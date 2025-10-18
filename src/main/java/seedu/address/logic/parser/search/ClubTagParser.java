@@ -11,15 +11,15 @@ import seedu.address.model.club.Club;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
- * Parses input arguments for a search by person name instruction
+ * Parses input arguments for a search by club tag instruction
  */
 public class ClubTagParser {
 
     public static final String KEYWORD = "t";
 
     /**
-     * Parses the given {@code String} of arguments in the context of a search by person name
-     * instruction and returns a corresponding {@code Predicate<Person>} object.
+     * Parses the given {@code String} of arguments in the context of a search by club tag
+     * instruction and returns a corresponding {@code Predicate<Club>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
     public static Predicate<Club> parse(String args) throws ParseException {
@@ -30,10 +30,8 @@ public class ClubTagParser {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        Predicate<Club> parseClubTag = club -> {
-            return club.getTags().stream()
-                    .anyMatch(new TagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        };
+        Predicate<Club> parseClubTag = club -> club.getTags().stream()
+                .anyMatch(new TagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         return parseClubTag;
     }
 

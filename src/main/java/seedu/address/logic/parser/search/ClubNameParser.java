@@ -11,15 +11,15 @@ import seedu.address.model.club.Club;
 import seedu.address.model.club.ClubContainsKeywordsPredicate;
 
 /**
- * Parses input arguments for a search by person name instruction
+ * Parses input arguments for a search by club name instruction
  */
 public class ClubNameParser {
 
     public static final String KEYWORD = "n";
 
     /**
-     * Parses the given {@code String} of arguments in the context of a search by person name
-     * instruction and returns a corresponding {@code Predicate<Person>} object.
+     * Parses the given {@code String} of arguments in the context of a search by club name
+     * instruction and returns a corresponding {@code Predicate<Club>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
     public static Predicate<Club> parse(String args) throws ParseException {

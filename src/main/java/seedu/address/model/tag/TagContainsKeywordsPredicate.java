@@ -33,8 +33,8 @@ public class TagContainsKeywordsPredicate implements Predicate<Tag> {
             return false;
         }
 
-        TagContainsKeywordsPredicate otherNameContainsKeywordsPredicate = (TagContainsKeywordsPredicate) other;
-        return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
+        TagContainsKeywordsPredicate otherTagContainsKeywordsPredicate = (TagContainsKeywordsPredicate) other;
+        return keywords.equals(otherTagContainsKeywordsPredicate.keywords);
     }
 
     @Override
