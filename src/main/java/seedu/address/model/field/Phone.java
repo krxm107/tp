@@ -3,6 +3,8 @@ package seedu.address.model.field;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import seedu.address.model.field.validator.PhoneValidator;
+
 /**
  * Represents a Person's phone number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
@@ -11,8 +13,9 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String VALIDATION_REGEX = "\\d{3,}";
+            "Phone numbers should only contain numbers or spaces, "
+                    + "and they must contain at least 6 and at most 15 digits.";
+
     public final String value;
 
     /**
@@ -23,21 +26,32 @@ public class Phone {
     public Phone(String phone) {
         requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = phone;
+        value = PhoneValidator.normalize(phone);
     }
 
     /**
      * Returns true if a given string is a valid phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return PhoneValidator.validate(test).isValid();
     }
 
+    /**
+     * @return
+     *     The normalized phone number for display to the user.
+     */
     @Override
     public String toString() {
         return value;
     }
 
+    /**
+     * @param other
+     *     the reference object with which to compare.
+     *
+     * @return
+     *     A boolean indicating whether the phone numbers are equal.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -53,6 +67,10 @@ public class Phone {
         return value.equals(otherPhone.value);
     }
 
+    /**
+     * @return
+     *     The normalized phone number's hashCode.
+     */
     @Override
     public int hashCode() {
         return value.hashCode();
