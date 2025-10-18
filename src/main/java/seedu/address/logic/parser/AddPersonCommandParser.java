@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -33,37 +34,43 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
      * and returns an AddPersonCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public AddPersonCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        requireNonNull(args);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        // include PREFIX_PHONE in tokenize so it can be parsed if present
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
+
+        // ✅ Only these are required: NAME, EMAIL, ADDRESS
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        // duplicates check is fine even if phone is absent
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-
-        Phone phone = null;
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        } else {
-            phone = new Phone("");
-        }
-
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+
+        // ✅ Phone is optional: parse only if present, otherwise create empty Phone
+        Phone phone;
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()); // may throw ParseException
+        } else {
+            phone = new Phone(""); // empty = “no phone”
+        }
+
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(name, phone, email, address, tagList);
-
         return new AddPersonCommand(person);
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
+     * Returns true if all the given prefixes are present in the given ArgumentMultimap.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());

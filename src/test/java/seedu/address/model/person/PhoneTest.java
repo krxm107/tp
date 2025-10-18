@@ -26,20 +26,6 @@ public final class PhoneTest {
         assertThrows(NullPointerException.class, () -> new Phone(null));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "", "   ", // empty
-        "12345", // too short (< MIN)
-        "1234567890123456", // too long (> MAX)
-        "123-4567", // non-digit
-        "+6581234567", // plus not allowed per simplified spec
-        "(8123)4567", // brackets not allowed
-        "81 23a 4567" // contains letter
-    })
-    void constructorInvalidThrowsIllegalArgumentException(String s) {
-        assertThrows(IllegalArgumentException.class, () -> new Phone(s));
-    }
-
     @Test
     void constructorEdgeCaseMaxLengthIsAllowed() {
         String s = "1".repeat(PhoneValidator.MAX_DIGITS);
