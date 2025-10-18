@@ -20,7 +20,7 @@ public class FindClubCommandParser implements Parser<FindClubCommand> {
      */
     public FindClubCommand parse(String args) throws ParseException {
         Predicate<Club> predicate = club -> true;
-        String[] searchModifiers = args.trim().split("\\\\");
+        String[] searchModifiers = args.trim().split("/");
 
         for (String segment : searchModifiers) {
             if (segment.isEmpty()) {

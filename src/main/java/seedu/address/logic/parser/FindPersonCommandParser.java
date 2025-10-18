@@ -20,7 +20,7 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
      */
     public FindPersonCommand parse(String args) throws ParseException {
         Predicate<Person> predicate = person -> true;
-        String[] searchModifiers = args.trim().split("\\\\");
+        String[] searchModifiers = args.trim().split("/");
 
         for (String segment : searchModifiers) {
             if (segment.isEmpty()) {
