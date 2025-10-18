@@ -1,49 +1,125 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
+import java.util.List;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
-import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
-
 
 /**
  * Adds a Person to a Club
  */
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
-    public static final String MESSAGE_ARGUMENTS = "Person: %1$s";
-    public static final String MESSAGE_SUCCESS = "%1$s added to %2$s";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds a person to a specified club. "
-            + "Parameters: ";
-
-    private final Name personName;
-    private final Name clubName;
+    public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
 
     //Todo: Update later
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds multiple persons to multiple clubs\n"
+            + "Person identified by the index number used in the displayed person list.\n"
+            + "Club identified by the index number used in the displayed person list.\n"
+            + "Parameters: "
+            + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
+            + PREFIX_CLUB + "Club INDEXes (must be a positive integers separated by space)\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_MEMBER + "1 2 4 "
+            + PREFIX_CLUB + "1 3";
+    public static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
+    private final Index[] personIndexes;
+    private final Index[] clubIndexes;
+
     /**
-     * @param personName of the person in the filtered person list to edit
-     * @param clubName of the club in the filtered club list to edit
+     * @param personIndexes of the person in the filtered person list to edit
+     * @param clubIndexes of the club in the filtered club list to edit
      */
-    public AddToCommand(Name personName, Name clubName) {
-        requireAllNonNull(personName);
-        this.personName = personName;
-        this.clubName = clubName;
+    public AddToCommand(Index[] personIndexes, Index[] clubIndexes) {
+        requireAllNonNull(personIndexes, clubIndexes);
+        this.personIndexes = personIndexes;
+        this.clubIndexes = clubIndexes;
+    }
+
+    private void concatInvalidIndexMessage(StringBuilder builder, boolean isPerson, Index index) {
+        if (isPerson) {
+            builder
+                    .append(String.format(
+                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
+                    .append("\n");
+        } else {
+            builder
+                    .append(String.format(
+                            Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
+                    .append("\n");
+        }
+    }
+
+    private void concatDuplicateMembershipMessage(StringBuilder builder, String personName, String clubName) {
+        builder.append(String.format(MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName)).append("\n");
+    }
+
+    private void concatAddedToClubMessage(StringBuilder builder, String personNames, String clubName) {
+        builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        Person person = model.getAddressBook().getPersonByName(personName);
-        Club club = model.getAddressBook().getClubByName(clubName);
+        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Club> lastShownClubList = model.getFilteredClubList();
+        StringBuilder outputMessageBuilder = new StringBuilder();
 
-        //Todo: Update role handling
-        club.addMember(person, "member");
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
+        for (Index clubIndex : clubIndexes) {
+            StringBuilder personNamesBuilder = new StringBuilder();
+            if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+                concatInvalidIndexMessage(outputMessageBuilder, false, clubIndex);
+                continue; // Skip to the next club index
+            }
+            Club club = lastShownClubList.get(clubIndex.getZeroBased());
+            String clubName = club.getName().toString();
+            for (Index personIndex : personIndexes) {
+                if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
+                    // Add invalid person index message once only per person index
+                    if (clubIndex == clubIndexes[0]) {
+                        concatInvalidIndexMessage(outputMessageBuilder, true, personIndex);
+                    }
+                    continue; // Skip to the next club index
+                }
+                Person person = lastShownPersonList.get(personIndex.getZeroBased());
+                String personName = person.getName().toString();
+
+                // Check if membership already exists
+                Membership toAdd = new Membership(person, club);
+                if (model.hasMembership(toAdd)) {
+                    concatDuplicateMembershipMessage(outputMessageBuilder, personName, clubName);
+                    continue; //Skip adding this membership and move to the next person
+                }
+                //Only add the person who are not already in the club to personNamesBuilder
+                // for MESSAGE_ADDED_TO_CLUB message
+                personNamesBuilder.append(personName).append(", ");
+
+                club.addMembership(toAdd);
+                person.addMembership(toAdd);
+                // model keep track of the generic membership without role. may change this later
+                model.addMembership(toAdd);
+            }
+            // Also handle the case where no new memberships were added
+            if (personNamesBuilder.length() == 0) {
+                continue; // No new members were added to this club
+            }
+            // Remove the trailing comma and space
+            assert personNamesBuilder.length() >= 2;
+            personNamesBuilder.setLength(personNamesBuilder.length() - 2);
+            String personNames = personNamesBuilder.toString();
+            concatAddedToClubMessage(outputMessageBuilder, personNames, clubName);
+        }
+        String outputMessage = outputMessageBuilder.toString();
+        return new CommandResult(outputMessage);
     }
 }
 

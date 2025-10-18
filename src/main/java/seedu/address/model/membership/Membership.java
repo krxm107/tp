@@ -30,6 +30,18 @@ public class Membership {
         this.role = role;
     }
 
+    /**
+     * Constructor that sets joinDate to current date and role to "member" by default.
+     */
+    public Membership(Person person, Club club) {
+        Objects.requireNonNull(person);
+        Objects.requireNonNull(club);
+        this.person = person;
+        this.club = club;
+        this.joinDate = LocalDate.now();
+        this.role = "member";
+    }
+
     public Person getPerson() {
         return person;
     }
@@ -48,6 +60,14 @@ public class Membership {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getClubName() {
+        return club.getName().toString();
+    }
+
+    public String getPersonName() {
+        return person.getName().toString();
     }
 
     @Override
