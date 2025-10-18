@@ -123,4 +123,15 @@ public final class PhoneTest {
         String s = "1".repeat(PhoneValidator.MAX_DIGITS + 1);
         assertFalse(Phone.isValidPhone(s));
     }
+
+    /**
+     * Unit tests for {@link Phone}.
+     * Includes validation and optional (empty) phone behavior.
+     */
+    @Test
+    void emptyPhoneAllowedAndDisplaysEmpty() {
+        Phone p = new Phone("");
+        assertEquals("", p.toString());
+        assertFalse(p.isPresent());
+    }
 }
