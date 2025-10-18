@@ -33,9 +33,8 @@ public class Phone {
      *              </ul>
      */
     public Phone(String phone) {
-        requireNonNull(phone);
-        if (phone.trim().isEmpty()) {
-            this.value = ""; // Optional phone field
+        if (phone == null || phone.trim().isEmpty()) {
+            this.value = "";
             return;
         }
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
