@@ -34,12 +34,22 @@ public class Person {
     private final ObservableSet<Membership> memberships;
 
     /**
-     * Every field must be present and not null.
+     * Constructs a {@code Person}.
+     *
+     * @param name    The person's name (required).
+     * @param phone   The person's phone number (optional; may be empty).
+     * @param email   The person's email address (required).
+     * @param address The person's address (required).
+     * @param tags    A set of tags (non-null; may be empty).
+     *
+     *     <p>
+     *     If {@code phone} is null, a blank {@code Phone} instance is created.
+     *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+        requireAllNonNull(name, email, address, tags);
         this.name = name;
-        this.phone = phone;
+        this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
