@@ -19,7 +19,7 @@ import seedu.address.model.person.Person;
  */
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
-    public static final String MESSAGE_SUCCESS = "%1$s added to %2$s";
+    public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
 
     //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -50,17 +50,15 @@ public class AddToCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         List<Person> lastShownPersonList = model.getFilteredPersonList();
         List<Club> lastShownClubList = model.getFilteredClubList();
-        StringBuilder personNamesBuilder = new StringBuilder();
-        StringBuilder clubNamesBuilder = new StringBuilder();
         StringBuilder outputMessageBuilder = new StringBuilder();
 
         for (Index clubIndex : clubIndexes) {
+            StringBuilder personNamesBuilder = new StringBuilder();
             if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
             }
             Club club = lastShownClubList.get(clubIndex.getZeroBased());
             String clubName = club.getName().toString();
-            clubNamesBuilder.append(clubName).append(", ");
             for (Index personIndex : personIndexes) {
                 if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -76,7 +74,6 @@ public class AddToCommand extends Command {
                             .append("\n");
                     continue;
                 }
-                //Add the person name here only once even if multiple clubs are added
                 //Only add the person who are not already in the club
                 if (clubIndex == clubIndexes[0]) {
                     personNamesBuilder.append(personName).append(", ");
@@ -87,17 +84,17 @@ public class AddToCommand extends Command {
                 // model keep track of the generic membership without role. may change this later
                 model.addMembership(toAdd);
             }
+            // Also handle the case where no new memberships were added
+            if (personNamesBuilder.length() == 0) {
+                continue;
+            }
+            // Remove the trailing comma and space
+            assert personNamesBuilder.length() >= 2;
+            personNamesBuilder.setLength(personNamesBuilder.length() - 2);
+            outputMessageBuilder
+                    .append(String.format(MESSAGE_ADDED_TO_CLUB, personNamesBuilder.toString(), clubName))
+                    .append("\n");
         }
-
-        // Remove trailing comma and space
-        // Also handle the case where no new memberships were added
-        if (personNamesBuilder.length() == 0) {
-            String outputMessage = outputMessageBuilder.toString();
-            return new CommandResult(outputMessage);
-        }
-        String personNames = personNamesBuilder.substring(0, personNamesBuilder.length() - 2);
-        String clubNames = clubNamesBuilder.substring(0, clubNamesBuilder.length() - 2);
-        outputMessageBuilder.append(String.format(MESSAGE_SUCCESS, personNames, clubNames));
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
     }
