@@ -55,13 +55,14 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
 
-        // ✅ Phone is optional: parse only if present, otherwise create empty Phone
-        Phone phone;
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()); // may throw ParseException
-        } else {
-            phone = new Phone(""); // empty = “no phone”
-        }
+        /**
+         * Phone is optional. If the user supplies `p/` with no value, it is treated as absent.
+         */
+        final String rawPhone = argMultimap.getValue(PREFIX_PHONE).orElse(null);
+
+        final Phone phone = (rawPhone == null || rawPhone.strip().isEmpty())
+                ? new Phone("")                     // optional / absent phone
+                : ParserUtil.parsePhone(rawPhone);  // validate only if non-empty
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

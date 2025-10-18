@@ -79,7 +79,7 @@ class JsonAdaptedPerson {
         final Name modelName = new Name(name);
 
         final Phone modelPhone;
-        if (phone == null || phone.trim().isEmpty()) {
+        if (phone == null || phone.strip().isEmpty()) {
             modelPhone = new Phone(""); // optional phone
         } else if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);

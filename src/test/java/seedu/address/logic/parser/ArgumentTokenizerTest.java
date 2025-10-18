@@ -58,8 +58,8 @@ public class ArgumentTokenizerTest {
         String argsString = "  some random string /t tag with leading and trailing spaces ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString);
 
-        // Same string expected as preamble, but leading/trailing spaces should be trimmed
-        assertPreamblePresent(argMultimap, argsString.trim());
+        // Same string expected as preamble, but leading/trailing spaces should be stripped
+        assertPreamblePresent(argMultimap, argsString.strip());
 
     }
 

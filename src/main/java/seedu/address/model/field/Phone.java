@@ -32,7 +32,7 @@ public class Phone {
      *              </ul>
      */
     public Phone(String phone) {
-        if (phone == null || phone.trim().isEmpty()) {
+        if (phone == null || phone.strip().isEmpty()) {
             this.value = "";
             return;
         }
