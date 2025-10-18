@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.List;
 
@@ -28,10 +28,10 @@ public class AddToCommand extends Command {
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
             + PREFIX_MEMBER + "INDEX (must be a positive integer)\n"
-            + PREFIX_CLUB + "INDEX (must be a positive integer)\n"
+            + PREFIX_NAME + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 "
-            + PREFIX_CLUB + "3";
+            + PREFIX_NAME+ "3";
     private final Index personIndex;
     private final Index clubIndex;
 
