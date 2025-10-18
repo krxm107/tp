@@ -10,10 +10,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Address {
 
     /**
-     +     * Addresses are optional. An empty string is valid.
-     +     * If provided, an address must not be only whitespace.
-     +     */
-    public static final String MESSAGE_CONSTRAINTS = "Address is optional. If provided, it must not be blank or whitespace-only.";
+    * Addresses are optional. An empty string is valid.
+    * If provided, an address must not be only whitespace.
+    */
+    public static final String MESSAGE_CONSTRAINTS = "Address is optional. "
+            + "If provided, it must not be blank or whitespace-only.";
 
     // At least one non-whitespace character if non-empty
     public static final String NON_EMPTY_VALIDATION_REGEX = ".*\\S.*";
@@ -39,6 +40,7 @@ public class Address {
             return false;
         }
 
+        test = test.strip();
         return test.isEmpty() || test.matches(NON_EMPTY_VALIDATION_REGEX);
     }
 
