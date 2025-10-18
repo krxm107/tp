@@ -31,8 +31,6 @@ public class AddToCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "John Doe "
             + PREFIX_CLUB + "Tennis Club";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "Person not found";
-    public static final String MESSAGE_CLUB_NOT_FOUND = "Club not found";
     private final Index personIndex;
     private final Index clubIndex;
 
@@ -60,6 +58,8 @@ public class AddToCommand extends Command {
         }
         Person person = lastShownPersonList.get(personIndex.getZeroBased());
         Club club = lastShownClubList.get(clubIndex.getZeroBased());
+        String personName = person.getName().toString();
+        String clubName = club.getName().toString();
 
         // Check if membership already exists
         Membership toAdd = new Membership(person, club);
@@ -73,8 +73,8 @@ public class AddToCommand extends Command {
         model.addMembership(toAdd);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                person.getName().toString(),
-                club.getName().toString()));
+                personName,
+                clubName));
     }
 }
 

@@ -4,12 +4,13 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
-import java.util.Optional;
+import java.util.List;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
-import seedu.address.model.field.Name;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
@@ -29,46 +30,44 @@ public class RemoveFromCommand extends Command {
             + PREFIX_MEMBER + "John Doe "
             + PREFIX_CLUB + "Tennis Club";
 
-    public static final String MESSAGE_PERSON_NOT_FOUND = "Person not found";
-    public static final String MESSAGE_CLUB_NOT_FOUND = "Club not found";
-    private final Name personName;
-    private final Name clubName;
+    private final Index personIndex;
+    private final Index clubIndex;
 
-    //Todo: Update later
     /**
-     * @param personName of the person in the filtered person list to edit
-     * @param clubName of the club in the filtered club list to edit
+     * @param personIndex of the person in the filtered person list to edit
+     * @param clubIndex of the club in the filtered club list to edit
      */
-    public RemoveFromCommand(Name personName, Name clubName) {
-        requireAllNonNull(personName);
-        this.personName = personName;
-        this.clubName = clubName;
+    public RemoveFromCommand(Index personIndex, Index clubIndex) {
+        requireAllNonNull(personIndex, clubIndex);
+        this.personIndex = personIndex;
+        this.clubIndex = clubIndex;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        Optional<Person> optionalPerson = model.getAddressBook().getPersonByName(personName);
-        Optional<Club> optionalClub = model.getAddressBook().getClubByName(clubName);
+        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Club> lastShownClubList = model.getFilteredClubList();
 
-        if (optionalPerson.isEmpty()) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
-        if (optionalClub.isEmpty()) {
-            throw new CommandException(MESSAGE_CLUB_NOT_FOUND);
+        if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person person = optionalPerson.get();
-        Club club = optionalClub.get();
-        club.removeMember(person);
+        if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        }
+        Person person = lastShownPersonList.get(personIndex.getZeroBased());
+        Club club = lastShownClubList.get(clubIndex.getZeroBased());
+        String personName = person.getName().toString();
+        String clubName = club.getName().toString();
 
-        // this is to keep track of the generic Membership without caring about role, etc
-        Membership toDelete = new Membership(person, club);
-        // Check if membership doesn't exists
-        Membership toAdd = new Membership(person, club);
-        if (!model.hasMembership(toAdd)) {
+        // Check if membership doesn't exist
+        Membership toRemove = new Membership(person, club);
+        if (!model.hasMembership(toRemove)) {
             throw new CommandException("The person is not in the club");
         }
-        model.deleteMembership(toDelete);
+        club.removeMember(person);
+        // this is to keep track of the generic Membership without caring about role, etc
+        model.deleteMembership(toRemove);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personName, clubName));
     }
