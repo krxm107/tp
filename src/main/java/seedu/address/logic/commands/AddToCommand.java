@@ -21,9 +21,6 @@ public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
     public static final String MESSAGE_SUCCESS = "%1$s added to %2$s";
 
-    private final Index personIndex;
-    private final Index clubIndex;
-
     //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a person to a club. \n" //I think a newline would look nice here
@@ -36,7 +33,13 @@ public class AddToCommand extends Command {
             + PREFIX_CLUB + "Tennis Club";
     public static final String MESSAGE_PERSON_NOT_FOUND = "Person not found";
     public static final String MESSAGE_CLUB_NOT_FOUND = "Club not found";
+    private final Index personIndex;
+    private final Index clubIndex;
 
+    /**
+     * @param personIndex of the person in the filtered person list to edit
+     * @param clubIndex of the club in the filtered club list to edit
+     */
     public AddToCommand(Index personIndex, Index clubIndex) {
         requireAllNonNull(personIndex, clubIndex);
         this.personIndex = personIndex;
@@ -69,7 +72,9 @@ public class AddToCommand extends Command {
         // model keep track of the generic membership without role. may change this later
         model.addMembership(toAdd);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, person.getName().toString(), club.getName().toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                person.getName().toString(),
+                club.getName().toString()));
     }
 }
 
