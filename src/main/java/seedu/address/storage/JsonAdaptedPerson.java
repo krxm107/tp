@@ -80,7 +80,7 @@ class JsonAdaptedPerson {
 
         final Phone modelPhone;
         if (phone == null || phone.trim().isEmpty()) {
-            modelPhone = new Phone("");                // optional phone
+            modelPhone = new Phone(""); // optional phone
         } else if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         } else {

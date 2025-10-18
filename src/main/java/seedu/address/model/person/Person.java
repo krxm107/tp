@@ -42,9 +42,9 @@ public class Person {
      * @param address The person's address (required).
      * @param tags    A set of tags (non-null; may be empty).
      *
-     * <p>
-     * If {@code phone} is null, a blank {@code Phone} instance is created.
-     * </p>
+     *     <p>
+     *     If {@code phone} is null, a blank {@code Phone} instance is created.
+     *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, email, address, tags);
