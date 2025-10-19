@@ -39,6 +39,14 @@ public class ClubCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label memberCount;
+    @FXML
+    private HBox phoneRow;
+    @FXML
+    private HBox addressRow;
+    @FXML
+    private HBox emailRow;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -49,24 +57,25 @@ public class ClubCard extends UiPart<Region> {
         this.club = club;
         id.setText(displayedIndex + ". ");
         name.setText(club.getName().fullName);
+        memberCount.setText(club.getMemberships().size() + "");
 
         if (club.getPhone().value.isEmpty()) {
-            phone.setVisible(false);
-            phone.setManaged(false);
+            phoneRow.setVisible(false);
+            phoneRow.setManaged(false);
         } else {
             phone.setText(club.getPhone().value);
         }
 
         if (club.getAddress().value.isEmpty()) {
-            address.setVisible(false);
-            address.setManaged(false);
+            addressRow.setVisible(false);
+            addressRow.setManaged(false);
         } else {
             address.setText(club.getAddress().value);
         }
 
         if (club.getEmail().value.isEmpty()) {
-            email.setVisible(false);
-            email.setManaged(false);
+            emailRow.setVisible(false);
+            emailRow.setManaged(false);
         } else {
             email.setText(club.getEmail().value);
         }

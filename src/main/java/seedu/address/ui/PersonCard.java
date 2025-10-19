@@ -43,6 +43,12 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private FlowPane memberships;
+    @FXML
+    private HBox phoneRow;
+    @FXML
+    private HBox addressRow;
+    @FXML
+    private HBox emailRow;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -54,22 +60,22 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
 
         if (person.getPhone().value.isEmpty()) {
-            phone.setVisible(false);
-            phone.setManaged(false);
+            phoneRow.setVisible(false);
+            phoneRow.setManaged(false);
         } else {
             phone.setText(person.getPhone().value);
         }
 
         if (person.getAddress().value.isEmpty()) {
-            address.setVisible(false);
-            address.setManaged(false);
+            addressRow.setVisible(false);
+            addressRow.setManaged(false);
         } else {
             address.setText(person.getAddress().value);
         }
 
         if (person.getEmail().value.isEmpty()) {
-            email.setVisible(false);
-            email.setManaged(false);
+            emailRow.setVisible(false);
+            emailRow.setManaged(false);
         } else {
             email.setText(person.getEmail().value);
         }
