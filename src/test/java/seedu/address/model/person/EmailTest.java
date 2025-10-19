@@ -31,8 +31,8 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("@"));
         assertFalse(Email.isValidEmail("a@"));
         assertFalse(Email.isValidEmail("@b"));
-        assertFalse(Email.isValidEmail("a@b"));        // no dot
-        assertFalse(Email.isValidEmail("a b@c.com"));  // spaces
+        assertFalse(Email.isValidEmail("a@b")); // no dot
+        assertFalse(Email.isValidEmail("a b@c.com")); // spaces
 
         // valid emails
         assertTrue(Email.isValidEmail(" "));
