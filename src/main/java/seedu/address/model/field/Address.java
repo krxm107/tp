@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Represents a Person's address in the address book.
  * <p>
- * This field is optional — if no address number is provided, an empty {@code Address}
+ * This field is optional — if no address is provided, an empty {@code Address}
  * object will be created. Otherwise, the value must pass validation rules.
  * </p>
  * Guarantees: immutable; valid if non-empty.
@@ -28,7 +28,7 @@ public class Address {
      * Constructs an {@code Address}.
      *
      * @param address
-     *     A valid address number, or an empty/whitespace string if optional.
+     *     A valid address, or an empty/whitespace string if optional.
      *     <ul>
      *         <li>If {@code address} is null or blank, an empty Address is created.</li>
      *         <li>Otherwise, it must satisfy {@link #isValidAddress(String)}.</li>

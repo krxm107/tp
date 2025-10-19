@@ -22,9 +22,15 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new {@link AddClubCommand} object.
+ *
  * <p>
- * The {@code p/PHONE} prefix is optional. If omitted, the created {@code Club}
+ * The {@code p/PHONE} prefix is optional. If omitted, the created {@code Person}
  * will have an empty {@code Phone} instance.
+ * </p>
+ *
+ * <p>
+ * The {@code a/ADDRESS} prefix is optional. If omitted, the created {@code Person}
+ * will have an empty {@code Address} instance.
  * </p>
  */
 public class AddClubCommandParser implements Parser<AddClubCommand> {
@@ -42,8 +48,8 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
-        // ✅ Only these are required: NAME, EMAIL, ADDRESS
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS)
+        // ✅ Only these are required: NAME, EMAIL
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
@@ -54,7 +60,13 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+
+        // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
+        final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
+
+        final Address address = (rawAddress == null || rawAddress.strip().isEmpty())
+                ? new Address("") // optional / absent address
+                : ParserUtil.parseAddress(rawAddress); // validate only if non-empty
 
         // Phone is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawPhone = argMultimap.getValue(PREFIX_PHONE).orElse(null);

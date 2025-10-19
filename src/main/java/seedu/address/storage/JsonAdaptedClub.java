@@ -53,7 +53,7 @@ class JsonAdaptedClub {
         name = source.getName().fullName;
         phone = source.getPhone() == null ? "" : source.getPhone().value;
         email = source.getEmail().value;
-        address = source.getAddress().value;
+        this.address = source.getAddress() == null ? "" : source.getAddress().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -101,7 +101,15 @@ class JsonAdaptedClub {
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-        final Address modelAddress = new Address(address);
+
+        final Address modelAddress;
+        if (address == null || address.strip().isEmpty()) {
+            modelAddress = new Address(""); // optional address
+        } else if (!Address.isValidAddress(address)) {
+            throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
+        } else {
+            modelAddress = new Address(address);
+        }
 
         final Set<Tag> modelTags = new HashSet<>(clubTags);
         return new Club(modelName, modelPhone, modelEmail, modelAddress, modelTags);
