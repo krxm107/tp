@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.stream.Stream;
 
@@ -24,8 +25,8 @@ public class RemoveFromCommandParser implements Parser<RemoveFromCommand> {
     public RemoveFromCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
-                PREFIX_MEMBER, PREFIX_CLUB);
-        if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB)
+                PREFIX_MEMBER, PREFIX_NAME);
+        if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE));
         }

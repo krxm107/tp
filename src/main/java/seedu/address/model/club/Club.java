@@ -39,7 +39,7 @@ public class Club {
      * @param name    The person's name (required).
      * @param phone   The person's phone number (optional; may be empty).
      * @param email   The person's email address (required).
-     * @param address The person's address (required).
+     * @param address The person's address (optional; may be empty)..
      * @param tags    A set of tags (non-null; may be empty).
      *
      *     <p>
@@ -51,7 +51,7 @@ public class Club {
         this.name = name;
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
-        this.address = address;
+        this.address = (address == null) ? new Address("") : address;
         this.tags.addAll(tags);
     }
 
