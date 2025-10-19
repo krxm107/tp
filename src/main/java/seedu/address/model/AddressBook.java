@@ -154,13 +154,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         memberships.add(membership);
     }
 
-    // get person by name directly from addressbook
-    @Override
-    public Optional<Person> getPersonByName(Name target) {
-        requireNonNull(target);
-        return persons.getPersonByName(target);
-    }
-
     @Override
     public Optional<Person> getPersonByEmail(Email email) {
         requireNonNull(email);

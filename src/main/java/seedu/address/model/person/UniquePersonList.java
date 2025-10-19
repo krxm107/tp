@@ -12,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
 import seedu.address.model.field.Email;
-import seedu.address.model.field.Name;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -155,14 +154,6 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
         return true;
-    }
-
-    public Optional<Person> getPersonByName(Name name) {
-        return internalList.stream()
-                .filter(person ->
-                        person.getName().equals(name)
-                )
-                .findFirst();
     }
 
     public Optional<Person> getPersonByEmail(Email email) {
