@@ -96,7 +96,10 @@
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0 0 10 0;
+    -fx-background-insets: 0 0 10 0;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
 }
 
 .list-cell:filled:even {
