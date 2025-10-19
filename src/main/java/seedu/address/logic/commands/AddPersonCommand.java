@@ -24,13 +24,10 @@ public class AddPersonCommand extends Command {
     public static final String COMMAND_WORD = "add_person";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person. "
-                        + "Required: "
-                        + PREFIX_NAME + "NAME "
-                        + PREFIX_EMAIL + "EMAIL "
-                        + "Optional: "
-                        + "[" + PREFIX_PHONE + "PHONE] "
-                        + "[" + PREFIX_ADDRESS + "ADDRESS] "
-                        + "[" + PREFIX_TAG + "TAG]...\n"
+                        + "Required: " + PREFIX_NAME + "NAME "
+                        + "Optional: [" + PREFIX_EMAIL + "EMAIL] ["
+                        + PREFIX_PHONE + "PHONE] ["
+                        + PREFIX_ADDRESS + "ADDRESS]"
                         + "Examples:\n  " + COMMAND_WORD + " "
                         + PREFIX_NAME + "John Doe "
                         + PREFIX_EMAIL + "johnd@example.com "

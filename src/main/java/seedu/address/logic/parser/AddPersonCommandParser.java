@@ -43,7 +43,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
         // Name and Email are required; Phone and Address are optional
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddPersonCommand.MESSAGE_USAGE));
@@ -53,7 +53,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE);
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).orElse(""));
 
         // Address is optional. If the user supplies `a/` with no value, it is treated as absent.
         final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse("");
