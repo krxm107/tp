@@ -104,11 +104,9 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String strippedEmail = email.strip();
-
         if (!Email.isValidEmail(strippedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
-
         return new Email(strippedEmail);
     }
 

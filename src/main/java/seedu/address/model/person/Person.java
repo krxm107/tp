@@ -47,10 +47,10 @@ public class Person {
      *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, tags);
+        requireAllNonNull(name, email, address, tags);
         this.name = name;
         this.phone = (phone == null) ? new Phone("") : phone;
-        this.email = (email == null) ? new Email("") : email;
+        this.email = email;
         this.address = (address == null) ? new Address("") : address;
         this.tags.addAll(tags);
         this.memberships = FXCollections.observableSet(new HashSet<>());

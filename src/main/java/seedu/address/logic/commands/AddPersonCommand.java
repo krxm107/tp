@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -23,10 +24,13 @@ public class AddPersonCommand extends Command {
     public static final String COMMAND_WORD = "add_person";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person. "
-                        + "Required: " + PREFIX_NAME + "NAME "
-                        + "Optional: [" + PREFIX_EMAIL + "EMAIL] ["
-                        + PREFIX_PHONE + "PHONE] ["
-                        + PREFIX_ADDRESS + "ADDRESS]"
+                        + "Required: "
+                        + PREFIX_NAME + "NAME "
+                        + PREFIX_EMAIL + "EMAIL "
+                        + "Optional: "
+                        + "[" + PREFIX_PHONE + "PHONE] "
+                        + "[" + PREFIX_ADDRESS + "ADDRESS] "
+                        + "[" + PREFIX_TAG + "TAG]...\n"
                         + "Examples:\n  " + COMMAND_WORD + " "
                         + PREFIX_NAME + "John Doe "
                         + PREFIX_EMAIL + "johnd@example.com "
