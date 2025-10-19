@@ -23,15 +23,15 @@ public class AddToCommand extends Command {
 
     //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds a person to a club\n"
+            + ": Adds multiple persons to multiple clubs\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
-            + PREFIX_MEMBER + "INDEX (must be a positive integer)\n"
-            + PREFIX_CLUB + "INDEX (must be a positive integer)\n"
+            + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
+            + PREFIX_CLUB + "Club INDEXes (must be a positive integers separated by space)\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_MEMBER + "1 "
-            + PREFIX_CLUB + "3";
+            + PREFIX_MEMBER + "1 2 4 "
+            + PREFIX_CLUB + "1 3";
     public static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
     private final Index[] personIndexes;
     private final Index[] clubIndexes;
@@ -46,6 +46,29 @@ public class AddToCommand extends Command {
         this.clubIndexes = clubIndexes;
     }
 
+    private void concatInvalidIndexMessage(
+            StringBuilder builder, boolean isPerson, boolean isFirstClubIndex, Index index) {
+        if (isPerson && isFirstClubIndex) {
+            builder
+                    .append(String.format(
+                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
+                    .append("\n");
+        } else if (!isPerson) {
+            builder
+                    .append(String.format(
+                            Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
+                    .append("\n");
+        }
+    }
+
+    private void concatDuplicateMembershipMessage(StringBuilder builder, String personName, String clubName) {
+        builder.append(String.format(MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName)).append("\n");
+    }
+
+    private void concatAddedToClubMessage(StringBuilder builder, String personNames, String clubName) {
+        builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         List<Person> lastShownPersonList = model.getFilteredPersonList();
@@ -54,14 +77,19 @@ public class AddToCommand extends Command {
 
         for (Index clubIndex : clubIndexes) {
             StringBuilder personNamesBuilder = new StringBuilder();
+            boolean isFirstClubIndex = clubIndex == clubIndexes[0];
             if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+                concatInvalidIndexMessage(outputMessageBuilder, false, isFirstClubIndex, clubIndex);
+                continue; // Skip to the next club index
             }
             Club club = lastShownClubList.get(clubIndex.getZeroBased());
             String clubName = club.getName().toString();
             for (Index personIndex : personIndexes) {
                 if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-                    throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                    // Add invalid person index message once only per person index
+                    // Achieved by only adding when processing the first club index
+                    concatInvalidIndexMessage(outputMessageBuilder, true, isFirstClubIndex, personIndex);
+                    continue; // Skip to the next club index
                 }
                 Person person = lastShownPersonList.get(personIndex.getZeroBased());
                 String personName = person.getName().toString();
@@ -69,15 +97,12 @@ public class AddToCommand extends Command {
                 // Check if membership already exists
                 Membership toAdd = new Membership(person, club);
                 if (model.hasMembership(toAdd)) {
-                    outputMessageBuilder
-                            .append(String.format(MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName))
-                            .append("\n");
-                    continue;
+                    concatDuplicateMembershipMessage(outputMessageBuilder, personName, clubName);
+                    continue; //Skip adding this membership and move to the next person
                 }
-                //Only add the person who are not already in the club
-                if (clubIndex == clubIndexes[0]) {
-                    personNamesBuilder.append(personName).append(", ");
-                }
+                //Only add the person who are not already in the club to personNamesBuilder
+                // for MESSAGE_ADDED_TO_CLUB message
+                personNamesBuilder.append(personName).append(", ");
 
                 club.addMembership(toAdd);
                 person.addMembership(toAdd);
@@ -86,14 +111,13 @@ public class AddToCommand extends Command {
             }
             // Also handle the case where no new memberships were added
             if (personNamesBuilder.length() == 0) {
-                continue;
+                continue; // No new members were added to this club
             }
             // Remove the trailing comma and space
             assert personNamesBuilder.length() >= 2;
             personNamesBuilder.setLength(personNamesBuilder.length() - 2);
-            outputMessageBuilder
-                    .append(String.format(MESSAGE_ADDED_TO_CLUB, personNamesBuilder.toString(), clubName))
-                    .append("\n");
+            String personNames = personNamesBuilder.toString();
+            concatAddedToClubMessage(outputMessageBuilder, personNames, clubName);
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
