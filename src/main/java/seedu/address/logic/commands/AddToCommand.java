@@ -46,13 +46,14 @@ public class AddToCommand extends Command {
         this.clubIndexes = clubIndexes;
     }
 
-    private void concatInvalidIndexMessage(StringBuilder builder, boolean isPerson, Index index) {
-        if (isPerson) {
+    private void concatInvalidIndexMessage(
+            StringBuilder builder, boolean isPerson, boolean isFirstClubIndex, Index index) {
+        if (isPerson && isFirstClubIndex) {
             builder
                     .append(String.format(
                             Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
                     .append("\n");
-        } else {
+        } else if (!isPerson) {
             builder
                     .append(String.format(
                             Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
@@ -76,8 +77,9 @@ public class AddToCommand extends Command {
 
         for (Index clubIndex : clubIndexes) {
             StringBuilder personNamesBuilder = new StringBuilder();
+            boolean isFirstClubIndex = clubIndex == clubIndexes[0];
             if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                concatInvalidIndexMessage(outputMessageBuilder, false, clubIndex);
+                concatInvalidIndexMessage(outputMessageBuilder, false, isFirstClubIndex, clubIndex);
                 continue; // Skip to the next club index
             }
             Club club = lastShownClubList.get(clubIndex.getZeroBased());
@@ -85,9 +87,8 @@ public class AddToCommand extends Command {
             for (Index personIndex : personIndexes) {
                 if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
                     // Add invalid person index message once only per person index
-                    if (clubIndex == clubIndexes[0]) {
-                        concatInvalidIndexMessage(outputMessageBuilder, true, personIndex);
-                    }
+                    // Achieved by only adding when processing the first club index
+                    concatInvalidIndexMessage(outputMessageBuilder, true, isFirstClubIndex, personIndex);
                     continue; // Skip to the next club index
                 }
                 Person person = lastShownPersonList.get(personIndex.getZeroBased());
