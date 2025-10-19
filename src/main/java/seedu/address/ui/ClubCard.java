@@ -49,9 +49,28 @@ public class ClubCard extends UiPart<Region> {
         this.club = club;
         id.setText(displayedIndex + ". ");
         name.setText(club.getName().fullName);
-        phone.setText(club.getPhone().value);
-        address.setText(club.getAddress().value);
-        email.setText(club.getEmail().value);
+
+        if (club.getPhone().value.isEmpty()) {
+            phone.setVisible(false);
+            phone.setManaged(false);
+        } else {
+            phone.setText(club.getPhone().value);
+        }
+
+        if (club.getAddress().value.isEmpty()) {
+            address.setVisible(false);
+            address.setManaged(false);
+        } else {
+            address.setText(club.getAddress().value);
+        }
+
+        if (club.getEmail().value.isEmpty()) {
+            email.setVisible(false);
+            email.setManaged(false);
+        } else {
+            email.setText(club.getEmail().value);
+        }
+
         club.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
