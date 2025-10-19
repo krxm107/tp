@@ -30,6 +30,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = joinDate;
+
     }
 
     /**
