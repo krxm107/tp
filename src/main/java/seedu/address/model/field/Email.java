@@ -8,15 +8,16 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
-
-    private static final String SPECIAL_CHARACTERS = "+_.-";
-
     /**
-    * Email is optional. Empty string is valid.
-    * If provided, must follow the format local@domain.
-    */
+     * Email is optional. Empty string is valid.
+     * If provided, must follow the format local@domain.
+     */
     public static final String MESSAGE_CONSTRAINTS = "Email is optional. "
             + "If provided, it must follow the format local-part@domain.";
+
+    public static final String VALIDATION_REGEX = "[^\\s]+@[^\\s]+\\.[^\\s]+";
+
+    private static final String SPECIAL_CHARACTERS = "+_.-";
 
     // alphanumeric and special characters
     private static final String ALPHANUMERIC_NO_UNDERSCORE = "[^\\W_]+"; // alphanumeric characters except underscore
@@ -26,14 +27,12 @@ public class Email {
             + "(-" + ALPHANUMERIC_NO_UNDERSCORE + ")*";
     private static final String DOMAIN_LAST_PART_REGEX = "(" + DOMAIN_PART_REGEX + "){2,}$"; // At least two chars
     private static final String DOMAIN_REGEX = "(" + DOMAIN_PART_REGEX + "\\.)*" + DOMAIN_LAST_PART_REGEX;
-    public static final String VALIDATION_REGEX = "[^\\s]+@[^\\s]+\\.[^\\s]+";
-
     public final String value;
 
     /**
-     * Constructs an {@code Email}.
+     * Constructs a {@code Email}.
      *
-     * @param email A valid email address.
+     * @param email A valid email.
      */
     public Email(String email) {
         requireNonNull(email);
