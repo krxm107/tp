@@ -36,6 +36,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code oneBasedIndexes} into an array of {@code Index} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if any of the specified indexes is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseIndexes(String oneBasedIndexes) throws ParseException {
+        requireNonNull(oneBasedIndexes);
+        String[] splitIndexes = oneBasedIndexes.trim().split("\\s+");
+        Index[] indexes = new Index[splitIndexes.length];
+        for (int i = 0; i < splitIndexes.length; i++) {
+            indexes[i] = parseIndex(splitIndexes[i]);
+        }
+        return indexes;
+    }
+    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be stripped.
      *
