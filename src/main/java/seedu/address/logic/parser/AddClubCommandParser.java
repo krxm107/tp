@@ -42,11 +42,10 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
-        // Name is required; Email, Phone and Address are optional
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
+        // ✅ Only these are required: NAME, EMAIL, ADDRESS
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    AddClubCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
 
         // duplicates check is fine even if phone is absent
@@ -54,13 +53,8 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).orElse(""));
-
-        // Address is optional. If the user supplies `a/` with no value, it is treated as absent.
-        final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse("");
-        final Address address = (rawAddress.strip().isEmpty())
-                ? new Address("") // optional / absent address
-                : ParserUtil.parseAddress(rawAddress);
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
 
         // Phone is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawPhone = argMultimap.getValue(PREFIX_PHONE).orElse(null);
