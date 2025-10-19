@@ -16,7 +16,7 @@ import seedu.address.model.person.Person;
 /**
  * Adds a person to the address book.
  * <p>
- * Phone number is optional — the user may omit {@code p/PHONE}.
+ * Phone number and address are optional — the user may omit {@code p/PHONE} and {@code a/ADDRESS}
  * </p>
  */
 public class AddPersonCommand extends Command {
@@ -27,7 +27,7 @@ public class AddPersonCommand extends Command {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
@@ -39,8 +39,7 @@ public class AddPersonCommand extends Command {
             + PREFIX_TAG + "owesMoney\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane "
-            + PREFIX_EMAIL + "jane@abc.com "
-            + PREFIX_ADDRESS + "1 Road";
+            + PREFIX_EMAIL + "jane@abc.com ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
