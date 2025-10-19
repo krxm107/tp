@@ -24,20 +24,21 @@ public class AddClubCommand extends Command {
 
     public static final String COMMAND_WORD = "add_club";
 
-    public static final String MESSAGE_USAGE =
-            COMMAND_WORD + ": Adds a club. "
-            + "Required: "
-            + PREFIX_NAME + "CLUB_NAME "
-            + "Optional: "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a club to the address book. "
+            + "Parameters: "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_ADDRESS + "ADDRESS "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Examples:\n  " + COMMAND_WORD + " "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_PHONE + "98765432\n  "
-            + COMMAND_WORD + " "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_TAG + "friends "
+            + PREFIX_TAG + "owesMoney\n"
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane "
             + PREFIX_EMAIL + "jane@abc.com "
             + PREFIX_ADDRESS + "1 Road";

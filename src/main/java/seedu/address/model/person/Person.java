@@ -45,12 +45,16 @@ public class Person {
      *     <p>
      *     If {@code phone} is null, a blank {@code Phone} instance is created.
      *     </p>
+     *
+     *     <p>
+     *     If {@code address} is null, a blank {@code Address} instance is created.
+     *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, tags);
+        requireAllNonNull(name, email, tags);
         this.name = name;
         this.phone = (phone == null) ? new Phone("") : phone;
-        this.email = (email == null) ? new Email("") : email;
+        this.email = email;
         this.address = (address == null) ? new Address("") : address;
         this.tags.addAll(tags);
         this.memberships = FXCollections.observableSet(new HashSet<>());
