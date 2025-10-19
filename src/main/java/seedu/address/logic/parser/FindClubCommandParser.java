@@ -1,18 +1,17 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.function.Predicate;
 
-import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.search.ClubNameParser;
 import seedu.address.logic.parser.search.ClubTagParser;
 import seedu.address.model.club.Club;
-
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 
 /**
  * Parses input arguments and creates a new FindClubCommand object
