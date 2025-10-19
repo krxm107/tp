@@ -102,12 +102,20 @@
     -fx-border-radius: 8;
 }
 
-.list-cell:filled:even {
+.club-list-view .list-cell:filled:even {
     -fx-background-color: #3c3e3f;
 }
 
-.list-cell:filled:odd {
+.club-list-view .list-cell:filled:odd {
     -fx-background-color: #36393f;
+}
+
+.person-list-view .list-cell:filled:even {
+    -fx-background-color: #36393f;
+}
+
+.person-list-view .list-cell:filled:odd {
+    -fx-background-color: #3c3e3f;
 }
 
 .list-cell:filled:selected {
@@ -395,4 +403,14 @@
 
 .list-cell:even .member-badge {
     -fx-background-color: #36393f;
+}
+.membership-badge {
+    -fx-background-radius: 0 10 10 0;
+}
+.list-cell:odd .membership-badge {
+    -fx-background-color: #36393f;
+}
+
+.list-cell:even .membership-badge {
+    -fx-background-color: #3c3e3f;
 }
