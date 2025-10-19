@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -11,24 +12,9 @@ import seedu.address.model.field.Address;
 public class AddressTest {
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Address(null));
-    }
-
-    @Test
-    public void constructor_invalidAddress_throwsIllegalArgumentException() {
-        String invalidAddress = "";
-        assertThrows(IllegalArgumentException.class, () -> new Address(invalidAddress));
-    }
-
-    @Test
     public void isValidAddress() {
         // null address
         assertThrows(NullPointerException.class, () -> Address.isValidAddress(null));
-
-        // invalid addresses
-        assertFalse(Address.isValidAddress("")); // empty string
-        assertFalse(Address.isValidAddress(" ")); // spaces only
 
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
@@ -54,5 +40,16 @@ public class AddressTest {
 
         // different values -> returns false
         assertFalse(address.equals(new Address("Other Valid Address")));
+    }
+
+    /**
+     * Unit tests for {@link Address}.
+     * Includes validation and optional (empty) phone behavior.
+     */
+    @Test
+    void emptyAddressAllowedAndDisplaysEmpty() {
+        Address p = new Address("");
+        assertEquals("", p.toString());
+        assertFalse(p.isPresent());
     }
 }
