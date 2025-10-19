@@ -42,7 +42,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
-        // Name and Email are required; Phone and Address are optional
+        // Name is required; Email, Phone and Address are optional
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
