@@ -1,6 +1,7 @@
 package seedu.address.model.membership;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,20 +18,22 @@ public class Membership {
     private final Club club;
     private final LocalDate joinDate;
     private LocalDate expiryDate;
-    private List<LocalDate> renewalDates;
+    private List<LocalDate> renewalHistory;
     private MembershipStatus status;
 
     /**
      * Every field must be present and not null.
      */
-    public Membership(Person person, Club club, LocalDate joinDate) {
+    public Membership(Person person, Club club, LocalDate joinDate, int membershipDurationInMonths) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);
 
         this.person = person;
         this.club = club;
         this.joinDate = joinDate;
-
+        this.expiryDate = joinDate.plusMonths(membershipDurationInMonths);
+        this.renewalHistory = new ArrayList<>();
+        this.status = MembershipStatus.ACTIVE;
     }
 
     /**
@@ -42,6 +45,65 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
+        this.expiryDate = joinDate.plusMonths(12); // Default duration of 12 months
+        this.renewalHistory = new ArrayList<>();
+        this.status = MembershipStatus.ACTIVE;
+    }
+
+    /**
+     * Checks if the membership is currently active.
+     * An active status and a current date before the expiry date are required.
+     * @return true if the membership is active, false otherwise.
+     */
+    public boolean isActive() {
+        return this.status == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate);
+    }
+
+    /**
+     * Updates the status of the membership based on the current date.
+     * This should be called periodically (e.g., daily) by a managing process.
+     */
+    public void updateStatus() {
+        if (this.status == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {
+            this.status = MembershipStatus.EXPIRED;
+            System.out.println("Membership for " + person.getName() + " has expired.");
+        }
+    }
+
+    /**
+     * Renews the membership. The behavior depends on the current status.
+     * @param renewalDurationInMonths The number of months to extend the membership by.
+     */
+    public void renew(int renewalDurationInMonths) {
+        if (this.status == MembershipStatus.CANCELLED) {
+            System.out.println("Cannot renew a cancelled membership. Please create a new one.");
+            return;
+        }
+    }
+
+    /**
+     * Reactivates an expired membership by treating it as a new subscription.
+     * The join date is kept for historical purposes, but the new period starts from today.
+     * @param durationInMonths The duration of the new membership period.
+     */
+    public void reactivate(int durationInMonths) {
+        if (this.status != MembershipStatus.EXPIRED) {
+            System.out.println("Only expired memberships can be reactivated.");
+            return;
+        }
+        // The new period starts now
+        this.expiryDate = LocalDate.now().plusMonths(durationInMonths);
+        this.renewalHistory.add(LocalDate.now());
+        this.status = MembershipStatus.ACTIVE;
+        System.out.println("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
+    }
+
+    /**
+     * Cancels the membership. This is a final state.
+     */
+    public void cancel() {
+        this.status = MembershipStatus.CANCELLED;
+        System.out.println("Membership for " + person.getName() + " has been cancelled.");
     }
 
     public Person getPerson() {
@@ -54,6 +116,18 @@ public class Membership {
 
     public LocalDate getJoinDate() {
         return joinDate;
+    }
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public List<LocalDate> getRenewalHistory() {
+        return renewalHistory;
+    }
+
+    public MembershipStatus getStatus() {
+        return status;
     }
 
     public String getClubName() {
