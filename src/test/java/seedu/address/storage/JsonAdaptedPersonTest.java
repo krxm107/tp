@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
@@ -20,7 +19,6 @@ import seedu.address.model.field.Phone;
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 

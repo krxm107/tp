@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddPersonCommand;
-import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
