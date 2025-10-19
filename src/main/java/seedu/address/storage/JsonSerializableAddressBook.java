@@ -106,7 +106,7 @@ class JsonSerializableAddressBook {
             }
 
             // Use the model's own logic to create the membership link.
-            club.addMember(person, jsonAdaptedMembership.getRole(), jsonAdaptedMembership.getJoinDate());
+            club.addMember(person, jsonAdaptedMembership.getJoinDate());
             addressBook.addMembership(new Membership(person, club));
         }
         return addressBook;

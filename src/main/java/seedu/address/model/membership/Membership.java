@@ -1,6 +1,7 @@
 package seedu.address.model.membership;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.model.club.Club;
@@ -15,19 +16,20 @@ public class Membership {
     private final Person person;
     private final Club club;
     private final LocalDate joinDate;
-    private String role;
+    private LocalDate expiryDate;
+    private List<LocalDate> renewalDates;
+    private MembershipStatus status;
 
     /**
      * Every field must be present and not null.
      */
-    public Membership(Person person, Club club, LocalDate joinDate, String role) {
+    public Membership(Person person, Club club, LocalDate joinDate) {
         Objects.requireNonNull(person);
         Objects.requireNonNull(club);
 
         this.person = person;
         this.club = club;
         this.joinDate = joinDate;
-        this.role = role;
     }
 
     /**
@@ -39,7 +41,6 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
-        this.role = "member";
     }
 
     public Person getPerson() {
@@ -52,14 +53,6 @@ public class Membership {
 
     public LocalDate getJoinDate() {
         return joinDate;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getClubName() {

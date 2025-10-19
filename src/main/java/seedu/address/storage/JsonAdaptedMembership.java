@@ -17,17 +17,14 @@ class JsonAdaptedMembership {
     private final String personEmail;
     private final String clubName;
     private final String joinDate;
-    private final String role;
 
     @JsonCreator
     public JsonAdaptedMembership(@JsonProperty("personEmail") String personEmail,
                                  @JsonProperty("clubName") String clubName,
-                                 @JsonProperty("joinDate") String joinDate,
-                                 @JsonProperty("role") String role) {
+                                 @JsonProperty("joinDate") String joinDate) {
         this.personEmail = personEmail;
         this.clubName = clubName;
         this.joinDate = joinDate;
-        this.role = role;
     }
 
     /**
@@ -38,7 +35,6 @@ class JsonAdaptedMembership {
         personEmail = source.getPerson().getEmail().value; // Or another unique identifier
         clubName = source.getClub().getName().fullName;
         joinDate = source.getJoinDate().toString();
-        role = source.getRole();
     }
 
     public String getPersonEmail() {
@@ -51,9 +47,5 @@ class JsonAdaptedMembership {
 
     public LocalDate getJoinDate() {
         return LocalDate.parse(joinDate);
-    }
-
-    public String getRole() {
-        return role;
     }
 }

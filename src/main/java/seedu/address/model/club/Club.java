@@ -89,8 +89,8 @@ public class Club {
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public boolean addMember(Person person, String role) {
-        Membership newMembership = new Membership(person, this, LocalDate.now(), role);
+    public boolean addMember(Person person) {
+        Membership newMembership = new Membership(person, this, LocalDate.now());
 
         boolean added = this.memberships.add(newMembership);
 
@@ -106,12 +106,11 @@ public class Club {
      * This is useful for adding historical members.
      *
      * @param person   The person to be added as a member.
-     * @param role     The role of the member in the club.
      * @param joinDate The date the member joined the club.
      * @return true if the member was added successfully, false if they were already a member.
      */
-    public boolean addMember(Person person, String role, LocalDate joinDate) {
-        Membership newMembership = new Membership(person, this, joinDate, role);
+    public boolean addMember(Person person, LocalDate joinDate) {
+        Membership newMembership = new Membership(person, this, joinDate);
         boolean added = this.memberships.add(newMembership);
         if (added) {
             person.addMembership(newMembership);
