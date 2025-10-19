@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,7 +28,7 @@ public class Person {
 
     // Data fields
     private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
+    private final Set<Tag> tags;
     private final ObservableSet<Membership> memberships;
 
     /**
@@ -47,12 +45,15 @@ public class Person {
      *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, email, address, tags);
+        // Only name and email are compulsory
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(email);
+
         this.name = name;
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
-        this.address = address;
-        this.tags.addAll(tags);
+        this.address = (address == null) ? new Address("") : address;
+        this.tags = (tags == null) ? new HashSet<>() : new HashSet<>(tags);
         this.memberships = FXCollections.observableSet(new HashSet<>());
     }
 
