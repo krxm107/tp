@@ -101,12 +101,12 @@ class JsonSerializableAddressBook {
             final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail())).get();
             final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName())).get();
 
-            if (person == null || club == null) {
-                throw new IllegalValueException(MESSAGE_INVALID_MEMBERSHIP_LINK);
-            }
-
             // Use the model's own logic to create the membership link.
-            club.addMember(person, jsonAdaptedMembership.getJoinDate());
+            Membership membership = new Membership(person, club, jsonAdaptedMembership.getJoinDate(),
+                    jsonAdaptedMembership.getExpiryDate(), jsonAdaptedMembership.getRenewalHistory(),
+                    jsonAdaptedMembership.getStatus());
+            club.addMembership(membership);
+            person.addMembership(membership);
             addressBook.addMembership(new Membership(person, club));
         }
         return addressBook;

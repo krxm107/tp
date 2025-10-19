@@ -1,5 +1,7 @@
 package seedu.address.model.membership;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +24,36 @@ public class Membership {
     private MembershipStatus status;
 
     /**
-     * Every field must be present and not null.
+     * Constructor with duration specified.
      */
-    public Membership(Person person, Club club, LocalDate joinDate, int membershipDurationInMonths) {
-        Objects.requireNonNull(person);
-        Objects.requireNonNull(club);
+    public Membership(Person person, Club club, int membershipDurationInMonths) {
+        requireAllNonNull(person, club, membershipDurationInMonths);
 
         this.person = person;
         this.club = club;
-        this.joinDate = joinDate;
+        this.joinDate = LocalDate.now();
         this.expiryDate = joinDate.plusMonths(membershipDurationInMonths);
         this.renewalHistory = new ArrayList<>();
         this.status = MembershipStatus.ACTIVE;
     }
 
     /**
-     * Constructor that sets joinDate to current date and role to "member" by default.
+     * Constructor with all fields specified. Use to recreate from storage.
+     */
+    public Membership(Person person, Club club, LocalDate joinDate, LocalDate expiryDate,
+                      List<LocalDate> renewalHistory, MembershipStatus status) {
+        requireAllNonNull(person, club, joinDate, expiryDate, renewalHistory, status);
+
+        this.person = person;
+        this.club = club;
+        this.joinDate = joinDate;
+        this.expiryDate = expiryDate;
+        this.renewalHistory = renewalHistory;
+        this.status = status;
+    }
+
+    /**
+     * Constructor that sets joinDate to current date and expiryDate to 12 months later.
      */
     public Membership(Person person, Club club) {
         Objects.requireNonNull(person);
@@ -106,6 +122,7 @@ public class Membership {
         System.out.println("Membership for " + person.getName() + " has been cancelled.");
     }
 
+    // todo: implement isValidLocalDate later
     public Person getPerson() {
         return person;
     }
