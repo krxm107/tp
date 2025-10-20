@@ -17,15 +17,15 @@ import java.util.regex.Pattern;
 public final class NameValidator {
 
     // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period, slash.
-    private static final Pattern ALLOWED =
+    private static final Pattern ALLOWED =  
             Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
     private static final int MAX_LEN = 75;
 
-    public static String LENGTH_BOUND_WARNING =
-            String.format("Names should have at least %d character " +
-                    "and at most %d characters.", MIN_LEN, MAX_LEN);
+    public static final String LENGTH_BOUND_WARNING =
+            String.format("Names should have at least %d character "
+                    + "and at most %d characters.", MIN_LEN, MAX_LEN);
 
     private NameValidator() {
 
