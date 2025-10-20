@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-ClubHub is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ClubHub can get your contact management tasks done faster than traditional GUI apps.
+ClubHub allows you to manage your contacts on your desktop with keyboard commands. If you type fast, you can complete your contact management tasks faster with ClubHub than with mouse-based apps.
 
 * Table of Contents
 {:toc}
@@ -15,15 +15,41 @@ ClubHub is a **desktop app for managing contacts, optimized for use via a Comman
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal.
+
+If you're using Windows:
+
+    Press Windows key + R on your keyboard.
+    
+    A small box will pop up. Type cmd inside it.
+    
+    Press Enter. A black window will appear — that’s the command terminal. 
+
+If you're using macOS:
+
+    Click the magnifying glass 🔍 in the top-right corner (Spotlight Search).
+    
+    Type Terminal and press Enter.
+    
+    A window with text will open — that’s the command terminal.
+
+If you're using Linux:
+
+    Press Ctrl + Alt + T together.
+    
+    Or search for “Terminal” in your applications.
+    
+    A terminal window will open.
+
+`cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
@@ -36,7 +62,7 @@ ClubHub is a **desktop app for managing contacts, optimized for use via a Comman
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+5. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -75,9 +101,12 @@ Format: `help`
 
 ### Adding a person: `add_person`
 
-Adds a person to the address book.
+Adding a person to the address book helps you keep your contacts organized and easy to find.
+By entering their details — like name, email, phone, and address — you can store everything in one place.
+You only need to provide the essential information of name and email, and you can always edit or add more later.
+This ensures you'll never have to dig through scattered notes or emails again to find someone’s contact.
 
-Format: `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -89,9 +118,12 @@ Examples:
 
 ### Adding a club: `add_club`
 
-Adds a club to the address book.
+Adding a club to the address book lets you keep track of different clubs in one place. 
+By entering details like the club’s name, email, phone and address, you can easily manage and reach out to them whenever needed. 
+You can include as much or as little information as the club's name and email — and update it later if things change. 
+This makes it simple to stay connected with all your clubs without juggling multiple sources.
 
-Format: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A club can have any number of tags (including 0)
@@ -107,11 +139,11 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Editing a person : `edit_person`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -121,9 +153,26 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit_person 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+### Editing a club : `edit_club`
+
+Edits an existing club in the address book.
+
+Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+
+* Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
+* You can remove all the club’s tags by typing `t/` without
+  specifying any tags after it.
+
+Examples:
+*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
+*  `edit_club 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
+ 
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
@@ -222,7 +271,8 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete Person** | `delete_person INDEX`<br> e.g., `delete_person 3`
 **Delete Club** | `delete_club INDEX`<br> e.g., `delete_club 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_person 2 n/James Lee e/jameslee@example.com`
+**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_club 2 n/Tennis e/tennis@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
