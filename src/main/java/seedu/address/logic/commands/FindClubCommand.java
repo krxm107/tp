@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.parser.FindCommandPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
@@ -24,9 +25,9 @@ public class FindClubCommand extends Command {
             + "Example: " + COMMAND_WORD + " /n tennis basketball /t school t/NUS"
             + " - searches for all clubs tagged with 'school' and 'NUS' that contain either 'tennis' or 'basketball'";
 
-    private final Predicate<Club> predicate;
+    private final FindCommandPredicate<Club> predicate;
 
-    public FindClubCommand(Predicate<Club> predicate) {
+    public FindClubCommand(FindCommandPredicate<Club> predicate) {
         this.predicate = predicate;
     }
 
@@ -45,7 +46,7 @@ public class FindClubCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof FindClubCommand)) {
             return false;
         }
 

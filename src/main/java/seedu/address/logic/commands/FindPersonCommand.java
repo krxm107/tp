@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.parser.FindCommandPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -24,10 +25,14 @@ public class FindPersonCommand extends Command {
             + "Example: " + COMMAND_WORD + " /n alice bob /t friend /t NUS"
             + " - searches for all persons tagged as 'friend' and 'NUS' with names containing 'alice' or 'bob'";
 
-    private final Predicate<Person> predicate;
+    private final FindCommandPredicate<Person> predicate;
 
-    public FindPersonCommand(Predicate<Person> predicate) {
+    public FindPersonCommand(FindCommandPredicate<Person> predicate) {
         this.predicate = predicate;
+    }
+
+    public FindCommandPredicate<Person> getPredicate() {
+        return predicate;
     }
 
     @Override
@@ -45,7 +50,7 @@ public class FindPersonCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof FindPersonCommand)) {
             return false;
         }
 
