@@ -24,14 +24,14 @@ public class RenewMembershipCommandParser {
     public RenewMembershipCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
-        if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB)
+        if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             RenewMembershipCommand.MESSAGE_USAGE));
         }
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());
