@@ -34,10 +34,10 @@ public class FindClubCommandParser implements Parser<FindClubCommand> {
         }
 
         for (String prefix : argMultimap.getAllValues(PREFIX_NAME)) {
-            predicate = predicate.and(ClubNameParser.parse(prefix));
+            predicate = predicate.and(new ClubNameParser().parse(prefix));
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
-            predicate = predicate.and(ClubTagParser.parse(prefix));
+            predicate = predicate.and(new ClubTagParser().parse(prefix));
         }
 
         return new FindClubCommand(predicate);

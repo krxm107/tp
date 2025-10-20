@@ -13,7 +13,7 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
 /**
  * Parses input arguments for a search by club tag instruction
  */
-public class ClubTagParser {
+public class ClubTagParser implements SearchParser<Club> {
 
     public static final String KEYWORD = "t";
 
@@ -22,7 +22,7 @@ public class ClubTagParser {
      * instruction and returns a corresponding {@code Predicate<Club>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public static Predicate<Club> parse(String args) throws ParseException {
+    public Predicate<Club> parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

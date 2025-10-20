@@ -34,10 +34,10 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
         }
 
         for (String prefix : argMultimap.getAllValues(PREFIX_NAME)) {
-            predicate = predicate.and(PersonNameParser.parse(prefix));
+            predicate = predicate.and(new PersonNameParser().parse(prefix));
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
-            predicate = predicate.and(PersonTagParser.parse(prefix));
+            predicate = predicate.and(new PersonTagParser().parse(prefix));
         }
 
         return new FindPersonCommand(predicate);
