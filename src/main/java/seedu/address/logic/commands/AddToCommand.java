@@ -82,8 +82,12 @@ public class AddToCommand extends Command {
         builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
     }
 
-    private Membership createMembership(Person person, Club club) {
-        return new Membership(person, club, durationInMonths);
+    private Membership createMembership(Person person, Club club) throws CommandException {
+        try {
+            return new Membership(person, club, durationInMonths);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
+        }
     }
 
     @Override

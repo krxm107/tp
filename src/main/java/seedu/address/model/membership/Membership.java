@@ -17,6 +17,10 @@ import seedu.address.model.person.Person;
 public class Membership {
 
     public static final int DEFAULT_DURATION_IN_MONTHS = 12;
+    public static final int MINIMUM_RENEWAL_DURATION_IN_MONTHS = 1;
+    public static final int MAXIMUM_RENEWAL_DURATION_IN_MONTHS = 24;
+    public static final int MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 1;
+    public static final int MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 24;
 
     private final Person person;
     private final Club club;
@@ -30,6 +34,13 @@ public class Membership {
      */
     public Membership(Person person, Club club, int membershipDurationInMonths) {
         requireAllNonNull(person, club, membershipDurationInMonths);
+
+        if (membershipDurationInMonths < MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS
+                || membershipDurationInMonths > MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS) {
+            throw new IllegalArgumentException("Membership duration must be between "
+                    + MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS + " and " + MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS
+                    + " months.");
+        }
 
         this.person = person;
         this.club = club;
@@ -93,6 +104,13 @@ public class Membership {
      * @param renewalDurationInMonths The number of months to extend the membership by.
      */
     public void renew(int renewalDurationInMonths) {
+        if (renewalDurationInMonths < MINIMUM_RENEWAL_DURATION_IN_MONTHS
+                || renewalDurationInMonths > MAXIMUM_RENEWAL_DURATION_IN_MONTHS) {
+            throw new IllegalArgumentException("Renewal duration must be between "
+                    + MINIMUM_RENEWAL_DURATION_IN_MONTHS + " and " + MAXIMUM_RENEWAL_DURATION_IN_MONTHS
+                    + " months.");
+        }
+
         if (this.status == MembershipStatus.CANCELLED) {
             System.out.println("Cannot renew a cancelled membership. Please create a new one.");
             return;
