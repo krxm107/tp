@@ -53,7 +53,12 @@ public class RenewMembershipCommand extends Command {
         }
         Person personToRenew = lastShownPersonList.get(personIndex.getZeroBased());
         Club clubToRenew = lastShownClubList.get(clubIndex.getZeroBased());
-        model.renewMembership(personToRenew, clubToRenew, durationInMonths);
+        // Catch out of range duration
+        try {
+            model.renewMembership(personToRenew, clubToRenew, durationInMonths);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
+        }
         return new CommandResult(String.format(
                 MESSAGE_RENEWED_MEMBERSHIP,
                 personToRenew.getName(),
