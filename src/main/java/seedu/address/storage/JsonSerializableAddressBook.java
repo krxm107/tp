@@ -107,7 +107,7 @@ class JsonSerializableAddressBook {
                     jsonAdaptedMembership.getStatus());
             club.addMembership(membership);
             person.addMembership(membership);
-            addressBook.addMembership(new Membership(person, club));
+            addressBook.addMembership(membership);
         }
         return addressBook;
     }
