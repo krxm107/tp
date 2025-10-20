@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "name": "Fencing",
+      "phone": "94351253",
+      "email": "fencing@example.com",
+      "address": "123, Jurong West Ave 6, #08-111",
+      "tags": []
+    },
+    {
+      "name": "Golfing",
+      "phone": "99999999",
+      "email": "fencing@example.com",
+      "address": "95, Bt Batok Rd, #04-123",
+      "tags": []
+    }
+  ]
+}
