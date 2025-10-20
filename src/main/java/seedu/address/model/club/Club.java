@@ -92,8 +92,11 @@ public class Club {
             return true;
         }
 
-        return otherClub != null
-                && otherClub.getName().equals(getName());
+        if (otherClub == null) {
+            return false;
+        }
+
+        return otherClub.getEmail().equals(getEmail());
     }
 
     public boolean addMembership(Membership membership) {
