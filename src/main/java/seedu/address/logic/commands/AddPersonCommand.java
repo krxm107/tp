@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -71,7 +72,7 @@ public class AddPersonCommand extends Command {
         try {
             if (model.hasPerson(personToAdd)) {
                 logger.warning(() -> "AddPerson rejected (duplicate): " + personToAdd);
-                CommandException ce = new CommandException("This person already exists.");
+                CommandException ce = new CommandException(AddPersonCommand.MESSAGE_DUPLICATE_PERSON);
                 // record the exception with source class/method for trace
                 logger.throwing(cls, mtd, ce);
                 throw ce;
@@ -80,7 +81,7 @@ public class AddPersonCommand extends Command {
             model.addPerson(personToAdd);
             logger.info(() -> "Person added: " + personToAdd);
 
-            CommandResult result = new CommandResult(String.format("New person added: %s", personToAdd));
+            CommandResult result = new CommandResult(String.format("New person added: %s", Messages.format(personToAdd)));
             logger.exiting(cls, mtd, result);
             return result;
 
