@@ -40,7 +40,7 @@ public class AddToCommandParser implements Parser<AddToCommand> {
             }
             int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());
             return new AddToCommand(personIndexes, clubIndexes, durationInMonths);
-        } catch (ParseException pe) {
+        } catch (NumberFormatException | ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE), pe);
         }
