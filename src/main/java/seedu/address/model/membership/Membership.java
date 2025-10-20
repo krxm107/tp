@@ -16,6 +16,8 @@ import seedu.address.model.person.Person;
  */
 public class Membership {
 
+    public static final int DEFAULT_DURATION_IN_MONTHS = 12;
+
     private final Person person;
     private final Club club;
     private final LocalDate joinDate;
@@ -61,7 +63,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
-        this.expiryDate = joinDate.plusMonths(12); // Default duration of 12 months
+        this.expiryDate = joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS); // Default duration of 12 months
         this.renewalHistory = new ArrayList<>();
         this.status = MembershipStatus.ACTIVE;
     }

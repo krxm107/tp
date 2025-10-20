@@ -20,8 +20,6 @@ import seedu.address.model.person.Person;
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
     public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
-
-    //Todo: Update later
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds multiple persons to multiple clubs\n"
             + "Person identified by the index number used in the displayed person list.\n"
@@ -32,9 +30,12 @@ public class AddToCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3";
-    public static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
+
+    private static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
+
     private final Index[] personIndexes;
     private final Index[] clubIndexes;
+    private int durationInMonths = Membership.DEFAULT_DURATION_IN_MONTHS;
 
     /**
      * @param personIndexes of the person in the filtered person list to edit
@@ -44,6 +45,18 @@ public class AddToCommand extends Command {
         requireAllNonNull(personIndexes, clubIndexes);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
+    }
+
+    /**
+     * @param personIndexes of the person in the filtered person list to edit
+     * @param clubIndexes of the club in the filtered club list to edit
+     * @param durationInMonths duration of membership in months
+     */
+    public AddToCommand(Index[] personIndexes, Index[] clubIndexes, int durationInMonths) {
+        requireAllNonNull(personIndexes, clubIndexes, durationInMonths);
+        this.personIndexes = personIndexes;
+        this.clubIndexes = clubIndexes;
+        this.durationInMonths = durationInMonths;
     }
 
     private void concatInvalidIndexMessage(
@@ -67,6 +80,10 @@ public class AddToCommand extends Command {
 
     private void concatAddedToClubMessage(StringBuilder builder, String personNames, String clubName) {
         builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
+    }
+
+    private Membership createMembership(Person person, Club club) {
+        return new Membership(person, club, durationInMonths);
     }
 
     @Override
@@ -95,7 +112,7 @@ public class AddToCommand extends Command {
                 String personName = person.getName().toString();
 
                 // Check if membership already exists
-                Membership toAdd = new Membership(person, club);
+                Membership toAdd = createMembership(person, club);
                 if (model.hasMembership(toAdd)) {
                     concatDuplicateMembershipMessage(outputMessageBuilder, personName, clubName);
                     continue; //Skip adding this membership and move to the next person
