@@ -146,6 +146,16 @@ public class Club {
                 });
     }
 
+    /**
+     * Clears the list of members for this club
+     */
+    public void clearMembers() {
+        for (Membership m : memberships) {
+            m.getPerson().removeMembership(m);
+        }
+        memberships.clear();
+    }
+
     public Set<Membership> getMemberships() {
         return Collections.unmodifiableSet(memberships);
     }
