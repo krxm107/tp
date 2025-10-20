@@ -9,7 +9,6 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsTagsPredicate;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments for a search by person name instruction

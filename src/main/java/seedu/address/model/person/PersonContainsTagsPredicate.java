@@ -1,12 +1,10 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
-
 import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
  * Tests whether any of a {@code Person}'s {@code Tag}s matches any of the keywords given.

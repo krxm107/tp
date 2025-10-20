@@ -1,9 +1,13 @@
 package seedu.address.logic.parser.search;
 
-import seedu.address.logic.parser.exceptions.ParseException;
-
 import java.util.function.Predicate;
 
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses a specific search instruction in a find command
+ * @param <T>
+ */
 public interface SearchParser<T> {
 
     /**
