@@ -2,7 +2,10 @@
 
 package seedu.address.model.field.validator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -25,9 +28,9 @@ public final class AddressValidatorTest {
 
         @Test
         void invalid_containsDisallowedChars() {
-            assertFalse(AddressValidator.isValid("Unit @ 12"));     // @ is not allowed
+            assertFalse(AddressValidator.isValid("Unit @ 12")); // @ is not allowed
             assertFalse(AddressValidator.isValid("Street * Name")); // * is not allowed
-            assertFalse(AddressValidator.isValid("Blk 1 ~ 2"));     // ~ not allowed
+            assertFalse(AddressValidator.isValid("Blk 1 ~ 2")); // ~ not allowed
         }
 
         @Test
@@ -51,8 +54,8 @@ public final class AddressValidatorTest {
 
         @Test
         void validateOrThrow_throwsOnInvalid() {
-            assertThrows(IllegalArgumentException.class,
-                    () -> AddressValidator.validateOrThrow("Unit @ 12", false));
+            assertThrows(IllegalArgumentException.class, () ->
+                    AddressValidator.validateOrThrow("Unit @ 12", false));
         }
 
         @Test
@@ -77,7 +80,7 @@ public final class AddressValidatorTest {
         void stillRejects_badChars_orTooLong() {
             assertFalse(AddressValidator.isValid("Unit @ 12", true)); // bad char
             String over150 = "A".repeat(AddressValidator.MAX_LENGTH + 1);
-            assertFalse(AddressValidator.isValid(over150, true));     // too long
+            assertFalse(AddressValidator.isValid(over150, true)); // too long
         }
     }
 }

@@ -16,11 +16,11 @@ public final class AddressValidator {
     /**
      * Allowed characters:
      *  A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period .,
-     *  slash /, hash #, comma ,, ampersand &, parentheses (), colon :
+     *  slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;
      *
      * IMPORTANT: This is the exact pattern requested.
      */
-    public static final String ADDRESS_ALLOWED_CHARS_REGEX = "^[A-Za-z0-9\\s\\-'.#/,&():]*$";
+    public static final String ADDRESS_ALLOWED_CHARS_REGEX = "^[A-Za-z0-9\\s\\-'.#/,&():;]*$";
 
     private static final Pattern ALLOWED = Pattern.compile(ADDRESS_ALLOWED_CHARS_REGEX);
 

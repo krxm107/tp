@@ -63,9 +63,26 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
 
-        final Address address = (rawAddress == null || rawAddress.strip().isEmpty())
-                ? new Address("") // optional / absent address
-                : ParserUtil.parseAddress(rawAddress); // validate only if non-empty
+        // AddPersonCommandParser.java
+        Address address = null;
+        try {
+            address = argMultimap.getValue(PREFIX_ADDRESS)
+                .map(value -> {
+                    try {
+                        return ParserUtil.parseAddress(value); // "" accepted, invalid non-empty → ParseException
+                    } catch (ParseException e) {
+                        // bubble up as ParseException so the user sees the warning
+                        throw new RuntimeException(e);
+                    }
+                })
+                .orElse(new Address("")); // prefix absent → optional empty
+
+        } catch (RuntimeException re) {
+            if (re.getCause() instanceof ParseException) {
+                throw (ParseException) re.getCause();
+            }
+            throw re;
+        }
 
         // Phone is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawPhone = argMultimap.getValue(PREFIX_PHONE).orElse(null);

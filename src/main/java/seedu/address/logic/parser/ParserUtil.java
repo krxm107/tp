@@ -88,11 +88,17 @@ public class ParserUtil {
      */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
-        String strippedAddress = address.strip();
-        if (!Address.isValidAddress(strippedAddress)) {
+        final String trimmed = address.trim();
+
+        if (trimmed.isEmpty()) {
+            return new Address("");
+        }
+
+        if (!Address.isValidAddress(trimmed)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        return new Address(strippedAddress);
+
+        return new Address(trimmed);
     }
 
     /**
