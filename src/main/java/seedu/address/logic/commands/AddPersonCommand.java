@@ -1,14 +1,18 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -41,29 +45,58 @@ public class AddPersonCommand extends Command {
             + PREFIX_NAME + "Jane "
             + PREFIX_EMAIL + "jane@abc.com ";
 
+    private static final Logger logger = LogsCenter.getLogger(AddPersonCommand.class);
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private final Person personToAdd;
 
     /**
      * Creates an AddPersonCommand to add the specified {@code Person}
      */
     public AddPersonCommand(Person person) {
         requireNonNull(person);
-        toAdd = person;
+        personToAdd = person;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        final String cls = AddPersonCommand.class.getName();
+        final String mtd = "execute";
+        logger.entering(cls, mtd, model);
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
+        logger.fine(() -> "Validating duplicate for person: " + personToAdd);
+        try {
+            if (model.hasPerson(personToAdd)) {
+                logger.warning(() -> "AddPerson rejected (duplicate): " + personToAdd);
+                CommandException ce = new CommandException("This person already exists.");
+                // record the exception with source class/method for trace
+                logger.throwing(cls, mtd, ce);
+                throw ce;
+            }
 
-        model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+            model.addPerson(personToAdd);
+            logger.info(() -> "Person added: " + personToAdd);
+
+            CommandResult result = new CommandResult(String.format("New person added: %s", personToAdd));
+            logger.exiting(cls, mtd, result);
+            return result;
+
+        } catch (CommandException e) {
+            // Already logged via logger.throwing above; keep noise low here.
+            logger.fine(() -> "AddPerson failed with CommandException: " + e.getMessage());
+            logger.exiting(cls, mtd, e.getMessage());
+            throw e;
+
+        } catch (Exception e) {
+            // Unexpected: include stack trace and precise origin
+            logger.log(Level.SEVERE, "Unexpected error while adding person: " + personToAdd, e);
+            logger.throwing(cls, mtd, e);
+            logger.exiting(cls, mtd, "SEVERE: unexpected failure");
+            throw new CommandException("An unexpected error occurred while adding this person.");
+        }
     }
 
     @Override
@@ -78,13 +111,13 @@ public class AddPersonCommand extends Command {
         }
 
         AddPersonCommand otherAddPersonCommand = (AddPersonCommand) other;
-        return toAdd.equals(otherAddPersonCommand.toAdd);
+        return personToAdd.equals(otherAddPersonCommand.personToAdd);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("toAdd", toAdd)
+                .add("toAdd", personToAdd)
                 .toString();
     }
 }
