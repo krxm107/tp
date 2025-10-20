@@ -32,15 +32,15 @@ public class AddClubCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_NAME + "Basketball "
+            + PREFIX_EMAIL + "basketball@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_PHONE + "98765432 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney\n"
+            + PREFIX_TAG + "advanced "
+            + PREFIX_TAG + "competitive\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "Jane "
-            + PREFIX_EMAIL + "jane@abc.com ";
+            + PREFIX_NAME + "Gymnastics "
+            + PREFIX_EMAIL + "gymnastics@abc.com ";
 
     public static final String MESSAGE_SUCCESS = "New club added: %1$s";
     public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book";
