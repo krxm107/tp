@@ -4,6 +4,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
 
+import seedu.address.model.field.validator.AddressValidator;
+
 /**
  * Represents a Person's address in the address book.
  * <p>
@@ -42,7 +44,7 @@ public class Address {
 
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
 
-        this.value = address.strip();
+        this.value = AddressValidator.validateOrThrow(address, true);
     }
 
     /**
