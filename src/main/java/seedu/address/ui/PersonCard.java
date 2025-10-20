@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
@@ -42,7 +44,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private FlowPane memberships;
+    private VBox memberships;
     @FXML
     private HBox phoneRow;
     @FXML
@@ -87,7 +89,9 @@ public class PersonCard extends UiPart<Region> {
         person.getMemberships().stream()
                 .sorted(Comparator.comparing(Membership::getClubName))
                 .forEach(membership -> {
-                    Label membershipLabel = new Label(membership.getClubName());
+                    String clubName = membership.getClubName();
+                    String exp = membership.getExpiryDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    Label membershipLabel = new Label(clubName + ": until " + exp);
                     membershipLabel.getStyleClass().add("membership-label");
 
                     switch (membership.getStatus()) {
