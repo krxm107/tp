@@ -86,7 +86,25 @@ public class PersonCard extends UiPart<Region> {
 
         person.getMemberships().stream()
                 .sorted(Comparator.comparing(Membership::getClubName))
-                .forEach(membership -> memberships.getChildren().add(new Label(membership.getClubName())));
+                .forEach(membership -> {
+                    Label membershipLabel = new Label(membership.getClubName());
+                    membershipLabel.getStyleClass().add("membership-label");
 
+                    switch (membership.getStatus()) {
+                    case ACTIVE:
+                        membershipLabel.getStyleClass().add("membership-active");
+                        break;
+                    case EXPIRED:
+                        membershipLabel.getStyleClass().add("membership-expired");
+                        break;
+                    case CANCELLED:
+                        membershipLabel.getStyleClass().add("membership-cancelled");
+                        break;
+                    default:
+                        membershipLabel.getStyleClass().add("membership-active");
+                        break;
+                    }
+                    memberships.getChildren().add(membershipLabel);
+                });
     }
 }
