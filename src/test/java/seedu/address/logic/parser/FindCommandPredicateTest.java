@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.club.Club;
 import seedu.address.model.club.ClubContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
