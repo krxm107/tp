@@ -172,4 +172,43 @@ public class UniquePersonListTest {
     public void toStringMethod() {
         assertEquals(uniquePersonList.asUnmodifiableObservableList().toString(), uniquePersonList.toString());
     }
+
+    @Test
+    public void contains_personWithSameEmailInList_returnsTrue() {
+        UniquePersonList list = new UniquePersonList();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        list.add(alice);
+
+        // Same email, other fields may differ -> considered same person
+        Person sameEmail = new PersonBuilder().withName("Alice P.")
+                .withEmail("alice@example.com").withPhone("99999999").build();
+
+        assertTrue(list.contains(sameEmail));
+    }
+
+    @Test
+    public void contains_personWithDifferentEmailInList_returnsFalse() {
+        UniquePersonList list = new UniquePersonList();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        list.add(alice);
+
+        // Same name, different email -> NOT the same person now
+        Person sameNameDifferentEmail = new PersonBuilder(alice).withEmail("alice+1@example.com").build();
+
+        assertFalse(list.contains(sameNameDifferentEmail));
+    }
+
+    @Test
+    public void setPerson_sameEmail_throwsDuplicatePersonException() {
+        UniquePersonList list = new UniquePersonList();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
+        list.add(alice);
+        list.add(bob);
+
+        // Changing Bob's email to Alice's should trip duplicate
+        Person bobEmailClash = new PersonBuilder(bob).withEmail("alice@example.com").build();
+
+        assertThrows(DuplicatePersonException.class, () -> list.setPerson(bob, bobEmailClash));
+    }
 }

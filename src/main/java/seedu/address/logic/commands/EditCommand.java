@@ -170,6 +170,7 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
+
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
