@@ -13,7 +13,8 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Names should only contain letters A–Z, a–z, digits 0–9, "
-                    + "spaces, hyphens, apostrophes, periods, and slashes (/).";
+                    + "spaces, hyphens, apostrophes, periods, and slashes (/).\n\n"
+                    + NameValidator.LENGTH_BOUND_WARNING;
 
     public final String fullName;
 

@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.field.validator;
 
@@ -22,6 +22,10 @@ public final class NameValidator {
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
     private static final int MAX_LEN = 75;
+
+    public static String LENGTH_BOUND_WARNING =
+            String.format("Names should have at least %d character " +
+                    "and at most %d characters.", MIN_LEN, MAX_LEN);
 
     private NameValidator() {
 

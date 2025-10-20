@@ -17,10 +17,11 @@ import seedu.address.model.field.validator.AddressValidator;
 public class Address {
 
     public static final String MESSAGE_CONSTRAINTS = "Address must consist of "
-            + "only letters A-Z a-z, digits, whitespace, "
-            + "hyphens, apostrophes, periods, slashes, hash signs #, "
+            + "only letters A-Z a-z, digits, whitespace, \n"
+            + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
             + "commas, ampersands, parentheses, semicolons, "
-            + "or colons — and must be at least 0 characters long, and at most 150 characters long.";
+            + "or colons."
+            + "\n\nAn Address must be at most 150 characters long.";
 
     public final String value;
 
