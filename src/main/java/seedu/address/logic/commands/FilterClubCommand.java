@@ -5,15 +5,15 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
+import seedu.address.model.club.FilterClubPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class FindClubCommand extends Command {
+public class FilterClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "find_club";
+    public static final String COMMAND_WORD = "filter_club";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clubs whose fields contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
@@ -21,9 +21,9 @@ public class FindClubCommand extends Command {
             + "Example: " + COMMAND_WORD
             + "n/Basketball p/98765432 e/johnd@example.com a/John street, block 123, #01-01";
 
-    private final ClubContainsKeywordsPredicate predicate;
+    private final FilterClubPredicate predicate;
 
-    public FindClubCommand(ClubContainsKeywordsPredicate predicate) {
+    public FilterClubCommand(FilterClubPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -42,11 +42,11 @@ public class FindClubCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindClubCommand)) {
+        if (!(other instanceof FilterClubCommand)) {
             return false;
         }
 
-        FindClubCommand otherFindCommand = (FindClubCommand) other;
+        FilterClubCommand otherFindCommand = (FilterClubCommand) other;
         return predicate.equals(otherFindCommand.predicate);
     }
 

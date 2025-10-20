@@ -1,4 +1,4 @@
-package seedu.address.model.club;
+package seedu.address.model.person;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -9,18 +9,17 @@ import seedu.address.commons.util.ToStringBuilder;
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
-
-public class ClubContainsKeywordsPredicate implements Predicate<Club> {
+public class FilterPersonPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
-    public ClubContainsKeywordsPredicate(List<String> keywords) {
+    public FilterPersonPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
-    public boolean test(Club club) {
+    public boolean test(Person person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.matchClubByKeyword(club, keyword));
+                .anyMatch(keyword -> StringUtil.matchPersonByKeyword(person, keyword));
     }
 
     @Override
@@ -30,12 +29,12 @@ public class ClubContainsKeywordsPredicate implements Predicate<Club> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ClubContainsKeywordsPredicate)) {
+        if (!(other instanceof FilterPersonPredicate)) {
             return false;
         }
 
-        ClubContainsKeywordsPredicate otherClubContainsKeywordsPredicate = (ClubContainsKeywordsPredicate) other;
-        return keywords.equals(otherClubContainsKeywordsPredicate.keywords);
+        FilterPersonPredicate otherFilterPersonPredicate = (FilterPersonPredicate) other;
+        return keywords.equals(otherFilterPersonPredicate.keywords);
     }
 
     @Override
