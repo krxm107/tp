@@ -193,7 +193,7 @@ public class EditCommandTest {
 
         // Try to change Bob's email to Alice's -> should fail
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withEmail("alice@example.com").build();
-        EditCommand editBob = new EditCommand(Index.fromOneBased(2), descriptor); // or the appropriate target (index/id) used in your codebase
+        EditCommand editBob = new EditCommand(Index.fromOneBased(2), descriptor);
 
         assertThrows(CommandException.class, () -> editBob.execute(model));
     }

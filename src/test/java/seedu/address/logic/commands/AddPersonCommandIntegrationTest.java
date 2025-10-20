@@ -63,10 +63,14 @@ public class AddPersonCommandIntegrationTest {
     @Test
     public void execute_sameNameDifferentEmail_success() throws Exception {
         Model model = new ModelManager();
-        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+
+        Person alice =
+                new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+
         model.addPerson(alice);
 
-        Person sameNameDifferentEmail = new PersonBuilder().withName("Alice Pauline").withEmail("alice+1@example.com").build();
+        Person sameNameDifferentEmail =
+                new PersonBuilder().withName("Alice Pauline").withEmail("alice+1@example.com").build();
 
         AddPersonCommand add = new AddPersonCommand(sameNameDifferentEmail);
         add.execute(model); // no exception == success
