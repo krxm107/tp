@@ -13,7 +13,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
-import seedu.address.ui.HelpWindow;
 
 /**
  * Represents a Membership of a Person in a Club.
