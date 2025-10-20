@@ -90,7 +90,7 @@ public class Membership {
 
     /**
      * Updates the status of the membership based on the current date.
-     * This should be called periodically (e.g., daily) by a managing process.
+     * This should be called everytime we start the app.
      */
     public void updateStatus() {
         if (this.status == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {

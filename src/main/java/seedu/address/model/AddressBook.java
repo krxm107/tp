@@ -160,6 +160,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
     }
 
+    /**
+     * This method should be run once per day to update the status
+     * of all memberships in the system.
+     */
+    public void updateMembershipStatus() {
+        // todo: use a logger instead of System.out.println
+        System.out.println("\n--- Performing membership status update... ---");
+        for (Membership m : memberships) {
+            m.updateStatus();
+        }
+        System.out.println("--- Update complete. ---\n");
+    }
+
     @Override
     public Optional<Club> getClubByName(Name target) {
         requireNonNull(target);
