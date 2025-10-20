@@ -97,8 +97,11 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getEmail().equals(getEmail());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return otherPerson.getEmail().equals(getEmail());
     }
 
     /**
