@@ -1,7 +1,12 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.function.Predicate;
 
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.search.PersonNameParser;
@@ -20,30 +25,19 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
      */
     public FindPersonCommand parse(String args) throws ParseException {
         Predicate<Person> predicate = person -> true;
-        String[] searchModifiers = args.trim().split("/");
 
-        for (String segment : searchModifiers) {
-            if (segment.isEmpty()) {
-                continue;
-            }
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_NAME, PREFIX_TAG);
 
-            String[] parts = segment.split("\\s+", 2);
-            if (parts.length < 2) {
-                throw new ParseException("Expected value after keyword");
-            }
-            String searchKeyword = parts[0].trim();
-            String searchParameter = parts[1].trim();
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
-            switch (searchKeyword) {
-            case PersonNameParser.KEYWORD:
-                predicate = predicate.and(PersonNameParser.parse(searchParameter));
-                break;
-            case PersonTagParser.KEYWORD:
-                predicate = predicate.and(PersonTagParser.parse(searchParameter));
-                break;
-            default:
-                throw new ParseException("Unknown search keyword");
-            }
+        for (String prefix : argMultimap.getAllValues(PREFIX_NAME)) {
+            predicate = predicate.and(PersonNameParser.parse(prefix));
+        }
+        for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
+            predicate = predicate.and(PersonTagParser.parse(prefix));
         }
 
         return new FindPersonCommand(predicate);
