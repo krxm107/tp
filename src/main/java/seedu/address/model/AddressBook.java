@@ -5,8 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
@@ -23,6 +25,9 @@ import seedu.address.model.util.SampleDataUtil;
  * Duplicates are not allowed (by .isSamePerson comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
+
+    private final Logger logger = LogsCenter.getLogger(AddressBook.class);
+
     private final UniquePersonList persons;
     private final UniqueClubList clubs;
     private final UniqueMembershipList memberships;
@@ -179,11 +184,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void updateMembershipStatus() {
         // todo: use a logger instead of System.out.println
-        System.out.println("\n--- Performing membership status update... ---");
+        logger.info("Performing membership status update...");
         for (Membership m : memberships) {
             m.updateStatus();
         }
-        System.out.println("--- Update complete. ---\n");
+        logger.info("Membership status update completed.");
     }
 
     @Override

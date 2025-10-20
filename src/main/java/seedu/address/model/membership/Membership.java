@@ -6,11 +6,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
+import seedu.address.ui.HelpWindow;
 
 /**
  * Represents a Membership of a Person in a Club.
@@ -23,6 +26,8 @@ public class Membership {
     public static final int MAXIMUM_RENEWAL_DURATION_IN_MONTHS = 24;
     public static final int MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 1;
     public static final int MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 24;
+
+    private static final Logger logger = LogsCenter.getLogger(Membership.class);
 
     private final Person person;
     private final Club club;
@@ -97,7 +102,7 @@ public class Membership {
     public void updateStatus() {
         if (this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {
             this.status.set(MembershipStatus.EXPIRED);
-            System.out.println("Membership for " + person.getName() + " has expired.");
+            logger.info("Membership for " + person.getName() + " has expired.");
         }
     }
 
@@ -127,7 +132,7 @@ public class Membership {
         }
         this.renewalHistory.add(LocalDate.now());
         this.status.set(MembershipStatus.ACTIVE);
-        System.out.println("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
+        logger.info("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
     }
 
     /**
@@ -135,7 +140,7 @@ public class Membership {
      */
     public void cancel() {
         this.status.set(MembershipStatus.CANCELLED);
-        System.out.println("Membership for " + person.getName() + " has been cancelled.");
+        logger.info("Membership for " + person.getName() + " has been cancelled.");
     }
 
     // todo: implement isValidLocalDate later
