@@ -210,6 +210,11 @@ public final class AddClubCommandTest {
         public void updateFilteredMembershipList(Predicate<Membership> predicate) {
 
         }
+
+        @Override
+        public void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths) {
+
+        }
     }
 
     /**
