@@ -161,6 +161,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //todo: handle exception when membership not found
+    /**
+     * Renews the membership of a person in a club for the specified duration.
+     *
+     * @param person The person whose membership is to be renewed.
+     * @param club The club for which the membership is to be renewed.
+     * @param durationInMonths The duration in months for which the membership is to be renewed.
+     */
     public void renewMembership(Person person, Club club, int durationInMonths) {
         Membership membership = memberships.getMembershipByPersonClub(person, club).get();
         membership.renew(durationInMonths);

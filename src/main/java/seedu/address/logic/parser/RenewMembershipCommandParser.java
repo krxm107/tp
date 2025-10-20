@@ -1,24 +1,34 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RenewMembershipCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.stream.Stream;
-
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
+import java.util.stream.Stream;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.RenewMembershipCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new RenewMembershipCommand object
+ */
 public class RenewMembershipCommandParser {
 
+    /**
+     * Parses the given {@code String} of arguments in the context of the RenewMembershipCommand
+     * and returns a RenewMembershipCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public RenewMembershipCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
         if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenewMembershipCommand.MESSAGE_USAGE));
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            RenewMembershipCommand.MESSAGE_USAGE));
         }
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);

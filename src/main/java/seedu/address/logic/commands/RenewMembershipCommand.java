@@ -1,5 +1,12 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -7,13 +14,9 @@ import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
-import java.util.List;
-
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
-
+/**
+ * Renews a person's membership in a club by extending the expiry date by the specified duration in months.
+ */
 public class RenewMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "renew";
@@ -32,6 +35,11 @@ public class RenewMembershipCommand extends Command {
     private final Index clubIndex;
     private final int durationInMonths;
 
+    /**
+     * @param personIndex Index of the person in the filtered person list
+     * @param clubIndex Index of the club in the filtered club list
+     * @param durationInMonths Duration in months to extend the membership
+     */
     public RenewMembershipCommand(Index personIndex, Index clubIndex, int durationInMonths) {
         requireAllNonNull(personIndex, clubIndex, durationInMonths);
         this.personIndex = personIndex;
