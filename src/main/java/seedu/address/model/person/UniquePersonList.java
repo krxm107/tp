@@ -6,12 +6,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
 import seedu.address.model.field.Email;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -28,10 +30,21 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniquePersonList implements Iterable<Person> {
 
-    // Use an extractor here to fire update signal to ListView when the memberships change
-    private final Callback<Person, Observable[]> extractor = person -> new Observable[] {
-            person.getMemberships() // The ObservableSet itself is an Observable.
+    private final Callback<Person, Observable[]> extractor = person -> {
+        // Create a stream of all the status properties from all memberships
+        Observable[] membershipStatuses = person.getMemberships().stream()
+                .map(Membership::statusProperty)
+                .toArray(Observable[]::new);
+
+        // Create a final observable array that contains:
+        // 1. The membership set itself (for additions/removals)
+        // 2. All the individual status properties (for status changes)
+        return Stream.concat(
+                Stream.of(person.getMemberships()),
+                Stream.of(membershipStatuses)
+        ).toArray(Observable[]::new);
     };
+
     private final ObservableList<Person> internalList = FXCollections.observableArrayList(extractor);
     private final ObservableList<Person> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);

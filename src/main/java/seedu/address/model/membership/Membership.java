@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
@@ -27,7 +29,7 @@ public class Membership {
     private final LocalDate joinDate;
     private LocalDate expiryDate;
     private List<LocalDate> renewalHistory;
-    private MembershipStatus status;
+    private ObjectProperty<MembershipStatus> status = new SimpleObjectProperty<>();
 
     /**
      * Constructor with duration specified.
@@ -47,7 +49,7 @@ public class Membership {
         this.joinDate = LocalDate.now();
         this.expiryDate = joinDate.plusMonths(membershipDurationInMonths);
         this.renewalHistory = new ArrayList<>();
-        this.status = MembershipStatus.ACTIVE;
+        this.status.set(MembershipStatus.ACTIVE);
     }
 
     /**
@@ -62,7 +64,7 @@ public class Membership {
         this.joinDate = joinDate;
         this.expiryDate = expiryDate;
         this.renewalHistory = renewalHistory;
-        this.status = status;
+        this.status.set(status);
     }
 
     /**
@@ -76,7 +78,7 @@ public class Membership {
         this.joinDate = LocalDate.now();
         this.expiryDate = joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS); // Default duration of 12 months
         this.renewalHistory = new ArrayList<>();
-        this.status = MembershipStatus.ACTIVE;
+        this.status.set(MembershipStatus.ACTIVE);
     }
 
     /**
@@ -85,7 +87,7 @@ public class Membership {
      * @return true if the membership is active, false otherwise.
      */
     public boolean isActive() {
-        return this.status == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate);
+        return this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate);
     }
 
     /**
@@ -93,8 +95,8 @@ public class Membership {
      * This should be called everytime we start the app.
      */
     public void updateStatus() {
-        if (this.status == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {
-            this.status = MembershipStatus.EXPIRED;
+        if (this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {
+            this.status.set(MembershipStatus.EXPIRED);
             System.out.println("Membership for " + person.getName() + " has expired.");
         }
     }
@@ -111,12 +113,12 @@ public class Membership {
                     + " months.");
         }
 
-        if (this.status == MembershipStatus.CANCELLED) {
+        if (this.status.get() == MembershipStatus.CANCELLED) {
             System.out.println("Cannot renew a cancelled membership. Please create a new one.");
             return;
         }
 
-        if (this.status == MembershipStatus.EXPIRED) {
+        if (this.status.get() == MembershipStatus.EXPIRED) {
             // If expired, start new period from today
             this.expiryDate = LocalDate.now().plusMonths(renewalDurationInMonths);
         } else {
@@ -124,7 +126,7 @@ public class Membership {
             this.expiryDate = this.expiryDate.plusMonths(renewalDurationInMonths);
         }
         this.renewalHistory.add(LocalDate.now());
-        this.status = MembershipStatus.ACTIVE;
+        this.status.set(MembershipStatus.ACTIVE);
         System.out.println("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
     }
 
@@ -132,7 +134,7 @@ public class Membership {
      * Cancels the membership. This is a final state.
      */
     public void cancel() {
-        this.status = MembershipStatus.CANCELLED;
+        this.status.set(MembershipStatus.CANCELLED);
         System.out.println("Membership for " + person.getName() + " has been cancelled.");
     }
 
@@ -158,6 +160,10 @@ public class Membership {
     }
 
     public MembershipStatus getStatus() {
+        return status.get();
+    }
+
+    public ObjectProperty<MembershipStatus> statusProperty() {
         return status;
     }
 
