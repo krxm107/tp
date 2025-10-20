@@ -269,7 +269,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 manage multiple clubs & clubs' persons faster than a typical mouse/GUI driven app
 
 ### User stories
