@@ -31,7 +31,7 @@ public class AddToCommandParser implements Parser<AddToCommand> {
         }
 
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
             Index[] personIndexes = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_MEMBER).get());
             Index[] clubIndexes = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_CLUB).get());
             // duration is optional

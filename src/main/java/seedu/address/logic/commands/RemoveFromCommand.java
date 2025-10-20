@@ -26,7 +26,7 @@ public class RemoveFromCommand extends Command {
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
             + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
-            + PREFIX_CLUB + "Club INDEXes (must be a positive integers separated by space)\n"
+            + PREFIX_CLUB + "Club INDEXes (must be positive integers separated by space)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3";

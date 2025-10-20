@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
 import java.util.List;
@@ -21,15 +22,17 @@ public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
     public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds multiple persons to multiple clubs\n"
+            + ": Adds multiple persons to multiple clubs with membership duration\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
             + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
-            + PREFIX_CLUB + "Club INDEXes (must be a positive integers separated by space)\n"
+            + PREFIX_CLUB + "Club INDEXes (must be positive integers separated by space)\n"
+            + PREFIX_DURATION + "Duration in months (must be between 1 and 24, optional, default is 12)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
-            + PREFIX_CLUB + "1 3";
+            + PREFIX_CLUB + "1 3 "
+            + PREFIX_DURATION + "12";
 
     private static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
 
