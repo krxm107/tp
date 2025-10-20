@@ -7,7 +7,9 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalClubs.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLUB;
+import static seedu.address.testutil.TypicalPersonsAndClubs.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +19,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
+import seedu.address.testutil.TypicalClubs;
+import seedu.address.testutil.TypicalPersonsAndClubs;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -24,7 +29,7 @@ import seedu.address.model.club.Club;
  */
 public class DeleteClubCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(TypicalClubs.getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -56,6 +61,23 @@ public class DeleteClubCommandTest {
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         assertTrue(true);
+    }
+
+    @Test
+    public void execute_deleteWithMemberships_success() {
+        model = new ModelManager(TypicalPersonsAndClubs.getTypicalAddressBook(), new UserPrefs());
+
+        Club clubToDelete = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
+        DeleteClubCommand deleteCommand = new DeleteClubCommand(INDEX_FIRST_CLUB);
+
+        String expectedMessage = String.format(DeleteClubCommand.MESSAGE_DELETE_CLUB_SUCCESS,
+                Messages.format(clubToDelete));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        clubToDelete.clearMembers();
+        expectedModel.deleteClub(clubToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

@@ -44,9 +44,6 @@ public class DeleteClubCommand extends Command {
 
         Club clubToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        for (Membership m : clubToDelete.getMemberships()) {
-            model.deleteMembership(m);
-        }
         clubToDelete.clearMembers();
         model.deleteClub(clubToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_CLUB_SUCCESS, Messages.format(clubToDelete)));
