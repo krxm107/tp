@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public final class NameValidator {
 
     // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period, slash.
-    private static final Pattern ALLOWED =  
+    private static final Pattern ALLOWED =
             Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
