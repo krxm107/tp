@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.club.exceptions.DuplicateClubException;
 import seedu.address.model.club.exceptions.ClubNotFoundException;
+import seedu.address.model.club.exceptions.DuplicateClubException;
 import seedu.address.testutil.ClubBuilder;
 
 public class UniqueClubListTest {

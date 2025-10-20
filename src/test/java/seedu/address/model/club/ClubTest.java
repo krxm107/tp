@@ -32,20 +32,20 @@ public class ClubTest {
         // null -> returns false
         assertFalse(ARCHERY.isSameClub(null));
 
-        // same name, all other attributes different -> returns true
-        Club editedARCHERY = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        // same name, all other attributes different -> returns false
+        Club edited_archery = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ARCHERY.isSameClub(editedARCHERY));
+        assertFalse(ARCHERY.isSameClub(edited_archery));
 
-        // different name, all other attributes same -> returns false
-        editedARCHERY = new ClubBuilder(ARCHERY).withName(VALID_NAME_BOB).build();
-        assertFalse(ARCHERY.isSameClub(editedARCHERY));
+        // different name, all other attributes same -> returns true
+        edited_archery = new ClubBuilder(ARCHERY).withName(VALID_NAME_BOB).build();
+        assertTrue(ARCHERY.isSameClub(edited_archery));
 
-        // name differs in case, all other attributes same -> returns false
+        // name differs in case, all other attributes same -> returns true
         Club editedBob = new ClubBuilder(BALL).withName(VALID_NAME_BOB.toLowerCase()).build();
         assertTrue(BALL.isSameClub(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, all other attributes same -> returns true
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new ClubBuilder(BALL).withName(nameWithTrailingSpaces).build();
         assertTrue(BALL.isSameClub(editedBob));
@@ -54,8 +54,8 @@ public class ClubTest {
     @Test
     public void equals() {
         // same values -> returns true
-        Club ARCHERYCopy = new ClubBuilder(ARCHERY).build();
-        assertTrue(ARCHERY.equals(ARCHERYCopy));
+        Club archery_copy = new ClubBuilder(ARCHERY).build();
+        assertTrue(ARCHERY.equals(archery_copy));
 
         // same object -> returns true
         assertTrue(ARCHERY.equals(ARCHERY));
@@ -70,30 +70,35 @@ public class ClubTest {
         assertFalse(ARCHERY.equals(BALL));
 
         // different name -> returns false
-        Club editedARCHERY = new ClubBuilder(ARCHERY).withName(VALID_NAME_BOB).build();
-        assertFalse(ARCHERY.equals(editedARCHERY));
+        Club edited_archery = new ClubBuilder(ARCHERY).withName(VALID_NAME_BOB).build();
+        assertFalse(ARCHERY.equals(edited_archery));
 
         // different phone -> returns false
-        editedARCHERY = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ARCHERY.equals(editedARCHERY));
+        edited_archery = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).build();
+        assertFalse(ARCHERY.equals(edited_archery));
 
         // different email -> returns false
-        editedARCHERY = new ClubBuilder(ARCHERY).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(ARCHERY.equals(editedARCHERY));
+        edited_archery = new ClubBuilder(ARCHERY).withEmail(VALID_EMAIL_BOB).build();
+        assertFalse(ARCHERY.equals(edited_archery));
 
         // different address -> returns false
-        editedARCHERY = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(ARCHERY.equals(editedARCHERY));
+        edited_archery = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).build();
+        assertFalse(ARCHERY.equals(edited_archery));
 
         // different tags -> returns false
-        editedARCHERY = new ClubBuilder(ARCHERY).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(ARCHERY.equals(editedARCHERY));
+        edited_archery = new ClubBuilder(ARCHERY).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(ARCHERY.equals(edited_archery));
     }
 
     @Test
     public void toStringMethod() {
-        String expected = Club.class.getCanonicalName() + "{name=" + ARCHERY.getName() + ", phone=" + ARCHERY.getPhone()
-                + ", email=" + ARCHERY.getEmail() + ", address=" + ARCHERY.getAddress() + ", tags=" + ARCHERY.getTags() + "}";
+        String expected =
+                Club.class.getCanonicalName()
+                + "{name=" + ARCHERY.getName()
+                + ", phone=" + ARCHERY.getPhone()
+                + ", email=" + ARCHERY.getEmail() + ", address="
+                + ARCHERY.getAddress() + ", tags=" + ARCHERY.getTags() + "}";
+
         assertEquals(expected, ARCHERY.toString());
     }
 }
