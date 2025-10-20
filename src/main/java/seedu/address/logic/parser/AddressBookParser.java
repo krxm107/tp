@@ -23,6 +23,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.commands.ListMembershipCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
+import seedu.address.logic.commands.RenewMembershipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -97,6 +98,9 @@ public class AddressBookParser {
 
         case RemoveFromCommand.COMMAND_WORD:
             return new RemoveFromCommandParser().parse(arguments);
+
+        case RenewMembershipCommand.COMMAND_WORD:
+            return new RenewMembershipCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

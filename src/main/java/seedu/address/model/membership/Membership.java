@@ -115,23 +115,17 @@ public class Membership {
             System.out.println("Cannot renew a cancelled membership. Please create a new one.");
             return;
         }
-    }
 
-    /**
-     * Reactivates an expired membership by treating it as a new subscription.
-     * The join date is kept for historical purposes, but the new period starts from today.
-     * @param durationInMonths The duration of the new membership period.
-     */
-    public void reactivate(int durationInMonths) {
-        if (this.status != MembershipStatus.EXPIRED) {
-            System.out.println("Only expired memberships can be reactivated.");
-            return;
+        if (this.status == MembershipStatus.EXPIRED) {
+            // If expired, start new period from today
+            this.expiryDate = LocalDate.now().plusMonths(renewalDurationInMonths);
+        } else {
+            // If active, extend from current expiry date
+            this.expiryDate = this.expiryDate.plusMonths(renewalDurationInMonths);
         }
-        // The new period starts now
-        this.expiryDate = LocalDate.now().plusMonths(durationInMonths);
         this.renewalHistory.add(LocalDate.now());
         this.status = MembershipStatus.ACTIVE;
-        System.out.println("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
+        System.out.println("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
     }
 
     /**

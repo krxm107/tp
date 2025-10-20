@@ -195,6 +195,12 @@ public class ModelManager implements Model {
     //=========== Filtered Membership List Accessors =============================================================
 
     @Override
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        addressBook.renewMembership(person, club, durationInMonths);
+    }
+
+    @Override
     public ObservableList<Membership> getFilteredMembershipList() {
         return filteredMemberships;
     }

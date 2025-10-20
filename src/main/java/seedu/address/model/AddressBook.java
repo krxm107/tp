@@ -160,6 +160,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
     }
 
+    //todo: handle exception when membership not found
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.renew(durationInMonths);
+    }
+
     /**
      * This method should be run once per day to update the status
      * of all memberships in the system.
