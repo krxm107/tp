@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsTagsPredicate;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
@@ -28,10 +29,8 @@ public class PersonTagParser implements SearchParser<Person> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-        Predicate<Person> parsePersonTag = person -> person.getTags().stream()
-                .anyMatch(new TagContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-        return parsePersonTag;
+        String[] tagKeywords = trimmedArgs.split("\\s+");
+        return new PersonContainsTagsPredicate(Arrays.asList(tagKeywords));
     }
 
 }
