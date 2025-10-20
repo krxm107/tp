@@ -1,11 +1,16 @@
 package seedu.address.model.field;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.util.Objects;
 
 /**
  * Represents a Person's address in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
+ * <p>
+ * This field is optional — if no address is provided, an empty {@code Address}
+ * object will be created. Otherwise, the value must pass validation rules.
+ * </p>
+ * Guarantees: immutable; valid if non-empty.
  */
 public class Address {
 
@@ -22,19 +27,35 @@ public class Address {
     /**
      * Constructs an {@code Address}.
      *
-     * @param address A valid address.
+     * @param address
+     *     A valid address, or an empty/whitespace string if optional.
+     *     <ul>
+     *         <li>If {@code address} is null or blank, an empty Address is created.</li>
+     *         <li>Otherwise, it must satisfy {@link #isValidAddress(String)}.</li>
+     *     </ul>
      */
     public Address(String address) {
-        requireNonNull(address);
+        if (address == null || address.strip().isEmpty()) {
+            this.value = "";
+            return;
+        }
+
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
-        value = address;
+
+        this.value = address.strip();
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if the given string is a valid address.
+     * An empty string is treated as invalid (but constructible as optional).
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isBlank() || test.matches(VALIDATION_REGEX);
+    }
+
+    /** Returns true if this address field was provided by the user. */
+    public boolean isPresent() {
+        return value != null && !value.isEmpty();
     }
 
     @Override
@@ -54,12 +75,12 @@ public class Address {
         }
 
         Address otherAddress = (Address) other;
-        return value.equals(otherAddress.value);
+        return Objects.equals(value, otherAddress.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hashCode(value);
     }
 
 }

@@ -39,19 +39,23 @@ public class Person {
      * @param name    The person's name (required).
      * @param phone   The person's phone number (optional; may be empty).
      * @param email   The person's email address (required).
-     * @param address The person's address (required).
+     * @param address The person's address (optional; may be empty).
      * @param tags    A set of tags (non-null; may be empty).
      *
      *     <p>
      *     If {@code phone} is null, a blank {@code Phone} instance is created.
      *     </p>
+     *
+     *     <p>
+     *     If {@code address} is null, a blank {@code Address} instance is created.
+     *     </p>
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, email, address, tags);
+        requireAllNonNull(name, email, tags);
         this.name = name;
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
-        this.address = address;
+        this.address = (address == null) ? new Address("") : address;
         this.tags.addAll(tags);
         this.memberships = FXCollections.observableSet(new HashSet<>());
     }
