@@ -51,7 +51,7 @@
                         <Image url="@/images/address.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="address" styleClass="cell_small_label" />
+                <Label fx:id="address" styleClass="cell_small_label" wrapText="true" />
             </HBox>
 
             <HBox fx:id="emailRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
