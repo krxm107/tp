@@ -15,15 +15,41 @@ ClubHub allows you to manage your contacts on your desktop with keyboard command
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+4. Open a command terminal.
+
+If you're using Windows:
+
+    Press Windows key + R on your keyboard.
+    
+    A small box will pop up. Type cmd inside it.
+    
+    Press Enter. A black window will appear — that’s the command terminal. 
+
+If you're using macOS:
+
+    Click the magnifying glass 🔍 in the top-right corner (Spotlight Search).
+    
+    Type Terminal and press Enter.
+    
+    A window with text will open — that’s the command terminal.
+
+If you're using Linux:
+
+    Press Ctrl + Alt + T together.
+    
+    Or search for “Terminal” in your applications.
+    
+    A terminal window will open.
+
+`cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
@@ -36,7 +62,7 @@ ClubHub allows you to manage your contacts on your desktop with keyboard command
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+5. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
