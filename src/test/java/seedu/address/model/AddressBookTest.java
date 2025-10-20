@@ -120,11 +120,6 @@ public class AddressBookTest {
         }
 
         @Override
-        public Optional<Person> getPersonByName(Name name) {
-            return null;
-        }
-
-        @Override
         public Optional<Person> getPersonByEmail(Email email) {
             return null;
         }
@@ -135,4 +130,26 @@ public class AddressBookTest {
         }
     }
 
+    @Test
+    public void hasPerson_personWithSameEmailInAddressBook_returnsTrue() {
+        AddressBook ab = new AddressBook();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        ab.addPerson(alice);
+
+        Person sameEmailDifferentName = new PersonBuilder().withName("Alicia")
+                .withEmail("alice@example.com").build();
+
+        assertTrue(ab.hasPerson(sameEmailDifferentName));
+    }
+
+    @Test
+    public void hasPerson_personWithDifferentEmailSameName_returnsFalse() {
+        AddressBook ab = new AddressBook();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        ab.addPerson(alice);
+
+        Person sameNameDifferentEmail = new PersonBuilder(alice).withEmail("alice+1@example.com").build();
+
+        assertFalse(ab.hasPerson(sameNameDifferentEmail));
+    }
 }

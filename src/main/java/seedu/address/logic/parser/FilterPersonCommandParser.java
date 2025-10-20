@@ -29,5 +29,4 @@ public class FilterPersonCommandParser implements Parser<FilterPersonCommand> {
 
         return new FilterPersonCommand(new FilterPersonPredicate(Arrays.asList(nameKeywords)));
     }
-
 }

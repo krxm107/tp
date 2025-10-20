@@ -19,13 +19,14 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FilterClubCommand;
 import seedu.address.logic.commands.FilterPersonCommand;
+import seedu.address.logic.commands.FindClubCommand;
+import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListClubCommand;
 import seedu.address.logic.commands.ListContactsCommand;
 import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.commands.ListMembershipCommand;
-import seedu.address.logic.commands.ListPersonCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
+import seedu.address.logic.commands.RenewMembershipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -49,7 +50,7 @@ public class AddressBookParser {
     public Command parseCommand(String userInput) throws ParseException {
         CommandList.addCommand(userInput);
 
-        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.strip());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
@@ -83,6 +84,8 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case FindClubCommand.COMMAND_WORD:
+            return new FindClubCommandParser().parse(arguments);
         case FilterPersonCommand.COMMAND_WORD:
             return new FilterPersonCommandParser().parse(arguments);
 
@@ -92,11 +95,8 @@ public class AddressBookParser {
         case ListContactsCommand.COMMAND_WORD:
             return new ListContactsCommand();
 
-        case ListClubCommand.COMMAND_WORD:
-            return new ListClubCommand();
-
-        case ListPersonCommand.COMMAND_WORD:
-            return new ListPersonCommand();
+        case FindPersonCommand.COMMAND_WORD:
+            return new FindPersonCommandParser().parse(arguments);
 
         case ListMemberCommand.COMMAND_WORD:
             return new ListMemberCommandParser().parse(arguments);
@@ -109,6 +109,9 @@ public class AddressBookParser {
 
         case RemoveFromCommand.COMMAND_WORD:
             return new RemoveFromCommandParser().parse(arguments);
+
+        case RenewMembershipCommand.COMMAND_WORD:
+            return new RenewMembershipCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

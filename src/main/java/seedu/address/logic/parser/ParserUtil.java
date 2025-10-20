@@ -24,90 +24,111 @@ public class ParserUtil {
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
+     * stripped.
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
-        String trimmedIndex = oneBasedIndex.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+        String strippedIndex = oneBasedIndex.strip();
+        if (!StringUtil.isNonZeroUnsignedInteger(strippedIndex)) {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
-        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+        return Index.fromOneBased(Integer.parseInt(strippedIndex));
     }
 
     /**
-     * Parses a {@code String name} into a {@code Name}.
+     * Parses {@code oneBasedIndexes} into an array of {@code Index} and returns it.
      * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if any of the specified indexes is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseIndexes(String oneBasedIndexes) throws ParseException {
+        requireNonNull(oneBasedIndexes);
+        String[] splitIndexes = oneBasedIndexes.trim().split("\\s+");
+        Index[] indexes = new Index[splitIndexes.length];
+        for (int i = 0; i < splitIndexes.length; i++) {
+            indexes[i] = parseIndex(splitIndexes[i]);
+        }
+        return indexes;
+    }
+    /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be stripped.
      *
      * @throws ParseException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
+        String strippedName = name.strip();
+        if (!Name.isValidName(strippedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
-        return new Name(trimmedName);
+        return new Name(strippedName);
     }
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be stripped.
      *
      * @throws ParseException if the given {@code phone} is invalid.
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
+        String strippedPhone = phone.strip();
+        if (!Phone.isValidPhone(strippedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new Phone(strippedPhone);
     }
 
     /**
      * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be stripped.
      *
      * @throws ParseException if the given {@code address} is invalid.
      */
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
+        final String trimmed = address.trim();
+
+        if (trimmed.isEmpty()) {
+            return new Address("");
+        }
+
+        if (!Address.isValidAddress(trimmed)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+
+        return new Address(trimmed);
     }
 
     /**
      * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be stripped.
      *
      * @throws ParseException if the given {@code email} is invalid.
      */
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
+        String strippedEmail = email.strip();
+        if (!Email.isValidEmail(strippedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Email(strippedEmail);
     }
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trailing whitespaces will be stripped.
      *
      * @throws ParseException if the given {@code tag} is invalid.
      */
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
+        String strippedTag = tag.strip();
+        if (!Tag.isValidTagName(strippedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(trimmedTag);
+        return new Tag(strippedTag);
     }
 
     /**

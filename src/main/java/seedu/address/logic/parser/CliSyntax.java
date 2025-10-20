@@ -13,4 +13,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_MEMBER = new Prefix("m/");
     public static final Prefix PREFIX_CLUB = new Prefix("c/");
+    public static final Prefix PREFIX_DURATION = new Prefix("d/");
 }

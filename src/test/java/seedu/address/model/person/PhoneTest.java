@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Nested;
@@ -20,25 +19,6 @@ import seedu.address.model.field.validator.PhoneValidator;
 public final class PhoneTest {
 
     // ---------- constructor & basic validation ----------
-
-    @Test
-    void constructorNullThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Phone(null));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-        "", "   ", // empty
-        "12345", // too short (< MIN)
-        "1234567890123456", // too long (> MAX)
-        "123-4567", // non-digit
-        "+6581234567", // plus not allowed per simplified spec
-        "(8123)4567", // brackets not allowed
-        "81 23a 4567" // contains letter
-    })
-    void constructorInvalidThrowsIllegalArgumentException(String s) {
-        assertThrows(IllegalArgumentException.class, () -> new Phone(s));
-    }
 
     @Test
     void constructorEdgeCaseMaxLengthIsAllowed() {
@@ -122,5 +102,16 @@ public final class PhoneTest {
     void aboveMaxDigitsRejected() {
         String s = "1".repeat(PhoneValidator.MAX_DIGITS + 1);
         assertFalse(Phone.isValidPhone(s));
+    }
+
+    /**
+     * Unit tests for {@link Phone}.
+     * Includes validation and optional (empty) phone behavior.
+     */
+    @Test
+    void emptyPhoneAllowedAndDisplaysEmpty() {
+        Phone p = new Phone("");
+        assertEquals("", p.toString());
+        assertFalse(p.isPresent());
     }
 }

@@ -1,11 +1,16 @@
 package seedu.address.storage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 
 /**
  * Jackson-friendly version of {@link Membership}.
@@ -17,17 +22,25 @@ class JsonAdaptedMembership {
     private final String personEmail;
     private final String clubName;
     private final String joinDate;
-    private final String role;
+    private final String expiryDate;
+    private final List<JsonAdaptedRenewalDate> renewalHistory = new ArrayList<>();
+    private final String status;
 
     @JsonCreator
     public JsonAdaptedMembership(@JsonProperty("personEmail") String personEmail,
                                  @JsonProperty("clubName") String clubName,
                                  @JsonProperty("joinDate") String joinDate,
-                                 @JsonProperty("role") String role) {
+                                 @JsonProperty("expiryDate") String expiryDate,
+                                 @JsonProperty("renewalHistory") List<JsonAdaptedRenewalDate> renewalHistory,
+                                 @JsonProperty("status") String status) {
         this.personEmail = personEmail;
         this.clubName = clubName;
         this.joinDate = joinDate;
-        this.role = role;
+        this.expiryDate = expiryDate;
+        if (renewalHistory != null) {
+            this.renewalHistory.addAll(renewalHistory);
+        }
+        this.status = status;
     }
 
     /**
@@ -38,7 +51,12 @@ class JsonAdaptedMembership {
         personEmail = source.getPerson().getEmail().value; // Or another unique identifier
         clubName = source.getClub().getName().fullName;
         joinDate = source.getJoinDate().toString();
-        role = source.getRole();
+        expiryDate = source.getExpiryDate().toString();
+        // How can i store renewalHistory as a string?
+        renewalHistory.addAll(source.getRenewalHistory().stream()
+                .map(JsonAdaptedRenewalDate::new)
+                .toList());
+        status = source.getStatus().toString();
     }
 
     public String getPersonEmail() {
@@ -53,7 +71,17 @@ class JsonAdaptedMembership {
         return LocalDate.parse(joinDate);
     }
 
-    public String getRole() {
-        return role;
+    public LocalDate getExpiryDate() {
+        return LocalDate.parse(expiryDate);
+    }
+
+    public MembershipStatus getStatus() {
+        return MembershipStatus.valueOf(status);
+    }
+
+    public List<LocalDate> getRenewalHistory() throws IllegalValueException {
+        return renewalHistory.stream()
+                .map(JsonAdaptedRenewalDate::toModelType)
+                .collect(Collectors.toList());
     }
 }

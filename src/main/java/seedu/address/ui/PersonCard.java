@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
@@ -42,7 +44,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
-    private FlowPane memberships;
+    private VBox memberships;
+    @FXML
+    private HBox phoneRow;
+    @FXML
+    private HBox addressRow;
+    @FXML
+    private HBox emailRow;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -52,16 +60,55 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+
+        if (person.getPhone().value.isEmpty()) {
+            phoneRow.setVisible(false);
+            phoneRow.setManaged(false);
+        } else {
+            phone.setText(person.getPhone().value);
+        }
+
+        if (person.getAddress().value.isEmpty()) {
+            addressRow.setVisible(false);
+            addressRow.setManaged(false);
+        } else {
+            address.setText(person.getAddress().value);
+        }
+
+        if (person.getEmail().value.isEmpty()) {
+            emailRow.setVisible(false);
+            emailRow.setManaged(false);
+        } else {
+            email.setText(person.getEmail().value);
+        }
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         person.getMemberships().stream()
                 .sorted(Comparator.comparing(Membership::getClubName))
-                .forEach(membership -> memberships.getChildren().add(new Label(membership.getClubName())));
+                .forEach(membership -> {
+                    String clubName = membership.getClubName();
+                    String exp = membership.getExpiryDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    Label membershipLabel = new Label(clubName + ": until " + exp);
+                    membershipLabel.getStyleClass().add("membership-label");
 
+                    switch (membership.getStatus()) {
+                    case ACTIVE:
+                        membershipLabel.getStyleClass().add("membership-active");
+                        break;
+                    case EXPIRED:
+                        membershipLabel.getStyleClass().add("membership-expired");
+                        break;
+                    case CANCELLED:
+                        membershipLabel.getStyleClass().add("membership-cancelled");
+                        break;
+                    default:
+                        membershipLabel.getStyleClass().add("membership-active");
+                        break;
+                    }
+                    memberships.getChildren().add(membershipLabel);
+                });
     }
 }

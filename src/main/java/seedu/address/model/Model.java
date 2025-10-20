@@ -120,4 +120,6 @@ public interface Model {
     ObservableList<Membership> getFilteredMembershipList();
 
     void updateFilteredMembershipList(Predicate<Membership> predicate);
+
+    void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths);
 }

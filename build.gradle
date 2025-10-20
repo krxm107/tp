@@ -7,6 +7,10 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.14'
 }
 
+run {
+    enableAssertions = true
+}
+
 javafx {
     version = "17"
     modules = ['javafx.controls', 'javafx.fxml']

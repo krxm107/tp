@@ -8,13 +8,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+    <VBox alignment="CENTER_LEFT" minHeight="140" GridPane.columnIndex="0">
       <padding>
         <Insets top="5" right="5" bottom="5" left="15" />
       </padding>
@@ -28,10 +30,38 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <FlowPane fx:id="memberships" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <HBox fx:id="phoneRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
+        <ImageView fitHeight="16" fitWidth="16">
+          <image>
+            <Image url="@/images/phone.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="phone" styleClass="cell_small_label" />
+      </HBox>
+
+      <HBox fx:id="addressRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
+        <ImageView fitHeight="16" fitWidth="16">
+          <image>
+            <Image url="@/images/address.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="address" styleClass="cell_small_label" />
+      </HBox>
+
+      <HBox fx:id="emailRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
+        <ImageView fitHeight="16" fitWidth="16">
+          <image>
+            <Image url="@/images/email.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="email" styleClass="cell_small_label" />
+      </HBox>
     </VBox>
   </GridPane>
+  <VBox alignment="CENTER" prefWidth="260" styleClass="membership-badge">
+    <padding>
+      <Insets top="5" right="10" bottom="5" left="10" />
+    </padding>
+    <VBox alignment="CENTER" fx:id="memberships" spacing="5" />
+  </VBox>
 </HBox>

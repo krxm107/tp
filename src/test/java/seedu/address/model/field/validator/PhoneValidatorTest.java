@@ -25,7 +25,7 @@ public final class PhoneValidatorTest {
         var result = PhoneValidator.validate(raw);
         assertTrue(result.isValid(), "Expected valid for: " + raw);
         String normalized = result.get();
-        assertEquals(normalized.length(), normalized.trim().length(), "No extra spaces");
+        assertEquals(normalized.length(), normalized.strip().length(), "No extra spaces");
         assertTrue(normalized.matches("\\d+"), "Digits only");
         assertTrue(normalized.length() >= PhoneValidator.MIN_DIGITS
                 && normalized.length() <= PhoneValidator.MAX_DIGITS);
