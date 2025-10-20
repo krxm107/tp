@@ -17,7 +17,7 @@ import seedu.address.model.club.Club;
  * Adds a club to the address book.
  *
  * <p>
- * Phone number is optional — the user may omit {@code p/PHONE}.
+ * Phone number and address are optional — the user may omit {@code p/PHONE} and {@code ADDRESS}.
  * </p>
  */
 public class AddClubCommand extends Command {
@@ -28,7 +28,7 @@ public class AddClubCommand extends Command {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
@@ -40,8 +40,7 @@ public class AddClubCommand extends Command {
             + PREFIX_TAG + "owesMoney\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane "
-            + PREFIX_EMAIL + "jane@abc.com "
-            + PREFIX_ADDRESS + "1 Road";
+            + PREFIX_EMAIL + "jane@abc.com ";
 
     public static final String MESSAGE_SUCCESS = "New club added: %1$s";
     public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book";
