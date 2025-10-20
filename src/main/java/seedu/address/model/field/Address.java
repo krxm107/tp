@@ -4,6 +4,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
 
+import seedu.address.model.field.validator.AddressValidator;
+
 /**
  * Represents a Person's address in the address book.
  * <p>
@@ -14,13 +16,11 @@ import java.util.Objects;
  */
 public class Address {
 
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String MESSAGE_CONSTRAINTS = "Address must consist of "
+            + "only letters A-Z a-z, digits, whitespace, "
+            + "hyphens, apostrophes, periods, slashes, hash signs #, "
+            + "commas, ampersands, parentheses, semicolons, "
+            + "or colons — and must be at least 0 characters long, and at most 150 characters long.";
 
     public final String value;
 
@@ -42,7 +42,7 @@ public class Address {
 
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
 
-        this.value = address.strip();
+        this.value = AddressValidator.validateOrThrow(address, true);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Address {
      * An empty string is treated as invalid (but constructible as optional).
      */
     public static boolean isValidAddress(String test) {
-        return test.isBlank() || test.matches(VALIDATION_REGEX);
+        return AddressValidator.isValid(test, true);
     }
 
     /** Returns true if this address field was provided by the user. */
