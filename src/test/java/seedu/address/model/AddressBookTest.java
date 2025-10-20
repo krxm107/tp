@@ -120,11 +120,6 @@ public class AddressBookTest {
         }
 
         @Override
-        public Optional<Person> getPersonByName(Name name) {
-            return null;
-        }
-
-        @Override
         public Optional<Person> getPersonByEmail(Email email) {
             return null;
         }

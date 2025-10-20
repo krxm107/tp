@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddToCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -27,7 +26,7 @@ public class RemoveFromCommandParser implements Parser<RemoveFromCommand> {
                 PREFIX_MEMBER, PREFIX_CLUB);
         if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -37,7 +36,7 @@ public class RemoveFromCommandParser implements Parser<RemoveFromCommand> {
             return new RemoveFromCommand(personIndexes, clubIndexes);
         } catch (ParseException pe) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE), pe);
         }
     }
 

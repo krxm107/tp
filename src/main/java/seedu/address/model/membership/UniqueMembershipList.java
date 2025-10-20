@@ -5,11 +5,14 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.club.Club;
 import seedu.address.model.membership.exceptions.DuplicateMembershipException;
 import seedu.address.model.membership.exceptions.MembershipNotFoundException;
+import seedu.address.model.person.Person;
 
 /**
  * A list of memberships that enforces uniqueness between its elements and does not allow nulls.
@@ -46,6 +49,14 @@ public class UniqueMembershipList implements Iterable<Membership> {
             throw new DuplicateMembershipException();
         }
         internalList.add(toAdd);
+    }
+
+    public Optional<Membership> getMembershipByPersonClub(Person person, Club club) {
+        requireAllNonNull(person, club);
+        return internalList.stream()
+                .filter(membership -> membership.getPerson().equals(person)
+                        && membership.getClub().equals(club))
+                .findFirst();
     }
 
     /**

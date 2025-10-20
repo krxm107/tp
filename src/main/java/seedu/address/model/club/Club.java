@@ -2,7 +2,6 @@ package seedu.address.model.club;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -102,34 +101,19 @@ public class Club {
     public boolean addMembership(Membership membership) {
         return memberships.add(membership);
     }
+
     /**
-     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
+     * Adds a person as a member of the club.
+     *
+     * @param person The person to be added as a member.
+     * @return true if the person was added successfully, false if they were already a member.
      */
-    public boolean addMember(Person person, String role) {
-        Membership newMembership = new Membership(person, this, LocalDate.now(), role);
+    public boolean addMember(Person person) {
+        Membership newMembership = new Membership(person, this);
 
         boolean added = this.memberships.add(newMembership);
 
         // If added successfully, update the person object as well
-        if (added) {
-            person.addMembership(newMembership);
-        }
-        return added;
-    }
-
-    /**
-     * Adds a member to the club with a specified join date.
-     * This is useful for adding historical members.
-     *
-     * @param person   The person to be added as a member.
-     * @param role     The role of the member in the club.
-     * @param joinDate The date the member joined the club.
-     * @return true if the member was added successfully, false if they were already a member.
-     */
-    public boolean addMember(Person person, String role, LocalDate joinDate) {
-        Membership newMembership = new Membership(person, this, joinDate, role);
-        boolean added = this.memberships.add(newMembership);
         if (added) {
             person.addMembership(newMembership);
         }

@@ -154,17 +154,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         memberships.add(membership);
     }
 
-    // get person by name directly from addressbook
-    @Override
-    public Optional<Person> getPersonByName(Name target) {
-        requireNonNull(target);
-        return persons.getPersonByName(target);
-    }
-
     @Override
     public Optional<Person> getPersonByEmail(Email email) {
         requireNonNull(email);
         return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
+    }
+
+    //todo: handle exception when membership not found
+    /**
+     * Renews the membership of a person in a club for the specified duration.
+     *
+     * @param person The person whose membership is to be renewed.
+     * @param club The club for which the membership is to be renewed.
+     * @param durationInMonths The duration in months for which the membership is to be renewed.
+     */
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.renew(durationInMonths);
+    }
+
+    /**
+     * This method should be run once per day to update the status
+     * of all memberships in the system.
+     */
+    public void updateMembershipStatus() {
+        // todo: use a logger instead of System.out.println
+        System.out.println("\n--- Performing membership status update... ---");
+        for (Membership m : memberships) {
+            m.updateStatus();
+        }
+        System.out.println("--- Update complete. ---\n");
     }
 
     @Override
