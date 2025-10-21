@@ -3,7 +3,10 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -79,6 +82,21 @@ public class CommandTestUtil {
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+
+    public static final int VALID_MEMBER_INDEX_1 = 1;
+    public static final int VALID_MEMBER_INDEX_2 = 2;
+    public static final int VALID_CLUB_INDEX_1 = 3;
+    public static final int VALID_CLUB_INDEX_2 = 4;
+    public static final int VALID_DURATION = 10;
+
+    public static final String VALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER
+            + VALID_MEMBER_INDEX_1 + " " + VALID_MEMBER_INDEX_2;
+    public static final String VALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB
+            + VALID_CLUB_INDEX_1 + " " + VALID_CLUB_INDEX_2;;
+    public static final String VALID_DURATION_DESC = " " + PREFIX_DURATION + VALID_DURATION;
+    public static final String INVALID_DURATION_DESC = " " + PREFIX_DURATION + "abc";
+    public static final String INVALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER + "1 a";
+    public static final String INVALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB + "b 2";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
