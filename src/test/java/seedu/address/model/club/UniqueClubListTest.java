@@ -42,9 +42,9 @@ public class UniqueClubListTest {
     @Test
     public void contains_clubWithSameIdentityFieldsInList_returnsTrue() {
         uniqueClubList.add(ARCHERY);
-        Club editedAlice = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Club editedArchery = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(uniqueClubList.contains(editedAlice));
+        assertTrue(uniqueClubList.contains(editedArchery));
     }
 
     @Test
@@ -85,11 +85,11 @@ public class UniqueClubListTest {
     @Test
     public void setClub_editedClubHasSameIdentity_success() {
         uniqueClubList.add(ARCHERY);
-        Club editedAlice = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Club editedArchery = new ClubBuilder(ARCHERY).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        uniqueClubList.setClub(ARCHERY, editedAlice);
+        uniqueClubList.setClub(ARCHERY, editedArchery);
         UniqueClubList expectedUniqueClubList = new UniqueClubList();
-        expectedUniqueClubList.add(editedAlice);
+        expectedUniqueClubList.add(editedArchery);
         assertEquals(expectedUniqueClubList, uniqueClubList);
     }
 
