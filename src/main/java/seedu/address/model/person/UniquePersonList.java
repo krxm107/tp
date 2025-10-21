@@ -18,12 +18,12 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * A list of persons that enforces distinctness between its elements and does not allow nulls.
- * A person is considered distinct by comparing using {@code Person#isSamePerson(Person)}.
+ * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}.
  * As such, adding and updating of
  * persons uses Person#isSamePerson(Person) for equality
  * so as to ensure that the person being added or updated is
- * distinct in terms of identity in the DistinctPersonList.
+ * unique in terms of identity in the UniquePersonList.
  * However, the removal of a person uses Person#equals(Object) so
  * as to ensure that the person with exactly the same fields will be removed.
  *
@@ -31,7 +31,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  *
  * @see Person#isSamePerson(Person)
  */
-public class DistinctPersonList implements Iterable<Person> {
+public class UniquePersonList implements Iterable<Person> {
 
     private final Callback<Person, Observable[]> extractor = person -> {
         // Create a stream of all the status properties from all memberships
@@ -111,7 +111,7 @@ public class DistinctPersonList implements Iterable<Person> {
         }
     }
 
-    public void setPersons(DistinctPersonList replacement) {
+    public void setPersons(UniquePersonList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -122,7 +122,7 @@ public class DistinctPersonList implements Iterable<Person> {
      */
     public void setPersons(List<Person> persons) {
         requireAllNonNull(persons);
-        if (!personsAreDistinct(persons)) {
+        if (!personsAreUnique(persons)) {
             throw new DuplicatePersonException();
         }
 
@@ -148,12 +148,12 @@ public class DistinctPersonList implements Iterable<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DistinctPersonList)) {
+        if (!(other instanceof UniquePersonList)) {
             return false;
         }
 
-        DistinctPersonList otherDistinctPersonList = (DistinctPersonList) other;
-        return internalList.equals(otherDistinctPersonList.internalList);
+        UniquePersonList otherUniquePersonList = (UniquePersonList) other;
+        return internalList.equals(otherUniquePersonList.internalList);
     }
 
     @Override
@@ -167,9 +167,9 @@ public class DistinctPersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns true if {@code persons} contains only distinct persons.
+     * Returns true if {@code persons} contains only unique persons.
      */
-    private boolean personsAreDistinct(List<Person> persons) {
+    private boolean personsAreUnique(List<Person> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
                 if (persons.get(i).isSamePerson(persons.get(j))) {

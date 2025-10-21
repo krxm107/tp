@@ -15,10 +15,10 @@ import seedu.address.model.membership.exceptions.MembershipNotFoundException;
 import seedu.address.model.person.Person;
 
 /**
- * A list of memberships that enforces distinctness between its elements and does not allow nulls.
- * A membership is considered distinct by comparing using {@code Membership#equals(Object)}.
+ * A list of memberships that enforces uniqueness between its elements and does not allow nulls.
+ * A membership is considered unique by comparing using {@code Membership#equals(Object)}.
  * As such, adding and updating of memberships uses Membership#equals(Object) for equality so as to ensure that
- * the membership being added or updated is distinct in terms of identity in the DistinctMembershipList.
+ * the membership being added or updated is unique in terms of identity in the UniqueMembershipList.
  * However, the removal of a membership also uses Membership#equals(Object) so as to ensure that the
  * membership with exactly the same fields will be removed.
  *
@@ -26,7 +26,7 @@ import seedu.address.model.person.Person;
  *
  * @see Membership#equals(Object)
  */
-public class DistinctMembershipList implements Iterable<Membership> {
+public class UniqueMembershipList implements Iterable<Membership> {
     private final ObservableList<Membership> internalList = FXCollections.observableArrayList();
     private final ObservableList<Membership> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
@@ -91,7 +91,7 @@ public class DistinctMembershipList implements Iterable<Membership> {
         }
     }
 
-    public void setMemberships(DistinctMembershipList replacement) {
+    public void setMemberships(UniqueMembershipList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -102,7 +102,7 @@ public class DistinctMembershipList implements Iterable<Membership> {
      */
     public void setMemberships(List<Membership> memberships) {
         requireAllNonNull(memberships);
-        if (!membershipsAreDistinct(memberships)) {
+        if (!membershipsAreUnique(memberships)) {
             throw new DuplicateMembershipException();
         }
 
@@ -128,12 +128,12 @@ public class DistinctMembershipList implements Iterable<Membership> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DistinctMembershipList)) {
+        if (!(other instanceof UniqueMembershipList)) {
             return false;
         }
 
-        DistinctMembershipList otherDistinctMembershipList = (DistinctMembershipList) other;
-        return internalList.equals(otherDistinctMembershipList.internalList);
+        UniqueMembershipList otherUniqueMembershipList = (UniqueMembershipList) other;
+        return internalList.equals(otherUniqueMembershipList.internalList);
     }
 
     @Override
@@ -147,9 +147,9 @@ public class DistinctMembershipList implements Iterable<Membership> {
     }
 
     /**
-     * Returns true if {@code memberships} contains only distinct memberships.
+     * Returns true if {@code memberships} contains only unique memberships.
      */
-    private boolean membershipsAreDistinct(List<Membership> memberships) {
+    private boolean membershipsAreUnique(List<Membership> memberships) {
         for (int i = 0; i < memberships.size() - 1; i++) {
             for (int j = i + 1; j < memberships.size(); j++) {
                 if (memberships.get(i).equals(memberships.get(j))) {

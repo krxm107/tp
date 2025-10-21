@@ -11,13 +11,13 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.DistinctClubList;
+import seedu.address.model.club.UniqueClubList;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
-import seedu.address.model.membership.DistinctMembershipList;
 import seedu.address.model.membership.Membership;
-import seedu.address.model.person.DistinctPersonList;
+import seedu.address.model.membership.UniqueMembershipList;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.util.SampleDataUtil;
 
 /**
@@ -28,9 +28,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
-    private final DistinctPersonList persons;
-    private final DistinctClubList clubs;
-    private final DistinctMembershipList memberships;
+    private final UniquePersonList persons;
+    private final UniqueClubList clubs;
+    private final UniqueMembershipList memberships;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -40,9 +40,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new DistinctPersonList();
-        clubs = new DistinctClubList();
-        memberships = new DistinctMembershipList();
+        persons = new UniquePersonList();
+        clubs = new UniqueClubList();
+        memberships = new UniqueMembershipList();
     }
 
     public AddressBook() {
@@ -162,7 +162,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public Optional<Person> getPersonByEmail(Email email) {
         requireNonNull(email);
-        return persons.getPersonByEmail(email); // Delegate this call to DistinctPersonList
+        return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
     }
 
     //todo: handle exception when membership not found

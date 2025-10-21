@@ -18,7 +18,7 @@ import seedu.address.model.membership.MembershipStatus;
  */
 class JsonAdaptedMembership {
 
-    // Assuming a Person is distinctly identified by their Email, and a Club by its Name.
+    // Assuming a Person is uniquely identified by their Email, and a Club by its Name.
     private final String personEmail;
     private final String clubName;
     private final String joinDate;
@@ -48,7 +48,7 @@ class JsonAdaptedMembership {
      */
     public JsonAdaptedMembership(Membership source) {
         // Adapt the model objects to their simple string IDs.
-        personEmail = source.getPerson().getEmail().value; // Or another distinct identifier
+        personEmail = source.getPerson().getEmail().value; // Or another unique identifier
         clubName = source.getClub().getName().fullName;
         joinDate = source.getJoinDate().toString();
         expiryDate = source.getExpiryDate().toString();

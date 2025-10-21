@@ -206,7 +206,7 @@ public class EditCommandTest {
         model.addPerson(alice);
         model.addPerson(bob);
 
-        // Change Bob's name to "Alice" but keep distinct email -> allowed
+        // Change Bob's name to "Alice" but keep unique email -> allowed
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName("Alice").build();
         EditCommand editBob = new EditCommand(Index.fromOneBased(2), descriptor);
 

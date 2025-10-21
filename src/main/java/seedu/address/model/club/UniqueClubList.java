@@ -18,17 +18,17 @@ import seedu.address.model.field.Name;
 import seedu.address.model.membership.Membership;
 
 /**
- * A list of clubs that enforces distinctness between its elements and does not allow nulls.
- * A club is considered distinct by comparing using {@code Club#isSameClub(Club)}. As such, adding and updating of
+ * A list of clubs that enforces uniqueness between its elements and does not allow nulls.
+ * A club is considered unique by comparing using {@code Club#isSameClub(Club)}. As such, adding and updating of
  * clubs uses Club#isSameClub(Club) for equality so as to ensure that the club being added or updated is
- * distinct in terms of identity in the DistinctClubList. However, the removal of a club uses Club#equals(Object) so
+ * unique in terms of identity in the UniqueClubList. However, the removal of a club uses Club#equals(Object) so
  * as to ensure that the club with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
  * @see Club#isSameClub(Club)
  */
-public class DistinctClubList implements Iterable<Club> {
+public class UniqueClubList implements Iterable<Club> {
 
     private final Callback<Club, Observable[]> extractor = club -> {
         // Create a stream of all the status properties from all memberships
@@ -100,7 +100,7 @@ public class DistinctClubList implements Iterable<Club> {
         }
     }
 
-    public void setClubs(DistinctClubList replacement) {
+    public void setClubs(UniqueClubList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
@@ -111,7 +111,7 @@ public class DistinctClubList implements Iterable<Club> {
      */
     public void setClubs(List<Club> clubs) {
         requireAllNonNull(clubs);
-        if (!clubsAreDistinct(clubs)) {
+        if (!clubsAreUnique(clubs)) {
             throw new DuplicateClubException();
         }
 
@@ -145,12 +145,12 @@ public class DistinctClubList implements Iterable<Club> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DistinctClubList)) {
+        if (!(other instanceof UniqueClubList)) {
             return false;
         }
 
-        DistinctClubList otherDistinctClubList = (DistinctClubList) other;
-        return internalList.equals(otherDistinctClubList.internalList);
+        UniqueClubList otherUniqueClubList = (UniqueClubList) other;
+        return internalList.equals(otherUniqueClubList.internalList);
     }
 
     @Override
@@ -164,9 +164,9 @@ public class DistinctClubList implements Iterable<Club> {
     }
 
     /**
-     * Returns true if {@code clubs} contains only distinct clubs.
+     * Returns true if {@code clubs} contains only unique clubs.
      */
-    private boolean clubsAreDistinct(List<Club> clubs) {
+    private boolean clubsAreUnique(List<Club> clubs) {
         for (int i = 0; i < clubs.size() - 1; i++) {
             for (int j = i + 1; j < clubs.size(); j++) {
                 if (clubs.get(i).isSameClub(clubs.get(j))) {
