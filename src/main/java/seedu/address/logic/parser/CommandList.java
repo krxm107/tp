@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A utility class to maintain a history of user-entered commands,
- * allowing navigation through previous and next commands.
+ * Maintains a list of previously entered commands and provides
+ * methods to retrieve previous or next commands for navigation.
  */
 public class CommandList {
     private static final List<String> COMMAND_LIST = new ArrayList<>();
     private static int currentCommand = 0;
 
     /**
-     * Adds a new command to the command history.
+     * Adds a command to the command history and updates the current command index.
      *
      * @param args The command string to add.
      */
@@ -22,7 +22,7 @@ public class CommandList {
     }
 
     /**
-     * Returns the previous command in the history, if available.
+     * Retrieves the previous command from the history.
      *
      * @return The previous command string.
      */
@@ -34,7 +34,7 @@ public class CommandList {
     }
 
     /**
-     * Returns the next command in the history, if available.
+     * Retrieves the next command from the history.
      *
      * @return The next command string.
      */
