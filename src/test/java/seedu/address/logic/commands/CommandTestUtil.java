@@ -96,8 +96,8 @@ public class CommandTestUtil {
     public static final String INVALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER + "1 a";
     public static final String INVALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB + "b 2";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
