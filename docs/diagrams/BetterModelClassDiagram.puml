@@ -5,12 +5,16 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 AddressBook *-right-> "1" UniquePersonList
+AddressBook *-right-> "1" UniqueClubList
+AddressBook *-right-> "1" UniqueMembershipList
 AddressBook *-right-> "1" UniqueTagList
 UniqueTagList -[hidden]down- UniquePersonList
 UniqueTagList -[hidden]down- UniquePersonList
 
 UniqueTagList -right-> "*" Tag
 UniquePersonList -right-> Person
+UniqueClubList -right-> Club
+UniqueMembershipList -right-> Membership
 
 Person -up-> "*" Tag
 
@@ -18,4 +22,14 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+
+Club -up-> "*" Tag
+
+Club *--> Name
+Club *--> Phone
+Club *--> Email
+Club *--> Address
+
+Membership *--> Person
+Membership *--> Club
 @enduml

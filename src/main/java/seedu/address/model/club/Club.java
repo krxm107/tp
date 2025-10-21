@@ -132,6 +132,7 @@ public class Club {
     }
 
     /**
+     * Removes membership from both the club and the person.
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
@@ -144,6 +145,7 @@ public class Club {
                     memberships.remove(membershipToRemove);
                     person.removeMembership(membershipToRemove); // Maintain bidirectional link
                 });
+        // Also remember to delete membership from ModelManager
     }
 
     /**
