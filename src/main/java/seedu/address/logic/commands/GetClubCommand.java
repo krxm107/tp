@@ -33,6 +33,10 @@ public class GetClubCommand extends Command {
     private final Index targetIndex;
     private final String keywords;
 
+    /**
+     * {@code keywords} refer to optional words used to specify what fields to copy.
+     * Is an empty string if no words were entered by the user.
+     */
     public GetClubCommand(Index targetIndex, String keywords) {
         this.targetIndex = targetIndex;
         this.keywords = keywords;

@@ -9,6 +9,9 @@ import java.awt.datatransfer.StringSelection;
  */
 public class CopyUtil {
 
+    /**
+     * Copies a string to the user's clipboard
+     */
     public static void copyTextToClipboard(String text) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection stringSelection = new StringSelection(text);
