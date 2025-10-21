@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonCommand;
+import seedu.address.logic.parser.search.SearchParser;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsTagsPredicate;
@@ -53,11 +53,11 @@ public class FindPersonCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         // invalid arguments
         assertParseFailure(parser, " a/ address",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPersonCommand.MESSAGE_USAGE));
 
         // search modifier without search parameter
         assertParseFailure(parser, " n/ t/ friends",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchParser.MESSAGE_USAGE));
     }
 
 }
