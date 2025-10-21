@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.parser.get;
 
 import static seedu.address.logic.Messages.format;
 
