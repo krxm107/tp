@@ -22,7 +22,7 @@ import seedu.address.logic.commands.FilterPersonCommand;
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListContactsCommand;
+import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.commands.ListMembershipCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
@@ -92,8 +92,8 @@ public class AddressBookParser {
         case FilterClubCommand.COMMAND_WORD:
             return new FilterClubCommandParser().parse(arguments);
 
-        case ListContactsCommand.COMMAND_WORD:
-            return new ListContactsCommand();
+        case ListAllCommand.COMMAND_WORD:
+            return new ListAllCommand();
 
         case FindPersonCommand.COMMAND_WORD:
             return new FindPersonCommandParser().parse(arguments);
