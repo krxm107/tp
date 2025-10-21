@@ -31,7 +31,7 @@ public class Membership {
     private final Person person;
     private final Club club;
     private final LocalDate joinDate;
-    private LocalDate expiryDate;
+    private ObjectProperty<LocalDate> expiryDate = new SimpleObjectProperty<>();
     private List<LocalDate> renewalHistory;
     private ObjectProperty<MembershipStatus> status = new SimpleObjectProperty<>();
 
@@ -51,7 +51,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
-        this.expiryDate = joinDate.plusMonths(membershipDurationInMonths);
+        this.expiryDate.set(joinDate.plusMonths(membershipDurationInMonths));
         this.renewalHistory = new ArrayList<>();
         this.status.set(MembershipStatus.ACTIVE);
     }
@@ -66,7 +66,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = joinDate;
-        this.expiryDate = expiryDate;
+        this.expiryDate.set(expiryDate);
         this.renewalHistory = renewalHistory;
         this.status.set(status);
     }
@@ -80,7 +80,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
-        this.expiryDate = joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS); // Default duration of 12 months
+        this.expiryDate.set(joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS)); // Default duration of 12 months
         this.renewalHistory = new ArrayList<>();
         this.status.set(MembershipStatus.ACTIVE);
     }
@@ -91,7 +91,7 @@ public class Membership {
      * @return true if the membership is active, false otherwise.
      */
     public boolean isActive() {
-        return this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate);
+        return this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate.get());
     }
 
     /**
@@ -99,7 +99,7 @@ public class Membership {
      * This should be called everytime we start the app.
      */
     public void updateStatus() {
-        if (this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate)) {
+        if (this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate.get())) {
             this.status.set(MembershipStatus.EXPIRED);
             logger.info("Membership for " + person.getName() + " has expired.");
         }
@@ -124,10 +124,10 @@ public class Membership {
 
         if (this.status.get() == MembershipStatus.EXPIRED) {
             // If expired, start new period from today
-            this.expiryDate = LocalDate.now().plusMonths(renewalDurationInMonths);
+            this.expiryDate.set(LocalDate.now().plusMonths(renewalDurationInMonths));
         } else {
             // If active, extend from current expiry date
-            this.expiryDate = this.expiryDate.plusMonths(renewalDurationInMonths);
+            this.expiryDate.set(this.expiryDate.get().plusMonths(renewalDurationInMonths));
         }
         this.renewalHistory.add(LocalDate.now());
         this.status.set(MembershipStatus.ACTIVE);
@@ -156,7 +156,7 @@ public class Membership {
     }
 
     public LocalDate getExpiryDate() {
-        return expiryDate;
+        return expiryDate.get();
     }
 
     public List<LocalDate> getRenewalHistory() {
@@ -165,6 +165,10 @@ public class Membership {
 
     public MembershipStatus getStatus() {
         return status.get();
+    }
+
+    public ObjectProperty<LocalDate> expiryDateProperty() {
+        return expiryDate;
     }
 
     public ObjectProperty<MembershipStatus> statusProperty() {
