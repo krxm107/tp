@@ -24,7 +24,6 @@ public final class PhoneTest {
     void constructorEdgeCaseMaxLengthIsAllowed() {
         String s = "1".repeat(PhoneValidator.MAX_DIGITS);
         assertDoesNotThrow(() -> new Phone(s));
-        // If your Phone has getValue(), replace toString() with getValue()
         assertEquals(s, new Phone(s).toString()); // toString returns original
     }
 

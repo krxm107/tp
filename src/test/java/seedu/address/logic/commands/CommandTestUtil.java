@@ -13,7 +13,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -21,7 +20,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
-import seedu.address.model.person.FilterPersonPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -98,8 +96,8 @@ public class CommandTestUtil {
     public static final String INVALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER + "1 a";
     public static final String INVALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB + "b 2";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
+    public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -160,9 +158,8 @@ public class CommandTestUtil {
     public static void showPersonAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new FilterPersonPredicate(Arrays.asList(splitName[0])));
+        Person target = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        model.updateFilteredPersonList(p -> p.equals(target));
 
         assertEquals(1, model.getFilteredPersonList().size());
     }

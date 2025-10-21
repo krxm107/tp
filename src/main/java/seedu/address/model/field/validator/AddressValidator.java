@@ -59,7 +59,6 @@ public final class AddressValidator {
 
     /**
      * Validates and returns the trimmed address, or throws {@link IllegalArgumentException}.
-     * Use this when you want a fail-fast path.
      */
     public static String validateOrThrow(String address, boolean allowEmpty) {
         if (!isValid(address, allowEmpty)) {
@@ -73,7 +72,7 @@ public final class AddressValidator {
     }
 
     /**
-     * Equality helper if you ever compare validators (not typically needed).
+     * Equality method for comparing validators.
      */
     @Override
     public boolean equals(Object o) {
