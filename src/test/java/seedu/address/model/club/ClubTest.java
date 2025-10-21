@@ -32,23 +32,36 @@ public class ClubTest {
         // null -> returns false
         assertFalse(ARCHERY.isSameClub(null));
 
-        // same name, all other attributes different -> returns false
+        // same name, all other attributes different -> returns true
         Club editedArchery = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(ARCHERY.isSameClub(editedArchery));
+        assertTrue(ARCHERY.isSameClub(editedArchery));
 
         // different name, all other attributes same -> returns true
         editedArchery = new ClubBuilder(ARCHERY).withName(VALID_NAME_BOB).build();
         assertTrue(ARCHERY.isSameClub(editedArchery));
 
         // name differs in case, all other attributes same -> returns true
-        Club editedBob = new ClubBuilder(BALL).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertTrue(BALL.isSameClub(editedBob));
+        Club editedBall = new ClubBuilder(BALL).withName(VALID_NAME_BOB.toLowerCase()).build();
+        assertTrue(BALL.isSameClub(editedBall));
 
         // name has trailing spaces, all other attributes same -> returns true
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
-        editedBob = new ClubBuilder(BALL).withName(nameWithTrailingSpaces).build();
-        assertTrue(BALL.isSameClub(editedBob));
+        editedBall = new ClubBuilder(BALL).withName(nameWithTrailingSpaces).build();
+        assertTrue(BALL.isSameClub(editedBall));
+
+        // same email, all other attributes different -> returns true
+        editedArchery = new ClubBuilder(ARCHERY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ARCHERY.isSameClub(editedArchery));
+
+        // different email, all other attributes same -> returns true
+        editedArchery = new ClubBuilder(ARCHERY).withEmail(VALID_EMAIL_BOB).build();
+        assertTrue(ARCHERY.isSameClub(editedArchery));
+
+        // email differs in case, all other attributes same -> returns true
+        editedBall = new ClubBuilder(BALL).withEmail(VALID_EMAIL_BOB.toLowerCase()).build();
+        assertTrue(BALL.isSameClub(editedBall));
     }
 
     @Test

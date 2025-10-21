@@ -6,12 +6,16 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 import seedu.address.model.club.exceptions.ClubNotFoundException;
 import seedu.address.model.club.exceptions.DuplicateClubException;
 import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 
 /**
  * A list of clubs that enforces uniqueness between its elements and does not allow nulls.
@@ -26,7 +30,22 @@ import seedu.address.model.field.Name;
  */
 public class UniqueClubList implements Iterable<Club> {
 
-    private final ObservableList<Club> internalList = FXCollections.observableArrayList();
+    private final Callback<Club, Observable[]> extractor = club -> {
+        // Create a stream of all the status properties from all memberships
+        Observable[] membershipStatuses = club.getMemberships().stream()
+                .map(Membership::statusProperty)
+                .toArray(Observable[]::new);
+
+        // Create a final observable array that contains:
+        // 1. The membership set itself (for additions/removals)
+        // 2. All the individual status properties (for status changes)
+        return Stream.concat(
+                Stream.of(club.getMemberships()),
+                Stream.of(membershipStatuses)
+        ).toArray(Observable[]::new);
+    };
+
+    private final ObservableList<Club> internalList = FXCollections.observableArrayList(extractor);
     private final ObservableList<Club> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
