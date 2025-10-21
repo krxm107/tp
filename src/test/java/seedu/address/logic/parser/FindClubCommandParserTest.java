@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindClubCommand;
-import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.search.SearchParser;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.ClubContainsKeywordsPredicate;
 import seedu.address.model.club.ClubContainsTagsPredicate;
@@ -53,11 +53,11 @@ public class FindClubCommandParserTest {
     public void parse_invalidArgs_throwsParseException() {
         // invalid arguments
         assertParseFailure(parser, " a/ address",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindClubCommand.MESSAGE_USAGE));
 
         // search modifier without search parameter
         assertParseFailure(parser, " n/ t/ NUS",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchParser.MESSAGE_USAGE));
     }
 
 }
