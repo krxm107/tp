@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
@@ -30,7 +32,7 @@ public class Club {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Set<Membership> memberships = new HashSet<>();
+    private final ObservableSet<Membership> memberships = FXCollections.observableSet(new HashSet<>());
 
     /**
      * Constructs a {@code Person}.
@@ -148,6 +150,10 @@ public class Club {
         // Also remember to delete membership from ModelManager
     }
 
+    public ObservableSet<Membership> getMemberships() {
+        return this.memberships;
+    }
+
     /**
      * Clears the list of members for this club
      */
@@ -156,10 +162,6 @@ public class Club {
             m.getPerson().removeMembership(m);
         }
         memberships.clear();
-    }
-
-    public Set<Membership> getMemberships() {
-        return Collections.unmodifiableSet(memberships);
     }
 
     /**
