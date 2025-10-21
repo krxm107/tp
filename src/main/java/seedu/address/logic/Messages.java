@@ -72,4 +72,66 @@ public class Messages {
         club.getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    /**
+     * Formats the {@code person}'s details to be copied to the user's clipboard.
+     * Details to be copied are specified by {@code args}.
+     */
+    public static String getPersonDetails(Person person, String args) {
+        if (args.isEmpty()) {
+            return format(person);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (args.contains("n")) {
+            sb.append(person.getName()).append(" ");
+        }
+        if (args.contains("p")) {
+            sb.append(person.getPhone()).append(" ");
+        }
+        if (args.contains("e")) {
+            sb.append(person.getEmail()).append(" ");
+        }
+        if (args.contains("a")) {
+            sb.append(person.getAddress()).append(" ");
+        }
+        if (args.contains("m")) {
+            person.getMemberships().stream().forEach(membership ->
+                    sb.append(membership.getClubName()).append(" "));
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Formats the {@code club}'s details to be copied to the user's clipboard.
+     * Details to be copied are specified by {@code args}.
+     */
+    public static String getClubDetails(Club club, String args) {
+        if (args.isEmpty()) {
+            return format(club);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if (args.contains("n")) {
+            sb.append(club.getName()).append(" ");
+        }
+        if (args.contains("p")) {
+            sb.append(club.getPhone()).append(" ");
+        }
+        if (args.contains("e")) {
+            sb.append(club.getEmail()).append(" ");
+        }
+        if (args.contains("a")) {
+            sb.append(club.getAddress()).append(" ");
+        }
+        if (args.contains("m")) {
+            club.getMemberships().stream().forEach(membership ->
+                    sb.append(membership.getPersonName()).append(" "));
+        }
+
+        return sb.toString();
+    }
 }
