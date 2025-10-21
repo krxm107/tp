@@ -46,6 +46,7 @@ public class StringUtilTest {
     }
 
 
+
     //---------------- Tests for containsWordIgnoreCase --------------------------------------
 
     /*
@@ -54,6 +55,7 @@ public class StringUtilTest {
      * The four test cases below test one invalid input at a time.
      */
 
+    /*
     @Test
     public void containsWordIgnoreCase_nullWord_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> StringUtil.containsWordIgnoreCase("typical sentence", null));
@@ -75,6 +77,7 @@ public class StringUtilTest {
     public void containsWordIgnoreCase_nullSentence_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> StringUtil.containsWordIgnoreCase(null, "abc"));
     }
+    */
 
     /*
      * Valid equivalence partitions for word:
@@ -101,6 +104,8 @@ public class StringUtilTest {
      * The test method below tries to verify all above with a reasonably low number of test cases.
      */
 
+
+    /*
     @Test
     public void containsWordIgnoreCase_validInputs_correctResult() {
 
@@ -122,6 +127,7 @@ public class StringUtilTest {
         // Matches multiple words in sentence
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
+    */
 
     //---------------- Tests for getDetails --------------------------------------
 

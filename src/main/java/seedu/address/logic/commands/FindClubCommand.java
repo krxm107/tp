@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.function.Predicate;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.parser.FindCommandPredicate;
+import seedu.address.logic.parser.search.SearchParser;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
@@ -18,15 +18,14 @@ public class FindClubCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clubs whose match all of "
             + "the specified search instructions and displays them as a list with index numbers."
-            + "For each instruction, multiple parameters may be provided, any of which may be used to match the target."
-            + "Parameters: /SEARCH_KEYWORD1 [SEARCH_PARAMETERS1] /SEARCH_KEYWORD2 [SEARCH_PARAMETERS2]...\n"
+            + SearchParser.MESSAGE_USAGE
             + "Search Keywords: /n - search by name /t - search by tag (name)\n"
             + "Example: " + COMMAND_WORD + " /n tennis basketball /t school t/NUS"
             + " - searches for all clubs tagged with 'school' and 'NUS' that contain either 'tennis' or 'basketball'";
 
-    private final Predicate<Club> predicate;
+    private final FindCommandPredicate<Club> predicate;
 
-    public FindClubCommand(Predicate<Club> predicate) {
+    public FindClubCommand(FindCommandPredicate<Club> predicate) {
         this.predicate = predicate;
     }
 
@@ -45,7 +44,7 @@ public class FindClubCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof FindClubCommand)) {
             return false;
         }
 

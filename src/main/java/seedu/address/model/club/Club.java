@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
@@ -30,7 +32,7 @@ public class Club {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Set<Membership> memberships = new HashSet<>();
+    private final ObservableSet<Membership> memberships = FXCollections.observableSet(new HashSet<>());
 
     /**
      * Constructs a {@code Person}.
@@ -83,7 +85,7 @@ public class Club {
     }
 
     /**
-     * Returns true if both clubs have the same name.
+     * Returns true if both clubs have the same name and / or the same email.
      * This defines a weaker notion of equality between two clubs.
      */
     public boolean isSameClub(Club otherClub) {
@@ -95,7 +97,7 @@ public class Club {
             return false;
         }
 
-        return otherClub.getEmail().equals(getEmail());
+        return otherClub.getName().equals(getName()) || otherClub.getEmail().equals(getEmail());
     }
 
     public boolean addMembership(Membership membership) {
@@ -132,6 +134,7 @@ public class Club {
     }
 
     /**
+     * Removes membership from both the club and the person.
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
@@ -144,6 +147,11 @@ public class Club {
                     memberships.remove(membershipToRemove);
                     person.removeMembership(membershipToRemove); // Maintain bidirectional link
                 });
+        // Also remember to delete membership from ModelManager
+    }
+
+    public ObservableSet<Membership> getMemberships() {
+        return this.memberships;
     }
 
     /**
@@ -154,10 +162,6 @@ public class Club {
             m.getPerson().removeMembership(m);
         }
         memberships.clear();
-    }
-
-    public Set<Membership> getMemberships() {
-        return Collections.unmodifiableSet(memberships);
     }
 
     /**
@@ -185,7 +189,6 @@ public class Club {
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, tags);
     }
 

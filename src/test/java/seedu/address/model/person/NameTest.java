@@ -88,8 +88,6 @@ public final class NameTest {
 
         @Test
         void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
-            // If your NameValidator.normalize lowercases for keying, these should be equal.
-            // If it preserves case, feel free to delete this test.
             Name a = new Name("JOHN DOE");
             Name b = new Name("john doe");
             assertEquals(a, b);
@@ -107,8 +105,6 @@ public final class NameTest {
     @Test
     void toStringReturnsOriginalInputNotNormalized() {
         Name n = new Name("  John   A.   Doe  ");
-        // equals/hashCode compare normalized versions,
-        // but toString() should return the raw original per your class.
         assertEquals("  John   A.   Doe  ", n.toString());
     }
 }

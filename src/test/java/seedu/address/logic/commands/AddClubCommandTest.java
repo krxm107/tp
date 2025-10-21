@@ -58,16 +58,16 @@ public final class AddClubCommandTest {
 
     @Test
     public void equals() {
-        Club alice = new ClubBuilder().withName("Alice").build();
+        Club archery = new ClubBuilder().withName("Alice").build();
         Club bob = new ClubBuilder().withName("Bob").build();
-        AddClubCommand addAliceCommand = new AddClubCommand(alice);
+        AddClubCommand addAliceCommand = new AddClubCommand(archery);
         AddClubCommand addBobCommand = new AddClubCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddClubCommand addAliceCommandCopy = new AddClubCommand(alice);
+        AddClubCommand addAliceCommandCopy = new AddClubCommand(archery);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false

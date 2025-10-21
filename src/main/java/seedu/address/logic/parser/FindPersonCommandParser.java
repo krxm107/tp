@@ -4,9 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.function.Predicate;
-
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.search.PersonNameParser;
@@ -24,20 +21,20 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindPersonCommand parse(String args) throws ParseException {
-        Predicate<Person> predicate = person -> true;
+        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_TAG);
 
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPersonCommand.MESSAGE_USAGE));
         }
 
         for (String prefix : argMultimap.getAllValues(PREFIX_NAME)) {
-            predicate = predicate.and(PersonNameParser.parse(prefix));
+            predicate.add(new PersonNameParser().parse(prefix));
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
-            predicate = predicate.and(PersonTagParser.parse(prefix));
+            predicate.add(new PersonTagParser().parse(prefix));
         }
 
         return new FindPersonCommand(predicate);
