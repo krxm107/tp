@@ -104,7 +104,7 @@ public class RemoveFromCommand extends Command {
                 personNamesBuilder.append(personName).append(", ");
 
                 club.removeMember(person);
-                // this is to keep track of the generic Membership without caring about role, etc
+                // Model also keep track of memberships
                 model.deleteMembership(toRemove);
             }
             // Also handle the case where no new memberships were added
