@@ -73,6 +73,10 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code person}'s details to be copied to the user's clipboard.
+     * Details to be copied are specified by {@code args}.
+     */
     public static String getPersonDetails(Person person, String args) {
         if (args.isEmpty()) {
             return format(person);
@@ -83,19 +87,15 @@ public class Messages {
         if(args.contains("n")) {
             sb.append(person.getName()).append(" ");
         }
-
         if(args.contains("p")) {
             sb.append(person.getPhone()).append(" ");
         }
-
         if(args.contains("e")) {
             sb.append(person.getEmail()).append(" ");
         }
-
         if(args.contains("a")) {
             sb.append(person.getAddress()).append(" ");
         }
-
         if(args.contains("m")) {
             person.getMemberships().stream().forEach(membership ->
                     sb.append(membership.getClubName()).append(" "));
@@ -104,6 +104,10 @@ public class Messages {
         return sb.toString();
     }
 
+    /**
+     * Formats the {@code club}'s details to be copied to the user's clipboard.
+     * Details to be copied are specified by {@code args}.
+     */
     public static String getClubDetails(Club club, String args) {
         if (args.isEmpty()) {
             return format(club);
@@ -112,25 +116,17 @@ public class Messages {
         StringBuilder sb = new StringBuilder();
 
         if(args.contains("n")) {
-            sb.append(club.getName());
-            sb.append(" ");
+            sb.append(club.getName()).append(" ");
         }
-
         if(args.contains("p")) {
-            sb.append(club.getPhone());
-            sb.append(" ");
+            sb.append(club.getPhone()).append(" ");
         }
-
         if(args.contains("e")) {
-            sb.append(club.getEmail());
-            sb.append(" ");
+            sb.append(club.getEmail()).append(" ");
         }
-
         if(args.contains("a")) {
-            sb.append(club.getAddress());
-            sb.append(" ");
+            sb.append(club.getAddress()).append(" ");
         }
-
         if(args.contains("m")) {
             club.getMemberships().stream().forEach(membership ->
                     sb.append(membership.getPersonName()).append(" "));

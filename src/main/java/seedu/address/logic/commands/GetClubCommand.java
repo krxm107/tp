@@ -12,14 +12,20 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
+/**
+ * Copies the details of a club, identified using it's displayed index, to the user's clipboard.
+ */
 public class GetClubCommand extends Command {
 
     public static final String COMMAND_WORD = "get_club";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Copies the club identified by the index number to the user's clipboard.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Copies all details of a club identified by the index number to the user's clipboard.\n"
+            + "Optional keywords may be added to copy specified fields only\n"
+            + "Keywords: n - name, p - phone, e - email, a - address, m - members\n"
+            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
+            + "Example: " + COMMAND_WORD + " 1 - copies all details fully labeled\n"
+            + "Example: " + COMMAND_WORD + " 1 /p - copies phone number only";
 
     public static final String MESSAGE_GET_CLUB_SUCCESS = "Copied: %1$s";
     public static final String MESSAGE_GET_CLUB_FAILURE = "Failed to copy club to clipboard";
