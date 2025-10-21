@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -119,5 +120,21 @@ public class RemoveFromCommand extends Command {
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RemoveFromCommand)) {
+            return false;
+        }
+
+        RemoveFromCommand otherRemoveFromCommand = (RemoveFromCommand) other;
+        return Arrays.equals(personIndexes, otherRemoveFromCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherRemoveFromCommand.clubIndexes);
     }
 }

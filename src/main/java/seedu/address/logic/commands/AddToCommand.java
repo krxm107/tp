@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -145,6 +146,23 @@ public class AddToCommand extends Command {
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddToCommand)) {
+            return false;
+        }
+
+        AddToCommand otherAddToCommand = (AddToCommand) other;
+        return Arrays.equals(personIndexes, otherAddToCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherAddToCommand.clubIndexes)
+                && durationInMonths == otherAddToCommand.durationInMonths;
     }
 }
 
