@@ -1,5 +1,16 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_ART;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_ART;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_ART;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_ART;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BIG;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CASUAL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +41,13 @@ public class TypicalClubs {
             .withEmail("french@example.com").withAddress("little tokyo").build();
     public static final Club GAME = new ClubBuilder().withName("Games Club").withPhone("9482442")
             .withEmail("game@example.com").withAddress("4th street").build();
+
+    // Manually added - Club's details found in {@code CommandTestUtil}
+    public static final Club ART = new ClubBuilder().withName(VALID_NAME_ART).withPhone(VALID_PHONE_ART)
+            .withEmail(VALID_EMAIL_ART).withAddress(VALID_ADDRESS_ART).withTags(VALID_TAG_CASUAL).build();
+    public static final Club BOOKS = new ClubBuilder().withName(VALID_NAME_BOOKS).withPhone(VALID_PHONE_BOOKS)
+            .withEmail(VALID_EMAIL_BOOKS).withAddress(VALID_ADDRESS_BOOKS).withTags(VALID_TAG_BIG, VALID_TAG_CASUAL)
+            .build();
 
     private TypicalClubs() {} // prevents instantiation
 

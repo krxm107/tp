@@ -3,7 +3,10 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -47,6 +50,28 @@ public class CommandTestUtil {
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
+    public static final String VALID_NAME_ART = "Art Club";
+    public static final String VALID_NAME_BOOKS = "Book Club";
+    public static final String VALID_PHONE_ART = "11111111";
+    public static final String VALID_PHONE_BOOKS = "22222222";
+    public static final String VALID_EMAIL_ART = "art@example.com";
+    public static final String VALID_EMAIL_BOOKS = "book@example.com";
+    public static final String VALID_ADDRESS_ART = "Block 312, Art Street 1";
+    public static final String VALID_ADDRESS_BOOKS = "Block 123, Book Street 3";
+    public static final String VALID_TAG_BIG = "big";
+    public static final String VALID_TAG_CASUAL = "casual";
+
+    public static final String NAME_DESC_ART = " " + PREFIX_NAME + VALID_NAME_ART;
+    public static final String NAME_DESC_BOOKS = " " + PREFIX_NAME + VALID_NAME_BOOKS;
+    public static final String PHONE_DESC_ART = " " + PREFIX_PHONE + VALID_PHONE_ART;
+    public static final String PHONE_DESC_BOOKS = " " + PREFIX_PHONE + VALID_PHONE_BOOKS;
+    public static final String EMAIL_DESC_ART = " " + PREFIX_EMAIL + VALID_EMAIL_ART;
+    public static final String EMAIL_DESC_BOOKS = " " + PREFIX_EMAIL + VALID_EMAIL_BOOKS;
+    public static final String ADDRESS_DESC_ART = " " + PREFIX_ADDRESS + VALID_ADDRESS_ART;
+    public static final String ADDRESS_DESC_BOOKS = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOOKS;
+    public static final String TAG_DESC_BIG = " " + PREFIX_TAG + VALID_TAG_BIG;
+    public static final String TAG_DESC_CASUAL = " " + PREFIX_TAG + VALID_TAG_CASUAL;
+
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
@@ -56,8 +81,23 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
+    public static final int VALID_MEMBER_INDEX_1 = 1;
+    public static final int VALID_MEMBER_INDEX_2 = 2;
+    public static final int VALID_CLUB_INDEX_1 = 3;
+    public static final int VALID_CLUB_INDEX_2 = 4;
+    public static final int VALID_DURATION = 10;
+
+    public static final String VALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER
+            + VALID_MEMBER_INDEX_1 + " " + VALID_MEMBER_INDEX_2;
+    public static final String VALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB
+            + VALID_CLUB_INDEX_1 + " " + VALID_CLUB_INDEX_2;;
+    public static final String VALID_DURATION_DESC = " " + PREFIX_DURATION + VALID_DURATION;
+    public static final String INVALID_DURATION_DESC = " " + PREFIX_DURATION + "abc";
+    public static final String INVALID_MEMBER_INDEX_DESC = " " + PREFIX_MEMBER + "1 a";
+    public static final String INVALID_CLUB_INDEX_DESC = " " + PREFIX_CLUB + "b 2";
+
+    public static final EditCommand.EditPersonDescriptor DESC_AMY;
+    public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
