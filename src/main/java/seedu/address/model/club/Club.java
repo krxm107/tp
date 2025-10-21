@@ -153,6 +153,16 @@ public class Club {
     }
 
     /**
+     * Clears the list of members for this club
+     */
+    public void clearMembers() {
+        for (Membership m : memberships) {
+            m.getPerson().removeMembership(m);
+        }
+        memberships.clear();
+    }
+
+    /**
      * Returns true if both clubs have the same identity and data fields.
      * This defines a stronger notion of equality between two clubs.
      */

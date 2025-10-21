@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.field.validator;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Validates and normalizes person names for add_person.
  * Rules:
- *  - 1–100 chars after stripping.
+ *  - 1–75 chars after stripping.
  *  - Allow ASCII letters A–Z, a–z, digits 0–9, marks, spaces, hyphens, apostrophes, periods, and slashes (/).
  *  - Collapse internal whitespace to single spaces.
  *  - Name key is case-insensitive and space-collapsed; useful for duplicate detection.
@@ -21,7 +21,11 @@ public final class NameValidator {
             Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
-    private static final int MAX_LEN = 100;
+    private static final int MAX_LEN = 75;
+
+    public static final String LENGTH_BOUND_WARNING =
+            String.format("Names should have at least %d character "
+                    + "and at most %d characters.", MIN_LEN, MAX_LEN);
 
     private NameValidator() {
 
