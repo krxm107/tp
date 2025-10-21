@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -20,7 +21,17 @@ import seedu.address.model.field.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new AddClubCommand object
+ * Parses input arguments and creates a new {@link AddClubCommand} object.
+ *
+ * <p>
+ * The {@code p/PHONE} prefix is optional. If omitted, the created {@code Person}
+ * will have an empty {@code Phone} instance.
+ * </p>
+ *
+ * <p>
+ * The {@code a/ADDRESS} prefix is optional. If omitted, the created {@code Person}
+ * will have an empty {@code Address} instance.
+ * </p>
  */
 public class AddClubCommandParser implements Parser<AddClubCommand> {
 
@@ -29,30 +40,50 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
      * and returns an AddClubCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public AddClubCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        requireNonNull(args);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)
+        // include PREFIX_PHONE in tokenize so it can be parsed if present
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
+
+        // ✅ Only these are required: NAME, EMAIL
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+        // duplicates check is fine even if phone is absent
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
+
+        // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
+        final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
+
+        final Address address = (rawAddress == null || rawAddress.strip().isEmpty())
+                ? new Address("") // optional / absent address
+                : ParserUtil.parseAddress(rawAddress); // validate only if non-empty
+
+        // Phone is optional. If the user supplies `p/` with no value, it is treated as absent.
+        final String rawPhone = argMultimap.getValue(PREFIX_PHONE).orElse(null);
+
+        final Phone phone = (rawPhone == null || rawPhone.strip().isEmpty())
+                ? new Phone("") // optional / absent phone
+                : ParserUtil.parsePhone(rawPhone); // validate only if non-empty
+
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Club club = new Club(name, phone, email, address, tagList);
+        Club person = new Club(name, phone, email, address, tagList);
 
-        return new AddClubCommand(club);
+        return new AddClubCommand(person);
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
+     * Returns true if all the given prefixes are present in the given ArgumentMultimap.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());

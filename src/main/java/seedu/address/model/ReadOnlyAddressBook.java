@@ -25,8 +25,6 @@ public interface ReadOnlyAddressBook {
 
     ObservableList<Membership> getMembershipList();
 
-    Optional<Person> getPersonByName(Name name);
-
     Optional<Person> getPersonByEmail(Email email);
 
     Optional<Club> getClubByName(Name name);

@@ -48,6 +48,8 @@ public class ModelManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        // Update membership status upon initialization
+        this.addressBook.updateMembershipStatus();
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.filteredClubs = new FilteredList<>(this.addressBook.getClubList());
@@ -126,6 +128,10 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteClub(Club target) {
+        // delete all memberships related to the club
+        for (Membership m : target.getMemberships()) {
+            this.deleteMembership(m);
+        }
         addressBook.removeClub(target);
     }
 
@@ -191,6 +197,12 @@ public class ModelManager implements Model {
 
 
     //=========== Filtered Membership List Accessors =============================================================
+
+    @Override
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        addressBook.renewMembership(person, club, durationInMonths);
+    }
 
     @Override
     public ObservableList<Membership> getFilteredMembershipList() {

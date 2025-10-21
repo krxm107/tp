@@ -3,9 +3,11 @@ package seedu.address.ui;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.CommandList;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -27,7 +29,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(CommandExecutor commandExecutor) {
         super(FXML);
         this.commandExecutor = commandExecutor;
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // Calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
@@ -37,7 +39,7 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandEntered() {
         String commandText = commandTextField.getText();
-        if (commandText.equals("")) {
+        if (commandText.isEmpty()) {
             return;
         }
 
@@ -46,6 +48,27 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setText("");
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
+        }
+    }
+
+    /**
+     * Handles the UP / DOWN button pressed event.
+     */
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        String command = "";
+
+        switch (event.getCode()) {
+        case UP:
+            command = CommandList.getPrevCommand();
+            commandTextField.setText(command);
+            break;
+        case DOWN:
+            command = CommandList.getNextCommand();
+            commandTextField.setText(command);
+            break;
+        default:
+            break;
         }
     }
 
@@ -81,5 +104,4 @@ public class CommandBox extends UiPart<Region> {
          */
         CommandResult execute(String commandText) throws CommandException, ParseException;
     }
-
 }

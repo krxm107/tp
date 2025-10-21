@@ -32,20 +32,20 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same name, all other attributes different -> returns true
+        // same name, all other attributes different -> returns false
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
-
-        // different name, all other attributes same -> returns false
-        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
+        // different name, all other attributes same -> returns true
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
+
+        // name differs in case, all other attributes same -> returns true
         Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
         assertTrue(BOB.isSamePerson(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, all other attributes same -> returns true
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertTrue(BOB.isSamePerson(editedBob));
@@ -95,5 +95,37 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
+    }
+
+    @Test
+    public void isSamePerson_sameObject_returnsTrue() {
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        assertTrue(alice.isSamePerson(alice));
+    }
+
+    @Test
+    public void isSamePerson_null_returnsFalse() {
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        assertFalse(alice.isSamePerson(null));
+    }
+
+    @Test
+    public void isSamePerson_sameEmailDifferentOtherFields_returnsTrue() {
+        Person base = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com")
+                .withAddress("123, Jurong West Ave 6, #08-111").withPhone("94351253").build();
+        // same email, different name/phone/address
+        Person variant = new PersonBuilder(base).withName("Alice P.")
+                .withPhone("00000000").withAddress("Somewhere else").build();
+        // Keep same email explicitly
+        variant = new PersonBuilder(variant).withEmail("alice@example.com").build();
+
+        assertTrue(base.isSamePerson(variant));
+    }
+
+    @Test
+    public void isSamePerson_differentEmailSameName_returnsFalse() {
+        Person base = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        Person differentEmail = new PersonBuilder(base).withEmail("alice+1@example.com").build();
+        assertFalse(base.isSamePerson(differentEmail));
     }
 }

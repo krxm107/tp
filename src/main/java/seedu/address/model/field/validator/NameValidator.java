@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.field.validator;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Validates and normalizes person names for add_person.
  * Rules:
- *  - 1–100 chars after trimming.
+ *  - 1–75 chars after stripping.
  *  - Allow ASCII letters A–Z, a–z, digits 0–9, marks, spaces, hyphens, apostrophes, periods, and slashes (/).
  *  - Collapse internal whitespace to single spaces.
  *  - Name key is case-insensitive and space-collapsed; useful for duplicate detection.
@@ -21,7 +21,11 @@ public final class NameValidator {
             Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
-    private static final int MAX_LEN = 100;
+    private static final int MAX_LEN = 75;
+
+    public static final String LENGTH_BOUND_WARNING =
+            String.format("Names should have at least %d character "
+                    + "and at most %d characters.", MIN_LEN, MAX_LEN);
 
     private NameValidator() {
 
@@ -49,7 +53,7 @@ public final class NameValidator {
         final int len = normalized.length();
 
         if (len < MIN_LEN) {
-            return ValidationResult.fail("Name cannot be empty after trimming.");
+            return ValidationResult.fail("Name cannot be empty after stripping.");
         }
         if (len > MAX_LEN) {
             return ValidationResult.fail("Name exceeds " + MAX_LEN + " characters.");
@@ -65,10 +69,10 @@ public final class NameValidator {
         return ValidationResult.ok(normalized);
     }
 
-    /** Collapse whitespace, trim, and apply Unicode NFKC normalization. */
+    /** Collapse whitespace, strip, and apply Unicode NFKC normalization. */
     public static String normalize(String raw) {
         String s = Normalizer.normalize(Objects.toString(raw, ""), Normalizer.Form.NFKC);
-        s = s.trim();
+        s = s.strip();
         s = MULTI_SPACE.matcher(s).replaceAll(" ");
         return s;
     }
@@ -76,7 +80,7 @@ public final class NameValidator {
     /** Case-insensitive, space-collapsed key for duplicate checks. */
     public static String nameKey(String raw) {
         String n = normalize(raw).toLowerCase();
-        n = MULTI_SPACE.matcher(n).replaceAll(" ").trim();
+        n = MULTI_SPACE.matcher(n).replaceAll(" ").strip();
         return n;
     }
 

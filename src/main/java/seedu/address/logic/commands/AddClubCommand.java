@@ -16,7 +16,9 @@ import seedu.address.model.club.Club;
 /**
  * Adds a club to the address book.
  *
- * Good test case: add_club n/Tennis Club p/98765432 e/johnd@example.com a/John street, block 123, #01-01
+ * <p>
+ * Phone number and address are optional — the user may omit {@code p/PHONE} and {@code ADDRESS}.
+ * </p>
  */
 public class AddClubCommand extends Command {
 
@@ -25,17 +27,20 @@ public class AddClubCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a club to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_NAME + "Basketball "
+            + PREFIX_EMAIL + "basketball@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_TAG + "advanced "
+            + PREFIX_TAG + "competitive\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "Gymnastics "
+            + PREFIX_EMAIL + "gymnastics@abc.com ";
 
     public static final String MESSAGE_SUCCESS = "New club added: %1$s";
     public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book";

@@ -5,8 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.UniqueClubList;
@@ -23,6 +25,9 @@ import seedu.address.model.util.SampleDataUtil;
  * Duplicates are not allowed (by .isSamePerson comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
+
+    private final Logger logger = LogsCenter.getLogger(AddressBook.class);
+
     private final UniquePersonList persons;
     private final UniqueClubList clubs;
     private final UniqueMembershipList memberships;
@@ -154,17 +159,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         memberships.add(membership);
     }
 
-    // get person by name directly from addressbook
-    @Override
-    public Optional<Person> getPersonByName(Name target) {
-        requireNonNull(target);
-        return persons.getPersonByName(target);
-    }
-
     @Override
     public Optional<Person> getPersonByEmail(Email email) {
         requireNonNull(email);
         return persons.getPersonByEmail(email); // Delegate this call to UniquePersonList
+    }
+
+    //todo: handle exception when membership not found
+    /**
+     * Renews the membership of a person in a club for the specified duration.
+     *
+     * @param person The person whose membership is to be renewed.
+     * @param club The club for which the membership is to be renewed.
+     * @param durationInMonths The duration in months for which the membership is to be renewed.
+     */
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.renew(durationInMonths);
+    }
+
+    /**
+     * This method should be run once per day to update the status
+     * of all memberships in the system.
+     */
+    public void updateMembershipStatus() {
+        // todo: use a logger instead of System.out.println
+        logger.info("Performing membership status update...");
+        for (Membership m : memberships) {
+            m.updateStatus();
+        }
+        logger.info("Membership status update completed.");
     }
 
     @Override

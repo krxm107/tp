@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -181,4 +183,33 @@ public class EditCommandTest {
         assertEquals(expected, editCommand.toString());
     }
 
+    @Test
+    public void execute_editToDuplicateEmail_failure() {
+        Model model = new ModelManager();
+        Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
+        model.addPerson(alice);
+        model.addPerson(bob);
+
+        // Try to change Bob's email to Alice's -> should fail
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withEmail("alice@example.com").build();
+        EditCommand editBob = new EditCommand(Index.fromOneBased(2), descriptor);
+
+        assertThrows(CommandException.class, () -> editBob.execute(model));
+    }
+
+    @Test
+    public void execute_editToDuplicateName_success() throws Exception {
+        Model model = new ModelManager();
+        Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
+        model.addPerson(alice);
+        model.addPerson(bob);
+
+        // Change Bob's name to "Alice" but keep unique email -> allowed
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName("Alice").build();
+        EditCommand editBob = new EditCommand(Index.fromOneBased(2), descriptor);
+
+        editBob.execute(model); // success if no exception
+    }
 }

@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.person;
 
@@ -36,12 +36,12 @@ public final class NameTest {
     }
 
     /**
-     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     * Boundary value testing heuristic is applied to test that the max string length of 75 is valid.
      */
     @Test
     void testMaxLengthIsAllowed() {
-        // 98 'A' + " B" => 100 chars
-        String s = "A".repeat(98) + " B";
+        // 73 'A' + " B" => 75 chars
+        String s = "A".repeat(73) + " B";
         assertDoesNotThrow(() -> new Name(s));
         assertEquals(s, new Name(s).toString()); // toString returns original
     }
