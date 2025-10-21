@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_ART;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_BALL;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -12,8 +14,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showClubAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLUB;
 import static seedu.address.testutil.TypicalClubs.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -41,10 +43,10 @@ public class EditClubCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Club editedClub = new ClubBuilder().build();
         EditClubDescriptor descriptor = new EditClubDescriptorBuilder(editedClub).build();
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_PERSON, descriptor);
+        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, descriptor);
 
         String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
                         Messages.format(editedClub));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -67,7 +69,7 @@ public class EditClubCommandTest {
         EditClubCommand editClubCommand = new EditClubCommand(indexLastClub, descriptor);
 
         String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
                         Messages.format(editedClub));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -78,11 +80,11 @@ public class EditClubCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_PERSON, new EditClubDescriptor());
-        Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
+        Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
 
         String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
                         Messages.format(editedClub));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -92,15 +94,15 @@ public class EditClubCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        showClubAtIndex(model, INDEX_FIRST_PERSON);
+        showClubAtIndex(model, INDEX_FIRST_CLUB);
 
-        Club clubInFilteredList = model.getFilteredClubList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Club clubInFilteredList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         Club editedClub = new ClubBuilder(clubInFilteredList).withName(VALID_NAME_BOB).build();
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_PERSON,
+        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB,
                 new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
                         Messages.format(editedClub));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -111,23 +113,23 @@ public class EditClubCommandTest {
 
     @Test
     public void execute_duplicateClubUnfilteredList_failure() {
-        Club firstClub = model.getFilteredClubList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Club firstClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         EditClubDescriptor descriptor = new EditClubDescriptorBuilder(firstClub).build();
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_SECOND_PERSON, descriptor);
+        EditClubCommand editClubCommand = new EditClubCommand(INDEX_SECOND_CLUB, descriptor);
 
-        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_CLUB);
     }
 
     @Test
     public void execute_duplicateClubFilteredList_failure() {
-        showClubAtIndex(model, INDEX_FIRST_PERSON);
+        showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         // edit club in filtered list into a duplicate in address book
-        Club clubInList = model.getAddressBook().getClubList().get(INDEX_SECOND_PERSON.getZeroBased());
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_PERSON,
+        Club clubInList = model.getAddressBook().getClubList().get(INDEX_SECOND_CLUB.getZeroBased());
+        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB,
                 new EditClubDescriptorBuilder(clubInList).build());
 
-        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_CLUB);
     }
 
     @Test
@@ -136,7 +138,7 @@ public class EditClubCommandTest {
         EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditClubCommand editClubCommand = new EditClubCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     /**
@@ -145,24 +147,24 @@ public class EditClubCommandTest {
      */
     @Test
     public void execute_invalidClubIndexFilteredList_failure() {
-        showClubAtIndex(model, INDEX_FIRST_PERSON);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        showClubAtIndex(model, INDEX_FIRST_CLUB);
+        Index outOfBoundIndex = INDEX_SECOND_CLUB;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
 
         EditClubCommand editClubCommand = new EditClubCommand(outOfBoundIndex,
                 new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        final EditClubCommand standardCommand = new EditClubCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditClubCommand standardCommand = new EditClubCommand(INDEX_FIRST_CLUB, DESC_ART);
 
         // same values -> returns true
-        EditClubDescriptor copyDescriptor = new EditClubDescriptor(DESC_AMY);
-        EditClubCommand commandWithSameValues = new EditClubCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        EditClubDescriptor copyDescriptor = new EditClubDescriptor(DESC_ART);
+        EditClubCommand commandWithSameValues = new EditClubCommand(INDEX_FIRST_CLUB, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -175,10 +177,10 @@ public class EditClubCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_CLUB, DESC_ART)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditClubCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditClubCommand(INDEX_FIRST_CLUB, DESC_BALL)));
     }
 
     @Test

@@ -21,6 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.EditClubDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -99,12 +100,23 @@ public class CommandTestUtil {
     public static final EditPersonCommand.EditPersonDescriptor DESC_AMY;
     public static final EditPersonCommand.EditPersonDescriptor DESC_BOB;
 
+    public static final EditClubCommand.EditClubDescriptor DESC_ART;
+    public static final EditClubCommand.EditClubDescriptor DESC_BALL;
+            
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_ART = new EditClubDescriptorBuilder().withName(VALID_NAME_ART)
+                .withPhone(VALID_PHONE_ART).withEmail(VALID_EMAIL_ART).withAddress(VALID_ADDRESS_ART)
+                .withTags(VALID_TAG_CASUAL).build();
+        
+        DESC_BALL = new EditClubDescriptorBuilder().withName(VALID_NAME_BOOKS)
+                .withPhone(VALID_PHONE_BOOKS).withEmail(VALID_EMAIL_BOOKS).withAddress(VALID_ADDRESS_BOOKS)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
