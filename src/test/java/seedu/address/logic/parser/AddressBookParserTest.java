@@ -75,7 +75,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + ClubUtil.getEditClubDescriptorDetails(descriptor));
         assertEquals(new EditClubCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
-    
+
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
