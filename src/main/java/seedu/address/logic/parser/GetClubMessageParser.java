@@ -17,10 +17,9 @@ public class GetClubMessageParser {
     public String parse(Club club, String args) {
         if (args.isEmpty()) {
             return format(club);
-        }
-        /*else if (args.trim().equals("full")) {
-           return getFullClubDetails(club);
-        } */else {
+        } else if (args.trim().equals("full")) {
+            return getFullClubDetails(club);
+        } else {
             return getClubDetails(club, args);
         }
     }
@@ -42,6 +41,14 @@ public class GetClubMessageParser {
         if (args.contains("m")) {
             club.getMemberships().stream().forEach(membership ->
                     sb.append(membership.getPersonName()).append(" "));
+        }
+        return sb.toString();
+    }
+
+    private String getFullClubDetails(Club club) {
+        StringBuilder sb = new StringBuilder(format(club));
+        for (Membership memberships : club.getMemberships()) {
+            sb.append("\n").append(format(memberships.getPerson()));
         }
         return sb.toString();
     }
