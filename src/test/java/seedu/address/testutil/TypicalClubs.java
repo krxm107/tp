@@ -1,13 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.model.AddressBook;
-import seedu.address.model.club.Club;
-import seedu.address.model.person.Person;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_ART;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_ART;
@@ -18,6 +10,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_ART;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BIG;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CASUAL;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.club.Club;
 
 /**
  * A utility class containing a list of {@code Club} objects to be used in tests.

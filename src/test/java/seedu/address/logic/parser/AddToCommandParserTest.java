@@ -1,20 +1,17 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_1;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION_DESC;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_CLUB_INDEX_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DURATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_MEMBER_INDEX_DESC;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLUB_INDEX_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DURATION_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_MEMBER_INDEX_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -31,8 +28,10 @@ public class AddToCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Index[] expectedMemberIndexes = new Index[] { Index.fromOneBased(VALID_MEMBER_INDEX_1), Index.fromOneBased(VALID_MEMBER_INDEX_2) };
-        Index[] expectedClubIndexes = new Index[] { Index.fromOneBased(VALID_CLUB_INDEX_1), Index.fromOneBased(VALID_CLUB_INDEX_2) };
+        Index[] expectedMemberIndexes = new Index[] { Index.fromOneBased(VALID_MEMBER_INDEX_1),
+                Index.fromOneBased(VALID_MEMBER_INDEX_2) };
+        Index[] expectedClubIndexes = new Index[] { Index.fromOneBased(VALID_CLUB_INDEX_1),
+                Index.fromOneBased(VALID_CLUB_INDEX_2) };
 
         // with duration
         assertParseSuccess(parser,
