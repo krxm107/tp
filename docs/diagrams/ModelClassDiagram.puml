@@ -56,17 +56,17 @@ AddressBook *--> "1" UniqueClubList
 AddressBook *--> "1" UniqueMembershipList
 
 UniquePersonList --> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
+Person *--> "1" Name
+Person *--> "0..1" Phone
+Person *--> "1" Email
+Person *--> "0..1" Address
 Person *--> "*" Tag
 
 UniqueClubList --> "~* all" Club
-Club *--> Name
-Club *--> Phone
-Club *--> Email
-Club *--> Address
+Club *--> "1" Name
+Club *--> "0..1" Phone
+Club *--> "1" Email
+Club *--> "0..1" Address
 Club *--> "*" Tag
 
 ' Association class relationship
