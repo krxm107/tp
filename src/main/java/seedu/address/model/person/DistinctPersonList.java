@@ -39,13 +39,21 @@ public class DistinctPersonList implements Iterable<Person> {
                 .map(Membership::statusProperty)
                 .toArray(Observable[]::new);
 
+        Observable[] membershipExpiryDates = person.getMemberships().stream()
+                .map(Membership::expiryDateProperty)
+                .toArray(Observable[]::new);
+
         // Create a final observable array that contains:
         // 1. The membership set itself (for additions/removals)
         // 2. All the individual status properties (for status changes)
-        return Stream.concat(
-                Stream.of(person.getMemberships()),
-                Stream.of(membershipStatuses)
-        ).toArray(Observable[]::new);
+        // 3. All the individual expiry date properties (for expiry date changes)
+        Stream membershipsStream = Stream.of(person.getMemberships());
+        Stream membershipStatusStream = Stream.of(membershipStatuses);
+        Stream membershipExpiryDateStream = Stream.of(membershipExpiryDates);
+
+        return (Observable[]) Stream.of(membershipsStream, membershipStatusStream, membershipExpiryDateStream)
+                .flatMap(s -> s)
+                .toArray(Observable[]::new);
     };
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList(extractor);
