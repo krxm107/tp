@@ -7,13 +7,13 @@ import seedu.address.logic.commands.GetPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new GetPersonCommand object
  */
 public class GetPersonCommandParser implements Parser<GetPersonCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeletePersonCommand
-     * and returns a DeletePersonCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the GetPersonCommand
+     * and returns a GetPersonCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public GetPersonCommand parse(String args) throws ParseException {

@@ -21,6 +21,8 @@ import seedu.address.logic.commands.FilterClubCommand;
 import seedu.address.logic.commands.FilterPersonCommand;
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.commands.FindPersonCommand;
+import seedu.address.logic.commands.GetClubCommand;
+import seedu.address.logic.commands.GetPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListMemberCommand;
@@ -113,6 +115,12 @@ public class AddressBookParser {
 
         case RenewMembershipCommand.COMMAND_WORD:
             return new RenewMembershipCommandParser().parse(arguments);
+
+        case GetClubCommand.COMMAND_WORD:
+            return new GetClubCommandParser().parse(arguments);
+
+        case GetPersonCommand.COMMAND_WORD:
+            return new GetPersonCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
