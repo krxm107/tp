@@ -110,7 +110,7 @@ public interface Model {
      * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
      */
     void setClub(Club target, Club editedClub);
-    
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

@@ -155,7 +155,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         clubs.setClub(target, editedClub);
     }
-    
+
     //// membership-level operation
 
     /**

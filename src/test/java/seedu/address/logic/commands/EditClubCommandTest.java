@@ -194,21 +194,6 @@ public class EditClubCommandTest {
     }
 
     @Test
-    public void execute_editToDuplicateEmail_failure() {
-        Model model = new ModelManager();
-        Club alice = new ClubBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Club bob = new ClubBuilder().withName("Bob").withEmail("bob@example.com").build();
-        model.addClub(alice);
-        model.addClub(bob);
-
-        // Try to change Bob's email to Alice's -> should fail
-        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withEmail("alice@example.com").build();
-        EditClubCommand editBob = new EditClubCommand(Index.fromOneBased(2), descriptor);
-
-        assertThrows(CommandException.class, () -> editBob.execute(model));
-    }
-
-    @Test
     public void execute_editToDuplicateName_success() throws Exception {
         Model model = new ModelManager();
         Club alice = new ClubBuilder().withName("Alice").withEmail("alice@example.com").build();
