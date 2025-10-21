@@ -12,9 +12,9 @@ Package Model as ModelPackage <<Rectangle>>{
     Class ModelManager
     Class UserPrefs
 
-    Class UniquePersonList
-    Class UniqueClubList
-    Class UniqueMembershipList
+    Class DistinctPersonList
+    Class DistinctClubList
+    Class DistinctMembershipList
     Class Person
     Class Club
 
@@ -51,18 +51,18 @@ ModelManager -left-> "1" AddressBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-AddressBook *--> "1" UniquePersonList
-AddressBook *--> "1" UniqueClubList
-AddressBook *--> "1" UniqueMembershipList
+AddressBook *--> "1" DistinctPersonList
+AddressBook *--> "1" DistinctClubList
+AddressBook *--> "1" DistinctMembershipList
 
-UniquePersonList --> "~* all" Person
+DistinctPersonList --> "~* all" Person
 Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 
-UniqueClubList --> "~* all" Club
+DistinctClubList --> "~* all" Club
 Club *--> Name
 Club *--> Phone
 Club *--> Email
@@ -73,10 +73,10 @@ Club *--> "*" Tag
 Person "*" -- "*" Club : member of >
 (Club, Person) ..x Membership
 
-UniqueMembershipList --> "~* all" Membership
+DistinctMembershipList --> "~* all" Membership
 
 Person -[hidden]up--> I
-UniquePersonList -[hidden]right-> I
+DistinctPersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address

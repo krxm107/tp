@@ -83,7 +83,7 @@ public class Club {
     }
 
     /**
-     * Returns true if both clubs have the same name.
+     * Returns true if both clubs have the same name and / or the same email.
      * This defines a weaker notion of equality between two clubs.
      */
     public boolean isSameClub(Club otherClub) {
@@ -95,7 +95,7 @@ public class Club {
             return false;
         }
 
-        return otherClub.getEmail().equals(getEmail());
+        return otherClub.getName().equals(getName()) || otherClub.getEmail().equals(getEmail());
     }
 
     public boolean addMembership(Membership membership) {
