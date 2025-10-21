@@ -10,13 +10,9 @@ import java.awt.datatransfer.StringSelection;
 public class CopyUtil {
 
     public static void copyTextToClipboard(String text) {
-        try {
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            StringSelection stringSelection = new StringSelection(text);
-            clipboard.setContents(stringSelection, null);
-        } catch (Exception e) {
-            System.out.println("Error occurred, unable to copy to clipboard");
-        }
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection stringSelection = new StringSelection(text);
+        clipboard.setContents(stringSelection, null);
     }
 
 }
