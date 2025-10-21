@@ -17,12 +17,20 @@ public class GetPersonCommandParser implements Parser<GetPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public GetPersonCommand parse(String args) throws ParseException {
+        String[] parts = args.split("/");
+        Index index;
+
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new GetPersonCommand(index);
+            index = ParserUtil.parseIndex(parts[0]);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetPersonCommand.MESSAGE_USAGE), pe);
+        }
+
+        if (parts.length == 1) {
+            return new GetPersonCommand(index, "");
+        } else {
+            return new GetPersonCommand(index, parts[1]);
         }
     }
 

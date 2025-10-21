@@ -21,13 +21,15 @@ public class GetClubCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_GET_CLUB_SUCCESS = "Copied club: %1$s";
+    public static final String MESSAGE_GET_CLUB_SUCCESS = "Copied: %1$s";
     public static final String MESSAGE_GET_CLUB_FAILURE = "Failed to copy club to clipboard";
 
     private final Index targetIndex;
+    private final String keywords;
 
-    public GetClubCommand(Index targetIndex) {
+    public GetClubCommand(Index targetIndex, String keywords) {
         this.targetIndex = targetIndex;
+        this.keywords = keywords;
     }
 
     @Override
@@ -40,13 +42,14 @@ public class GetClubCommand extends Command {
         }
 
         Club clubToCopy = lastShownList.get(targetIndex.getZeroBased());
+        String details = Messages.getClubDetails(clubToCopy, keywords);
         try {
-            CopyUtil.copyTextToClipboard(clubToCopy.toString());
+            CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_CLUB_FAILURE);
         }
 
-        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, Messages.format(clubToCopy)));
+        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
     }
 
     @Override

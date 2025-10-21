@@ -21,13 +21,15 @@ public class GetPersonCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_GET_PERSON_SUCCESS = "Copied person: %1$s";
+    public static final String MESSAGE_GET_PERSON_SUCCESS = "Copied: %1$s";
     public static final String MESSAGE_GET_PERSON_FAILURE = "Failed to copy person to clipboard";
 
     private final Index targetIndex;
+    private final String keywords;
 
-    public GetPersonCommand(Index targetIndex) {
+    public GetPersonCommand(Index targetIndex, String keywords) {
         this.targetIndex = targetIndex;
+        this.keywords = keywords;
     }
 
     @Override
@@ -40,13 +42,14 @@ public class GetPersonCommand extends Command {
         }
 
         Person personToCopy = lastShownList.get(targetIndex.getZeroBased());
+        String details = Messages.getPersonDetails(personToCopy, keywords);
         try {
-            CopyUtil.copyTextToClipboard(personToCopy.toString());
+            CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_PERSON_FAILURE);
         }
 
-        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, Messages.format(personToCopy)));
+        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
     }
 
     @Override

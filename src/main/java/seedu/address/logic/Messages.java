@@ -72,4 +72,70 @@ public class Messages {
         club.getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    public static String getPersonDetails(Person person, String args) {
+        if (args.isEmpty()) {
+            return format(person);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if(args.contains("n")) {
+            sb.append(person.getName()).append(" ");
+        }
+
+        if(args.contains("p")) {
+            sb.append(person.getPhone()).append(" ");
+        }
+
+        if(args.contains("e")) {
+            sb.append(person.getEmail()).append(" ");
+        }
+
+        if(args.contains("a")) {
+            sb.append(person.getAddress()).append(" ");
+        }
+
+        if(args.contains("m")) {
+            person.getMemberships().stream().forEach(membership ->
+                    sb.append(membership.getClubName()).append(" "));
+        }
+
+        return sb.toString();
+    }
+
+    public static String getClubDetails(Club club, String args) {
+        if (args.isEmpty()) {
+            return format(club);
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        if(args.contains("n")) {
+            sb.append(club.getName());
+            sb.append(" ");
+        }
+
+        if(args.contains("p")) {
+            sb.append(club.getPhone());
+            sb.append(" ");
+        }
+
+        if(args.contains("e")) {
+            sb.append(club.getEmail());
+            sb.append(" ");
+        }
+
+        if(args.contains("a")) {
+            sb.append(club.getAddress());
+            sb.append(" ");
+        }
+
+        if(args.contains("m")) {
+            club.getMemberships().stream().forEach(membership ->
+                    sb.append(membership.getPersonName()).append(" "));
+        }
+
+        return sb.toString();
+    }
 }
