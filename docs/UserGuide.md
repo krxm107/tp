@@ -52,7 +52,7 @@ If you're using Linux:
 Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `findp` : Lists all contacts.
 
    * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
@@ -254,7 +254,7 @@ Examples:
 
 Finds and displays persons that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of persons.
 
-Format: `findp SEARCH_CONDITION_1 [SEARCH_KEYWORDS_1] SEARCH_CONDITION_2 [SEARCH_KEYWORDS_2] ... SEARCH_CONDITION_N [SEARCH_KEYWORDS_N]`
+Format: `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
 Search conditions: 
 `n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES 
 `t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
@@ -283,7 +283,7 @@ Examples:
 
 Finds and displays clubs that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of clubs.
 
-Format: `findc SEARCH_CONDITION_1 [SEARCH_KEYWORDS_1] SEARCH_CONDITION_2 [SEARCH_KEYWORDS_2] ... SEARCH_CONDITION_N [SEARCH_KEYWORDS_N]`
+Format: `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
 Search conditions:
 `n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
 `t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
@@ -475,7 +475,11 @@ Action | Format, Examples
 **Delete Club** | `delete_club INDEX`<br> e.g., `delete_club 3`
 **Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_person 2 n/James Lee e/jameslee@example.com`
 **Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_club 2 n/Tennis e/tennis@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**Find Person** | `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> e.g., `findp n/ James Jake t/ friend`
+**Find Club** | `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> e.g., `findp n/ Dance Guitar t/ monday`
+**List Memberships** | `list_memberships INDEX`</br> e.g., `list_memberships 1`
+**List Members** | `list_members INDEX`</br> e.g., `list_members 1`
+**Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br> e.g., `get_person 2 /pae`
+**Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br> e.g., `get_club 2 /*`
 **Help** | `help`
 **Exit** | `exit`
