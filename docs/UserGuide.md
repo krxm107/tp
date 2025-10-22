@@ -133,6 +133,81 @@ Examples:
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
 * `add_club n/Cycling e/cycling@example.com a/45 Cycling Street p/1234567`
 
+### Adding multiple persons to multiple clubs : `add_to`
+
+Adds multiple persons to multiple clubs in the address book.
+
+Format: `add_to m/INDEXES c/INDEXES [d/DURATION]`
+
+* The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+* The default duration is 12 months if not specified.
+* Join date is set to today’s date.
+* Expiry date is set to join date plus duration months.
+* Adds the membership of the persons at the specified `PERSON_INDEXES` to the clubs at the specified `CLUB_INDEXES`.
+* The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
+
+Examples:
+* `add_to m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
+
+### Removing multiple persons from multiple clubs : `remove_from`
+
+Removes multiple persons from multiple clubs in the address book.
+
+Format: `remove_from m/INDEXES c/INDEXES`
+
+* The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+* Removes the membership of the persons at the specified `PERSON_INDEXES` from the clubs at the specified `CLUB_INDEXES`.
+* The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
+
+Examples:
+* `remove_from m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
+
+### Renew membership of a person in a club : `renew`
+
+Renews the membership of a person in a club in the address book with renewal duration given.
+
+Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
+
+* Renew the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
+* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+* The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
+* If expiry date was in the past, setting new expiry date from today.
+* If expiry date was in the future, extending from current expiry date.
+
+Examples:
+* `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
+
+### Cancel membership of a person in a club : `cancel`
+
+Cancels the membership of a person in a club in the address book.
+
+Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`
+
+* Cancels the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
+* The index refers to the index number shown in the displayed person list & club list accordingly.
+* The index **must be a positive integer** 1, 2, 3, …​
+* The membership remains valid until the expiry date. The membership cannot be renewed but can be reactivated.
+* The membership will not be deleted.
+* To remove the person from the club, use the `remove_from` command.
+
+Examples:
+* `cancel m/1 c/2` Cancels the membership of the 1st person in the 2nd club.
+ 
+### Reactivating membership of a person in a club : `reactivate`
+
+Reactivates the **cancelled** membership of a person in a club in the address book with renewal duration given.
+Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
+
+* Reactivates the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
+* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+* The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
+* If expiry date was in the past, setting new expiry date from today.
+* If expiry date was in the future, extending from current expiry date.
+ 
+Examples:
+* `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
