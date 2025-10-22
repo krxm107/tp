@@ -320,8 +320,8 @@ Format: `list_memberships INDEX`
 * In the person list, only the target is displayed
 
 Examples:
-* `listp` followed by `list_memberships 2` lists the 2nd person in the address book and all clubs which they are a member of.
-* `find Betsy` followed by `list_memberships 1` lists the 1st person in the results of the `find` command and their associated clubs.
+* `findp` followed by `list_memberships 2` lists the 2nd person in the address book and all clubs which they are a member of.
+* `findp n/ Betsy` followed by `list_memberships 1` lists the 1st person in the results of the `find` command and their associated clubs.
 
 ### Listing a club and their members : `list_members`
 
@@ -335,8 +335,8 @@ Format: `list_members INDEX`
 * In the club list, only the target is displayed
 
 Examples:
-* `listc` followed by `list_members 2` lists the 2nd club in the address book and all its members.
-* `find Tennis` followed by `list_members 1` lists the 1st club in the results of the `find` command and its members.
+* `findc` followed by `list_members 2` lists the 2nd club in the address book and all its members.
+* `findc n/ Tennis` followed by `list_members 1` lists the 1st club in the results of the `find` command and its members.
 
 ### Deleting a person : `delete_person`
 
@@ -349,8 +349,8 @@ Format: `delete_person INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `listp` followed by `delete_person 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
+* `findp` followed by `delete_person 2` deletes the 2nd person in the address book.
+* `findp n/ Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
 
 ### Deleting a club : `delete_club`
 
@@ -361,8 +361,58 @@ Format: `delete_club INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `listc` followed by `delete 2` deletes the 2nd club in the address book.
-* `find Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
+* `findc` followed by `delete 2` deletes the 2nd club in the address book.
+* `findc n/ Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
+
+### Copying a person's details : `get_person`
+
+Copies the details of a person to the user's clipboard. By default, copies all details apart from memberships. Conditions may be supplied to specify which details to copy.
+
+Format: `get_person INDEX [/OPTIONAL_CONDITIONS]`
+Optional conditions:
+* `n` specifies the person's name to be included in the copy.
+* `p` specifies the person's phone number to be included in the copy.
+* `e` specifies the person's email to be included in the copy.
+* `a` specifies the person's address to be included in the copy.
+* `m` specifies the inclusion of the names of all clubs of which the person is a member of.
+
+* Copies the details of the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* `/` must be used between the index and optional conditions, if any are provided
+* Multiple optional conditions may be added by appending each keyword. Non-matching keywords are ignored.
+  e.g. `get_person 1 /abcde` will copy the 1st person's address and email to the clipboard. 
+
+Examples:
+* `findp n/ John` followed by `get_person 1 /pe` copies the phone number and email address of the 1st person in the results of the `find` command.
+* `findp` followed by `get_person 2` copies all details (excluding memberships) of the 2nd person in the address book.
+  ![result for 'get_person 2'](images/getPersonResult.png)
+
+### Copying a club's details : `get_club`
+
+Copies the details of a club to the user's clipboard. By default, copies all details apart from members. Conditions may be supplied to specify which details to copy, including an option to copy all members' details.
+
+Format: `get_club INDEX [/OPTIONAL_CONDITIONS]`
+Optional conditions:
+* `n` specifies the club's name to be included in the copy.
+* `p` specifies the club's phone number to be included in the copy.
+* `e` specifies the club's email to be included in the copy.
+* `a` specifies the club's address to be included in the copy.
+* `m` specifies the inclusion of the names of all clubs members.
+* `*` specifies the full details of a club, plus the full details of all its members, to be copied.
+
+* Copies the details of the club at the specified `INDEX`.
+* The index refers to the index number shown in the displayed club list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* `/` must be used between the index and optional conditions, if any are provided
+* Multiple optional conditions may be added by appending each keyword. Non-matching keywords are ignored.
+  e.g. `get_person 1 /abcde` will copy the 1st club's address and email to the clipboard.
+
+Examples:
+* `findc n/ Band` followed by `get_club 1 /pe` copies the phone number and email address of the 1st club in the results of the `find` command.
+* `findc` followed by `get_club 2` copies all details (excluding members) of the 2nd club in the address book.
+* `findc` followed by `get_club 2 /*` copied all details (including member details) of the 2nd club in the address book.
+  ![result for 'get_club 2 /*'](images/getClubFullResult.png)
 
 ### Clearing all entries : `clear`
 

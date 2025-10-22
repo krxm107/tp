@@ -17,7 +17,7 @@ public class GetClubMessageParser {
     public String parse(Club club, String args) {
         if (args.isEmpty()) {
             return format(club);
-        } else if (args.trim().equals("*")) {
+        } else if (args.contains("*")) {
             return getFullClubDetails(club);
         } else {
             return getClubDetails(club, args);
