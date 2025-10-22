@@ -158,7 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     oldM.getClub(),
                     oldM.getJoinDate(),
                     oldM.getExpiryDate(),
-                    new ArrayList<>(oldM.getRenewalHistory()),
+                    List.copyOf(oldM.getRenewalHistory()),
                     oldM.getStatus()
             );
 
@@ -190,19 +190,18 @@ public class AddressBook implements ReadOnlyAddressBook {
             return;
         }
 
-        // 1) Snapshot all memberships that currently reference the target club
         List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
                 .filter(m -> m.getClub().equals(target))
                 .toList();
 
-        // 2) Rebuild each membership to point to editedClub, preserving all other fields
+        // For each old membership, create an equivalent that points to editedClub
         for (Membership oldM : owned) {
             Membership newM = new Membership(
-                    oldM.getPerson(),                 // same person
-                    editedClub,                       // <-- new club
+                    oldM.getPerson(),
+                    editedClub,
                     oldM.getJoinDate(),
                     oldM.getExpiryDate(),
-                    new ArrayList<>(oldM.getRenewalHistory()),
+                    List.copyOf(oldM.getRenewalHistory()),
                     oldM.getStatus()
             );
 
