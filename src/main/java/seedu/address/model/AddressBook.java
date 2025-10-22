@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -142,8 +143,36 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
 
+        List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
+                .filter(m -> m.getPerson().equals(target))
+                .toList();
+
+        // For each old membership, create an equivalent that points to editedPerson
+        for (Membership oldM : owned) {
+            Membership newM = new Membership(
+                    editedPerson,
+                    oldM.getClub(),
+                    oldM.getJoinDate(),
+                    oldM.getExpiryDate(),
+                    new ArrayList<>(oldM.getRenewalHistory()),
+                    oldM.getStatus()
+            );
+
+            memberships.setMembership(oldM, newM);
+            oldM.getClub().removeMember(target); // removes oldM
+            oldM.getClub().addMembership(newM); // add the rebuilt membership to the club
+
+            // Attach the rebuilt membership to the edited person
+            editedPerson.addMembership(newM);
+
+            // Detach the old membership object from the old person
+            target.removeMembership(oldM);
+        }
+
+        // Replace the Person in the person list
         persons.setPerson(target, editedPerson);
     }
+
 
     /**
      * Replaces the given club {@code target} in the list with {@code editedClub}.
