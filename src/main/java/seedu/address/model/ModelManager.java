@@ -201,13 +201,34 @@ public class ModelManager implements Model {
     @Override
     public void renewMembership(Person person, Club club, int durationInMonths) {
         requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
         addressBook.renewMembership(person, club, durationInMonths);
     }
 
     @Override
     public void cancelMembership(Person person, Club club) {
         requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
         addressBook.cancelMembership(person, club);
+    }
+
+    @Override
+    public void reactivateMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.reactivateMembership(person, club, durationInMonths);
     }
 
     @Override
