@@ -38,11 +38,10 @@ public class Membership {
     /**
      * Constructor with duration specified.
      */
-    public Membership(Person person, Club club, int membershipDurationInMonths) {
-        requireAllNonNull(person, club, membershipDurationInMonths);
+    public Membership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club, durationInMonths);
 
-        if (membershipDurationInMonths < MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS
-                || membershipDurationInMonths > MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS) {
+        if (!isValidMembershipDuration(durationInMonths)) {
             throw new IllegalArgumentException("Membership duration must be between "
                     + MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS + " and " + MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS
                     + " months.");
@@ -51,7 +50,7 @@ public class Membership {
         this.person = person;
         this.club = club;
         this.joinDate = LocalDate.now();
-        this.expiryDate.set(joinDate.plusMonths(membershipDurationInMonths));
+        this.expiryDate.set(joinDate.plusMonths(durationInMonths));
         this.renewalHistory = new ArrayList<>();
         this.status.set(MembershipStatus.ACTIVE);
     }
@@ -85,6 +84,16 @@ public class Membership {
         this.status.set(MembershipStatus.ACTIVE);
     }
 
+    private boolean isValidMembershipDuration(int durationInMonths) {
+        return durationInMonths >= MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS
+                && durationInMonths <= MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS;
+    }
+
+    private boolean isValidRenewalDuration(int durationInMonths) {
+        return durationInMonths >= MINIMUM_RENEWAL_DURATION_IN_MONTHS
+                && durationInMonths <= MAXIMUM_RENEWAL_DURATION_IN_MONTHS;
+    }
+
     /**
      * Checks if the membership is currently active.
      * An active status and a current date before the expiry date are required.
@@ -107,11 +116,10 @@ public class Membership {
 
     /**
      * Renews the membership. The behavior depends on the current status.
-     * @param renewalDurationInMonths The number of months to extend the membership by.
+     * @param durationInMonths The number of months to extend the membership by.
      */
-    public void renew(int renewalDurationInMonths) {
-        if (renewalDurationInMonths < MINIMUM_RENEWAL_DURATION_IN_MONTHS
-                || renewalDurationInMonths > MAXIMUM_RENEWAL_DURATION_IN_MONTHS) {
+    public void renew(int durationInMonths) {
+        if (!isValidRenewalDuration(durationInMonths)) {
             throw new IllegalArgumentException("Renewal duration must be between "
                     + MINIMUM_RENEWAL_DURATION_IN_MONTHS + " and " + MAXIMUM_RENEWAL_DURATION_IN_MONTHS
                     + " months.");
@@ -123,10 +131,10 @@ public class Membership {
 
         if (this.status.get() == MembershipStatus.EXPIRED) {
             // If expired, start new period from today
-            this.expiryDate.set(LocalDate.now().plusMonths(renewalDurationInMonths));
+            this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
         } else {
             // If active, extend from current expiry date
-            this.expiryDate.set(this.expiryDate.get().plusMonths(renewalDurationInMonths));
+            this.expiryDate.set(this.expiryDate.get().plusMonths(durationInMonths));
         }
         this.renewalHistory.add(LocalDate.now());
         this.status.set(MembershipStatus.ACTIVE);
