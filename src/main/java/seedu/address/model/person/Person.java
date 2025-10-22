@@ -89,6 +89,16 @@ public class Person {
     }
 
     /**
+     * Clears the list of memberships for this person
+     */
+    public void clearMemberships() {
+        for (Membership m : memberships) {
+            m.getClub().removeMember(this);
+        }
+        memberships.clear();
+    }
+
+    /**
      * Returns true if both persons have the same email.
      * This defines a weaker notion of equality between two persons.
      */
