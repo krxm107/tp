@@ -220,6 +220,11 @@ public final class AddClubCommandTest {
         public void cancelMembership(Person personToCancel, Club clubToCancel) {
 
         }
+
+        @Override
+        public void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths) {
+
+        }
     }
 
     /**
