@@ -157,8 +157,22 @@ public class Membership {
         if (this.status.get() != MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException("Only cancelled memberships can be reactivated.");
         }
+        if (!isValidMembershipDuration(durationInMonths)) {
+            throw new IllegalArgumentException("Membership duration must be between "
+                    + MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS + " and " + MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS
+                    + " months.");
+        }
         this.status.set(MembershipStatus.ACTIVE);
-        this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
+        if (LocalDate.now().isAfter(expiryDate.get())) {
+            // If previously expired, start new period from today
+            logger.info("Expiry date was in the past, setting new expiry date from today.");
+            this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
+        } else {
+            // If not expired, extend from current expiry date
+            logger.info("Expiry date was in the future, extending from current expiry date.");
+            LocalDate newExpiryDate = this.expiryDate.get().plusMonths(durationInMonths);
+            this.expiryDate.set(newExpiryDate);
+        }
         logger.info("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
     }
 
