@@ -182,8 +182,46 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setClub(Club target, Club editedClub) {
         requireNonNull(editedClub);
 
+        // Short-circuit: no-op if nothing changes
+        if (target.equals(editedClub)) {
+            clubs.setClub(target, editedClub);
+            return;
+        }
+
+        // 1) Snapshot all memberships that currently reference the target club
+        List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
+                .filter(m -> m.getClub().equals(target))
+                .toList();
+
+        // 2) Rebuild each membership to point to editedClub, preserving all other fields
+        for (Membership oldM : owned) {
+            Membership newM = new Membership(
+                    oldM.getPerson(),                 // same person
+                    editedClub,                       // <-- new club
+                    oldM.getJoinDate(),
+                    oldM.getExpiryDate(),
+                    new ArrayList<>(oldM.getRenewalHistory()),
+                    oldM.getStatus()
+            );
+
+            // Replace in the global membership list
+            memberships.setMembership(oldM, newM);
+
+            // Keep bi-directional links consistent
+
+            // Detach old membership from the person and club containers
+            oldM.getPerson().removeMembership(oldM);
+            target.removeMember(oldM.getPerson());       // removes oldM link on the club side
+
+            // Attach rebuilt membership to both sides
+            newM.getPerson().addMembership(newM);
+            editedClub.addMembership(newM);
+        }
+
+        // 3) Finally, replace the Club in the club list
         clubs.setClub(target, editedClub);
     }
+
 
     //// membership-level operation
 
