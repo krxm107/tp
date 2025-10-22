@@ -7,14 +7,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -51,6 +55,7 @@ public class AddPersonCommand extends Command {
     private static final Logger logger = LogsCenter.getLogger(AddPersonCommand.class);
 
     private final Person personToAdd;
+    private Index[] clubIndexes = null;
 
     /**
      * Creates an AddPersonCommand to add the specified {@code Person}
@@ -60,12 +65,26 @@ public class AddPersonCommand extends Command {
         personToAdd = person;
     }
 
+    public AddPersonCommand(Person person, Index[] clubIndexes) {
+        requireNonNull(person);
+        personToAdd = person;
+        this.clubIndexes = clubIndexes;
+    }
+
+    private void addMembershipToAll(Model model, Person personToAdd, Club club) {
+        Membership membershipToAdd = new Membership(personToAdd, club);
+        club.addMembership(membershipToAdd);
+        personToAdd.addMembership(membershipToAdd);
+        model.addMembership(membershipToAdd);
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         final String cls = AddPersonCommand.class.getName();
         final String mtd = "execute";
         logger.entering(cls, mtd, model);
         requireNonNull(model);
+
 
         logger.fine(() -> "Validating duplicate for person: " + personToAdd);
         try {
@@ -79,6 +98,17 @@ public class AddPersonCommand extends Command {
 
             model.addPerson(personToAdd);
             logger.info(() -> "Person added: " + personToAdd);
+
+            if (clubIndexes != null) {
+                List<Club> lastShownClubList = model.getFilteredClubList();
+                for (Index clubIndex : clubIndexes) {
+                    if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+                        continue; // Skip to the next club index
+                    }
+                    Club club = lastShownClubList.get(clubIndex.getZeroBased());
+                    addMembershipToAll(model, personToAdd, club);
+                }
+            }
 
             CommandResult result = new CommandResult(
                     String.format("New person added: %s",
