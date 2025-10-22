@@ -182,6 +182,16 @@ public final class AddClubCommandTest {
         }
 
         @Override
+        public void clearMembership(Club club) {
+
+        }
+
+        @Override
+        public void clearMembership(Person person) {
+
+        }
+
+        @Override
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
         }

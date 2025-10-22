@@ -84,6 +84,16 @@ public interface Model {
     void deleteMembership(Membership target);
 
     /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Club club);
+
+    /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Person person);
+
+    /**
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
