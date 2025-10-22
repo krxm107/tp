@@ -173,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             target.removeMembership(oldM);
         }
 
-        // Replace the Person in the person list
+        // Finally, replace the Person in the person list
         persons.setPerson(target, editedPerson);
     }
 
