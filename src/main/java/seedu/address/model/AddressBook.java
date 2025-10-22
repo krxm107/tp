@@ -205,21 +205,16 @@ public class AddressBook implements ReadOnlyAddressBook {
                     oldM.getStatus()
             );
 
-            // Replace in the global membership list
             memberships.setMembership(oldM, newM);
-
-            // Keep bi-directional links consistent
-
-            // Detach old membership from the person and club containers
-            oldM.getPerson().removeMembership(oldM);
-            target.removeMember(oldM.getPerson());       // removes oldM link on the club side
+            oldM.getPerson().removeMembership(oldM); // removes oldM
+            target.removeMember(oldM.getPerson()); // removes oldM link on the club side
 
             // Attach rebuilt membership to both sides
             newM.getPerson().addMembership(newM);
             editedClub.addMembership(newM);
         }
 
-        // 3) Finally, replace the Club in the club list
+        // Finally, replace the Club in the club list
         clubs.setClub(target, editedClub);
     }
 
