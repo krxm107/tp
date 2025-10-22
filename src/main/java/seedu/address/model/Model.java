@@ -114,6 +114,13 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
+    /**
+     * Replaces the given club {@code target} with {@code editedClub}.
+     * {@code target} must exist in the address book.
+     * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
+     */
+    void setClub(Club target, Club editedClub);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

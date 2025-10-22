@@ -145,6 +145,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    /**
+     * Replaces the given club {@code target} in the list with {@code editedClub}.
+     * {@code target} must exist in the address book.
+     * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
+     */
+    public void setClub(Club target, Club editedClub) {
+        requireNonNull(editedClub);
+
+        clubs.setClub(target, editedClub);
+    }
+
     //// membership-level operation
 
     /**
