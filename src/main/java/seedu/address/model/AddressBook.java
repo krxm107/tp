@@ -143,6 +143,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
 
+        if (target.equals(editedPerson)) {
+            return;
+        }
+
         List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
                 .filter(m -> m.getPerson().equals(target))
                 .toList();
@@ -169,7 +173,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             target.removeMembership(oldM);
         }
 
-        // Replace the Person in the person list
+        // Finally, replace the Person in the person list
         persons.setPerson(target, editedPerson);
     }
 
@@ -182,8 +186,38 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setClub(Club target, Club editedClub) {
         requireNonNull(editedClub);
 
+        if (target.equals(editedClub)) {
+            return;
+        }
+
+        List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
+                .filter(m -> m.getClub().equals(target))
+                .toList();
+
+        // For each old membership, create an equivalent that points to editedClub
+        for (Membership oldM : owned) {
+            Membership newM = new Membership(
+                    oldM.getPerson(),
+                    editedClub,
+                    oldM.getJoinDate(),
+                    oldM.getExpiryDate(),
+                    new ArrayList<>(oldM.getRenewalHistory()),
+                    oldM.getStatus()
+            );
+
+            memberships.setMembership(oldM, newM);
+            oldM.getPerson().removeMembership(oldM); // removes oldM
+            target.removeMember(oldM.getPerson()); // removes oldM link on the club side
+
+            // Attach rebuilt membership to both sides
+            newM.getPerson().addMembership(newM);
+            editedClub.addMembership(newM);
+        }
+
+        // Finally, replace the Club in the club list
         clubs.setClub(target, editedClub);
     }
+
 
     //// membership-level operation
 
