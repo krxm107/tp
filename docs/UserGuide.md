@@ -254,23 +254,63 @@ Examples:
 *  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
 *  `edit_club 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
  
-### Locating persons by name: `find`
+### Locating persons: `findp`
 
-Finds persons whose names contain any of the given keywords.
+Finds and displays persons that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of persons.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findp SEARCH_CONDITION_1 [SEARCH_KEYWORDS_1] SEARCH_CONDITION_2 [SEARCH_KEYWORDS_2] ... SEARCH_CONDITION_N [SEARCH_KEYWORDS_N]`
+Search conditions: 
+`n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES 
+`t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* The order of the search conditions and keywords does not matter. 
+  e.g. `n/ Hans Bo` will match `n/ Bo Hans` and `n/ Hans t/ friend` will match `t/ friend n/ Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* All search conditions must be met for the target (i.e. `AND` search).
+  e.g. `n/ Hans t/ friend` will only return persons with both `Hans` in their name and are tagged with `friend`
+* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
+  e.g. `n/ Hans Bo` may return `Hans Gruber`, `Bo Yang`
+* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
+  e.g. To search for `Hans Bo` without returning `Hans Gruber` or `Bo Yang`, use `n/ Hans n/ Bo`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `findp` returns all persons 
+* `findp n/ Alex` returns `alex` and `Alex yeoh`
+* `findp n/ alex david` returns `alex` and `Alex yeoh` and `David Li`
+* `findp n/ alex n/ Yeoh` returns `Alex yeoh`
+* `findp t/ friend` returns all persons tagged with `friend`
+* `findp n/ Alex t/ friend` returns only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not <br>
+  ![result for 'findp n/ Alex t/ friend'](images/findAlexFriendResult.png)
+
+### Locating clubs: `findc`
+
+Finds and displays clubs that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of clubs.
+
+Format: `findc SEARCH_CONDITION_1 [SEARCH_KEYWORDS_1] SEARCH_CONDITION_2 [SEARCH_KEYWORDS_2] ... SEARCH_CONDITION_N [SEARCH_KEYWORDS_N]`
+Search conditions:
+`n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
+`t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
+
+* The search is case-insensitive. e.g `archery` will match `Archery`
+* The order of the search conditions and keywords does not matter.
+  e.g. `n/ Archery NUS` will match `n/ NUS Archery` and `n/ Archery t/ evening` will match `t/ evening n/ Archery`
+* Only full words will be matched e.g. `ArcheryNUS` will not match `Archery`
+* All search conditions must be met for the target (i.e. `AND` search).
+  e.g. `n/ Ball t/ evening` will only return clubs with both `Ball` in their name and are tagged with `evening`
+* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
+  e.g. `n/ Eight Ball` may return `Basket Ball`, `eight pm dance`
+* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
+  e.g. To search for `Eight Ball` without returning `Basket Ball` or `eight pm dance`, use `n/ Eight n/ Ball`
+
+Examples:
+* `findc` returns all clubs
+* `findc n/ Study` returns `study` and `NUS Study`
+* `findc n/ NUS study` returns `study` and `NUS Study` and `NUS Guitar`
+* `findc n/ NUS n/ study` returns `NUS Study`
+* `findc t/ NTU` returns all clubs tagged with `NTU`
+* `findc n/ Study t/ NTU` returns only `study` because `study` is tagged with `NTU` but `NUS Study` is not <br>
+  ![result for 'findc n/ Study t/ NTU'](images/findStudyNtuResult.png)
 
 ### Deleting a person : `delete_person`
 
