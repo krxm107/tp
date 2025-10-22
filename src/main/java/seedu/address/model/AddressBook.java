@@ -158,7 +158,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     oldM.getClub(),
                     oldM.getJoinDate(),
                     oldM.getExpiryDate(),
-                    List.copyOf(oldM.getRenewalHistory()),
+                    new ArrayList<>(oldM.getRenewalHistory()),
                     oldM.getStatus()
             );
 
@@ -201,7 +201,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                     editedClub,
                     oldM.getJoinDate(),
                     oldM.getExpiryDate(),
-                    List.copyOf(oldM.getRenewalHistory()),
+                    new ArrayList<>(oldM.getRenewalHistory()),
                     oldM.getStatus()
             );
 
