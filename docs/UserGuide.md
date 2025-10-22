@@ -343,6 +343,11 @@ Action | Format, Examples
 --------|------------------
 **Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br> e.g., `add_to m/1 2 c/3 4 d/6`
+**Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br> e.g., `remove_from m/1 2 c/3 4`
+**Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> e.g., `renew m/1 c/2 d/6`
+**Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br> e.g., `cancel m/1 c/2`
+**Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> e.g., `reactivate m/1 c/2 d/6`
 **Clear** | `clear`
 **Delete Person** | `delete_person INDEX`<br> e.g., `delete_person 3`
 **Delete Club** | `delete_club INDEX`<br> e.g., `delete_club 3`
@@ -351,3 +356,4 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
+**Exit** | `exit`
