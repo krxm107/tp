@@ -208,10 +208,6 @@ Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 Examples:
 * `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-
 Format: `list`
 
 ### Editing a person : `edit_person`
@@ -263,7 +259,7 @@ Search conditions:
 `n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES 
 `t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the search conditions and keywords does not matter. 
   e.g. `n/ Hans Bo` will match `n/ Bo Hans` and `n/ Hans t/ friend` will match `t/ friend n/ Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
@@ -292,7 +288,7 @@ Search conditions:
 `n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
 `t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
 
-* The search is case-insensitive. e.g `archery` will match `Archery`
+* The search is case-insensitive. e.g. `archery` will match `Archery`
 * The order of the search conditions and keywords does not matter.
   e.g. `n/ Archery NUS` will match `n/ NUS Archery` and `n/ Archery t/ evening` will match `t/ evening n/ Archery`
 * Only full words will be matched e.g. `ArcheryNUS` will not match `Archery`
@@ -312,6 +308,36 @@ Examples:
 * `findc n/ Study t/ NTU` returns only `study` because `study` is tagged with `NTU` but `NUS Study` is not <br>
   ![result for 'findc n/ Study t/ NTU'](images/findStudyNtuResult.png)
 
+### Listing a person and their associated clubs : `list_memberships`
+
+Finds and displays clubs which the specified person is a member of.
+
+Format: `list_memberships INDEX`
+
+* The target person is specified by its `INDEX` shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* In the club list, all clubs associated with the target are displayed
+* In the person list, only the target is displayed
+
+Examples:
+* `listp` followed by `list_memberships 2` lists the 2nd person in the address book and all clubs which they are a member of.
+* `find Betsy` followed by `list_memberships 1` lists the 1st person in the results of the `find` command and their associated clubs.
+
+### Listing a club and their members : `list_members`
+
+Finds and displays persons which are members of the specified club.
+
+Format: `list_members INDEX`
+
+* The target club is specified by its `INDEX` shown in the displayed club list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* In the person list, all persons associated with the target are displayed
+* In the club list, only the target is displayed
+
+Examples:
+* `listc` followed by `list_members 2` lists the 2nd club in the address book and all its members.
+* `find Tennis` followed by `list_members 1` lists the 1st club in the results of the `find` command and its members.
+
 ### Deleting a person : `delete_person`
 
 Deletes the specified person from the address book.
@@ -323,7 +349,7 @@ Format: `delete_person INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete_person 2` deletes the 2nd person in the address book.
+* `listp` followed by `delete_person 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
 
 ### Deleting a club : `delete_club`
@@ -335,7 +361,7 @@ Format: `delete_club INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd club in the address book.
+* `listc` followed by `delete 2` deletes the 2nd club in the address book.
 * `find Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
 
 ### Clearing all entries : `clear`
