@@ -216,7 +216,10 @@ Format: `list`
 
 ### Editing a person : `edit_person`
 
-Edits an existing person in the address book.
+Editing a person in your address book helps you keep their
+details up to date without having to create a new entry.
+You can quickly change their name, phone, email, address, or tags,
+so your contact list always stays accurate and organised.
 
 Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -233,7 +236,10 @@ Examples:
 
 ### Editing a club : `edit_club`
 
-Edits an existing club in the address book.
+Editing a club in your address book helps you keep its
+details up to date without having to create a new entry.
+You can quickly change its name, phone, email, address, or tags,
+so your contact list always stays accurate and organised.
 
 Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
