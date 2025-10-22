@@ -97,7 +97,8 @@ public class Club {
             return false;
         }
 
-        return otherClub.getName().equals(getName()) || otherClub.getEmail().equals(getEmail());
+        return name.fullName.equalsIgnoreCase(otherClub.name.fullName)
+                || email.value.equalsIgnoreCase(otherClub.email.value);
     }
 
     public boolean addMembership(Membership membership) {

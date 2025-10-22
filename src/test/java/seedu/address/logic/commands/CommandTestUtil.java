@@ -52,8 +52,10 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String VALID_NAME_ART = "Art Club";
+    public static final String VALID_NAME_BALL = "Ball Club";
     public static final String VALID_NAME_BOOKS = "Book Club";
     public static final String VALID_PHONE_ART = "11111111";
+    public static final String VALID_PHONE_BALL = "12345678";
     public static final String VALID_PHONE_BOOKS = "22222222";
     public static final String VALID_EMAIL_ART = "art@example.com";
     public static final String VALID_EMAIL_BOOKS = "book@example.com";

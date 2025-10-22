@@ -65,6 +65,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
+        // Identity check should be email-only (case-insensitive) via isSamePerson
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 

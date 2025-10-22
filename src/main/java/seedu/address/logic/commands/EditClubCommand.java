@@ -51,6 +51,8 @@ public class EditClubCommand extends Command {
     public static final String MESSAGE_EDIT_CLUB_SUCCESS = "Edited Club: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_CLUB_NAME = "A club with this name already exists.";
+    public static final String MESSAGE_DUPLICATE_CLUB_EMAIL = "A club with this email already exists.";
 
     private final Index index;
     private final EditClubDescriptor editClubDescriptor;
@@ -79,8 +81,27 @@ public class EditClubCommand extends Command {
         Club clubToEdit = lastShownList.get(index.getZeroBased());
         Club editedClub = createEditedClub(clubToEdit, editClubDescriptor);
 
+        // Existing broad duplicate check (keeps previous semantics)
         if (!clubToEdit.isSameClub(editedClub) && model.hasClub(editedClub)) {
             throw new CommandException(MESSAGE_DUPLICATE_CLUB);
+        }
+
+        /*
+            Block collisions on name/email with *any other* club
+            as name OR email are unique identifiers for a club.
+
+            Set case-insensitive for both.
+        */
+        for (Club c : model.getAddressBook().getClubList()) {
+            if (c.equals(clubToEdit)) {
+                continue; // skip the club being edited
+            }
+            if (c.getName().fullName.equalsIgnoreCase(editedClub.getName().fullName)) {
+                throw new CommandException(MESSAGE_DUPLICATE_CLUB_NAME);
+            }
+            if (c.getEmail().value.equalsIgnoreCase(editedClub.getEmail().value)) {
+                throw new CommandException(MESSAGE_DUPLICATE_CLUB_EMAIL);
+            }
         }
 
         model.setClub(clubToEdit, editedClub);

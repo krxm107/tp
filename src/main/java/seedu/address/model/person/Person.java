@@ -111,7 +111,7 @@ public class Person {
             return false;
         }
 
-        return otherPerson.getEmail().equals(getEmail());
+        return this.email.value.equalsIgnoreCase(otherPerson.email.value);
     }
 
     /**

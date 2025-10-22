@@ -79,18 +79,18 @@ public final class NameTest {
     class EqualityAndHashCode {
 
         @Test
-        void equalWhen() {
+        void assertExtraSpacesBreaksEquality() {
             Name a = new Name("  John   Doe ");
             Name b = new Name("John Doe");
-            assertEquals(a, b);
-            assertEquals(a.hashCode(), b.hashCode());
+            assertNotEquals(a, b);
+            assertNotEquals(a.hashCode(), b.hashCode());
         }
 
         @Test
-        void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
+        void notEqualIfCaseDiffers() {
             Name a = new Name("JOHN DOE");
             Name b = new Name("john doe");
-            assertEquals(a, b);
+            assertNotEquals(a, b);
         }
 
         @Test

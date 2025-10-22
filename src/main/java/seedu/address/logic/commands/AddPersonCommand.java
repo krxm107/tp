@@ -49,6 +49,9 @@ public class AddPersonCommand extends Command {
             + PREFIX_NAME + "Jane "
             + PREFIX_EMAIL + "jane@abc.com ";
 
+    public static final String MESSAGE_DUPLICATE_PERSON_EMAIL =
+            "A person with this email already exists.";
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
