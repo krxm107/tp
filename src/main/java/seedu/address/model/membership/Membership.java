@@ -118,8 +118,7 @@ public class Membership {
         }
 
         if (this.status.get() == MembershipStatus.CANCELLED) {
-            System.out.println("Cannot renew a cancelled membership. Please create a new one.");
-            return;
+            throw new IllegalArgumentException("Cannot renew a cancelled membership. Please create a new one.");
         }
 
         if (this.status.get() == MembershipStatus.EXPIRED) {
@@ -140,6 +139,19 @@ public class Membership {
     public void cancel() {
         this.status.set(MembershipStatus.CANCELLED);
         logger.info("Membership for " + person.getName() + " has been cancelled.");
+    }
+
+    /**
+     * Reactivates a cancelled membership.
+     * @param durationInMonths The duration in months for the reactivated membership.
+     */
+    public void reactivate(int durationInMonths) {
+        if (this.status.get() != MembershipStatus.CANCELLED) {
+            throw new IllegalArgumentException("Only cancelled memberships can be reactivated.");
+        }
+        this.status.set(MembershipStatus.ACTIVE);
+        this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
+        logger.info("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
     }
 
     // todo: implement isValidLocalDate later
