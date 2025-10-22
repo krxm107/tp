@@ -65,6 +65,10 @@ public class AddPersonCommand extends Command {
         personToAdd = person;
     }
 
+    /**
+     * Creates an AddPersonCommand to add the specified {@code Person}
+     * and add memberships to specified clubs.
+     */
     public AddPersonCommand(Person person, Index[] clubIndexes) {
         requireNonNull(person);
         personToAdd = person;
