@@ -132,4 +132,6 @@ public interface Model {
     void updateFilteredMembershipList(Predicate<Membership> predicate);
 
     void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths);
+
+    void cancelMembership(Person personToCancel, Club clubToCancel);
 }

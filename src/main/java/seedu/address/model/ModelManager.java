@@ -219,6 +219,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void cancelMembership(Person person, Club club) {
+        requireAllNonNull(person, club);
+        addressBook.cancelMembership(person, club);
+    }
+
+    @Override
     public ObservableList<Membership> getFilteredMembershipList() {
         return filteredMemberships;
     }

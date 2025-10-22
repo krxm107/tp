@@ -179,6 +179,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Cancels the membership of a person in a club.
+     *
+     * @param person The person whose membership is to be cancelled.
+     * @param club The club for which the membership is to be cancelled.
+     */
+    public void cancelMembership(Person person, Club club) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.cancel();
+    }
+
+    /**
      * This method should be run once per day to update the status
      * of all memberships in the system.
      */
