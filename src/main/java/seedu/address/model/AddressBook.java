@@ -143,6 +143,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
 
+        if (target.equals(editedPerson)) {
+            return;
+        }
+
         List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
                 .filter(m -> m.getPerson().equals(target))
                 .toList();
@@ -182,9 +186,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setClub(Club target, Club editedClub) {
         requireNonNull(editedClub);
 
-        // Short-circuit: no-op if nothing changes
         if (target.equals(editedClub)) {
-            clubs.setClub(target, editedClub);
             return;
         }
 
