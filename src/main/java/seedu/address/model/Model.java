@@ -141,4 +141,6 @@ public interface Model {
     void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths);
 
     void cancelMembership(Person personToCancel, Club clubToCancel);
+
+    void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths);
 }

@@ -201,6 +201,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Reactivates a cancelled membership of a person in a club for the specified duration.
+     *
+     * @param person The person whose membership is to be reactivated.
+     * @param club The club for which the membership is to be reactivated.
+     * @param durationInMonths The duration in months for which the membership is to be reactivated.
+     */
+    public void reactivateMembership(Person person, Club club, int durationInMonths) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.reactivate(durationInMonths);
+    }
+
+    /**
      * This method should be run once per day to update the status
      * of all memberships in the system.
      */
