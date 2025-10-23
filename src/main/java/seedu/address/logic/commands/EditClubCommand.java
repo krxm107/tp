@@ -230,6 +230,7 @@ public class EditClubCommand extends Command {
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
         public Optional<Set<Tag>> getTags() {
+            // Enforce defensive programming and immutability by deep copying before return.
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
