@@ -87,6 +87,8 @@ public class AddPersonCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        assert false;
+
         final String cls = AddPersonCommand.class.getName();
         final String mtd = "execute";
         logger.entering(cls, mtd, model);

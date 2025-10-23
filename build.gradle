@@ -8,6 +8,8 @@ plugins {
 }
 
 run {
+    // Gradle assertions are now enabled. They are not enabled by default.
+    // In addition, assertions are now enabled through IntelliJ settings.
     enableAssertions = true
 }
 
