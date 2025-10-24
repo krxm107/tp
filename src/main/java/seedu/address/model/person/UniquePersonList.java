@@ -19,9 +19,12 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
+ * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}.
+ * As such, adding and updating of
+ * persons uses Person#isSamePerson(Person) for equality
+ * so as to ensure that the person being added or updated is
+ * unique in terms of identity in the UniquePersonList.
+ * However, the removal of a person uses Person#equals(Object) so
  * as to ensure that the person with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
@@ -36,13 +39,21 @@ public class UniquePersonList implements Iterable<Person> {
                 .map(Membership::statusProperty)
                 .toArray(Observable[]::new);
 
+        Observable[] membershipExpiryDates = person.getMemberships().stream()
+                .map(Membership::expiryDateProperty)
+                .toArray(Observable[]::new);
+
         // Create a final observable array that contains:
         // 1. The membership set itself (for additions/removals)
         // 2. All the individual status properties (for status changes)
-        return Stream.concat(
-                Stream.of(person.getMemberships()),
-                Stream.of(membershipStatuses)
-        ).toArray(Observable[]::new);
+        // 3. All the individual expiry date properties (for expiry date changes)
+        Stream membershipsStream = Stream.of(person.getMemberships());
+        Stream membershipStatusStream = Stream.of(membershipStatuses);
+        Stream membershipExpiryDateStream = Stream.of(membershipExpiryDates);
+
+        return (Observable[]) Stream.of(membershipsStream, membershipStatusStream, membershipExpiryDateStream)
+                .flatMap(s -> s)
+                .toArray(Observable[]::new);
     };
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList(extractor);
@@ -54,6 +65,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
+        // Identity check should be email-only (case-insensitive) via isSamePerson
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 

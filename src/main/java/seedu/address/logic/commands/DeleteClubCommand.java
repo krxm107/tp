@@ -11,7 +11,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
-
 /**
  * Deletes a club identified using it's displayed index from the address book.
  */
@@ -42,6 +41,9 @@ public class DeleteClubCommand extends Command {
         }
 
         Club clubToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        clubToDelete.clearMembers();
+        model.clearMembership(clubToDelete);
         model.deleteClub(clubToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_CLUB_SUCCESS, Messages.format(clubToDelete)));
     }

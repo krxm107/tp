@@ -84,6 +84,16 @@ public interface Model {
     void deleteMembership(Membership target);
 
     /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Club club);
+
+    /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Person person);
+
+    /**
      * Adds the given person.
      * {@code person} must not already exist in the address book.
      */
@@ -104,6 +114,13 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
+    /**
+     * Replaces the given club {@code target} with {@code editedClub}.
+     * {@code target} must exist in the address book.
+     * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
+     */
+    void setClub(Club target, Club editedClub);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -122,4 +139,8 @@ public interface Model {
     void updateFilteredMembershipList(Predicate<Membership> predicate);
 
     void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths);
+
+    void cancelMembership(Person personToCancel, Club clubToCancel);
+
+    void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths);
 }

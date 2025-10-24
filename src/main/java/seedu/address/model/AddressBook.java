@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -142,8 +143,81 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);
 
+        if (target.equals(editedPerson)) {
+            return;
+        }
+
+        List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
+                .filter(m -> m.getPerson().equals(target))
+                .toList();
+
+        // For each old membership, create an equivalent that points to editedPerson
+        for (Membership oldM : owned) {
+            Membership newM = new Membership(
+                    editedPerson,
+                    oldM.getClub(),
+                    oldM.getJoinDate(),
+                    oldM.getExpiryDate(),
+                    new ArrayList<>(oldM.getMembershipEventHistory()),
+                    oldM.getStatus()
+            );
+
+            memberships.setMembership(oldM, newM);
+            oldM.getClub().removeMember(target); // removes oldM
+            oldM.getClub().addMembership(newM); // add the rebuilt membership to the club
+
+            // Attach the rebuilt membership to the edited person
+            editedPerson.addMembership(newM);
+
+            // Detach the old membership object from the old person
+            target.removeMembership(oldM);
+        }
+
+        // Finally, replace the Person in the person list
         persons.setPerson(target, editedPerson);
     }
+
+
+    /**
+     * Replaces the given club {@code target} in the list with {@code editedClub}.
+     * {@code target} must exist in the address book.
+     * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
+     */
+    public void setClub(Club target, Club editedClub) {
+        requireNonNull(editedClub);
+
+        if (target.equals(editedClub)) {
+            return;
+        }
+
+        List<Membership> owned = memberships.asUnmodifiableObservableList().stream()
+                .filter(m -> m.getClub().equals(target))
+                .toList();
+
+        // For each old membership, create an equivalent that points to editedClub
+        for (Membership oldM : owned) {
+            Membership newM = new Membership(
+                    oldM.getPerson(),
+                    editedClub,
+                    oldM.getJoinDate(),
+                    oldM.getExpiryDate(),
+                    new ArrayList<>(oldM.getMembershipEventHistory()),
+                    oldM.getStatus()
+            );
+
+            memberships.setMembership(oldM, newM);
+            oldM.getPerson().removeMembership(oldM); // removes oldM
+            target.removeMember(oldM.getPerson()); // removes oldM link on the club side
+
+            // Attach rebuilt membership to both sides
+            newM.getPerson().addMembership(newM);
+            editedClub.addMembership(newM);
+        }
+
+        // Finally, replace the Club in the club list
+        clubs.setClub(target, editedClub);
+    }
+
 
     //// membership-level operation
 
@@ -176,6 +250,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void renewMembership(Person person, Club club, int durationInMonths) {
         Membership membership = memberships.getMembershipByPersonClub(person, club).get();
         membership.renew(durationInMonths);
+    }
+
+    /**
+     * Cancels the membership of a person in a club.
+     *
+     * @param person The person whose membership is to be cancelled.
+     * @param club The club for which the membership is to be cancelled.
+     */
+    public void cancelMembership(Person person, Club club) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.cancel();
+    }
+
+    /**
+     * Reactivates a cancelled membership of a person in a club for the specified duration.
+     *
+     * @param person The person whose membership is to be reactivated.
+     * @param club The club for which the membership is to be reactivated.
+     * @param durationInMonths The duration in months for which the membership is to be reactivated.
+     */
+    public void reactivateMembership(Person person, Club club, int durationInMonths) {
+        Membership membership = memberships.getMembershipByPersonClub(person, club).get();
+        membership.reactivate(durationInMonths);
     }
 
     /**

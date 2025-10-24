@@ -45,7 +45,7 @@
             <Image url="@/images/address.png" />
           </image>
         </ImageView>
-        <Label fx:id="address" styleClass="cell_small_label" />
+        <Label fx:id="address" styleClass="cell_small_label" wrapText="true"/>
       </HBox>
 
       <HBox fx:id="emailRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
@@ -58,11 +58,10 @@
       </HBox>
     </VBox>
   </GridPane>
-  <VBox alignment="CENTER" prefWidth="160" styleClass="membership-badge">
+  <VBox alignment="CENTER" prefWidth="260" styleClass="membership-badge">
     <padding>
       <Insets top="5" right="10" bottom="5" left="10" />
     </padding>
-    <Label text="Clubs:" />
-    <FlowPane fx:id="memberships" alignment="CENTER" hgap="5" vgap="5" />
+    <VBox alignment="CENTER" fx:id="memberships" spacing="5" />
   </VBox>
 </HBox>

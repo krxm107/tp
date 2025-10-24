@@ -89,7 +89,17 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Clears the list of memberships for this person
+     */
+    public void clearMemberships() {
+        for (Membership m : memberships) {
+            m.getClub().removeMember(this);
+        }
+        memberships.clear();
+    }
+
+    /**
+     * Returns true if both persons have the same email.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -97,8 +107,11 @@ public class Person {
             return true;
         }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        if (otherPerson == null) {
+            return false;
+        }
+
+        return this.email.value.equalsIgnoreCase(otherPerson.email.value);
     }
 
     /**
@@ -126,7 +139,6 @@ public class Person {
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, tags);
     }
 

@@ -11,17 +11,25 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddClubCommand;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.commands.AddToCommand;
+import seedu.address.logic.commands.CancelMembershipCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteClubCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
-import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditClubCommand;
+import seedu.address.logic.commands.EditPersonCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterClubCommand;
+import seedu.address.logic.commands.FilterPersonCommand;
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.commands.FindPersonCommand;
+import seedu.address.logic.commands.GetClubCommand;
+import seedu.address.logic.commands.GetPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.commands.ListMembershipCommand;
+import seedu.address.logic.commands.ReactivateMembershipCommand;
 import seedu.address.logic.commands.RemoveFromCommand;
 import seedu.address.logic.commands.RenewMembershipCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -69,8 +77,11 @@ public class AddressBookParser {
         case AddClubCommand.COMMAND_WORD:
             return new AddClubCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+        case EditPersonCommand.COMMAND_WORD:
+            return new EditPersonCommandParser().parse(arguments);
+
+        case EditClubCommand.COMMAND_WORD:
+            return new EditClubCommandParser().parse(arguments);
 
         case DeletePersonCommand.COMMAND_WORD:
             return new DeletePersonCommandParser().parse(arguments);
@@ -87,6 +98,15 @@ public class AddressBookParser {
         case FindPersonCommand.COMMAND_WORD:
             return new FindPersonCommandParser().parse(arguments);
 
+        case FilterPersonCommand.COMMAND_WORD:
+            return new FilterPersonCommandParser().parse(arguments);
+
+        case FilterClubCommand.COMMAND_WORD:
+            return new FilterClubCommandParser().parse(arguments);
+
+        case ListAllCommand.COMMAND_WORD:
+            return new ListAllCommand();
+
         case ListMemberCommand.COMMAND_WORD:
             return new ListMemberCommandParser().parse(arguments);
 
@@ -101,6 +121,18 @@ public class AddressBookParser {
 
         case RenewMembershipCommand.COMMAND_WORD:
             return new RenewMembershipCommandParser().parse(arguments);
+
+        case CancelMembershipCommand.COMMAND_WORD:
+            return new CancelMembershipCommandParser().parse(arguments);
+
+        case ReactivateMembershipCommand.COMMAND_WORD:
+            return new ReactivateMembershipCommandParser().parse(arguments);
+
+        case GetClubCommand.COMMAND_WORD:
+            return new GetClubCommandParser().parse(arguments);
+
+        case GetPersonCommand.COMMAND_WORD:
+            return new GetPersonCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.field.validator;
 

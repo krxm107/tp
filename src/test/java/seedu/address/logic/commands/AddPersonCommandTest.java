@@ -152,6 +152,11 @@ public class AddPersonCommandTest {
         }
 
         @Override
+        public void setClub(Club target, Club editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -178,6 +183,16 @@ public class AddPersonCommandTest {
 
         @Override
         public void deleteMembership(Membership target) {
+
+        }
+
+        @Override
+        public void clearMembership(Club club) {
+
+        }
+
+        @Override
+        public void clearMembership(Person person) {
 
         }
 
@@ -213,6 +228,14 @@ public class AddPersonCommandTest {
 
         @Override
         public void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths) {
+        }
+
+        @Override
+        public void cancelMembership(Person personToCancel, Club clubToCancel) {
+        }
+
+        @Override
+        public void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths) {
 
         }
     }

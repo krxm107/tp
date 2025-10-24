@@ -72,4 +72,5 @@ public class Messages {
         club.getTags().forEach(builder::append);
         return builder.toString();
     }
+
 }

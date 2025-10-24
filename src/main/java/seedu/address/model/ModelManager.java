@@ -128,12 +128,30 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteClub(Club target) {
+        // delete all memberships related to the club
+        for (Membership m : target.getMemberships()) {
+            this.deleteMembership(m);
+        }
         addressBook.removeClub(target);
     }
 
     @Override
     public void deleteMembership(Membership target) {
         addressBook.removeMembership(target);
+    }
+
+    @Override
+    public void clearMembership(Club club) {
+        for (Membership m : club.getMemberships()) {
+            addressBook.removeMembership(m);
+        }
+    }
+
+    @Override
+    public void clearMembership(Person person) {
+        for (Membership m : person.getMemberships()) {
+            addressBook.removeMembership(m);
+        }
     }
 
     @Override
@@ -159,6 +177,13 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void setClub(Club target, Club editedClub) {
+        requireAllNonNull(target, editedClub);
+
+        addressBook.setClub(target, editedClub);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -197,7 +222,34 @@ public class ModelManager implements Model {
     @Override
     public void renewMembership(Person person, Club club, int durationInMonths) {
         requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
         addressBook.renewMembership(person, club, durationInMonths);
+    }
+
+    @Override
+    public void cancelMembership(Person person, Club club) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.cancelMembership(person, club);
+    }
+
+    @Override
+    public void reactivateMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.reactivateMembership(person, club, durationInMonths);
     }
 
     @Override
