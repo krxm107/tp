@@ -31,16 +31,16 @@ public class Membership {
     private final Club club;
     private final LocalDate joinDate;
     private ObjectProperty<LocalDate> expiryDate = new SimpleObjectProperty<>();
-    private List<LocalDate> renewalHistory;
     private ObjectProperty<MembershipStatus> status = new SimpleObjectProperty<>();
+    private List<MembershipEvent> eventHistory;
 
     /**
      * Constructor with duration specified.
      */
-    public Membership(Person person, Club club, int durationInMonths) {
-        requireAllNonNull(person, club, durationInMonths);
+    public Membership(Person person, Club club, int initialDurationInMonths) {
+        requireAllNonNull(person, club, initialDurationInMonths);
 
-        if (!isValidMembershipDuration(durationInMonths)) {
+        if (!isValidMembershipDuration(initialDurationInMonths)) {
             throw new IllegalArgumentException("Membership duration must be between "
                     + MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS + " and " + MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS
                     + " months.");
@@ -48,9 +48,20 @@ public class Membership {
 
         this.person = person;
         this.club = club;
-        this.joinDate = LocalDate.now();
-        this.expiryDate.set(joinDate.plusMonths(durationInMonths));
-        this.renewalHistory = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        this.joinDate = today;
+        this.expiryDate.set(joinDate.plusMonths(initialDurationInMonths));
+        this.eventHistory = new ArrayList<>();
+
+        // The first event is always a JOIN event. This captures the initial duration.
+        MembershipEvent joinEvent = new MembershipEvent(
+                EventType.JOIN,
+                today,
+                initialDurationInMonths,
+                this.expiryDate.get()
+        );
+        this.eventHistory.add(joinEvent);
+
         this.status.set(MembershipStatus.ACTIVE);
     }
 
@@ -58,14 +69,14 @@ public class Membership {
      * Constructor with all fields specified. Use to recreate from storage.
      */
     public Membership(Person person, Club club, LocalDate joinDate, LocalDate expiryDate,
-                      List<LocalDate> renewalHistory, MembershipStatus status) {
-        requireAllNonNull(person, club, joinDate, expiryDate, renewalHistory, status);
+                      List<MembershipEvent> eventHistory, MembershipStatus status) {
+        requireAllNonNull(person, club, joinDate, expiryDate, eventHistory, status);
 
         this.person = person;
         this.club = club;
         this.joinDate = joinDate;
         this.expiryDate.set(expiryDate);
-        this.renewalHistory = renewalHistory;
+        this.eventHistory = eventHistory;
         this.status.set(status);
     }
 
@@ -79,7 +90,7 @@ public class Membership {
         this.club = club;
         this.joinDate = LocalDate.now();
         this.expiryDate.set(joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS)); // Default duration of 12 months
-        this.renewalHistory = new ArrayList<>();
+        this.eventHistory = new ArrayList<>();
         this.status.set(MembershipStatus.ACTIVE);
     }
 
@@ -124,24 +135,35 @@ public class Membership {
                     + " months.");
         }
 
+        LocalDate today = LocalDate.now();
+        EventType eventType;
+        LocalDate newExpiry;
+
         if (this.status.get() == MembershipStatus.CANCELLED) {
-            throw new IllegalArgumentException("Cannot renew a cancelled membership. Please create a new one.");
+            throw new IllegalArgumentException("Membership is cancelled. Please reactivate instead.");
+        } else if (this.status.get() == MembershipStatus.EXPIRED) {
+            throw new IllegalArgumentException("Membership has expired. Please reactivate instead.");
         }
 
-        if (this.status.get() == MembershipStatus.EXPIRED) {
-            // If expired, start new period from today
-            this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
-        } else {
-            // If active, extend from current expiry date
-            this.expiryDate.set(this.expiryDate.get().plusMonths(durationInMonths));
-        }
-        this.renewalHistory.add(LocalDate.now());
+        eventType = EventType.RENEW;
+        // Extends the existing expiry date
+        newExpiry = getExpiryDate().plusMonths(durationInMonths);
+        this.expiryDate.set(newExpiry);
+
+        // Create the detailed event record
+        MembershipEvent renewalEvent = new MembershipEvent(
+                eventType,
+                today,
+                durationInMonths,
+                this.expiryDate.get()
+        );
+        this.eventHistory.add(renewalEvent);
         this.status.set(MembershipStatus.ACTIVE);
         logger.info("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
     }
 
     /**
-     * Cancels the membership. This is a final state.
+     * Cancels the membership.
      */
     public void cancel() {
         this.status.set(MembershipStatus.CANCELLED);
@@ -149,12 +171,12 @@ public class Membership {
     }
 
     /**
-     * Reactivates a cancelled membership.
+     * Reactivates an expired or cancelled membership.
      * @param durationInMonths The duration in months for the reactivated membership.
      */
     public void reactivate(int durationInMonths) {
-        if (this.status.get() != MembershipStatus.CANCELLED) {
-            throw new IllegalArgumentException("Only cancelled memberships can be reactivated.");
+        if (this.status.get() != MembershipStatus.CANCELLED || this.status.get() != MembershipStatus.EXPIRED) {
+            throw new IllegalArgumentException("Only expired or cancelled memberships can be reactivated.");
         }
         if (!isValidMembershipDuration(durationInMonths)) {
             throw new IllegalArgumentException("Membership duration must be between "
@@ -175,7 +197,6 @@ public class Membership {
         logger.info("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
     }
 
-    // todo: implement isValidLocalDate later
     public Person getPerson() {
         return person;
     }
@@ -192,8 +213,8 @@ public class Membership {
         return expiryDate.get();
     }
 
-    public List<LocalDate> getRenewalHistory() {
-        return renewalHistory;
+    public List<MembershipEvent> getEventHistory() {
+        return eventHistory;
     }
 
     public MembershipStatus getStatus() {
