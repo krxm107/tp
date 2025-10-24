@@ -22,7 +22,7 @@ public class FindPersonCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no search modifiers (corresponds to find all)
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         FindPersonCommand expectedFindCommand = new FindPersonCommand(predicate);
 
         assertParseSuccess(parser, "     ", expectedFindCommand);

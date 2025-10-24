@@ -16,7 +16,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.parser.FindCommandPredicate;
+import seedu.address.logic.parser.CombinedSearchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -33,8 +33,8 @@ public class FindPersonCommandTest {
 
     @Test
     public void equals() {
-        FindCommandPredicate<Person> firstPredicate = new FindCommandPredicate<>();
-        FindCommandPredicate<Person> secondPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> firstPredicate = new CombinedSearchPredicate<>();
+        CombinedSearchPredicate<Person> secondPredicate = new CombinedSearchPredicate<>();
 
         firstPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
         secondPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("second")));
@@ -62,7 +62,7 @@ public class FindPersonCommandTest {
     @Test
     public void execute_noSearchParameters_allPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -72,7 +72,7 @@ public class FindPersonCommandTest {
     @Test
     public void execute_zeroKeywords_noPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(preparePersonPredicate(" "));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -83,7 +83,7 @@ public class FindPersonCommandTest {
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(preparePersonPredicate("Pauline Benson Kurz"));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -94,7 +94,7 @@ public class FindPersonCommandTest {
     @Test
     public void execute_multipleSearchParameters_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(preparePersonPredicate("Pauline Benson Kurz"));
         predicate.add(prepareTagPredicate("friends"));
         FindPersonCommand command = new FindPersonCommand(predicate);
@@ -105,7 +105,7 @@ public class FindPersonCommandTest {
 
     @Test
     public void toStringMethod() {
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(new NameContainsKeywordsPredicate(Arrays.asList("keyword")));
         FindPersonCommand findCommand = new FindPersonCommand(predicate);
         String expected = FindPersonCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";

@@ -85,7 +85,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(new NameContainsKeywordsPredicate(keywords));
         FindPersonCommand command = (FindPersonCommand) parser.parseCommand(
                 FindPersonCommand.COMMAND_WORD + " " + PersonNameParser.KEYWORD + "/ " + keywords.stream()

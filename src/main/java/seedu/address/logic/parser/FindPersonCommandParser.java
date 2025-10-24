@@ -21,7 +21,7 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindPersonCommand parse(String args) throws ParseException {
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_TAG);

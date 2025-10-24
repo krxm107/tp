@@ -21,7 +21,7 @@ public class FindClubCommandParser implements Parser<FindClubCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindClubCommand parse(String args) throws ParseException {
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_TAG);

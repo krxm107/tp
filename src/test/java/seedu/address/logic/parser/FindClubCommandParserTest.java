@@ -22,7 +22,7 @@ public class FindClubCommandParserTest {
     @Test
     public void parse_validArgs_returnsFindCommand() {
         // no search modifiers (corresponds to find all)
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         FindClubCommand expectedFindCommand = new FindClubCommand(predicate);
 
         assertParseSuccess(parser, "     ", expectedFindCommand);

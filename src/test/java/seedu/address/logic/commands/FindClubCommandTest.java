@@ -16,7 +16,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.parser.FindCommandPredicate;
+import seedu.address.logic.parser.CombinedSearchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -33,8 +33,8 @@ public class FindClubCommandTest {
 
     @Test
     public void equals() {
-        FindCommandPredicate<Club> firstPredicate = new FindCommandPredicate<>();
-        FindCommandPredicate<Club> secondPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> firstPredicate = new CombinedSearchPredicate<>();
+        CombinedSearchPredicate<Club> secondPredicate = new CombinedSearchPredicate<>();
 
         firstPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("first")));
         secondPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("second")));
@@ -62,7 +62,7 @@ public class FindClubCommandTest {
     @Test
     public void execute_noSearchParameters_allClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 7);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -72,7 +72,7 @@ public class FindClubCommandTest {
     @Test
     public void execute_zeroKeywords_noClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 0);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         predicate.add(prepareClubPredicate(" "));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
@@ -83,7 +83,7 @@ public class FindClubCommandTest {
     @Test
     public void execute_multipleKeywords_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 3);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         predicate.add(prepareClubPredicate("Archery Balls Chess"));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
@@ -94,7 +94,7 @@ public class FindClubCommandTest {
     @Test
     public void execute_multipleSearchParameters_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 2);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         predicate.add(prepareClubPredicate("Archery Balls Chess"));
         predicate.add(prepareTagPredicate("sports"));
         FindClubCommand command = new FindClubCommand(predicate);
@@ -105,7 +105,7 @@ public class FindClubCommandTest {
 
     @Test
     public void toStringMethod() {
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         predicate.add(new ClubContainsKeywordsPredicate(Arrays.asList("keyword")));
         FindClubCommand findCommand = new FindClubCommand(predicate);
         String expected = FindClubCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";

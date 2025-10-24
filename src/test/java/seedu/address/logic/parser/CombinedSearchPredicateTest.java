@@ -14,13 +14,13 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonContainsTagsPredicate;
 import seedu.address.testutil.PersonBuilder;
 
-public class FindCommandPredicateTest {
+public class CombinedSearchPredicateTest {
 
     @Test
     public void equals() {
-        FindCommandPredicate<Person> firstPredicate = new FindCommandPredicate<>();
-        FindCommandPredicate<Person> secondPredicate = new FindCommandPredicate<>();
-        FindCommandPredicate<Club> thirdPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> firstPredicate = new CombinedSearchPredicate<>();
+        CombinedSearchPredicate<Person> secondPredicate = new CombinedSearchPredicate<>();
+        CombinedSearchPredicate<Club> thirdPredicate = new CombinedSearchPredicate<>();
 
         firstPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
         secondPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("second")));
@@ -30,7 +30,7 @@ public class FindCommandPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        FindCommandPredicate<Person> firstPredicateCopy = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> firstPredicateCopy = new CombinedSearchPredicate<>();
         firstPredicateCopy.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
@@ -44,23 +44,23 @@ public class FindCommandPredicateTest {
         assertFalse(firstPredicate.equals(secondPredicate));
 
         // one empty predicate -> returns false
-        FindCommandPredicate<Person> fourthPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> fourthPredicate = new CombinedSearchPredicate<>();
         assertFalse(firstPredicate.equals(fourthPredicate));
 
         // both empty predicate -> returns true
-        FindCommandPredicate<Person> fifthPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> fifthPredicate = new CombinedSearchPredicate<>();
         assertTrue(fifthPredicate.equals(fourthPredicate));
     }
 
     @Test
     public void test_noPredicate_returnsTrue() {
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("family").build()));
     }
 
     @Test
     public void test_allPredicatesMet_returnsTrue() {
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
         predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Bob")));
         predicate.add(new PersonContainsTagsPredicate(Collections.singletonList("family")));
@@ -69,7 +69,7 @@ public class FindCommandPredicateTest {
 
     @Test
     public void test_onePredicateUnmet_returnsFalse() {
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
         predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
         predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Bob")));
         predicate.add(new PersonContainsTagsPredicate(Collections.singletonList("family")));
