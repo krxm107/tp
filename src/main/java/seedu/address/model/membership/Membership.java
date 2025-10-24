@@ -121,6 +121,10 @@ public class Membership {
         if (getStatus() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate.get())) {
             this.status.set(MembershipStatus.EXPIRED);
             logger.info("Membership for " + person.getName() + " has expired.");
+        } else if (getStatus() == MembershipStatus.PENDING_CANCELLATION
+                && LocalDate.now().isAfter(expiryDate.get())) {
+            this.status.set(MembershipStatus.CANCELLED);
+            logger.info("Membership for " + person.getName() + " has been cancelled after pending cancellation.");
         }
     }
 
