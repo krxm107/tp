@@ -9,12 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.logic.search.parsers.AddressParser;
 import seedu.address.logic.search.parsers.EmailParser;
 import seedu.address.logic.search.parsers.NameParser;
 import seedu.address.logic.search.parsers.PhoneParser;
 import seedu.address.logic.search.parsers.TagParser;
-import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.model.club.Club;
 
 /**

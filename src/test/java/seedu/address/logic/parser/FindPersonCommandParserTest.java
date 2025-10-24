@@ -10,8 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindPersonCommand;
-import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.logic.search.CombinedSearchPredicate;
+import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.logic.search.predicates.NameMatchesPredicate;
 import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.person.Person;
