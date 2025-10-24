@@ -1,13 +1,12 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.NameParser;
-import seedu.address.logic.search.parsers.TagParser;
+import seedu.address.logic.search.parsers.*;
+import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
 
 /**
@@ -24,7 +23,7 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_TAG);
+                args, PREFIX_NAME, PREFIX_TAG, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_PHONE);
 
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPersonCommand.MESSAGE_USAGE));
@@ -35,6 +34,15 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
             predicate.add(new TagParser<Person>().parse(prefix));
+        }
+        for (String prefix : argMultimap.getAllValues(PREFIX_ADDRESS)) {
+            predicate.add(new AddressParser<Person>().parse(prefix));
+        }
+        for (String prefix : argMultimap.getAllValues(PREFIX_EMAIL)) {
+            predicate.add(new EmailParser<Person>().parse(prefix));
+        }
+        for (String prefix : argMultimap.getAllValues(PREFIX_PHONE)) {
+            predicate.add(new PhoneParser<Person>().parse(prefix));
         }
 
         return new FindPersonCommand(predicate);

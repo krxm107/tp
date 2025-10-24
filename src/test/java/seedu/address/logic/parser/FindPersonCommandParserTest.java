@@ -52,7 +52,7 @@ public class FindPersonCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         // invalid arguments
-        assertParseFailure(parser, " a/ address",
+        assertParseFailure(parser, " nn/ nickname",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindPersonCommand.MESSAGE_USAGE));
 
         // search modifier without search parameter

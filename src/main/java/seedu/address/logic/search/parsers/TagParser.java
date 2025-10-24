@@ -14,8 +14,6 @@ import seedu.address.model.field.Searchable;
  */
 public class TagParser<T extends Searchable> implements SearchParser<T> {
 
-    public static final String KEYWORD = "t";
-
     /**
      * Parses the given {@code String} of arguments in the context of a search by tag
      * instruction and returns a corresponding {@code Predicate<Searchable>} object.
@@ -28,7 +26,7 @@ public class TagParser<T extends Searchable> implements SearchParser<T> {
         }
 
         String[] tagKeywords = trimmedArgs.split("\\s+");
-        return new TagsMatchPredicate(Arrays.asList(tagKeywords));
+        return new TagsMatchPredicate<>(Arrays.asList(tagKeywords));
     }
 
 }

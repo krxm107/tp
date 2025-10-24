@@ -14,8 +14,6 @@ import seedu.address.model.field.Searchable;
  */
 public class AddressParser<T extends Searchable> implements SearchParser<T> {
 
-    public static final String KEYWORD = "a";
-
     /**
      * Parses the given {@code String} of arguments in the context of a search by address
      * instruction and returns a corresponding {@code Predicate<Searchable>} object.

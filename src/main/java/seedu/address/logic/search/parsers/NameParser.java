@@ -14,8 +14,6 @@ import seedu.address.model.field.Searchable;
  */
 public class NameParser<T extends Searchable> implements SearchParser<T> {
 
-    public static final String KEYWORD = "n";
-
     /**
      * Parses the given {@code String} of arguments in the context of a search by name
      * instruction and returns a corresponding {@code Predicate<Searchable>} object.
@@ -28,7 +26,7 @@ public class NameParser<T extends Searchable> implements SearchParser<T> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        return new NameMatchesPredicate<T>(Arrays.asList(nameKeywords));
+        return new NameMatchesPredicate<>(Arrays.asList(nameKeywords));
     }
 
 }

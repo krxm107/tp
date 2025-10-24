@@ -26,7 +26,7 @@ public class EmailMatchesPredicate<T extends Searchable> implements Predicate<T>
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PhoneMatchesPredicate<?>)) {
+        if (!(other instanceof EmailMatchesPredicate<?>)) {
             return false;
         }
 
