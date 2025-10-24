@@ -6,6 +6,9 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
 
+/**
+ * Tests that a {@code Searchable}'s {@code Phone} matches any of the keywords given.
+ */
 public class PhoneMatchesPredicate<T extends Searchable> implements Predicate<T> {
     private final List<String> keywords;
 
