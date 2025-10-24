@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.model.membership.EventType;
@@ -16,11 +17,21 @@ class JsonAdaptedMembershipEvent {
     private final String newExpiryDate; // The resulting expiry date after this event
 
     @JsonCreator
-    public JsonAdaptedMembershipEvent(MembershipEvent membershipEvent) {
-        this.eventType = membershipEvent.getEventType().toString();
-        this.eventDate = membershipEvent.getEventDate().toString();
-        this.monthsAdded = Integer.toString(membershipEvent.getMonthsAdded());
-        this.newExpiryDate = membershipEvent.getNewExpiryDate().toString();
+    public JsonAdaptedMembershipEvent(@JsonProperty("eventType") String eventType,
+                                      @JsonProperty("eventDate") String eventDate,
+                                      @JsonProperty("monthsAdded") String monthsAdded,
+                                      @JsonProperty("newExpiryDate") String newExpiryDate) {
+        this.eventType = eventType;
+        this.eventDate = eventDate;
+        this.monthsAdded = monthsAdded;
+        this.newExpiryDate = newExpiryDate;
+    }
+
+    public JsonAdaptedMembershipEvent(MembershipEvent source) {
+        this.eventType = source.getEventType().toString();
+        this.eventDate = source.getEventDate().toString();
+        this.monthsAdded = Integer.toString(source.getMonthsAdded());
+        this.newExpiryDate = source.getNewExpiryDate().toString();
     }
 
     @JsonValue
