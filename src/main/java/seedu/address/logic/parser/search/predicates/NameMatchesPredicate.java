@@ -1,0 +1,45 @@
+package seedu.address.logic.parser.search.predicates;
+
+import java.util.List;
+import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.field.Searchable;
+
+/**
+ * Tests that a {@code Person} or {@code Club}'s {@code Name} matches any of the keywords given.
+ */
+public class NameMatchesPredicate implements Predicate<Searchable> {
+    private final List<String> keywords;
+
+    public NameMatchesPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(Searchable searchable) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(searchable.getName().fullName, keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof NameMatchesPredicate)) {
+            return false;
+        }
+
+        NameMatchesPredicate otherNameMatchesPredicate = (NameMatchesPredicate) other;
+        return keywords.equals(otherNameMatchesPredicate.keywords);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).add("keywords", keywords).toString();
+    }
+}
