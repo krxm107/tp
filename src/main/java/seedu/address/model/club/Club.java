@@ -15,6 +15,7 @@ import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -151,8 +152,20 @@ public class Club {
         // Also remember to delete membership from ModelManager
     }
 
+    /**
+     * Returns the observable set of memberships for this club including all statuses
+     */
     public ObservableSet<Membership> getMemberships() {
         return this.memberships;
+    }
+
+    /**
+     * Returns the number of members in this club including pending cancellation membership and exclude cancelled membership.
+     */
+    public int getMemberCount() {
+        return (int) memberships.stream()
+                .filter(membership -> membership.getStatus() != MembershipStatus.CANCELLED)
+                .count();
     }
 
     /**
