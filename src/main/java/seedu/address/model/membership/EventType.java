@@ -6,5 +6,6 @@ package seedu.address.model.membership;
 public enum EventType {
     JOIN,
     RENEW,
+    CANCEL,
     REACTIVATE
 }

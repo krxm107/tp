@@ -134,28 +134,26 @@ public class Membership {
                     + MINIMUM_RENEWAL_DURATION_IN_MONTHS + " and " + MAXIMUM_RENEWAL_DURATION_IN_MONTHS
                     + " months.");
         }
-
-        LocalDate today = LocalDate.now();
-        EventType eventType;
-        LocalDate newExpiry;
-
         if (this.status.get() == MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException("Membership is cancelled. Please reactivate instead.");
         } else if (this.status.get() == MembershipStatus.EXPIRED) {
             throw new IllegalArgumentException("Membership has expired. Please reactivate instead.");
         }
 
+        LocalDate today = LocalDate.now();
+        EventType eventType;
+        LocalDate newExpiry;
         eventType = EventType.RENEW;
         // Extends the existing expiry date
         newExpiry = getExpiryDate().plusMonths(durationInMonths);
         this.expiryDate.set(newExpiry);
 
-        // Create the detailed event record
+        // Create renew event record
         MembershipEvent renewalEvent = new MembershipEvent(
                 eventType,
                 today,
                 durationInMonths,
-                this.expiryDate.get()
+                newExpiry
         );
         this.membershipEventHistory.add(renewalEvent);
         this.status.set(MembershipStatus.ACTIVE);
@@ -166,6 +164,26 @@ public class Membership {
      * Cancels the membership.
      */
     public void cancel() {
+        if (this.status.get() == MembershipStatus.CANCELLED) {
+            throw new IllegalArgumentException("Membership is already cancelled.");
+        }
+        else if (this.status.get() == MembershipStatus.EXPIRED) {
+            throw new IllegalArgumentException("Membership has already expired.");
+        }
+
+        LocalDate today = LocalDate.now();
+        EventType eventType = EventType.CANCEL;
+        LocalDate newExpiry = this.expiryDate.get();
+        int durationInMonths = 0;
+
+        // Create cancel event record
+        MembershipEvent cancelEvent = new MembershipEvent(
+                eventType,
+                today,
+                durationInMonths,
+                newExpiry
+        );
+        this.membershipEventHistory.add(cancelEvent);
         this.status.set(MembershipStatus.CANCELLED);
         logger.info("Membership for " + person.getName() + " has been cancelled.");
     }
