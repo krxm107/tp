@@ -7,27 +7,27 @@ import java.time.LocalDate;
  */
 public class MembershipEvent {
 
-    private final EventType type;
+    private final EventType eventType;
     private final LocalDate eventDate;
     private final int monthsAdded; // Duration added
     private final LocalDate newExpiryDate; // The resulting expiry date after this event
 
     /**
      * Constructor for MembershipEvent.
-     * @param type
+     * @param eventType
      * @param eventDate
      * @param monthsAdded
      * @param newExpiryDate
      */
-    public MembershipEvent(EventType type, LocalDate eventDate, int monthsAdded, LocalDate newExpiryDate) {
-        this.type = type;
+    public MembershipEvent(EventType eventType, LocalDate eventDate, int monthsAdded, LocalDate newExpiryDate) {
+        this.eventType = eventType;
         this.eventDate = eventDate;
         this.monthsAdded = monthsAdded;
         this.newExpiryDate = newExpiryDate;
     }
 
-    public EventType getType() {
-        return type;
+    public EventType getEventType() {
+        return eventType;
     }
 
     public LocalDate getEventDate() {
@@ -45,6 +45,6 @@ public class MembershipEvent {
     @Override
     public String toString() {
         return String.format("[%s] on %s: Added %d months. New Expiry: %s",
-                type, eventDate, monthsAdded, newExpiryDate);
+                eventType, eventDate, monthsAdded, newExpiryDate);
     }
 }
