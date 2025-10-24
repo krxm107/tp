@@ -17,7 +17,10 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.CombinedSearchPredicate;
+import seedu.address.logic.search.predicates.AddressMatchesPredicate;
+import seedu.address.logic.search.predicates.EmailMatchesPredicate;
 import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.PhoneMatchesPredicate;
 import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -73,7 +76,7 @@ public class FindPersonCommandTest {
     public void execute_zeroKeywords_noPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(preparePersonPredicate(" "));
+        predicate.add(prepareNamePredicate(" "));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -84,7 +87,7 @@ public class FindPersonCommandTest {
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(preparePersonPredicate("Pauline Benson Kurz"));
+        predicate.add(prepareNamePredicate("Pauline Benson Kurz"));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -95,12 +98,27 @@ public class FindPersonCommandTest {
     public void execute_multipleSearchParameters_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(preparePersonPredicate("Pauline Benson Kurz"));
+        predicate.add(prepareNamePredicate("Pauline Benson Kurz"));
         predicate.add(prepareTagPredicate("friends"));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(ALICE, BENSON), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_multipleSearchParameters_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
+        predicate.add(prepareNamePredicate("Pauline"));
+        predicate.add(prepareTagPredicate("friends"));
+        predicate.add(prepareAddressPredicate("Jurong"));
+        predicate.add(prepareEmailPredicate("alice"));
+        predicate.add(preparePhonePredicate("9435"));
+        FindPersonCommand command = new FindPersonCommand(predicate);
+        expectedModel.updateFilteredPersonList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(ALICE), model.getFilteredPersonList());
     }
 
     @Test
@@ -115,7 +133,7 @@ public class FindPersonCommandTest {
     /**
      * Parses {@code userInput} into a {@code NameMatchesPredicate}.
      */
-    private NameMatchesPredicate<Person> preparePersonPredicate(String userInput) {
+    private NameMatchesPredicate<Person> prepareNamePredicate(String userInput) {
         return new NameMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 
@@ -124,5 +142,26 @@ public class FindPersonCommandTest {
      */
     private TagsMatchPredicate<Person> prepareTagPredicate(String userInput) {
         return new TagsMatchPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code AddressMatchesPredicate}.
+     */
+    private AddressMatchesPredicate<Person> prepareAddressPredicate(String userInput) {
+        return new AddressMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code EmailMatchesPredicate}.
+     */
+    private EmailMatchesPredicate<Person> prepareEmailPredicate(String userInput) {
+        return new EmailMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code PhoneMatchesPredicate}.
+     */
+    private PhoneMatchesPredicate<Person> preparePhonePredicate(String userInput) {
+        return new PhoneMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 }

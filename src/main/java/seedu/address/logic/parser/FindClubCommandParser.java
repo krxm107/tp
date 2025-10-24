@@ -1,11 +1,19 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.*;
+import seedu.address.logic.search.parsers.AddressParser;
+import seedu.address.logic.search.parsers.EmailParser;
+import seedu.address.logic.search.parsers.NameParser;
+import seedu.address.logic.search.parsers.PhoneParser;
+import seedu.address.logic.search.parsers.TagParser;
 import seedu.address.model.club.Club;
 
 /**

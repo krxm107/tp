@@ -1,11 +1,11 @@
 package seedu.address.logic.search.predicates;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 public class AddressMatchesPredicate<T extends Searchable> implements Predicate<T> {
     private final List<String> keywords;
