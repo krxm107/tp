@@ -110,7 +110,7 @@ public class Membership {
      * @return true if the membership is active, false otherwise.
      */
     public boolean isActive() {
-        return this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate.get());
+        return getStatus() == MembershipStatus.ACTIVE && LocalDate.now().isBefore(expiryDate.get());
     }
 
     /**
@@ -118,7 +118,7 @@ public class Membership {
      * This should be called everytime we start the app.
      */
     public void updateStatus() {
-        if (this.status.get() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate.get())) {
+        if (getStatus() == MembershipStatus.ACTIVE && LocalDate.now().isAfter(expiryDate.get())) {
             this.status.set(MembershipStatus.EXPIRED);
             logger.info("Membership for " + person.getName() + " has expired.");
         }
@@ -134,9 +134,9 @@ public class Membership {
                     + MINIMUM_RENEWAL_DURATION_IN_MONTHS + " and " + MAXIMUM_RENEWAL_DURATION_IN_MONTHS
                     + " months.");
         }
-        if (this.status.get() == MembershipStatus.CANCELLED) {
+        if (getStatus() == MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException("Membership is cancelled. Please reactivate instead.");
-        } else if (this.status.get() == MembershipStatus.EXPIRED) {
+        } else if (getStatus() == MembershipStatus.EXPIRED) {
             throw new IllegalArgumentException("Membership has expired. Please reactivate instead.");
         }
 
@@ -164,10 +164,9 @@ public class Membership {
      * Cancels the membership.
      */
     public void cancel() {
-        if (this.status.get() == MembershipStatus.CANCELLED) {
+        if (getStatus() == MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException("Membership is already cancelled.");
-        }
-        else if (this.status.get() == MembershipStatus.EXPIRED) {
+        } else if (getStatus() == MembershipStatus.EXPIRED) {
             throw new IllegalArgumentException("Membership has already expired.");
         }
 
@@ -193,7 +192,7 @@ public class Membership {
      * @param durationInMonths The duration in months for the reactivated membership.
      */
     public void reactivate(int durationInMonths) {
-        if (this.status.get() != MembershipStatus.CANCELLED || this.status.get() != MembershipStatus.EXPIRED) {
+        if (getStatus() == MembershipStatus.ACTIVE) {
             throw new IllegalArgumentException("Only expired or cancelled memberships can be reactivated.");
         }
         if (!isValidMembershipDuration(durationInMonths)) {
@@ -202,11 +201,12 @@ public class Membership {
                     + " months.");
         }
 
+        LocalDate today = LocalDate.now();
         LocalDate newExpiry;
-        if (LocalDate.now().isAfter(expiryDate.get())) {
+        if (today.isAfter(expiryDate.get())) {
             // If previously expired, start new period from today
             logger.info("Expiry date was in the past, setting new expiry date from today.");
-            newExpiry = LocalDate.now().plusMonths(durationInMonths);
+            newExpiry = today.plusMonths(durationInMonths);
         } else {
             // If not expired, extend from current expiry date
             logger.info("Expiry date was in the future, extending from current expiry date.");
@@ -214,7 +214,6 @@ public class Membership {
         }
         this.expiryDate.set(newExpiry);
 
-        LocalDate today = LocalDate.now();
         EventType eventType;
         eventType = EventType.REACTIVATE;
 
