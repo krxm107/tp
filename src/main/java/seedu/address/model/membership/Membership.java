@@ -16,7 +16,6 @@ import seedu.address.model.person.Person;
 
 /**
  * Represents a Membership of a Person in a Club.
- * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Membership {
 
