@@ -8,6 +8,8 @@ import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.search.parsers.ClubNameParser;
 import seedu.address.logic.search.parsers.ClubTagParser;
+import seedu.address.logic.search.parsers.NameParser;
+import seedu.address.logic.search.parsers.TagParser;
 import seedu.address.model.club.Club;
 
 /**
@@ -31,10 +33,10 @@ public class FindClubCommandParser implements Parser<FindClubCommand> {
         }
 
         for (String prefix : argMultimap.getAllValues(PREFIX_NAME)) {
-            predicate.add(new ClubNameParser().parse(prefix));
+            predicate.add(new NameParser<Club>().parse(prefix));
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
-            predicate.add(new ClubTagParser().parse(prefix));
+            predicate.add(new TagParser<Club>().parse(prefix));
         }
 
         return new FindClubCommand(predicate);

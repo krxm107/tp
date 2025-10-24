@@ -12,7 +12,7 @@ import seedu.address.model.field.Searchable;
 /**
  * Parses input arguments for a search by tag instruction
  */
-public class TagParser implements SearchParser<Searchable> {
+public class TagParser<T extends Searchable> implements SearchParser<T> {
 
     public static final String KEYWORD = "t";
 
@@ -21,7 +21,7 @@ public class TagParser implements SearchParser<Searchable> {
      * instruction and returns a corresponding {@code Predicate<Searchable>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public Predicate<Searchable> parse(String args) throws ParseException {
+    public Predicate<T> parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));

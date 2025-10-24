@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code Searchable}'s {@code Tag}s match any of the keywords given.
  */
-public class TagsMatchPredicate implements Predicate<Searchable> {
+public class TagsMatchPredicate<T extends Searchable> implements Predicate<T> {
     private final List<String> tags;
 
     public TagsMatchPredicate(List<String> tags) {

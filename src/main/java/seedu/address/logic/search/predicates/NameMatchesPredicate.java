@@ -10,7 +10,7 @@ import seedu.address.model.field.Searchable;
 /**
  * Tests that a {@code Searchable}'s {@code Name} matches any of the keywords given.
  */
-public class NameMatchesPredicate implements Predicate<Searchable> {
+public class NameMatchesPredicate<T extends Searchable> implements Predicate<T> {
     private final List<String> keywords;
 
     public NameMatchesPredicate(List<String> keywords) {
