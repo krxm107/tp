@@ -201,17 +201,32 @@ public class Membership {
                     + MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS + " and " + MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS
                     + " months.");
         }
-        this.status.set(MembershipStatus.ACTIVE);
+
+        LocalDate newExpiry;
         if (LocalDate.now().isAfter(expiryDate.get())) {
             // If previously expired, start new period from today
             logger.info("Expiry date was in the past, setting new expiry date from today.");
-            this.expiryDate.set(LocalDate.now().plusMonths(durationInMonths));
+            newExpiry = LocalDate.now().plusMonths(durationInMonths);
         } else {
             // If not expired, extend from current expiry date
             logger.info("Expiry date was in the future, extending from current expiry date.");
-            LocalDate newExpiryDate = this.expiryDate.get().plusMonths(durationInMonths);
-            this.expiryDate.set(newExpiryDate);
+            newExpiry = getExpiryDate().plusMonths(durationInMonths);
         }
+        this.expiryDate.set(newExpiry);
+
+        LocalDate today = LocalDate.now();
+        EventType eventType;
+        eventType = EventType.REACTIVATE;
+
+        // Create reactivate event record
+        MembershipEvent reactivateEvent = new MembershipEvent(
+                eventType,
+                today,
+                durationInMonths,
+                newExpiry
+        );
+        this.membershipEventHistory.add(reactivateEvent);
+        this.status.set(MembershipStatus.ACTIVE);
         logger.info("Membership for " + person.getName() + " reactivated. New expiry date: " + this.expiryDate);
     }
 
