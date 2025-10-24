@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.search.parsers.SearchParser;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonContainsTagsPredicate;
 
 public class FindPersonCommandParserTest {
 
@@ -28,7 +28,7 @@ public class FindPersonCommandParserTest {
         assertParseSuccess(parser, "     ", expectedFindCommand);
 
         // no leading and trailing whitespaces
-        predicate.add(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        predicate.add(new NameMatchesPredicate<>(Arrays.asList("Alice", "Bob")));
         expectedFindCommand = new FindPersonCommand(predicate);
 
         assertParseSuccess(parser, " n/ Alice Bob", expectedFindCommand);
@@ -37,13 +37,13 @@ public class FindPersonCommandParserTest {
         assertParseSuccess(parser, " n/ \n Alice \n \t Bob  \t", expectedFindCommand);
 
         // multiple search modifiers of the same type
-        predicate.add(new NameContainsKeywordsPredicate(List.of("Charlie")));
+        predicate.add(new NameMatchesPredicate<>(List.of("Charlie")));
         expectedFindCommand = new FindPersonCommand(predicate);
 
         assertParseSuccess(parser, " n/ Alice Bob n/ Charlie", expectedFindCommand);
 
         // multiple search modifiers of different types
-        predicate.add(new PersonContainsTagsPredicate(List.of("friends")));
+        predicate.add(new TagsMatchPredicate<>(List.of("friends")));
         expectedFindCommand = new FindPersonCommand(predicate);
 
         assertParseSuccess(parser, " n/ Alice Bob n/ Charlie t/ friends", expectedFindCommand);

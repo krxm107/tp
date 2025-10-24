@@ -17,12 +17,12 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.CombinedSearchPredicate;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonContainsTagsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindPersonCommand}.
@@ -36,8 +36,8 @@ public class FindPersonCommandTest {
         CombinedSearchPredicate<Person> firstPredicate = new CombinedSearchPredicate<>();
         CombinedSearchPredicate<Person> secondPredicate = new CombinedSearchPredicate<>();
 
-        firstPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
-        secondPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("second")));
+        firstPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
+        secondPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("second")));
 
         FindPersonCommand findFirstCommand = new FindPersonCommand(firstPredicate);
         FindPersonCommand findSecondCommand = new FindPersonCommand(secondPredicate);
@@ -106,23 +106,23 @@ public class FindPersonCommandTest {
     @Test
     public void toStringMethod() {
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(new NameContainsKeywordsPredicate(Arrays.asList("keyword")));
+        predicate.add(new NameMatchesPredicate<>(Arrays.asList("keyword")));
         FindPersonCommand findCommand = new FindPersonCommand(predicate);
         String expected = FindPersonCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code NameMatchesPredicate}.
      */
-    private NameContainsKeywordsPredicate preparePersonPredicate(String userInput) {
-        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private NameMatchesPredicate<Person> preparePersonPredicate(String userInput) {
+        return new NameMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 
     /**
-     * Parses {@code userInput} into a {@code TagContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code TagsMatchPredicate}.
      */
-    private PersonContainsTagsPredicate prepareTagPredicate(String userInput) {
-        return new PersonContainsTagsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private TagsMatchPredicate<Person> prepareTagPredicate(String userInput) {
+        return new TagsMatchPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 }

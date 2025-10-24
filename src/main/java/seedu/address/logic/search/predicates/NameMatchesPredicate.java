@@ -30,11 +30,11 @@ public class NameMatchesPredicate<T extends Searchable> implements Predicate<T> 
         }
 
         // instanceof handles nulls
-        if (!(other instanceof NameMatchesPredicate)) {
+        if (!(other instanceof NameMatchesPredicate<?>)) {
             return false;
         }
 
-        NameMatchesPredicate otherNameMatchesPredicate = (NameMatchesPredicate) other;
+        NameMatchesPredicate<?> otherNameMatchesPredicate = (NameMatchesPredicate<?>) other;
         return keywords.equals(otherNameMatchesPredicate.keywords);
     }
 

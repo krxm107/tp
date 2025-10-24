@@ -17,13 +17,12 @@ import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.CombinedSearchPredicate;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
-import seedu.address.model.club.ClubContainsTagsPredicate;
-
 /**
  * Contains integration tests (interaction with the Model) for {@code FindClubCommand}.
  */
@@ -36,8 +35,8 @@ public class FindClubCommandTest {
         CombinedSearchPredicate<Club> firstPredicate = new CombinedSearchPredicate<>();
         CombinedSearchPredicate<Club> secondPredicate = new CombinedSearchPredicate<>();
 
-        firstPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("first")));
-        secondPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("second")));
+        firstPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
+        secondPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("second")));
 
         FindClubCommand findFirstCommand = new FindClubCommand(firstPredicate);
         FindClubCommand findSecondCommand = new FindClubCommand(secondPredicate);
@@ -106,23 +105,23 @@ public class FindClubCommandTest {
     @Test
     public void toStringMethod() {
         CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
-        predicate.add(new ClubContainsKeywordsPredicate(Arrays.asList("keyword")));
+        predicate.add(new NameMatchesPredicate<>(Arrays.asList("keyword")));
         FindClubCommand findCommand = new FindClubCommand(predicate);
         String expected = FindClubCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code ClubContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code NameMatchesPredicate}.
      */
-    private ClubContainsKeywordsPredicate prepareClubPredicate(String userInput) {
-        return new ClubContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private NameMatchesPredicate<Club> prepareClubPredicate(String userInput) {
+        return new NameMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 
     /**
-     * Parses {@code userInput} into a {@code TagContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code TagsMatchPredicate}.
      */
-    private ClubContainsTagsPredicate prepareTagPredicate(String userInput) {
-        return new ClubContainsTagsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private TagsMatchPredicate<Club> prepareTagPredicate(String userInput) {
+        return new TagsMatchPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 }

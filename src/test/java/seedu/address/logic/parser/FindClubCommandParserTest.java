@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.search.parsers.SearchParser;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
-import seedu.address.model.club.ClubContainsTagsPredicate;
 
 public class FindClubCommandParserTest {
 
@@ -28,7 +28,7 @@ public class FindClubCommandParserTest {
         assertParseSuccess(parser, "     ", expectedFindCommand);
 
         // no leading and trailing whitespaces
-        predicate.add(new ClubContainsKeywordsPredicate(Arrays.asList("Archery", "Bowling")));
+        predicate.add(new NameMatchesPredicate<>(Arrays.asList("Archery", "Bowling")));
         expectedFindCommand = new FindClubCommand(predicate);
 
         assertParseSuccess(parser, " n/ Archery Bowling", expectedFindCommand);
@@ -37,13 +37,13 @@ public class FindClubCommandParserTest {
         assertParseSuccess(parser, " n/ \n Archery \n \t Bowling  \t", expectedFindCommand);
 
         // multiple search modifiers of the same type
-        predicate.add(new ClubContainsKeywordsPredicate(List.of("Canoeing")));
+        predicate.add(new NameMatchesPredicate<>(List.of("Canoeing")));
         expectedFindCommand = new FindClubCommand(predicate);
 
         assertParseSuccess(parser, " n/ Archery Bowling n/ Canoeing", expectedFindCommand);
 
         // multiple search modifiers of different types
-        predicate.add(new ClubContainsTagsPredicate(List.of("NUS")));
+        predicate.add(new TagsMatchPredicate<>(List.of("NUS")));
         expectedFindCommand = new FindClubCommand(predicate);
 
         assertParseSuccess(parser, " n/ Archery Bowling n/ Canoeing t/ NUS", expectedFindCommand);

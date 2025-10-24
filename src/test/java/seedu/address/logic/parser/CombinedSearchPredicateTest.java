@@ -7,11 +7,10 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.PersonContainsTagsPredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class CombinedSearchPredicateTest {
@@ -22,20 +21,17 @@ public class CombinedSearchPredicateTest {
         CombinedSearchPredicate<Person> secondPredicate = new CombinedSearchPredicate<>();
         CombinedSearchPredicate<Club> thirdPredicate = new CombinedSearchPredicate<>();
 
-        firstPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
-        secondPredicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("second")));
-        thirdPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("first")));
+        firstPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
+        secondPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("second")));
+        thirdPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
         CombinedSearchPredicate<Person> firstPredicateCopy = new CombinedSearchPredicate<>();
-        firstPredicateCopy.add(new NameContainsKeywordsPredicate(Collections.singletonList("first")));
+        firstPredicateCopy.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
         assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(thirdPredicate));
 
         // null -> returns false
         assertFalse(firstPredicate.equals(null));
@@ -61,18 +57,18 @@ public class CombinedSearchPredicateTest {
     @Test
     public void test_allPredicatesMet_returnsTrue() {
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
-        predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Bob")));
-        predicate.add(new PersonContainsTagsPredicate(Collections.singletonList("family")));
+        predicate.add(new NameMatchesPredicate<>(Collections.singletonList("Alice")));
+        predicate.add(new NameMatchesPredicate<>(Collections.singletonList("Bob")));
+        predicate.add(new TagsMatchPredicate<>(Collections.singletonList("family")));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("family").build()));
     }
 
     @Test
     public void test_onePredicateUnmet_returnsFalse() {
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Alice")));
-        predicate.add(new NameContainsKeywordsPredicate(Collections.singletonList("Bob")));
-        predicate.add(new PersonContainsTagsPredicate(Collections.singletonList("family")));
+        predicate.add(new NameMatchesPredicate<>(Collections.singletonList("Alice")));
+        predicate.add(new NameMatchesPredicate<>(Collections.singletonList("Bob")));
+        predicate.add(new TagsMatchPredicate<>(Collections.singletonList("family")));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
     }
 

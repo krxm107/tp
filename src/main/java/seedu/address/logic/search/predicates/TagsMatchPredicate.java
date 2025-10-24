@@ -29,11 +29,11 @@ public class TagsMatchPredicate<T extends Searchable> implements Predicate<T> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TagsMatchPredicate)) {
+        if (!(other instanceof TagsMatchPredicate<?>)) {
             return false;
         }
 
-        TagsMatchPredicate otherTagsMatchPredicate = (TagsMatchPredicate) other;
+        TagsMatchPredicate<?> otherTagsMatchPredicate = (TagsMatchPredicate<?>) other;
         return tags.equals(otherTagsMatchPredicate.tags);
     }
 

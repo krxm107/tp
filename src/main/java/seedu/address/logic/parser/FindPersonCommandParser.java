@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.search.parsers.NameParser;
+import seedu.address.logic.search.parsers.TagParser;
 import seedu.address.model.person.Person;
 
 /**
@@ -33,7 +34,7 @@ public class FindPersonCommandParser implements Parser<FindPersonCommand> {
             predicate.add(new NameParser<Person>().parse(prefix));
         }
         for (String prefix : argMultimap.getAllValues(PREFIX_TAG)) {
-            predicate.add(new NameParser<Person>().parse(prefix));
+            predicate.add(new TagParser<Person>().parse(prefix));
         }
 
         return new FindPersonCommand(predicate);
