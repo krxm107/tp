@@ -6,8 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.FindClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.ClubNameParser;
-import seedu.address.logic.search.parsers.ClubTagParser;
 import seedu.address.logic.search.parsers.NameParser;
 import seedu.address.logic.search.parsers.TagParser;
 import seedu.address.model.club.Club;
