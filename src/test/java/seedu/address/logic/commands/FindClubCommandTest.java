@@ -16,7 +16,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.parser.CombinedSearchPredicate;
+import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.logic.search.predicates.AddressMatchesPredicate;
 import seedu.address.logic.search.predicates.EmailMatchesPredicate;
 import seedu.address.logic.search.predicates.NameMatchesPredicate;

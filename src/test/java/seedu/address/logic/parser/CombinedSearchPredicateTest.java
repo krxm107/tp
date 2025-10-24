@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.logic.search.predicates.NameMatchesPredicate;
 import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.club.Club;

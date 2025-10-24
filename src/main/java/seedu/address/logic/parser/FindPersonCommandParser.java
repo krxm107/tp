@@ -14,6 +14,7 @@ import seedu.address.logic.search.parsers.EmailParser;
 import seedu.address.logic.search.parsers.NameParser;
 import seedu.address.logic.search.parsers.PhoneParser;
 import seedu.address.logic.search.parsers.TagParser;
+import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.model.person.Person;
 
 /**

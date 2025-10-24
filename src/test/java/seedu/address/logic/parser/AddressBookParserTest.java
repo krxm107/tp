@@ -24,7 +24,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.NameParser;
+import seedu.address.logic.search.CombinedSearchPredicate;
 import seedu.address.logic.search.predicates.NameMatchesPredicate;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.Person;
