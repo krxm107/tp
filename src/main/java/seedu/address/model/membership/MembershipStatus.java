@@ -6,5 +6,6 @@ package seedu.address.model.membership;
 public enum MembershipStatus {
     ACTIVE,
     EXPIRED,
+    PENDING_CANCELLATION,
     CANCELLED
 }

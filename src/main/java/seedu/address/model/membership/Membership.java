@@ -164,15 +164,22 @@ public class Membership {
      * Cancels the membership.
      */
     public void cancel() {
-        if (getStatus() == MembershipStatus.CANCELLED) {
+        if (getStatus() == MembershipStatus.CANCELLED || getStatus() == MembershipStatus.PENDING_CANCELLATION) {
             throw new IllegalArgumentException("Membership is already cancelled.");
-        } else if (getStatus() == MembershipStatus.EXPIRED) {
-            throw new IllegalArgumentException("Membership has already expired.");
         }
 
         LocalDate today = LocalDate.now();
+        LocalDate expiry = this.expiryDate.get();
+        // Check if expiry date is in the past
+        if (today.isAfter(expiry)) {
+            this.status.set(MembershipStatus.CANCELLED);
+            logger.info("Membership for " + person.getName() + " has been cancelled.");
+        } else {
+            this.status.set(MembershipStatus.PENDING_CANCELLATION);
+            logger.info("Membership for " + person.getName() + " is pending cancellation until expiry date: "
+                    + expiry);
+        }
         EventType eventType = EventType.CANCEL;
-        LocalDate newExpiry = this.expiryDate.get();
         int durationInMonths = 0;
 
         // Create cancel event record
@@ -180,11 +187,9 @@ public class Membership {
                 eventType,
                 today,
                 durationInMonths,
-                newExpiry
+                expiry
         );
         this.membershipEventHistory.add(cancelEvent);
-        this.status.set(MembershipStatus.CANCELLED);
-        logger.info("Membership for " + person.getName() + " has been cancelled.");
     }
 
     /**
