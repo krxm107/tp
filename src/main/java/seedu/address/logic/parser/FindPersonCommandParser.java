@@ -6,8 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.search.parsers.PersonNameParser;
-import seedu.address.logic.parser.search.parsers.PersonTagParser;
+import seedu.address.logic.search.parsers.PersonNameParser;
+import seedu.address.logic.search.parsers.PersonTagParser;
 import seedu.address.model.person.Person;
 
 /**

@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.search.predicates;
+package seedu.address.logic.search.predicates;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;

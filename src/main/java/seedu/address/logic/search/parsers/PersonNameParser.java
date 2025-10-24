@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.search.parsers;
+package seedu.address.logic.search.parsers;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 

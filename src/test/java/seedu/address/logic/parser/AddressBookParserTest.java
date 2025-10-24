@@ -23,7 +23,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.search.parsers.PersonNameParser;
+import seedu.address.logic.search.parsers.PersonNameParser;
 import seedu.address.model.club.Club;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;

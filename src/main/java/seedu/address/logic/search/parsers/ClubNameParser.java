@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.search.parsers;
+package seedu.address.logic.search.parsers;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -7,17 +7,17 @@ import java.util.function.Predicate;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsTagsPredicate;
+import seedu.address.model.club.ClubContainsKeywordsPredicate;
 
 /**
- * Parses input arguments for a search by club tag instruction
+ * Parses input arguments for a search by club name instruction
  */
-public class ClubTagParser implements SearchParser<Club> {
+public class ClubNameParser implements SearchParser<Club> {
 
-    public static final String KEYWORD = "t";
+    public static final String KEYWORD = "n";
 
     /**
-     * Parses the given {@code String} of arguments in the context of a search by club tag
+     * Parses the given {@code String} of arguments in the context of a search by club name
      * instruction and returns a corresponding {@code Predicate<Club>} object.
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -27,8 +27,8 @@ public class ClubTagParser implements SearchParser<Club> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 
-        String[] tagKeywords = trimmedArgs.split("\\s+");
-        return new ClubContainsTagsPredicate(Arrays.asList(tagKeywords));
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+        return new ClubContainsKeywordsPredicate(Arrays.asList(nameKeywords));
     }
 
 }

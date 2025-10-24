@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindClubCommand;
-import seedu.address.logic.parser.search.parsers.SearchParser;
+import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.model.club.Club;
 import seedu.address.model.club.ClubContainsKeywordsPredicate;
 import seedu.address.model.club.ClubContainsTagsPredicate;
