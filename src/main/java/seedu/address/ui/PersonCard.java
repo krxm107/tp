@@ -101,6 +101,9 @@ public class PersonCard extends UiPart<Region> {
                     case EXPIRED:
                         membershipLabel.getStyleClass().add("membership-expired");
                         break;
+                    case PENDING_CANCELLATION:
+                        membershipLabel.getStyleClass().add("membership-pending-cancellation");
+                        break;
                     case CANCELLED:
                         membershipLabel.getStyleClass().add("membership-cancelled");
                         break;

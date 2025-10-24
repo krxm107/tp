@@ -425,6 +425,10 @@
     -fx-background-color: #c95d5d; /* A clear red */
 }
 
+.membership-pending-cancellation {
+    -fx-background-color: #c19829; /* A noticeable yellow */
+}
+
 .membership-cancelled {
     -fx-background-color: #6c757d; /* A neutral grey */
 }
