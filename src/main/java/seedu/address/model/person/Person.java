@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
+import javafx.util.Callback;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
@@ -23,6 +25,12 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
+    // The extractor for the memberships list within this Person
+    private static final Callback<Membership, Observable[]> MEMBERSHIP_EXTRACTOR = membership -> new Observable[] {
+            membership.statusProperty(),
+            membership.expiryDateProperty()
+    };
+
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -31,7 +39,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final ObservableSet<Membership> memberships;
+    private final ObservableList<Membership> memberships = FXCollections.observableArrayList(MEMBERSHIP_EXTRACTOR);
 
     /**
      * Constructs a {@code Person}.
@@ -57,7 +65,6 @@ public class Person {
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
         this.tags.addAll(tags);
-        this.memberships = FXCollections.observableSet(new HashSet<>());
     }
 
     public Name getName() {
@@ -84,7 +91,7 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
-    public ObservableSet<Membership> getMemberships() {
+    public ObservableList<Membership> getMemberships() {
         return this.memberships;
     }
 
