@@ -19,7 +19,7 @@ public class EmailMatchesPredicate<T extends Searchable> implements Predicate<T>
     @Override
     public boolean test(Searchable searchable) {
         return keywords.stream()
-                .anyMatch(keyword -> searchable.getEmail().value.contains(keyword));
+                .anyMatch(keyword -> searchable.getEmail().value.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override
