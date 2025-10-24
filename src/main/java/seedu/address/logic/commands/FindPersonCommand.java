@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.parser.CombinedSearchPredicate;
-import seedu.address.logic.parser.search.SearchParser;
+import seedu.address.logic.parser.search.parsers.SearchParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
