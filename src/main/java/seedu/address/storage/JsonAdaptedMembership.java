@@ -23,7 +23,7 @@ class JsonAdaptedMembership {
     private final String clubName;
     private final String joinDate;
     private final String expiryDate;
-    private final List<JsonAdaptedRenewalDate> renewalHistory = new ArrayList<>();
+    private final List<JsonAdaptedMembershipEvent> renewalHistory = new ArrayList<>();
     private final String status;
 
     @JsonCreator
@@ -31,7 +31,7 @@ class JsonAdaptedMembership {
                                  @JsonProperty("clubName") String clubName,
                                  @JsonProperty("joinDate") String joinDate,
                                  @JsonProperty("expiryDate") String expiryDate,
-                                 @JsonProperty("renewalHistory") List<JsonAdaptedRenewalDate> renewalHistory,
+                                 @JsonProperty("renewalHistory") List<JsonAdaptedMembershipEvent> renewalHistory,
                                  @JsonProperty("status") String status) {
         this.personEmail = personEmail;
         this.clubName = clubName;
@@ -54,7 +54,7 @@ class JsonAdaptedMembership {
         expiryDate = source.getExpiryDate().toString();
         // How can i store renewalHistory as a string?
         renewalHistory.addAll(source.getRenewalHistory().stream()
-                .map(JsonAdaptedRenewalDate::new)
+                .map(JsonAdaptedMembershipEvent::new)
                 .toList());
         status = source.getStatus().toString();
     }
@@ -81,7 +81,7 @@ class JsonAdaptedMembership {
 
     public List<LocalDate> getRenewalHistory() throws IllegalValueException {
         return renewalHistory.stream()
-                .map(JsonAdaptedRenewalDate::toModelType)
+                .map(JsonAdaptedMembershipEvent::toModelType)
                 .collect(Collectors.toList());
     }
 }

@@ -32,7 +32,7 @@ public class Membership {
     private final LocalDate joinDate;
     private ObjectProperty<LocalDate> expiryDate = new SimpleObjectProperty<>();
     private ObjectProperty<MembershipStatus> status = new SimpleObjectProperty<>();
-    private List<MembershipEvent> eventHistory;
+    private List<MembershipEvent> membershipEventHistory;
 
     /**
      * Constructor with duration specified.
@@ -51,7 +51,7 @@ public class Membership {
         LocalDate today = LocalDate.now();
         this.joinDate = today;
         this.expiryDate.set(joinDate.plusMonths(initialDurationInMonths));
-        this.eventHistory = new ArrayList<>();
+        this.membershipEventHistory = new ArrayList<>();
 
         // The first event is always a JOIN event. This captures the initial duration.
         MembershipEvent joinEvent = new MembershipEvent(
@@ -60,7 +60,7 @@ public class Membership {
                 initialDurationInMonths,
                 this.expiryDate.get()
         );
-        this.eventHistory.add(joinEvent);
+        this.membershipEventHistory.add(joinEvent);
 
         this.status.set(MembershipStatus.ACTIVE);
     }
@@ -76,7 +76,7 @@ public class Membership {
         this.club = club;
         this.joinDate = joinDate;
         this.expiryDate.set(expiryDate);
-        this.eventHistory = eventHistory;
+        this.membershipEventHistory = eventHistory;
         this.status.set(status);
     }
 
@@ -90,7 +90,7 @@ public class Membership {
         this.club = club;
         this.joinDate = LocalDate.now();
         this.expiryDate.set(joinDate.plusMonths(DEFAULT_DURATION_IN_MONTHS)); // Default duration of 12 months
-        this.eventHistory = new ArrayList<>();
+        this.membershipEventHistory = new ArrayList<>();
         this.status.set(MembershipStatus.ACTIVE);
     }
 
@@ -157,7 +157,7 @@ public class Membership {
                 durationInMonths,
                 this.expiryDate.get()
         );
-        this.eventHistory.add(renewalEvent);
+        this.membershipEventHistory.add(renewalEvent);
         this.status.set(MembershipStatus.ACTIVE);
         logger.info("Membership for " + person.getName() + " renewed. New expiry date: " + this.expiryDate);
     }
@@ -213,8 +213,8 @@ public class Membership {
         return expiryDate.get();
     }
 
-    public List<MembershipEvent> getEventHistory() {
-        return eventHistory;
+    public List<MembershipEvent> getMembershipEventHistory() {
+        return membershipEventHistory;
     }
 
     public MembershipStatus getStatus() {

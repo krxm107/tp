@@ -5,16 +5,16 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-class JsonAdaptedRenewalDate {
+class JsonAdaptedMembershipEvent {
 
     private final String localDateString;
 
     @JsonCreator
-    public JsonAdaptedRenewalDate(String localDateName) {
+    public JsonAdaptedMembershipEvent(String localDateName) {
         this.localDateString = localDateName;
     }
 
-    public JsonAdaptedRenewalDate(LocalDate source) {
+    public JsonAdaptedMembershipEvent(LocalDate source) {
         localDateString = source.toString();
     }
 
