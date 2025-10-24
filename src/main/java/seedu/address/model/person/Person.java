@@ -10,7 +10,11 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.field.*;
+import seedu.address.model.field.Address;
+import seedu.address.model.field.Email;
+import seedu.address.model.field.Name;
+import seedu.address.model.field.Phone;
+import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.tag.Tag;
 
