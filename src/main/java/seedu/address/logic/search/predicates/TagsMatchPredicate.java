@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code Person} or {@code Club}'s {@code Tag}s match any of the keywords given.
+ * Tests that a {@code Searchable}'s {@code Tag}s match any of the keywords given.
  */
 public class TagsMatchPredicate implements Predicate<Searchable> {
     private final List<String> tags;

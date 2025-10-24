@@ -8,7 +8,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
 
 /**
- * Tests that a {@code Person} or {@code Club}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Searchable}'s {@code Name} matches any of the keywords given.
  */
 public class NameMatchesPredicate implements Predicate<Searchable> {
     private final List<String> keywords;
