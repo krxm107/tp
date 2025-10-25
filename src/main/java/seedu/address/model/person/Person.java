@@ -32,6 +32,12 @@ public class Person implements Searchable {
             membership.expiryDateProperty()
     };
 
+    // The extractor for the memberships list within this Person
+    private static final Callback<Membership, Observable[]> MEMBERSHIP_EXTRACTOR = membership -> new Observable[] {
+            membership.statusProperty(),
+            membership.expiryDateProperty()
+    };
+
     // Identity fields
     private final Name name;
     private final Phone phone;

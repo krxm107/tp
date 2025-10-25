@@ -57,7 +57,7 @@ public class ClubCard extends UiPart<Region> {
         this.club = club;
         id.setText(displayedIndex + ". ");
         name.setText(club.getName().fullName);
-        memberCount.setText(club.getMemberships().size() + "");
+        memberCount.setText(club.getMemberCount() + "");
 
         if (club.getPhone().value.isEmpty()) {
             phoneRow.setVisible(false);

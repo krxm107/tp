@@ -20,7 +20,7 @@ public class CancelMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "cancel";
     public static final String MESSAGE_CANCELLED_MEMBERSHIP =
-            "%1$s membership in %2$s cancelled. Membership remains valid till expiry date.";
+            "%1$s membership in %2$s cancelled. Membership only remains valid till expiry date.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Cancel a person's membership in a club"
             + "Current membership is still valid until expiry date.\n"
