@@ -81,6 +81,11 @@ public class EditClubCommand extends Command {
         Club clubToEdit = lastShownList.get(index.getZeroBased());
         Club editedClub = createEditedClub(clubToEdit, editClubDescriptor);
 
+        if (clubToEdit.equals(editedClub)) {
+            return new CommandResult("There was no change to this club " +
+                    "since the original and edited name, phone, email, address and tags are the same.");
+        }
+
         // Existing broad duplicate check (keeps previous semantics)
         if (!clubToEdit.isSameClub(editedClub) && model.hasClub(editedClub)) {
             throw new CommandException(MESSAGE_DUPLICATE_CLUB);

@@ -82,6 +82,11 @@ public class EditPersonCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        if (personToEdit.equals(editedPerson)) {
+            return new CommandResult("There was no change to this person " +
+                    "since the original and edited details are the same.");
+        }
+
         for (Person p : model.getAddressBook().getPersonList()) {
             if (p.equals(personToEdit)) {
                 continue;
