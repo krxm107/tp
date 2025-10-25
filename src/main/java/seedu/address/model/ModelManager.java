@@ -55,6 +55,8 @@ public class ModelManager implements Model {
         this.filteredClubs = new FilteredList<>(this.addressBook.getClubList());
         this.filteredMemberships = new FilteredList<>(this.addressBook.getMembershipList());
 
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
         updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
     }
 
