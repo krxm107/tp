@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.search;
+package seedu.address.logic.search.parsers;
 
 import java.util.function.Predicate;
 

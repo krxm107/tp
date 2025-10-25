@@ -1,4 +1,4 @@
-package seedu.address.logic.parser;
+package seedu.address.logic.search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.function.Predicate;
  * and chains them using the and operator when testing
  * @param <T> parameterized type of Predicate objects accepted
  */
-public class FindCommandPredicate<T> implements Predicate<T> {
+public class CombinedSearchPredicate<T> implements Predicate<T> {
     private final List<Predicate<T>> predicates = new ArrayList<>();
 
     /**
@@ -33,12 +33,12 @@ public class FindCommandPredicate<T> implements Predicate<T> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommandPredicate<?>)) {
+        if (!(other instanceof CombinedSearchPredicate<?>)) {
             return false;
         }
 
-        FindCommandPredicate<?> otherFindCommandPredicate = (FindCommandPredicate<?>) other;
-        return predicates.equals(otherFindCommandPredicate.predicates);
+        CombinedSearchPredicate<?> otherCombinedSearchPredicate = (CombinedSearchPredicate<?>) other;
+        return predicates.equals(otherCombinedSearchPredicate.predicates);
     }
 
 }

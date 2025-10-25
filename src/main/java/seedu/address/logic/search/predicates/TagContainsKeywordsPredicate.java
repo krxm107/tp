@@ -1,13 +1,15 @@
-package seedu.address.model.tag;
+package seedu.address.logic.search.predicates;
+
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code Tag}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Tag}'s {@code Name} contains any of the keywords as a substring.
  */
 public class TagContainsKeywordsPredicate implements Predicate<Tag> {
     private final List<String> keywords;
@@ -19,7 +21,7 @@ public class TagContainsKeywordsPredicate implements Predicate<Tag> {
     @Override
     public boolean test(Tag tag) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
+                .anyMatch(keyword -> containsSubstring(keyword, tag.tagName));
     }
 
     @Override

@@ -14,6 +14,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -22,7 +23,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Club in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Club {
+public class Club implements Searchable {
 
     // Identity fields
     private final Name name;

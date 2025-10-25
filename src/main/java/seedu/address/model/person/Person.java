@@ -16,6 +16,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.tag.Tag;
 
@@ -23,7 +24,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Person implements Searchable {
 
     // The extractor for the memberships list within this Person
     private static final Callback<Membership, Observable[]> MEMBERSHIP_EXTRACTOR = membership -> new Observable[] {
