@@ -12,8 +12,9 @@ import seedu.address.model.field.validator.NameValidator;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain letters A–Z, a–z, digits 0–9, "
-                    + "spaces, hyphens, apostrophes, periods, and slashes (/).\n\n"
+            "Allowed characters: " +
+            "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., " +
+            "slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @"
                     + NameValidator.LENGTH_BOUND_WARNING;
 
     public final String fullName;
