@@ -19,7 +19,9 @@ public final class PhoneValidator {
     public static final int MIN_DIGITS = 6;
     public static final int MAX_DIGITS = 15;
 
-    private static final Pattern DIGITS_ONLY = Pattern.compile("^\\d+$");
+    private static final Pattern ALLOWED =
+            Pattern.compile("^[A-Za-z0-9\\s\\-'.#/,&():;@]+$");
+
     private static final Pattern WS = Pattern.compile("\\s+");
 
     private PhoneValidator() {
@@ -48,7 +50,7 @@ public final class PhoneValidator {
         if (normalized.isEmpty()) {
             return ValidationResult.fail("Phone number cannot be empty.");
         }
-        if (!DIGITS_ONLY.matcher(normalized).matches()) {
+        if (!ALLOWED.matcher(normalized).matches()) {
             return ValidationResult.fail("Phone number must contain only digits.");
         }
         if (normalized.length() < MIN_DIGITS) {

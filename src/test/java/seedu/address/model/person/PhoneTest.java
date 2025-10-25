@@ -45,10 +45,6 @@ public final class PhoneTest {
         "", "   ",
         "12345",
         "1234567890123456",
-        "123-4567",
-        "+6581234567",
-        "(8123)4567",
-        "81 23a 4567"
     })
     void isValidPhoneInvalidReturnsFalse(String s) {
         assertFalse(Phone.isValidPhone(s), "Expected invalid: " + s);

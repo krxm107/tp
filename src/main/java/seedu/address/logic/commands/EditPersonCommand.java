@@ -95,6 +95,12 @@ public class EditPersonCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
+        if (editedPerson.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, "
+                    + "'%s', contains characters "
+                    + "other than digits and spaces", editedPerson.getPhone()));
+        }
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 

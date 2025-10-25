@@ -17,8 +17,8 @@ import seedu.address.model.field.validator.PhoneValidator;
 public class Phone {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers or spaces, "
-                    + "and they must contain at least 6 and at most 15 digits.";
+            "Phones must contain a minimum of 6 non-whitespace characters "
+                    + "and a maximum of 15 non-whitespace characters.";
 
     public final String value;
 
@@ -46,6 +46,26 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
         return PhoneValidator.validate(test).isValid();
+    }
+
+    /**
+     * Returns true if the phone contains a character that isn't numeric or a whitespace.
+     */
+    public boolean containsNonNumericNonSpaceCharacter() {
+        for (int i = 0; i < value.length(); i++) {
+            final char currChar = value.charAt(i);
+            if ('0' <= currChar && currChar <= '9') {
+                continue;
+            }
+
+            if (Character.isSpaceChar((int) currChar)) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /** Returns true if this phone field was provided by the user. */
