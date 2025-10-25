@@ -10,6 +10,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Email {
 
     private static final String SPECIAL_CHARACTERS = "+_.-";
+    
+    private static final String LOCAL_PART = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
+    private static final String DOMAIN_LABEL = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
+    private static final String DOMAIN =  DOMAIN_LABEL + "(\\." + DOMAIN_LABEL + ")*\\.[A-Za-z0-9]{2,}";
+    private static final String EMAIL_REGEX = "^" + LOCAL_PART + "@" + DOMAIN + "$";
+
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
             + "1. The local-part should only contain alphanumeric characters and these special characters, excluding "
@@ -21,11 +27,6 @@ public class Email {
             + "    - end with a domain label at least 2 characters long\n"
             + "    - have each domain label start and end with alphanumeric characters\n"
             + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.";
-
-    private static final String LOCAL_PART = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
-    private static final String DOMAIN_LABEL = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
-    private static final String DOMAIN =  DOMAIN_LABEL + "(\\." + DOMAIN_LABEL + ")*\\.[A-Za-z0-9]{2,}";
-    private static final String EMAIL_REGEX = "^" + LOCAL_PART + "@" + DOMAIN + "$";
 
     public final String value;
 
