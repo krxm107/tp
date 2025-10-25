@@ -88,6 +88,10 @@ public class Person implements Searchable {
         return address;
     }
 
+    public boolean phoneHasNonNumericNonSpaceCharacter() {
+        return getPhone().containsNonNumericNonSpaceCharacter();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

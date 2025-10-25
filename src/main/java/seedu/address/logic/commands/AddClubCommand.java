@@ -64,6 +64,12 @@ public class AddClubCommand extends Command {
         }
 
         model.addClub(toAdd);
+
+        if (toAdd.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters "
+                    + "other than digits and spaces", toAdd.getPhone()));
+        }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
