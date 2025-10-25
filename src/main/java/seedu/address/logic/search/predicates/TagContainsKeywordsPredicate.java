@@ -1,9 +1,9 @@
 package seedu.address.logic.search.predicates;
 
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
+
 import java.util.List;
 import java.util.function.Predicate;
-
-import static seedu.address.logic.search.SearchUtil.containsSubstring;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
