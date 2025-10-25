@@ -8,6 +8,16 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
+    
+    public static final String MESSAGE_CONSTRAINTS =
+            "Emails should start with a letter or a digit, "
+            + "and end with a letter or a digit.\n\n"
+            + "They should be of the format LOCAL_PART@DOMAIN_LABEL.DOMAIN_NAME (e.g. example@domain.com).\n\n"
+            + "Each of LOCAL_PART, DOMAIN_LABEL and DOMAIN_NAME should start and end with a digit.\n\n"
+            + "Each of LOCAL_PART, DOMAIN_LABEL and DOMAIN_NAME should contain one or more letters or digits.\n\n"
+            + "The email should contain at most 150 characters and "
+            + "LOCAL_PART should contain at most 64 characters.\n\n"
+            + "DOMAIN_NAME should contain at least 2 characters.";
 
     private static final String SPECIAL_CHARACTERS = "+_.-";
 
@@ -24,16 +34,6 @@ public class Email {
 
     private static final int MAX_EMAIL_LENGTH = 150;
     private static final int MAX_LOCAL_PART_LENGTH = 64;
-
-    public static final String MESSAGE_CONSTRAINTS
-            = "Emails should start with a letter or a digit, "
-                + "and end with a letter or a digit.\n\n"
-                + "They should be of the format LOCAL_PART@DOMAIN_LABEL.DOMAIN_NAME (e.g. example@domain.com).\n\n"
-                + "Each of LOCAL_PART, DOMAIN_LABEL and DOMAIN_NAME should start and end with a digit.\n\n"
-                + "Each of LOCAL_PART, DOMAIN_LABEL and DOMAIN_NAME should contain one or more letters or digits.\n\n"
-                + "The email should contain at most 150 characters and "
-                + "LOCAL_PART should contain at most 64 characters.\n\n"
-                + "DOMAIN_NAME should contain at least 2 characters.";
 
     public final String value;
 
