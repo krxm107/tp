@@ -346,7 +346,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **MSS**
 
-1.  The user issues the command `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`. Note that there can be any number of keywords, including 0.
+1.  The user issues the command `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`. Note that there can be any number of tags, including 0.
 2.  The app creates the new person, then displays a success message: "New person added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
 
     Use case ends.
@@ -369,7 +369,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 **MSS**
 
-1.  The user issues the `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...` command with a valid and unique club name. Note that there can be any number of keywords, including 0.
+1.  The user issues the `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...` command with a valid and unique club name. Note that there can be any number of tags, including 0.
 2.  The address book app creates the new club and displays a success message: "New club added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
 
     Use case ends.

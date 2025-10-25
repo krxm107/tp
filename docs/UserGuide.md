@@ -109,7 +109,7 @@ This ensures you'll never have to dig through scattered notes or emails again to
 Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of keywords (including 0)
+A person can have any number of tags (including 0)
 </div>
 
 Examples:
@@ -126,7 +126,7 @@ This makes it simple to stay connected with all your clubs without juggling mult
 Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A club can have any number of keywords (including 0)
+A club can have any number of tags (including 0)
 </div>
 
 Examples:
@@ -214,7 +214,7 @@ Format: `list`
 
 Editing a person in your address book helps you keep their
 details up to date without having to create a new entry.
-You can quickly change their name, phone, email, address, or keywords,
+You can quickly change their name, phone, email, address, or tags,
 so your contact list always stays accurate and organised.
 
 Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
@@ -222,19 +222,19 @@ Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…�
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing keywords, the existing keywords of the person will be removed i.e adding of keywords is not cumulative.
-* You can remove all the person’s keywords by typing `t/` without
-    specifying any keywords after it.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person’s tags by typing `t/` without
+    specifying any tags after it.
 
 Examples:
 *  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit_person 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing keywords.
+*  `edit_person 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a club : `edit_club`
 
 Editing a club in your address book helps you keep its
 details up to date without having to create a new entry.
-You can quickly change its name, phone, email, address, or keywords,
+You can quickly change its name, phone, email, address, or tags,
 so your contact list always stays accurate and organised.
 
 Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
@@ -242,13 +242,13 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing keywords, the existing keywords of the club will be removed i.e adding of keywords is not cumulative.
-* You can remove all the club’s keywords by typing `t/` without
-  specifying any keywords after it.
+* When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
+* You can remove all the club’s tags by typing `t/` without
+  specifying any tags after it.
 
 Examples:
 *  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
-*  `edit_club 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing keywords.
+*  `edit_club 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
  
 ### Locating persons: `findp`
 
@@ -257,7 +257,7 @@ Finds and displays persons that match all search conditions specified with the c
 Format: `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
 Search conditions: 
 `n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES 
-`t/ [TAGS]` - match persons tagged with keywords containing any of the names (separated by whitespace) specified in TAGS
+`t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
 
 * The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the search conditions and keywords does not matter. 
@@ -286,7 +286,7 @@ Finds and displays clubs that match all search conditions specified with the com
 Format: `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
 Search conditions:
 `n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
-`t/ [TAGS]` - match clubs tagged with keywords containing any of the names (separated by whitespace) specified in TAGS
+`t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
 
 * The search is case-insensitive. e.g. `archery` will match `Archery`
 * The order of the search conditions and keywords does not matter.
