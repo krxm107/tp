@@ -3,7 +3,6 @@ package seedu.address.logic.search.predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.search.SearchUtil;
 import seedu.address.model.tag.Tag;

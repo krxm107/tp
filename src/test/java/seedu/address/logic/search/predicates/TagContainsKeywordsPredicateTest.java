@@ -42,6 +42,10 @@ public class TagContainsKeywordsPredicateTest {
     public void test_tagContainsKeywords_returnsTrue() {
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.singletonList("NUS"));
         assertTrue(predicate.test(new Tag("NUS")));
+
+        // Substring keywords
+        predicate = new TagContainsKeywordsPredicate(Arrays.asList("NUS", "NTU"));
+        assertTrue(predicate.test(new Tag("NUSNTU")));
     }
 
     @Test
@@ -53,10 +57,6 @@ public class TagContainsKeywordsPredicateTest {
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("SMU"));
         assertFalse(predicate.test(new Tag("NUS")));
-
-        // Substring keywords
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("NUS", "NTU"));
-        assertFalse(predicate.test(new Tag("NUSNTU")));
     }
 
     @Test

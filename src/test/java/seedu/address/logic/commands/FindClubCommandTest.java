@@ -87,7 +87,7 @@ public class FindClubCommandTest {
     public void execute_multipleKeywords_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 3);
         CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Archery Balls Chess"));
+        predicate.add(prepareNamePredicate("Archer Ball Chess"));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -98,8 +98,8 @@ public class FindClubCommandTest {
     public void execute_multipleSearchParameters_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 2);
         CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Archery Balls Chess"));
-        predicate.add(prepareTagPredicate("sports"));
+        predicate.add(prepareNamePredicate("Archer Ball Chess"));
+        predicate.add(prepareTagPredicate("sport"));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -110,9 +110,9 @@ public class FindClubCommandTest {
     public void execute_multipleSearchParameters_oneClubFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 1);
         CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Archery"));
-        predicate.add(prepareTagPredicate("sports"));
-        predicate.add(prepareAddressPredicate("West"));
+        predicate.add(prepareNamePredicate("Archer"));
+        predicate.add(prepareTagPredicate("sport"));
+        predicate.add(prepareAddressPredicate("Wes"));
         predicate.add(prepareEmailPredicate("archery"));
         predicate.add(preparePhonePredicate("1253"));
         FindClubCommand command = new FindClubCommand(predicate);

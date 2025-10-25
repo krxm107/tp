@@ -87,7 +87,7 @@ public class FindPersonCommandTest {
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Pauline Benson Kurz"));
+        predicate.add(prepareNamePredicate("Paul Ben Kurz"));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -98,8 +98,8 @@ public class FindPersonCommandTest {
     public void execute_multipleSearchParameters_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Pauline Benson Kurz"));
-        predicate.add(prepareTagPredicate("friends"));
+        predicate.add(prepareNamePredicate("Paul Ben Kurz"));
+        predicate.add(prepareTagPredicate("friend"));
         FindPersonCommand command = new FindPersonCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -110,9 +110,9 @@ public class FindPersonCommandTest {
     public void execute_multipleSearchParameters_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
-        predicate.add(prepareNamePredicate("Pauline"));
-        predicate.add(prepareTagPredicate("friends"));
-        predicate.add(prepareAddressPredicate("Jurong"));
+        predicate.add(prepareNamePredicate("Paul"));
+        predicate.add(prepareTagPredicate("friend"));
+        predicate.add(prepareAddressPredicate("Juro"));
         predicate.add(prepareEmailPredicate("alice"));
         predicate.add(preparePhonePredicate("9435"));
         FindPersonCommand command = new FindPersonCommand(predicate);
