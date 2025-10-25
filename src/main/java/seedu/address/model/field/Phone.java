@@ -58,7 +58,7 @@ public class Phone {
                 continue;
             }
 
-            if ( Character.isSpaceChar((int)currChar) ) {
+            if (Character.isSpaceChar((int) currChar)) {
                 continue;
             }
 

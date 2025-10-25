@@ -108,8 +108,9 @@ public class EditClubCommand extends Command {
         model.updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
 
         if (editedClub.phoneHasNonNumericNonSpaceCharacter()) {
-            return new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters " +
-                    "other than digits and spaces", editedClub.getPhone()));
+            return new CommandResult(String.format("WARNING: The phone number added, "
+                    + "'%s', contains characters "
+                    + "other than digits and spaces", editedClub.getPhone()));
         }
 
         return new CommandResult(String.format(MESSAGE_EDIT_CLUB_SUCCESS, Messages.format(editedClub)));

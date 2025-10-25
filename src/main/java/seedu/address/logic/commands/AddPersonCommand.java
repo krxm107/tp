@@ -120,8 +120,8 @@ public class AddPersonCommand extends Command {
             CommandResult result = null;
 
             if (personToAdd.phoneHasNonNumericNonSpaceCharacter()) {
-                result = new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters " +
-                        "other than digits and spaces", personToAdd.getPhone()));
+                result = new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters "
+                        + "other than digits and spaces", personToAdd.getPhone()));
             } else {
                 result = new CommandResult(
                     String.format("New person added: %s",
