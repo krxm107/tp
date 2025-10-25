@@ -32,12 +32,6 @@ public class Person implements Searchable {
             membership.expiryDateProperty()
     };
 
-    // The extractor for the memberships list within this Person
-    private static final Callback<Membership, Observable[]> MEMBERSHIP_EXTRACTOR = membership -> new Observable[] {
-            membership.statusProperty(),
-            membership.expiryDateProperty()
-    };
-
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -71,6 +65,10 @@ public class Person implements Searchable {
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
+
+        assert tags.size() <= 5;
+        assert tags.stream().allMatch(tag -> tag.tagName.length() <= 20);
+
         this.tags.addAll(tags);
     }
 
