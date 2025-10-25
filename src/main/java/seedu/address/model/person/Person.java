@@ -65,6 +65,9 @@ public class Person implements Searchable {
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
+
+        assert tags.size() <= 5;
+
         this.tags.addAll(tags);
     }
 
