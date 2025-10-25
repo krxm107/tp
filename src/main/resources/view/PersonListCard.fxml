@@ -29,7 +29,7 @@
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="keywords" />
+      <FlowPane fx:id="tags" />
       <HBox fx:id="phoneRow" alignment="CENTER_LEFT" spacing="8" styleClass="field-row">
         <ImageView fitHeight="16" fitWidth="16">
           <image>
