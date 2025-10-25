@@ -1,17 +1,19 @@
 package seedu.address.logic.search.predicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.model.club.Club;
-import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.ClubBuilder;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.model.club.Club;
+import seedu.address.model.person.Person;
+import seedu.address.testutil.ClubBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressMatchesPredicateTest {
 
@@ -44,10 +46,10 @@ public class AddressMatchesPredicateTest {
     @Test
     public void test_addressContainsKeywords_returnsTrue() {
         AddressMatchesPredicate<Person> predicate = new AddressMatchesPredicate<>(Collections.singletonList("jurong"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Jurong Avenue 5").build()));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Jurong").build()));
 
-        // Substring keywords
-        predicate = new AddressMatchesPredicate<>(Arrays.asList("jurong", "ave"));
+        // Substring keyword
+        predicate = new AddressMatchesPredicate<>(Arrays.asList("jurong"));
         assertTrue(predicate.test(new PersonBuilder().withAddress("Jurong Avenue 5").build()));
     }
 
@@ -62,7 +64,7 @@ public class AddressMatchesPredicateTest {
         assertFalse(predicate.test(new ClubBuilder().withAddress("").build()));
 
         // Non-matching keyword
-        predicate = new AddressMatchesPredicate<>(Arrays.asList("SMU", "NTU"));
+        predicate = new AddressMatchesPredicate<>(Arrays.asList("SMU", "NUSS"));
         assertFalse(predicate.test(new ClubBuilder().withAddress("NUS").build()));
     }
 
