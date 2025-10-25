@@ -8,11 +8,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.model.field.Searchable;
 
+/**
+ * Contains helper methods for testing search parsers.
+ */
 public class SearchParserTestUtil {
 
     /**
-     * Asserts that the parsing of {@code userInput} by {@code parser} is successful and the command created
-     * equals to {@code expectedCommand}.
+     * Asserts that the parsing of {@code userInput} by {@code parser} is successful and the predicate created
+     * equals to {@code expectedPredicate}.
      */
     public static <T extends Searchable> void assertParseSuccess(SearchParser<T> parser, String userInput,
                                                                  Predicate<T> expectedPredicate) {
@@ -26,7 +29,7 @@ public class SearchParserTestUtil {
 
     /**
      * Asserts that the parsing of {@code userInput} by {@code parser} is unsuccessful and the error message
-     * equals to {@code expectedMessage}.
+     * equals to {@code expectedPredicate}.
      */
     public static <T extends Searchable> void assertParseFailure(SearchParser<T> parser,
                                                                  String userInput, String expectedMessage) {
