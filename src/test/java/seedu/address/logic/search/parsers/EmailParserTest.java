@@ -1,12 +1,13 @@
 package seedu.address.logic.search.parsers;
 
-import org.junit.jupiter.api.Test;
 import seedu.address.logic.search.predicates.EmailMatchesPredicate;
 import seedu.address.model.club.Club;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.function.Predicate;
+
+import org.junit.jupiter.api.Test;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.search.SearchParserTestUtil.assertParseFailure;

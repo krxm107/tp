@@ -1,14 +1,12 @@
 package seedu.address.logic.search;
 
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.SearchParser;
-import seedu.address.model.field.Searchable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.search.parsers.SearchParser;
+import seedu.address.model.field.Searchable;
 
 public class SearchParserTestUtil {
 
