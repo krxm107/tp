@@ -31,7 +31,7 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.setCellFactory(listView -> new PersonListViewCell());
         personListView.getItems().addListener((ListChangeListener<Person>) change -> {
             Platform.runLater(() -> personListView.scrollTo(change.getFrom()));
-        } );
+        });
     }
 
     /**
