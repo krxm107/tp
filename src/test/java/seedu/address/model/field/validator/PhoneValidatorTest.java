@@ -37,7 +37,7 @@ public final class PhoneValidatorTest {
         assertEquals("81234567", n);
     }
 
-    // ❌ INVALID CASES
+    // INVALID CASES
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", // empty
@@ -53,7 +53,7 @@ public final class PhoneValidatorTest {
         assertFalse(result.isValid(), "Expected invalid for: " + raw);
     }
 
-    // 🧪 EDGE CASES
+    // EDGE CASES
     @Nested
     class EdgeCases {
         @Test

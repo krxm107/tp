@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Email {
 
     private static final String SPECIAL_CHARACTERS = "+_.-";
-    
+
     private static final String LOCAL_PART = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
     private static final String DOMAIN_LABEL = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
     private static final String DOMAIN =  DOMAIN_LABEL + "(\\." + DOMAIN_LABEL + ")*\\.[A-Za-z0-9]{2,}";
