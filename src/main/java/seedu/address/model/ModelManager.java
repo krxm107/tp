@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -203,6 +204,16 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> personComparator) {
+        addressBook.sortPersonList(personComparator);
+    }
+
+    @Override
+    public void sortFilteredClubList(Comparator<Club> clubComparator) {
+        addressBook.sortClubList(clubComparator);
+    }
+
     //=========== Filtered Club List Accessors =============================================================
 
     @Override
@@ -215,7 +226,6 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredClubs.setPredicate(predicate);
     }
-
 
     //=========== Filtered Membership List Accessors =============================================================
 
