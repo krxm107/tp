@@ -10,7 +10,11 @@ import java.util.regex.Pattern;
  * Validates and normalizes person names for add_person.
  * Rules:
  *  - 1–75 chars after stripping.
- *  - Allow ASCII letters A–Z, a–z, digits 0–9, marks, spaces, hyphens, apostrophes, periods, and slashes (/).
+ *
+ *  - Allowed characters:
+ *        A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period .,
+ *        slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @
+ *
  *  - Collapse internal whitespace to single spaces.
  *  - Name key is case-insensitive and space-collapsed; useful for duplicate detection.
  */
@@ -18,7 +22,8 @@ public final class NameValidator {
 
     // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period, slash.
     private static final Pattern ALLOWED =
-            Pattern.compile("^[A-Za-z0-9 .\\-'’/]+$");
+            Pattern.compile("^[A-Za-z0-9\\s\\-'.#/,&():;@]+$");
+
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
     private static final int MAX_LEN = 75;
@@ -35,7 +40,7 @@ public final class NameValidator {
      * Validates and normalizes a raw name string entered by the user.
      * <p>
      * Ensures the name is non-null, within the allowed length range,
-     * contains only permitted ASCII characters, and includes at least one letter.
+     * contains only permitted characters, and includes at least one letter.
      * <p>
      * The normalized string that results removes unnecessary whitespaces and converts all characters to lowercase.
      *
@@ -60,8 +65,10 @@ public final class NameValidator {
         }
         if (!ALLOWED.matcher(normalized).matches()) {
             return ValidationResult.fail(
-                    "Name contains invalid characters. Allowed: letters, spaces, hyphens (-), "
-                            + "apostrophes (' or ’), periods (.), and slashes (/)");
+                    "Name contains invalid characters. Allowed characters: "
+                            + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
+                            + "slash /, hash #, comma ',', ampersand &, parentheses (), "
+                            + "colon :, semicolon ;, at sign @");
         }
         if (!containsLetter(normalized)) {
             return ValidationResult.fail("Name must contain at least one letter.");

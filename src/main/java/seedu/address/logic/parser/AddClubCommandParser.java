@@ -48,7 +48,7 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
-        // ✅ Only these are required: NAME, EMAIL
+        // Only these are required: NAME, EMAIL
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));

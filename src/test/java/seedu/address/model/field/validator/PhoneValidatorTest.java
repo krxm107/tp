@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public final class PhoneValidatorTest {
 
-    // ✅ VALID CASES
+    // VALID CASES
     @ParameterizedTest
     @ValueSource(strings = {
         "81234567", // typical local number
