@@ -53,7 +53,9 @@ public class FindClubCommandTest {
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        FindPersonCommand findPersonCommand = new FindPersonCommand(new CombinedSearchPredicate<>());
+        FindClubCommand findClubCommand = new FindClubCommand(new CombinedSearchPredicate<>());
+        assertFalse(findClubCommand.equals(findPersonCommand));
 
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
