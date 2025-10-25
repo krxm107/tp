@@ -7,6 +7,8 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
 
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
+
 /**
  * Tests that a {@code Searchable}'s {@code Name} matches any of the keywords given.
  */
@@ -20,7 +22,7 @@ public class NameMatchesPredicate<T extends Searchable> implements Predicate<T> 
     @Override
     public boolean test(Searchable searchable) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(searchable.getName().fullName, keyword));
+                .anyMatch(keyword -> containsSubstring(keyword, searchable.getName().fullName));
     }
 
     @Override

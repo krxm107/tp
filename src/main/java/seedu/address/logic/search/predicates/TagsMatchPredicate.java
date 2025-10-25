@@ -5,21 +5,20 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
-import seedu.address.model.tag.TagContainsKeywordsPredicate;
 
 /**
  * Tests that a {@code Searchable}'s {@code Tag}s match any of the keywords given.
  */
 public class TagsMatchPredicate<T extends Searchable> implements Predicate<T> {
-    private final List<String> tags;
+    private final List<String> keywords;
 
-    public TagsMatchPredicate(List<String> tags) {
-        this.tags = tags;
+    public TagsMatchPredicate(List<String> keywords) {
+        this.keywords = keywords;
     }
 
     @Override
     public boolean test(Searchable searchable) {
-        return searchable.getTags().stream().anyMatch(new TagContainsKeywordsPredicate(tags));
+        return searchable.getTags().stream().anyMatch(new TagContainsKeywordsPredicate(keywords));
     }
 
     @Override
@@ -34,11 +33,11 @@ public class TagsMatchPredicate<T extends Searchable> implements Predicate<T> {
         }
 
         TagsMatchPredicate<?> otherTagsMatchPredicate = (TagsMatchPredicate<?>) other;
-        return tags.equals(otherTagsMatchPredicate.tags);
+        return keywords.equals(otherTagsMatchPredicate.keywords);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("tags", tags).toString();
+        return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
 }

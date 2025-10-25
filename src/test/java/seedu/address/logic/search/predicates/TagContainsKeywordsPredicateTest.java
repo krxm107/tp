@@ -1,4 +1,4 @@
-package seedu.address.model.tag;
+package seedu.address.logic.search.predicates;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import seedu.address.model.tag.Tag;
 
 public class TagContainsKeywordsPredicateTest {
 

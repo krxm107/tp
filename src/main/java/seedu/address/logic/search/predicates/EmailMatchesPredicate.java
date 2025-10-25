@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
 
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
+
 /**
  * Tests that a {@code Searchable}'s {@code Email} matches any of the keywords given.
  */
@@ -19,7 +21,7 @@ public class EmailMatchesPredicate<T extends Searchable> implements Predicate<T>
     @Override
     public boolean test(Searchable searchable) {
         return keywords.stream()
-                .anyMatch(keyword -> searchable.getEmail().value.toLowerCase().contains(keyword.toLowerCase()));
+                .anyMatch(keyword -> containsSubstring(keyword, searchable.getEmail().value));
     }
 
     @Override
