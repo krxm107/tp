@@ -160,7 +160,8 @@ public class Club {
     }
 
     /**
-     * Returns the number of members in this club including pending cancellation membership and exclude cancelled membership.
+     * Returns the number of members in this club including pending cancellation membership
+     * and exclude cancelled membership.
      */
     public int getMemberCount() {
         return (int) memberships.stream()
