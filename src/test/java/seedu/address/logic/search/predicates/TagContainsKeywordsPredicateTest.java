@@ -51,12 +51,12 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void test_tagDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
+        // Zero keywords - should not occur if TagParser works
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new Tag("NUS")));
 
         // Non-matching keyword
-        predicate = new TagContainsKeywordsPredicate(Arrays.asList("SMU"));
+        predicate = new TagContainsKeywordsPredicate(Collections.singletonList("SMU"));
         assertFalse(predicate.test(new Tag("NUS")));
     }
 
