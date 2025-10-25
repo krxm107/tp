@@ -111,6 +111,10 @@ public class Club implements Searchable {
         return memberships.add(membership);
     }
 
+    public boolean phoneHasNonNumericNonSpaceCharacter() {
+        return getPhone().containsNonNumericNonSpaceCharacter();
+    }
+
     /**
      * Adds a person as a member of the club.
      *

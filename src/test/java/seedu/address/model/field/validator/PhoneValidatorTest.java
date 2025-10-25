@@ -37,23 +37,19 @@ public final class PhoneValidatorTest {
         assertEquals("81234567", n);
     }
 
-    // ❌ INVALID CASES
+    // INVALID CASES
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", // empty
         "12345", // too short
         "1234567890123456", // too long
-        "123-4567", // non-digit
-        "+6581234567", // plus sign not allowed
-        "(8123)4567", // brackets not allowed
-        "81 23a 4567" // letter
     })
     void invalidNumbers_returnFail(String raw) {
         var result = PhoneValidator.validate(raw);
         assertFalse(result.isValid(), "Expected invalid for: " + raw);
     }
 
-    // 🧪 EDGE CASES
+    // EDGE CASES
     @Nested
     class EdgeCases {
         @Test
