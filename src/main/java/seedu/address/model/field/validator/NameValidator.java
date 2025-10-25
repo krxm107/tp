@@ -65,9 +65,10 @@ public final class NameValidator {
         }
         if (!ALLOWED.matcher(normalized).matches()) {
             return ValidationResult.fail(
-                    "Name contains invalid characters. Allowed characters: " +
-                            "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., " +
-                            "slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @");
+                    "Name contains invalid characters. Allowed characters: "
+                            + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
+                            + "slash /, hash #, comma ',', ampersand &, parentheses (), "
+                            + "colon :, semicolon ;, at sign @");
         }
         if (!containsLetter(normalized)) {
             return ValidationResult.fail("Name must contain at least one letter.");

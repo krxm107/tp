@@ -75,7 +75,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_BIG = " " + PREFIX_TAG + VALID_TAG_BIG;
     public static final String TAG_DESC_CASUAL = " " + PREFIX_TAG + VALID_TAG_CASUAL;
 
-    public static final String INVALID_NAME_DESC  = " " + PREFIX_NAME + "James!"; // '!' not allowed by Name regex
+    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James!"; // '!' not allowed by Name regex
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS + "Blk 123 ! Road"; // '!' not allowed
