@@ -3,8 +3,9 @@ package seedu.address.logic.search.predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
+
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.search.SearchUtil;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -20,7 +21,7 @@ public class TagContainsKeywordsPredicate implements Predicate<Tag> {
     @Override
     public boolean test(Tag tag) {
         return keywords.stream()
-                .anyMatch(keyword -> SearchUtil.containsSubstring(keyword, tag.tagName));
+                .anyMatch(keyword -> containsSubstring(keyword, tag.tagName));
     }
 
     @Override

@@ -1,12 +1,12 @@
 package seedu.address.logic.search.predicates;
 
+import static seedu.address.logic.search.SearchUtil.containsSubstring;
+
 import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
-
-import static seedu.address.logic.search.SearchUtil.containsSubstring;
 
 /**
  * Tests that a {@code Searchable}'s {@code Phone} matches any of the keywords given.
