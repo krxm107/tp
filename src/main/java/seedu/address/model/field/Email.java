@@ -11,10 +11,13 @@ public class Email {
 
     private static final String SPECIAL_CHARACTERS = "+_.-";
 
-    private static final String LOCAL_PART = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
-    private static final String DOMAIN_LABEL = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
-    private static final String DOMAIN =  DOMAIN_LABEL + "(\\." + DOMAIN_LABEL + ")*\\.[A-Za-z0-9]{2,}";
-    private static final String EMAIL_REGEX = "^" + LOCAL_PART + "@" + DOMAIN + "$";
+    private static final String LOCAL_PART_REGEX = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
+    private static final String DOMAIN_LABEL_REGEX = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
+    private static final String DOMAIN_REGEX =  DOMAIN_LABEL_REGEX + "(\\." + DOMAIN_LABEL_REGEX + ")*\\.[A-Za-z0-9]{2,}";
+    private static final String EMAIL_REGEX = "^" + LOCAL_PART_REGEX + "@" + DOMAIN_REGEX + "$";
+
+    private static final int MAX_EMAIL_LENGTH = 150;
+    private static final int MAX_LOCAL_PART_LENGTH = 64;
 
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
@@ -44,8 +47,46 @@ public class Email {
     /**
      * Returns if a given string is a valid email.
      */
-    public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_REGEX);
+    public static boolean isValidEmail (String test) {
+        if (test == null) {
+            return false;
+        }
+
+        if (test.length() > MAX_EMAIL_LENGTH) {
+            return false;
+        }
+
+        if (!test.matches(EMAIL_REGEX)) {
+            return false;
+        }
+
+        final String[] emailParts = test.split("@", -1);
+        if (emailParts.length != 2) {
+            return false;
+        }
+
+        final String emailLocalPart = emailParts[0], emailDomainPart = emailParts[1];
+        return isValidEmailLocalPart(emailLocalPart) && isValidEmailDomainPart(emailDomainPart);
+    }
+
+    private static boolean isValidEmailLocalPart (final String emailLocalPart) {
+        if (emailLocalPart == null) {
+            return false;
+        }
+
+        if (emailLocalPart.length() > MAX_LOCAL_PART_LENGTH) {
+            return false;
+        }
+
+        return emailLocalPart.matches(LOCAL_PART_REGEX);
+    }
+
+    private static boolean isValidEmailDomainPart (final String emailDomainPart) {
+        if (emailDomainPart == null) {
+            return false;
+        }
+
+        return emailDomainPart.matches(DOMAIN_REGEX);
     }
 
     @Override
