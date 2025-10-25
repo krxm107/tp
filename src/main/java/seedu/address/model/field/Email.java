@@ -13,8 +13,14 @@ public class Email {
 
     private static final String LOCAL_PART_REGEX = "[A-Za-z0-9]+([._+-][A-Za-z0-9]+)*";
     private static final String DOMAIN_LABEL_REGEX = "[A-Za-z0-9]+(-[A-Za-z0-9]+)*";
-    private static final String DOMAIN_REGEX =  DOMAIN_LABEL_REGEX + "(\\." + DOMAIN_LABEL_REGEX + ")*\\.[A-Za-z0-9]{2,}";
-    private static final String EMAIL_REGEX = "^" + LOCAL_PART_REGEX + "@" + DOMAIN_REGEX + "$";
+
+    private static final String DOMAIN_REGEX = DOMAIN_LABEL_REGEX
+            + "(\\." + DOMAIN_LABEL_REGEX
+            + ")*\\.[A-Za-z0-9]{2,}";
+
+    private static final String EMAIL_REGEX = "^"
+            + LOCAL_PART_REGEX
+            + "@" + DOMAIN_REGEX + "$";
 
     private static final int MAX_EMAIL_LENGTH = 150;
     private static final int MAX_LOCAL_PART_LENGTH = 64;
@@ -47,7 +53,7 @@ public class Email {
     /**
      * Returns if a given string is a valid email.
      */
-    public static boolean isValidEmail (String test) {
+    public static boolean isValidEmail(String test) {
         if (test == null) {
             return false;
         }
@@ -65,11 +71,12 @@ public class Email {
             return false;
         }
 
-        final String emailLocalPart = emailParts[0], emailDomainPart = emailParts[1];
+        final String emailLocalPart = emailParts[0];
+        final String emailDomainPart = emailParts[1];
         return isValidEmailLocalPart(emailLocalPart) && isValidEmailDomainPart(emailDomainPart);
     }
 
-    private static boolean isValidEmailLocalPart (final String emailLocalPart) {
+    private static boolean isValidEmailLocalPart(final String emailLocalPart) {
         if (emailLocalPart == null) {
             return false;
         }
@@ -81,7 +88,7 @@ public class Email {
         return emailLocalPart.matches(LOCAL_PART_REGEX);
     }
 
-    private static boolean isValidEmailDomainPart (final String emailDomainPart) {
+    private static boolean isValidEmailDomainPart(final String emailDomainPart) {
         if (emailDomainPart == null) {
             return false;
         }
