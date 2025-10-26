@@ -83,7 +83,7 @@ public class EditClubCommand extends Command {
 
         if (clubToEdit.equals(editedClub)) {
             return new CommandResult("There was no change to this club " +
-                    "since the original and edited name, phone, email, address and tags are the same.");
+                    "since the original and edited details are the same.");
         }
 
         // Existing broad duplicate check (keeps previous semantics)
