@@ -172,7 +172,7 @@ public class EditClubCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(true)));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_CLUB, DESC_ART)));
