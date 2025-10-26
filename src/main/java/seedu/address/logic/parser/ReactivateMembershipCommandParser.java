@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ReactivateMembershipCommand object
  */
-public class ReactivateMembershipCommandParser {
+public class ReactivateMembershipCommandParser implements Parser<ReactivateMembershipCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ReactivateMembershipCommand
@@ -36,7 +36,7 @@ public class ReactivateMembershipCommandParser {
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());
             return new ReactivateMembershipCommand(personIndex, clubIndex, durationInMonths);
-        } catch (ParseException pe) {
+        } catch (NumberFormatException | ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ReactivateMembershipCommand.MESSAGE_USAGE), pe);
         }
