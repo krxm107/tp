@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new CancelMembershipCommand object
  */
-public class CancelMembershipCommandParser {
+public class CancelMembershipCommandParser implements Parser<CancelMembershipCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the CancelMembershipCommand
