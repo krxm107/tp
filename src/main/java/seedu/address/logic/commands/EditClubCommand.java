@@ -34,8 +34,10 @@ import seedu.address.model.tag.Tag;
 public class EditClubCommand extends Command {
 
     public static final String COMMAND_WORD = "edit_club";
+    public static final String COMMAND_SHORT = "editc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the club identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Edits the details of the club identified "
             + "by the index number used in the displayed club list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "

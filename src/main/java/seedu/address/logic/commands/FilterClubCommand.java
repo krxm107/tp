@@ -14,8 +14,10 @@ import seedu.address.model.club.FilterClubPredicate;
 public class FilterClubCommand extends Command {
 
     public static final String COMMAND_WORD = "filter_club";
+    public static final String COMMAND_SHORT = "filterc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clubs whose fields contains any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Finds all clubs whose fields contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…\u200B\n"
             + "Example: " + COMMAND_WORD
