@@ -55,6 +55,10 @@ public class EditPersonCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
+    public static final String UNCHANGED_PERSON_WARNING =
+            "There was no change to this person "
+            + "since the original and edited details are the same.";
+
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -81,6 +85,10 @@ public class EditPersonCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
+        if (personToEdit.equals(editedPerson)) {
+            return new CommandResult(UNCHANGED_PERSON_WARNING);
+        }
 
         for (Person p : model.getAddressBook().getPersonList()) {
             if (p.equals(personToEdit)) {

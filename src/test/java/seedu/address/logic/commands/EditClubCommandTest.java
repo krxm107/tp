@@ -81,9 +81,7 @@ public class EditClubCommandTest {
         EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
         Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
 
-        String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
-                        Messages.format(editedClub));
+        String expectedMessage = EditClubCommand.UNCHANGED_CLUB_WARNING;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
