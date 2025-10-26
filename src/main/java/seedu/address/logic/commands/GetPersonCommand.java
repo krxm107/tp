@@ -9,7 +9,7 @@ import seedu.address.commons.util.CopyUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.get.GetPersonMessageParser;
+import seedu.address.logic.parser.GetPersonMessageParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
