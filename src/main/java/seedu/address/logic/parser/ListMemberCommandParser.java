@@ -17,12 +17,20 @@ public class ListMemberCommandParser implements Parser<ListMemberCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ListMemberCommand parse(String args) throws ParseException {
+        String[] parts = args.split("/");
+        Index index;
+
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ListMemberCommand(index);
+            index = ParserUtil.parseIndex(parts[0]);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListMemberCommand.MESSAGE_USAGE), pe);
+        }
+
+        if (parts.length == 1) {
+            return new ListMemberCommand(index, new MembershipStatusParser().parse(""));
+        } else {
+            return new ListMemberCommand(index, new MembershipStatusParser().parse(parts[1]));
         }
     }
 

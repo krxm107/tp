@@ -15,26 +15,35 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Lists all memberships of a person identified using it's displayed index from the address book.
+ * Lists memberships of a person identified using it's displayed index from the address book.
  */
 public class ListMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "list_memberships";
-    public static final String COMMAND_SHORT = "listmp"; // list members for person
 
     public static final String MESSAGE_SUCCESS = "Listed all memberships";
+    public static final String COMMAND_SHORT = "listmp"; // list members for person
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
-            + "): List all memberships of a person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "): List all memberships (non-expired) of a person identified by its index number in the displayed list."
+            + "\nParameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
+            + "Optional keywords may be added to specify which membership statuses to show.\n"
+            + "Keywords: a - active, c - cancelled, e - expired, p - pending expiration, * - all\n"
+            + "Example: " + COMMAND_WORD + " 1 - shows all non-expired memberships\n"
+            + "Example: " + COMMAND_WORD + " 1 /ap - shows all memberships that are active or pending expiration";
 
     public static final String MESSAGE_LIST_SUCCESS = "Listed all memberships";
 
     private final Index targetIndex;
+    private final Predicate<Membership> predicate;
 
-    public ListMembershipCommand(Index targetIndex) {
+    /**
+     * Creates a <code>ListMembershipCommand</code> with the targetIndex
+     * and predicate for filtering membership statuses.
+     */
+    public ListMembershipCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
+        this.predicate = predicate;
     }
 
     @Override
@@ -48,8 +57,8 @@ public class ListMembershipCommand extends Command {
 
         Person personToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredPersonList(person -> person.equals(personToDisplay));
-        Predicate<Club> isMemberOf = club -> club.getMemberships().stream().map(Membership::getPerson)
-                .anyMatch(person -> person.equals(personToDisplay));
+        Predicate<Club> isMemberOf = club -> club.getMemberships().stream().filter(predicate)
+                .map(Membership::getPerson).anyMatch(person -> person.equals(personToDisplay));
         model.updateFilteredClubList(isMemberOf);
         return new CommandResult(MESSAGE_LIST_SUCCESS);
     }
@@ -66,13 +75,15 @@ public class ListMembershipCommand extends Command {
         }
 
         ListMembershipCommand otherListMemberhipCommand = (ListMembershipCommand) other;
-        return targetIndex.equals(otherListMemberhipCommand.targetIndex);
+        return targetIndex.equals(otherListMemberhipCommand.targetIndex)
+                && predicate.equals(otherListMemberhipCommand.predicate);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("targetIndex", targetIndex)
+                .add("predicate", predicate)
                 .toString();
     }
 }
