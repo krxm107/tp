@@ -21,9 +21,11 @@ import seedu.address.model.person.Person;
  */
 public class AddToCommand extends Command {
     public static final String COMMAND_WORD = "add_to";
+    public static final String COMMAND_SHORT = "addm"; // add member
+
     public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds multiple persons to multiple clubs with membership duration\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds multiple persons to multiple clubs with membership duration\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "

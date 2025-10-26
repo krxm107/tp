@@ -20,9 +20,10 @@ import seedu.address.model.person.Person;
  */
 public class RemoveFromCommand extends Command {
     public static final String COMMAND_WORD = "remove_from";
+    public static final String COMMAND_SHORT = "deletem"; // delete membership
     public static final String MESSAGE_REMOVED_FROM_CLUB = "%1$s removed from %2$s";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a person from a club\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Removes a person from a club\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "

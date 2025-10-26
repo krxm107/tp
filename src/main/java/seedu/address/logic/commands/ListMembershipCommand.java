@@ -20,11 +20,12 @@ import seedu.address.model.person.Person;
 public class ListMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "list_memberships";
+    public static final String COMMAND_SHORT = "listmp"; // list members for person
 
     public static final String MESSAGE_SUCCESS = "Listed all memberships";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all memberships of a person identified by the index number used in the displayed person list.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): List all memberships of a person identified by the index number used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
