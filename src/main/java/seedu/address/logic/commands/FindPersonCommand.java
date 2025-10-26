@@ -16,10 +16,10 @@ public class FindPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "findp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match all of "
-            + "the specified search instructions and displays them as a list with index numbers. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Find persons that match all of "
+            + "the specified search instructions and display them in the list on the right.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Keywords: /n - search by name /t - search by tag (name)\n"
+            + "Search Keywords: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag\n"
             + "Example: " + COMMAND_WORD + " /n alice bob /t friend /t NUS"
             + " - searches for all persons tagged as 'friend' and 'NUS' with names containing 'alice' or 'bob'";
 
