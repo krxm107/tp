@@ -157,16 +157,19 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void addClub(final Club club) {
         addressBook.addClub(club);
+        updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
     }
 
     @Override
     public void addMembership(Membership membership) {
         addressBook.addMembership(membership);
+        updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
     }
 
     @Override
