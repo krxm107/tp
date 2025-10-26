@@ -54,13 +54,17 @@ public class GetClubCommand extends Command {
 
         Club clubToCopy = lastShownList.get(targetIndex.getZeroBased());
         String details = new GetClubMessageParser().parse(clubToCopy, keywords);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
+    }
+
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_CLUB_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
     }
 
     @Override

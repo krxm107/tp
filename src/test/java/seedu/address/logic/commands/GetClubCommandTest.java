@@ -25,12 +25,23 @@ import seedu.address.model.club.Club;
  */
 public class GetClubCommandTest {
 
+    private static class GetClubCommandClone extends GetClubCommand {
+        public GetClubCommandClone(Index targetIndex, String keywords) {
+            super(targetIndex, keywords);
+        }
+
+        @Override
+        public void copyToClipboard(String details) {
+            return;
+        }
+    }
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Club clubToGet = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        GetClubCommand getClubCommand = new GetClubCommand(INDEX_FIRST_CLUB, "");
+        GetClubCommand getClubCommand = new GetClubCommandClone(INDEX_FIRST_CLUB, "");
 
         String copiedText = new GetClubMessageParser().parse(clubToGet, "");
         String expectedMessage = String.format(GetClubCommand.MESSAGE_GET_CLUB_SUCCESS, copiedText);
@@ -41,7 +52,7 @@ public class GetClubCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        GetClubCommand getClubCommand = new GetClubCommand(outOfBoundIndex, "");
+        GetClubCommand getClubCommand = new GetClubCommandClone(outOfBoundIndex, "");
 
         assertCommandFailure(getClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
@@ -51,7 +62,7 @@ public class GetClubCommandTest {
         showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         Club clubToGet = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        GetClubCommand getClubCommand = new GetClubCommand(INDEX_FIRST_CLUB, "");
+        GetClubCommand getClubCommand = new GetClubCommandClone(INDEX_FIRST_CLUB, "");
 
         String copiedText = new GetClubMessageParser().parse(clubToGet, "");
         String expectedMessage = String.format(GetClubCommand.MESSAGE_GET_CLUB_SUCCESS, copiedText);
@@ -67,7 +78,7 @@ public class GetClubCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
 
-        GetClubCommand getClubCommand = new GetClubCommand(outOfBoundIndex, "");
+        GetClubCommand getClubCommand = new GetClubCommandClone(outOfBoundIndex, "");
 
         assertCommandFailure(getClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
@@ -75,7 +86,7 @@ public class GetClubCommandTest {
     @Test
     public void execute_getSpecifiedFields_success() {
         Club clubToGet = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        GetClubCommand getClubCommand = new GetClubCommand(INDEX_FIRST_CLUB, "/aenpt");
+        GetClubCommand getClubCommand = new GetClubCommandClone(INDEX_FIRST_CLUB, "/aenpt");
 
         String copiedText = new GetClubMessageParser().parse(clubToGet, "/aenpt");
         String expectedMessage = String.format(GetClubCommand.MESSAGE_GET_CLUB_SUCCESS, copiedText);
@@ -86,7 +97,7 @@ public class GetClubCommandTest {
     @Test
     public void execute_getFullFields_success() {
         Club clubToGet = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        GetClubCommand getClubCommand = new GetClubCommand(INDEX_FIRST_CLUB, "/*");
+        GetClubCommand getClubCommand = new GetClubCommandClone(INDEX_FIRST_CLUB, "/*");
 
         String copiedText = new GetClubMessageParser().parse(clubToGet, "/*");
         String expectedMessage = String.format(GetClubCommand.MESSAGE_GET_CLUB_SUCCESS, copiedText);

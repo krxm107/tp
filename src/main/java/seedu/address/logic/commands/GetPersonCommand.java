@@ -54,13 +54,17 @@ public class GetPersonCommand extends Command {
 
         Person personToCopy = lastShownList.get(targetIndex.getZeroBased());
         String details = new GetPersonMessageParser().parse(personToCopy, keywords);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
+    }
+
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_PERSON_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
     }
 
     @Override

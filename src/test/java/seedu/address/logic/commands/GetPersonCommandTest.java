@@ -25,12 +25,23 @@ import seedu.address.model.person.Person;
  */
 public class GetPersonCommandTest {
 
+    private static class GetPersonCommandClone extends GetPersonCommand {
+        public GetPersonCommandClone(Index targetIndex, String keywords) {
+            super(targetIndex, keywords);
+        }
+
+        @Override
+        public void copyToClipboard(String details) {
+            return;
+        }
+    }
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Person personToGet = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        GetPersonCommand getPersonCommand = new GetPersonCommand(INDEX_FIRST_PERSON, "");
+        GetPersonCommand getPersonCommand = new GetPersonCommandClone(INDEX_FIRST_PERSON, "");
 
         String copiedText = new GetPersonMessageParser().parse(personToGet, "");
         String expectedMessage = String.format(GetPersonCommand.MESSAGE_GET_PERSON_SUCCESS, copiedText);
@@ -41,7 +52,7 @@ public class GetPersonCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        GetPersonCommand getPersonCommand = new GetPersonCommand(outOfBoundIndex, "");
+        GetPersonCommand getPersonCommand = new GetPersonCommandClone(outOfBoundIndex, "");
 
         assertCommandFailure(getPersonCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -51,7 +62,7 @@ public class GetPersonCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personToGet = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        GetPersonCommand getPersonCommand = new GetPersonCommand(INDEX_FIRST_PERSON, "");
+        GetPersonCommand getPersonCommand = new GetPersonCommandClone(INDEX_FIRST_PERSON, "");
 
         String copiedText = new GetPersonMessageParser().parse(personToGet, "");
         String expectedMessage = String.format(GetPersonCommand.MESSAGE_GET_PERSON_SUCCESS, copiedText);
@@ -67,7 +78,7 @@ public class GetPersonCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        GetPersonCommand getPersonCommand = new GetPersonCommand(outOfBoundIndex, "");
+        GetPersonCommand getPersonCommand = new GetPersonCommandClone(outOfBoundIndex, "");
 
         assertCommandFailure(getPersonCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -75,7 +86,7 @@ public class GetPersonCommandTest {
     @Test
     public void execute_getSpecifiedFields_success() {
         Person personToGet = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        GetPersonCommand getPersonCommand = new GetPersonCommand(INDEX_FIRST_PERSON, "/aenpt");
+        GetPersonCommand getPersonCommand = new GetPersonCommandClone(INDEX_FIRST_PERSON, "/aenpt");
 
         String copiedText = new GetPersonMessageParser().parse(personToGet, "/aenpt");
         String expectedMessage = String.format(GetPersonCommand.MESSAGE_GET_PERSON_SUCCESS, copiedText);
