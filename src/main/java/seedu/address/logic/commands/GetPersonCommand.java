@@ -21,11 +21,11 @@ public class GetPersonCommand extends Command {
     public static final String COMMAND_WORD = "get_person";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Copies all details of a person identified by the index number to the user's clipboard.\n"
-            + "Optional keywords may be added to copy specified fields only\n"
-            + "Keywords: n - name, p - phone, e - email, a - address, m - memberships\n"
+            + ": Copies details of a person identified by the index number to the user's clipboard.\n"
             + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " 1 - copies all details fully labeled\n"
+            + "Optional keywords may be added to copy specified fields only.\n"
+            + "Keywords: n - name, p - phone, e - email, a - address, m - memberships\n"
+            + "Example: " + COMMAND_WORD + " 1 - copies name, phone, email, address and tags\n"
             + "Example: " + COMMAND_WORD + " 1 /p - copies phone number only";
 
     public static final String MESSAGE_GET_PERSON_SUCCESS = "Copied: %1$s";
