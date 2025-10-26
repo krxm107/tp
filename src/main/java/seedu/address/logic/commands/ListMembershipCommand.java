@@ -12,6 +12,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 
 /**
@@ -31,9 +32,11 @@ public class ListMembershipCommand extends Command {
     public static final String MESSAGE_LIST_SUCCESS = "Listed all memberships";
 
     private final Index targetIndex;
+    private final Predicate<Membership> predicate;
 
-    public ListMembershipCommand(Index targetIndex) {
+    public ListMembershipCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
+        this.predicate = predicate;
     }
 
     @Override

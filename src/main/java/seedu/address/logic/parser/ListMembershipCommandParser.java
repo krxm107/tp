@@ -29,9 +29,9 @@ public class ListMembershipCommandParser implements Parser<ListMembershipCommand
         }
 
         if (parts.length == 1) {
-            return new ListMembershipCommand(index);
+            return new ListMembershipCommand(index, new MembershipStatusParser().parse(""));
         } else {
-            return new ListMembershipCommand(index);
+            return new ListMembershipCommand(index, new MembershipStatusParser().parse(parts[1]));
         }
     }
 

@@ -31,9 +31,11 @@ public class ListMemberCommand extends Command {
     public static final String MESSAGE_LIST_SUCCESS = "Listed all members";
 
     private final Index targetIndex;
+    private final Predicate<Membership> predicate;
 
-    public ListMemberCommand(Index targetIndex) {
+    public ListMemberCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
+        this.predicate = predicate;
     }
 
     @Override
