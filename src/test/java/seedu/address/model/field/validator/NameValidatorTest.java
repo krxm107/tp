@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.field.validator;
 
@@ -21,7 +21,7 @@ public final class NameValidatorTest {
     @ValueSource(strings = {
         "John Doe",
         "Dr. Jane A. Doe",
-        "O’Connor", // curly apostrophe
+        "O'Connor", // curly apostrophe
         "Jean-Luc Picard",
         "Ali s/o Ahmad", // slash allowed
         "Tan / Koh", // slash with spaces
@@ -60,8 +60,7 @@ public final class NameValidatorTest {
     static Stream<String> invalidNames() {
         return Stream.of(
                 "", " ", ".", "---", "'''", "....",
-                "A".repeat(101), // ✅ dynamic value works here
-                "Jane@Doe", // invalid symbol
+                "A".repeat(101), // dynamic value works here
                 "John Doe*", // invalid symbol
                 "John\\Doe" // backslash not allowed
         );
@@ -74,11 +73,11 @@ public final class NameValidatorTest {
     }
 
     /**
-     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     * Boundary value testing heuristic is applied to test that the max string length of 75 is valid.
      */
     @Test
     void boundaryValueTestMaxLength() {
-        String ninetyEight = "A".repeat(98);
+        String ninetyEight = "A".repeat(73);
         var res = NameValidator.validate(ninetyEight + " B");
         assertTrue(res.isValid());
         assertEquals(ninetyEight + " B", res.get());

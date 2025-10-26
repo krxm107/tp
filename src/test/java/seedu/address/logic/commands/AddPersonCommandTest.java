@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -151,6 +152,11 @@ public class AddPersonCommandTest {
         }
 
         @Override
+        public void setClub(Club target, Club editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -166,13 +172,38 @@ public class AddPersonCommandTest {
         }
 
         @Override
+        public void addMembership(Membership membership) {
+
+        }
+
+        @Override
         public void deleteClub(Club target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public void deleteMembership(Membership target) {
+
+        }
+
+        @Override
+        public void clearMembership(Club club) {
+
+        }
+
+        @Override
+        public void clearMembership(Person person) {
+
+        }
+
+        @Override
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasMembership(Membership membership) {
+            return false;
         }
 
         @Override
@@ -183,6 +214,29 @@ public class AddPersonCommandTest {
         @Override
         public void updateFilteredClubList(Predicate<Club> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Membership> getFilteredMembershipList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredMembershipList(Predicate<Membership> predicate) {
+
+        }
+
+        @Override
+        public void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths) {
+        }
+
+        @Override
+        public void cancelMembership(Person personToCancel, Club clubToCancel) {
+        }
+
+        @Override
+        public void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths) {
+
         }
     }
 

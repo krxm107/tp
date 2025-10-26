@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-ClubHub is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ClubHub can get your contact management tasks done faster than traditional GUI apps.
+ClubHub allows you to manage your contacts on your desktop with keyboard commands. If you type fast, you can complete your contact management tasks faster with ClubHub than with mouse-based apps.
 
 * Table of Contents
 {:toc}
@@ -15,13 +15,8 @@ ClubHub is a **desktop app for managing contacts, optimized for use via a Comman
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
 
-<<<<<<< Updated upstream
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
-
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
-=======
 3. Copy the file to the folder you want to use as the _home folder_ for ClubHub.
 
 4. Open a command terminal.
@@ -51,14 +46,13 @@ If you're using Linux:
     A terminal window will open.
 
 `cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application.<br>
->>>>>>> Stashed changes
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+   * `findp` : Lists all contacts.
 
    * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to ClubHub.
 
@@ -68,7 +62,7 @@ If you're using Linux:
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+5. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -107,16 +101,12 @@ Format: `help`
 
 ### Adding a person: `add_person`
 
-<<<<<<< Updated upstream
-Adds a person to the address book.
-=======
 Adding a person to ClubHub helps you keep your contacts organized and easy to find.
 By entering their details — like name, email, phone, and address — you can store everything in one place.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
 This ensures you'll never have to dig through scattered notes or emails again to find someone’s contact.
->>>>>>> Stashed changes
 
-Format: `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -128,16 +118,12 @@ Examples:
 
 ### Adding a club: `add_club`
 
-<<<<<<< Updated upstream
-Adds a club to the address book.
-=======
 Adding a club to ClubHub lets you keep track of different clubs in one place. 
 By entering details like the club’s name, email, phone and address, you can easily manage and reach out to them whenever needed. 
 You can include as much or as little information as the club's name and email — and update it later if things change. 
 This makes it simple to stay connected with all your clubs without juggling multiple sources.
->>>>>>> Stashed changes
 
-Format: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A club can have any number of tags (including 0)
@@ -147,11 +133,6 @@ Examples:
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
 * `add_club n/Cycling e/cycling@example.com a/45 Cycling Street p/1234567`
 
-<<<<<<< Updated upstream
-### Listing all persons : `list`
-
-Shows a list of all persons in the address book.
-=======
 ### Adding multiple persons to multiple clubs : `add_to`
 
 Adds multiple persons to multiple clubs in the club manager.
@@ -216,6 +197,7 @@ Examples:
 ### Reactivating membership of a person in a club : `reactivate`
 
 Reactivates the **cancelled** membership of a person in a club with renewal duration given.
+
 Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 
 * Reactivates the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
@@ -226,22 +208,15 @@ Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
  
 Examples:
 * `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
->>>>>>> Stashed changes
 
-Format: `list`
+### Editing a person : `edit_person`
 
-### Editing a person : `edit`
-
-<<<<<<< Updated upstream
-Edits an existing person in the address book.
-=======
 Editing a person in ClubHub helps you keep their
 details up to date without having to create a new entry.
 You can quickly change their name, phone, email, address, or tags,
 so your contact list always stays accurate and organised.
->>>>>>> Stashed changes
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -251,10 +226,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
     specifying any tags after it.
 
 Examples:
-<<<<<<< Updated upstream
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-=======
 *  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit_person 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -273,27 +244,81 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
 * You can remove all the club’s tags by typing `t/` without
   specifying any tags after it.
->>>>>>> Stashed changes
-
-### Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-<<<<<<< Updated upstream
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-=======
+*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
+*  `edit_club 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
+ 
+### Locating persons: `findp`
+
+Finds and displays persons that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of persons.
+
+Format: `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
+Search conditions: 
+`n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES 
+`t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
+
+* The search is case-insensitive. e.g. `hans` will match `Hans`
+* The order of the search conditions and keywords does not matter. 
+  e.g. `n/ Hans Bo` will match `n/ Bo Hans` and `n/ Hans t/ friend` will match `t/ friend n/ Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* All search conditions must be met for the target (i.e. `AND` search).
+  e.g. `n/ Hans t/ friend` will only return persons with both `Hans` in their name and are tagged with `friend`
+* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
+  e.g. `n/ Hans Bo` may return `Hans Gruber`, `Bo Yang`
+* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
+  e.g. To search for `Hans Bo` without returning `Hans Gruber` or `Bo Yang`, use `n/ Hans n/ Bo`
+
+Examples:
+* `findp` returns all persons 
+* `findp n/ Alex` returns `alex` and `Alex yeoh`
+* `findp n/ alex david` returns `alex` and `Alex yeoh` and `David Li`
+* `findp n/ alex n/ Yeoh` returns `Alex yeoh`
+* `findp t/ friend` returns all persons tagged with `friend`
+* `findp n/ Alex t/ friend` returns only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not <br>
+  ![result for 'findp n/ Alex t/ friend'](images/findAlexFriendResult.png)
+
+### Locating clubs: `findc`
+
+Finds and displays clubs that match all search conditions specified with the command. If no search condition is provided, findp displays the full list of clubs.
+
+Format: `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
+Search conditions:
+`n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
+`t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
+
+* The search is case-insensitive. e.g. `archery` will match `Archery`
+* The order of the search conditions and keywords does not matter.
+  e.g. `n/ Archery NUS` will match `n/ NUS Archery` and `n/ Archery t/ evening` will match `t/ evening n/ Archery`
+* Only full words will be matched e.g. `ArcheryNUS` will not match `Archery`
+* All search conditions must be met for the target (i.e. `AND` search).
+  e.g. `n/ Ball t/ evening` will only return clubs with both `Ball` in their name and are tagged with `evening`
+* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
+  e.g. `n/ Eight Ball` may return `Basket Ball`, `eight pm dance`
+* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
+  e.g. To search for `Eight Ball` without returning `Basket Ball` or `eight pm dance`, use `n/ Eight n/ Ball`
+
+Examples:
+* `findc` returns all clubs
+* `findc n/ Study` returns `study` and `NUS Study`
+* `findc n/ NUS study` returns `study` and `NUS Study` and `NUS Guitar`
+* `findc n/ NUS n/ study` returns `NUS Study`
+* `findc t/ NTU` returns all clubs tagged with `NTU`
+* `findc n/ Study t/ NTU` returns only `study` because `study` is tagged with `NTU` but `NUS Study` is not <br>
+  ![result for 'findc n/ Study t/ NTU'](images/findStudyNtuResult.png)
+
+### Listing a person and their associated clubs : `list_memberships`
+
+Finds and displays clubs which the specified person is a member of.
+
+Format: `list_memberships INDEX`
+
+* The target person is specified by its `INDEX` shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* In the club list, all clubs associated with the target are displayed
+* In the person list, only the target is displayed
+
+Examples:
 * `findp` followed by `list_memberships 2` lists the 2nd person in the contact list and all clubs which they are a member of.
 * `findp n/ Betsy` followed by `list_memberships 1` lists the 1st person in the results of the `find` command and their associated clubs.
 
@@ -311,7 +336,6 @@ Format: `list_members INDEX`
 Examples:
 * `findc` followed by `list_members 2` lists the 2nd club in the club list and all its members.
 * `findc n/ Tennis` followed by `list_members 1` lists the 1st club in the results of the `find` command and its members.
->>>>>>> Stashed changes
 
 ### Deleting a person : `delete_person`
 
@@ -324,13 +348,8 @@ Format: `delete_person INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-<<<<<<< Updated upstream
-* `list` followed by `delete_person 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
-=======
 * `findp` followed by `delete_person 2` deletes the 2nd person in the contact list.
-* `findp n/ Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find` command.
->>>>>>> Stashed changes
+* `findp n/ Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `findp` command.
 
 ### Deleting a club : `delete_club`
 
@@ -341,12 +360,8 @@ Format: `delete_club INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-<<<<<<< Updated upstream
-* `list` followed by `delete 2` deletes the 2nd club in the address book.
-* `find Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
-=======
-* `findc` followed by `delete 2` deletes the 2nd club in the club list.
-* `findc n/ Tennis` followed by `delete 1` deletes the 1st club in the results of the `find` command.
+* `findc` followed by `delete_club 2` deletes the 2nd club in the club list.
+* `findc n/ Tennis` followed by `delete_club 1` deletes the 1st club in the results of the `findc` command.
 
 ### Copying a person's details : `get_person`
 
@@ -370,7 +385,7 @@ Optional conditions:
 Examples:
 * `findp n/ John` followed by `get_person 1 /pe` copies the phone number and email address of the 1st person in the results of the `find` command.
 * `findp` followed by `get_person 2` copies all details (excluding memberships) of the 2nd person in the contact list.
-  ![result for 'get_person 2'](images/getPersonResult.png)
+ ![result for 'get_person 2'](images/getPersonResult.png)
 
 ### Copying a club's details : `get_club`
 
@@ -397,7 +412,6 @@ Examples:
 * `findc` followed by `get_club 2` copies all details (excluding members) of the 2nd club in the club list.
 * `findc` followed by `get_club 2 /*` copied all details (including member details) of the 2nd club in the club list.
   ![result for 'get_club 2 /*'](images/getClubFullResult.png)
->>>>>>> Stashed changes
 
 ### Clearing all entries : `clear`
 
@@ -450,10 +464,21 @@ Action | Format, Examples
 --------|------------------
 **Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br> e.g., `add_to m/1 2 c/3 4 d/6`
+**Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br> e.g., `remove_from m/1 2 c/3 4`
+**Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> e.g., `renew m/1 c/2 d/6`
+**Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br> e.g., `cancel m/1 c/2`
+**Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> e.g., `reactivate m/1 c/2 d/6`
 **Clear** | `clear`
 **Delete Person** | `delete_person INDEX`<br> e.g., `delete_person 3`
 **Delete Club** | `delete_club INDEX`<br> e.g., `delete_club 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_person 2 n/James Lee e/jameslee@example.com`
+**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit_club 2 n/Tennis e/tennis@example.com`
+**Find Person** | `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> e.g., `findp n/ James Jake t/ friend`
+**Find Club** | `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> e.g., `findp n/ Dance Guitar t/ monday`
+**List Memberships** | `list_memberships INDEX`</br> e.g., `list_memberships 1`
+**List Members** | `list_members INDEX`</br> e.g., `list_members 1`
+**Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br> e.g., `get_person 2 /pae`
+**Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br> e.g., `get_club 2 /*`
 **Help** | `help`
+**Exit** | `exit`

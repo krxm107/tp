@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.ClubBuilder;
 
@@ -57,16 +58,16 @@ public final class AddClubCommandTest {
 
     @Test
     public void equals() {
-        Club alice = new ClubBuilder().withName("Alice").build();
+        Club archery = new ClubBuilder().withName("Alice").build();
         Club bob = new ClubBuilder().withName("Bob").build();
-        AddClubCommand addAliceCommand = new AddClubCommand(alice);
+        AddClubCommand addAliceCommand = new AddClubCommand(archery);
         AddClubCommand addBobCommand = new AddClubCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddClubCommand addAliceCommandCopy = new AddClubCommand(alice);
+        AddClubCommand addAliceCommandCopy = new AddClubCommand(archery);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -102,6 +103,11 @@ public final class AddClubCommandTest {
 
         @Override
         public GuiSettings getGuiSettings() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setClub(final Club oldClub, final Club newClub) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -166,13 +172,38 @@ public final class AddClubCommandTest {
         }
 
         @Override
+        public void addMembership(Membership membership) {
+
+        }
+
+        @Override
         public void deleteClub(Club target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
+        public void deleteMembership(Membership target) {
+
+        }
+
+        @Override
+        public void clearMembership(Club club) {
+
+        }
+
+        @Override
+        public void clearMembership(Person person) {
+
+        }
+
+        @Override
         public boolean hasClub(Club c) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasMembership(Membership membership) {
+            return false;
         }
 
         @Override
@@ -183,6 +214,31 @@ public final class AddClubCommandTest {
         @Override
         public void updateFilteredClubList(Predicate<Club> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Membership> getFilteredMembershipList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredMembershipList(Predicate<Membership> predicate) {
+
+        }
+
+        @Override
+        public void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths) {
+
+        }
+
+        @Override
+        public void cancelMembership(Person personToCancel, Club clubToCancel) {
+
+        }
+
+        @Override
+        public void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths) {
+
         }
     }
 

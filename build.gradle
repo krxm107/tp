@@ -4,6 +4,21 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'application'
     id 'jacoco'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
+}
+
+run {
+    enableAssertions = true
+}
+
+javafx {
+    version = "17"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+application {
+    mainClass = 'seedu.address.MainApp'
+    applicationDefaultJvmArgs = ['-Dprism.order=sw']
 }
 
 mainClassName = 'seedu.address.Main'

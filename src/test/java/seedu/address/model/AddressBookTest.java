@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.club.Club;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
@@ -113,19 +115,41 @@ public class AddressBookTest {
         }
 
         @Override
-        public Person getPersonByName(Name name) {
+        public ObservableList<Membership> getMembershipList() {
             return null;
         }
 
         @Override
-        public Person getPersonByEmail(Email email) {
+        public Optional<Person> getPersonByEmail(Email email) {
             return null;
         }
 
         @Override
-        public Club getClubByName(Name name) {
+        public Optional<Club> getClubByName(Name name) {
             return null;
         }
     }
 
+    @Test
+    public void hasPerson_personWithSameEmailInAddressBook_returnsTrue() {
+        AddressBook ab = new AddressBook();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        ab.addPerson(alice);
+
+        Person sameEmailDifferentName = new PersonBuilder().withName("Alicia")
+                .withEmail("alice@example.com").build();
+
+        assertTrue(ab.hasPerson(sameEmailDifferentName));
+    }
+
+    @Test
+    public void hasPerson_personWithDifferentEmailSameName_returnsFalse() {
+        AddressBook ab = new AddressBook();
+        Person alice = new PersonBuilder().withName("Alice Pauline").withEmail("alice@example.com").build();
+        ab.addPerson(alice);
+
+        Person sameNameDifferentEmail = new PersonBuilder(alice).withEmail("alice+1@example.com").build();
+
+        assertFalse(ab.hasPerson(sameNameDifferentEmail));
+    }
 }

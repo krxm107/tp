@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -27,6 +29,9 @@ public class ClubListPanel extends UiPart<Region> {
         super(FXML);
         clubListView.setItems(clubList);
         clubListView.setCellFactory(listView -> new ClubListViewCell());
+        clubListView.getItems().addListener((ListChangeListener<Club>) change -> {
+            Platform.runLater(() -> clubListView.scrollTo(change.getFrom()));
+        });
     }
 
     /**

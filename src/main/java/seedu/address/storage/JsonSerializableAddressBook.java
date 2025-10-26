@@ -63,9 +63,7 @@ class JsonSerializableAddressBook {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         clubs.addAll(source.getClubList().stream().map(JsonAdaptedClub::new).collect(Collectors.toList()));
 
-        Set<Membership> allMemberships = source.getClubList().stream()
-                .flatMap(club -> club.getMemberships().stream())
-                .collect(Collectors.toSet());
+        Set<Membership> allMemberships = source.getMembershipList().stream().collect(Collectors.toSet());
 
         memberships.addAll(allMemberships.stream()
                 .map(JsonAdaptedMembership::new)
@@ -98,15 +96,16 @@ class JsonSerializableAddressBook {
         // Re-link persons and clubs using the membership data
         for (final JsonAdaptedMembership jsonAdaptedMembership : memberships) {
             // Find the already-loaded Person and Club objects from the address book
-            final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail()));
-            final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName()));
-
-            if (person == null || club == null) {
-                throw new IllegalValueException(MESSAGE_INVALID_MEMBERSHIP_LINK);
-            }
+            final Person person = addressBook.getPersonByEmail(new Email(jsonAdaptedMembership.getPersonEmail())).get();
+            final Club club = addressBook.getClubByName(new Name(jsonAdaptedMembership.getClubName())).get();
 
             // Use the model's own logic to create the membership link.
-            club.addMember(person, jsonAdaptedMembership.getRole(), jsonAdaptedMembership.getJoinDate());
+            Membership membership = new Membership(person, club, jsonAdaptedMembership.getJoinDate(),
+                    jsonAdaptedMembership.getExpiryDate(), jsonAdaptedMembership.getMembershipEventHistory(),
+                    jsonAdaptedMembership.getStatus());
+            club.addMembership(membership);
+            person.addMembership(membership);
+            addressBook.addMembership(membership);
         }
         return addressBook;
     }

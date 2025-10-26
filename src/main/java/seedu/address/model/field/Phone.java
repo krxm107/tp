@@ -1,79 +1,99 @@
 package seedu.address.model.field;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.util.Objects;
 
 import seedu.address.model.field.validator.PhoneValidator;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * <p>
+ * This field is optional — if no phone number is provided, an empty {@code Phone}
+ * object will be created. Otherwise, the value must pass {@link PhoneValidator} rules.
+ * </p>
+ * Guarantees: immutable; valid if non-empty.
  */
 public class Phone {
 
-
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers or spaces, "
-                    + "and they must contain at least 6 and at most 15 digits.";
+            "Phones must contain a minimum of 6 non-whitespace characters "
+                    + "and a maximum of 15 non-whitespace characters.";
 
     public final String value;
 
     /**
      * Constructs a {@code Phone}.
      *
-     * @param phone A valid phone number.
+     * @param phone A valid phone number, or an empty/whitespace string if optional.
+     *              <ul>
+     *                  <li>If {@code phone} is null or blank, an empty Phone is created.</li>
+     *                  <li>Otherwise, it must satisfy {@link #isValidPhone(String)}.</li>
+     *              </ul>
      */
     public Phone(String phone) {
-        requireNonNull(phone);
+        if (phone == null || phone.strip().isEmpty()) {
+            this.value = "";
+            return;
+        }
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        value = PhoneValidator.normalize(phone);
+        this.value = PhoneValidator.normalize(phone);
     }
 
     /**
-     * Returns true if a given string is a valid phone number.
+     * Returns true if the given string is a valid phone number.
+     * An empty string is treated as invalid (but constructible as optional).
      */
     public static boolean isValidPhone(String test) {
         return PhoneValidator.validate(test).isValid();
     }
 
     /**
-     * @return
-     *     The normalized phone number for display to the user.
+     * Returns true if the phone contains a character that isn't numeric or a whitespace.
      */
+    public boolean containsNonNumericNonSpaceCharacter() {
+        for (int i = 0; i < value.length(); i++) {
+            final char currChar = value.charAt(i);
+            if ('0' <= currChar && currChar <= '9') {
+                continue;
+            }
+
+            if (Character.isSpaceChar((int) currChar)) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /** Returns true if this phone field was provided by the user. */
+    public boolean isPresent() {
+        return value != null && !value.isEmpty();
+    }
+
     @Override
     public String toString() {
         return value;
     }
 
-    /**
-     * @param other
-     *     the reference object with which to compare.
-     *
-     * @return
-     *     A boolean indicating whether the phone numbers are equal.
-     */
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
+        if (this == other) {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Phone)) {
             return false;
         }
 
         Phone otherPhone = (Phone) other;
-        return value.equals(otherPhone.value);
+        return Objects.equals(value, otherPhone.value);
     }
 
-    /**
-     * @return
-     *     The normalized phone number's hashCode.
-     */
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hashCode(value);
     }
-
 }

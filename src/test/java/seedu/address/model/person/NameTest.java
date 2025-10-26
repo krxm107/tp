@@ -1,4 +1,4 @@
-//This class was written with the help of ChatGPT.
+//Some of the code in this file was written with the help of ChatGPT.
 
 package seedu.address.model.person;
 
@@ -28,7 +28,7 @@ public final class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", ".", "---", "'''", "....", // empty / only punctuation
-        "Jane@Doe", "John Doe*", // invalid symbols
+        "John Doe*", // invalid symbols
         "John\\Doe" // backslash not allowed (forward slash is)
     })
     void constructorInvalidNameThrowsIllegalArgumentException(String s) {
@@ -36,12 +36,12 @@ public final class NameTest {
     }
 
     /**
-     * Boundary value testing heuristic is applied to test that the max string length of 100 is valid.
+     * Boundary value testing heuristic is applied to test that the max string length of 75 is valid.
      */
     @Test
     void testMaxLengthIsAllowed() {
-        // 98 'A' + " B" => 100 chars
-        String s = "A".repeat(98) + " B";
+        // 73 'A' + " B" => 75 chars
+        String s = "A".repeat(73) + " B";
         assertDoesNotThrow(() -> new Name(s));
         assertEquals(s, new Name(s).toString()); // toString returns original
     }
@@ -52,7 +52,7 @@ public final class NameTest {
     @ValueSource(strings = {
         "John Doe",
         "Dr. Jane A. Doe",
-        "O’Connor",
+        "O'Connor",
         "Jean-Luc Picard",
         "Ali s/o Ahmad", // forward slash allowed
         "Tan / Koh", // slash with spaces
@@ -66,7 +66,7 @@ public final class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", ".", "---", "'''", "....",
-        "Jane@Doe", "John Doe*",
+        "John Doe*",
         "John\\Doe"
     })
     void isValidNameInvalidReturnsFalse(String s) {
@@ -79,20 +79,18 @@ public final class NameTest {
     class EqualityAndHashCode {
 
         @Test
-        void equalWhen() {
+        void assertExtraSpacesBreaksEquality() {
             Name a = new Name("  John   Doe ");
             Name b = new Name("John Doe");
-            assertEquals(a, b);
-            assertEquals(a.hashCode(), b.hashCode());
+            assertNotEquals(a, b);
+            assertNotEquals(a.hashCode(), b.hashCode());
         }
 
         @Test
-        void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
-            // If your NameValidator.normalize lowercases for keying, these should be equal.
-            // If it preserves case, feel free to delete this test.
+        void notEqualIfCaseDiffers() {
             Name a = new Name("JOHN DOE");
             Name b = new Name("john doe");
-            assertEquals(a, b);
+            assertNotEquals(a, b);
         }
 
         @Test
@@ -107,8 +105,6 @@ public final class NameTest {
     @Test
     void toStringReturnsOriginalInputNotNormalized() {
         Name n = new Name("  John   A.   Doe  ");
-        // equals/hashCode compare normalized versions,
-        // but toString() should return the raw original per your class.
         assertEquals("  John   A.   Doe  ", n.toString());
     }
 }

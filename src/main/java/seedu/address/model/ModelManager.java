@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -25,6 +26,7 @@ public class ModelManager implements Model {
 
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Club> filteredClubs;
+    private final FilteredList<Membership> filteredMemberships;
 
     /**
      * Initializes a ModelManager with the default values of addressBook and userPrefs.
@@ -46,10 +48,16 @@ public class ModelManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        // Update membership status upon initialization
+        this.addressBook.updateMembershipStatus();
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-
         this.filteredClubs = new FilteredList<>(this.addressBook.getClubList());
+        this.filteredMemberships = new FilteredList<>(this.addressBook.getMembershipList());
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
+        updateFilteredMembershipList(PREDICATE_SHOW_ALL_MEMBERSHIP);
     }
 
     //=========== UserPrefs ==================================================================================
@@ -112,6 +120,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasMembership(Membership membership) {
+        requireNonNull(membership);
+        return addressBook.hasMembership(membership);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
@@ -122,15 +136,37 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteMembership(Membership target) {
+        addressBook.removeMembership(target);
+    }
+
+    @Override
+    public void clearMembership(Club club) {
+        for (Membership m : club.getMemberships()) {
+            addressBook.removeMembership(m);
+        }
+    }
+
+    @Override
+    public void clearMembership(Person person) {
+        for (Membership m : person.getMemberships()) {
+            addressBook.removeMembership(m);
+        }
+    }
+
+    @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void addClub(final Club club) {
         addressBook.addClub(club);
-        updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
+    }
+
+    @Override
+    public void addMembership(Membership membership) {
+        addressBook.addMembership(membership);
     }
 
     @Override
@@ -138,6 +174,13 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void setClub(Club target, Club editedClub) {
+        requireAllNonNull(target, editedClub);
+
+        addressBook.setClub(target, editedClub);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -170,6 +213,53 @@ public class ModelManager implements Model {
         filteredClubs.setPredicate(predicate);
     }
 
+
+    //=========== Filtered Membership List Accessors =============================================================
+
+    @Override
+    public void renewMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.renewMembership(person, club, durationInMonths);
+    }
+
+    @Override
+    public void cancelMembership(Person person, Club club) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.cancelMembership(person, club);
+    }
+
+    @Override
+    public void reactivateMembership(Person person, Club club, int durationInMonths) {
+        requireAllNonNull(person, club);
+        //todo: update exception handling later
+        Membership membershipToCheck = new Membership(person, club);
+        if (!hasMembership(membershipToCheck)) {
+            throw new IllegalArgumentException("Membership does not exist.");
+        }
+        addressBook.reactivateMembership(person, club, durationInMonths);
+    }
+
+    @Override
+    public ObservableList<Membership> getFilteredMembershipList() {
+        return filteredMemberships;
+    }
+
+    @Override
+    public void updateFilteredMembershipList(Predicate<Membership> predicate) {
+        requireNonNull(predicate);
+        filteredMemberships.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -185,7 +275,8 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons)
-                && filteredClubs.equals(otherModelManager.filteredClubs);
+                && filteredClubs.equals(otherModelManager.filteredClubs)
+                && filteredMemberships.equals(otherModelManager.filteredMemberships);
     }
 
 }

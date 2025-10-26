@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.club.Club;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
@@ -17,9 +18,7 @@ public interface Model {
 
     Predicate<Club> PREDICATE_SHOW_ALL_CLUBS = unused -> true;
 
-    ObservableList<Club> getFilteredClubList();
-
-    void updateFilteredClubList(Predicate<Club> predicate);
+    Predicate<Membership> PREDICATE_SHOW_ALL_MEMBERSHIP = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -69,6 +68,7 @@ public interface Model {
      */
     boolean hasClub(final Club club);
 
+    boolean hasMembership(Membership membership);
     /**
      * Deletes the given person.
      * The person must exist in the address book.
@@ -80,6 +80,18 @@ public interface Model {
      * The club must exist in the address book.
      */
     void deleteClub(Club target);
+
+    void deleteMembership(Membership target);
+
+    /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Club club);
+
+    /**
+     * Clears the list of memberships for this club in the address book
+     */
+    void clearMembership(Person person);
 
     /**
      * Adds the given person.
@@ -93,12 +105,21 @@ public interface Model {
      */
     void addClub(final Club club);
 
+    void addMembership(Membership membership);
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
+
+    /**
+     * Replaces the given club {@code target} with {@code editedClub}.
+     * {@code target} must exist in the address book.
+     * The club identity of {@code editedClub} must not be the same as another existing club in the address book.
+     */
+    void setClub(Club target, Club editedClub);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
@@ -108,4 +129,18 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    ObservableList<Club> getFilteredClubList();
+
+    void updateFilteredClubList(Predicate<Club> predicate);
+
+    ObservableList<Membership> getFilteredMembershipList();
+
+    void updateFilteredMembershipList(Predicate<Membership> predicate);
+
+    void renewMembership(Person personToRenew, Club clubToRenew, int durationInMonths);
+
+    void cancelMembership(Person personToCancel, Club clubToCancel);
+
+    void reactivateMembership(Person personToReactivate, Club clubToReactivate, int durationInMonths);
 }

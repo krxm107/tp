@@ -5,19 +5,26 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 import seedu.address.model.field.Email;
-import seedu.address.model.field.Name;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
+ * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}.
+ * As such, adding and updating of
+ * persons uses Person#isSamePerson(Person) for equality
+ * so as to ensure that the person being added or updated is
+ * unique in terms of identity in the UniquePersonList.
+ * However, the removal of a person uses Person#equals(Object) so
  * as to ensure that the person with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
@@ -26,7 +33,30 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class UniquePersonList implements Iterable<Person> {
 
-    private final ObservableList<Person> internalList = FXCollections.observableArrayList();
+    private final Callback<Person, Observable[]> extractor = person -> {
+        // Create a stream of all the status properties from all memberships
+        Observable[] membershipStatuses = person.getMemberships().stream()
+                .map(Membership::statusProperty)
+                .toArray(Observable[]::new);
+
+        Observable[] membershipExpiryDates = person.getMemberships().stream()
+                .map(Membership::expiryDateProperty)
+                .toArray(Observable[]::new);
+
+        // Create a final observable array that contains:
+        // 1. The membership set itself (for additions/removals)
+        // 2. All the individual status properties (for status changes)
+        // 3. All the individual expiry date properties (for expiry date changes)
+        Stream membershipsStream = Stream.of(person.getMemberships());
+        Stream membershipStatusStream = Stream.of(membershipStatuses);
+        Stream membershipExpiryDateStream = Stream.of(membershipExpiryDates);
+
+        return (Observable[]) Stream.of(membershipsStream, membershipStatusStream, membershipExpiryDateStream)
+                .flatMap(s -> s)
+                .toArray(Observable[]::new);
+    };
+
+    private final ObservableList<Person> internalList = FXCollections.observableArrayList(extractor);
     private final ObservableList<Person> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
@@ -35,6 +65,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
+        // Identity check should be email-only (case-insensitive) via isSamePerson
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 
@@ -150,21 +181,11 @@ public class UniquePersonList implements Iterable<Person> {
         return true;
     }
 
-    public Person getPersonByName(Name name) {
-        return internalList.stream()
-                .filter(person ->
-                        person.getName().equals(name)
-                )
-                .findFirst()
-                .get();
-    }
-
-    public Person getPersonByEmail(Email email) {
+    public Optional<Person> getPersonByEmail(Email email) {
         return internalList.stream()
                 .filter(person ->
                         person.getEmail().equals(email)
                 )
-                .findFirst()
-                .get();
+                .findFirst();
     }
 }
