@@ -49,8 +49,8 @@ public class ListMemberCommand extends Command {
 
         Club clubToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredClubList(club -> club.equals(clubToDisplay));
-        Predicate<Person> isInClub = person -> person.getMemberships().stream().map(Membership::getClub)
-                .anyMatch(club -> club.equals(clubToDisplay));
+        Predicate<Person> isInClub = person -> person.getMemberships().stream().filter(predicate)
+                .map(Membership::getClub).anyMatch(club -> club.equals(clubToDisplay));
         model.updateFilteredPersonList(isInClub);
         return new CommandResult(MESSAGE_LIST_SUCCESS);
     }
@@ -67,7 +67,8 @@ public class ListMemberCommand extends Command {
         }
 
         ListMemberCommand otherListMemberCommand = (ListMemberCommand) other;
-        return targetIndex.equals(otherListMemberCommand.targetIndex);
+        return targetIndex.equals(otherListMemberCommand.targetIndex)
+                && predicate.equals(otherListMemberCommand.predicate);
     }
 
     @Override

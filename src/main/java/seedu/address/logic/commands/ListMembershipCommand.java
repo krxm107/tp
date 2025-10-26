@@ -12,7 +12,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
-import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 
 /**
@@ -50,8 +49,8 @@ public class ListMembershipCommand extends Command {
 
         Person personToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredPersonList(person -> person.equals(personToDisplay));
-        Predicate<Club> isMemberOf = club -> club.getMemberships().stream().map(Membership::getPerson)
-                .anyMatch(person -> person.equals(personToDisplay));
+        Predicate<Club> isMemberOf = club -> club.getMemberships().stream().filter(predicate)
+                .map(Membership::getPerson).anyMatch(person -> person.equals(personToDisplay));
         model.updateFilteredClubList(isMemberOf);
         return new CommandResult(MESSAGE_LIST_SUCCESS);
     }
@@ -68,7 +67,8 @@ public class ListMembershipCommand extends Command {
         }
 
         ListMembershipCommand otherListMemberhipCommand = (ListMembershipCommand) other;
-        return targetIndex.equals(otherListMemberhipCommand.targetIndex);
+        return targetIndex.equals(otherListMemberhipCommand.targetIndex)
+                && predicate.equals(otherListMemberhipCommand.predicate);
     }
 
     @Override

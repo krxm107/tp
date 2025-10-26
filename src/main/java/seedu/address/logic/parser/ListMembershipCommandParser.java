@@ -22,7 +22,7 @@ public class ListMembershipCommandParser implements Parser<ListMembershipCommand
         Index index;
 
         try {
-            index = ParserUtil.parseIndex(args);
+            index = ParserUtil.parseIndex(parts[0]);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListMembershipCommand.MESSAGE_USAGE), pe);
