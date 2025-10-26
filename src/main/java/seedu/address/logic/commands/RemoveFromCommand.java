@@ -105,6 +105,7 @@ public class RemoveFromCommand extends Command {
                 personNamesBuilder.append(personName).append(", ");
 
                 club.removeMember(person);
+                person.removeClub(club);
                 // Model also keep track of memberships
                 model.deleteMembership(toRemove);
             }

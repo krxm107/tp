@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Callback;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.club.Club;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
@@ -175,5 +176,21 @@ public class Person implements Searchable {
 
     public void removeMembership(Membership membership) {
         this.memberships.remove(membership);
+    }
+
+    /**
+     * Removes membership from the person.
+     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public void removeClub(Club club) {
+        // Find the specific membership object to remove
+        memberships.stream()
+                .filter(m -> m.getClub().equals(club))
+                .findFirst()
+                .ifPresent(membershipToRemove -> {
+                    memberships.remove(membershipToRemove);
+                });
+        // Also remember to delete membership from ModelManager
     }
 }
