@@ -6,34 +6,41 @@ import seedu.address.model.membership.MembershipStatus;
 
 import java.util.function.Predicate;
 
+/**
+ * Parses the membership status arguments of a list member or list membership command
+ */
 public class MembershipStatusParser {
 
-    public Predicate<Membership> parse(String args) throws ParseException {
+    /**
+     * Parses the arguments in the context of a <code>ListMemberCommand</code> or <code>ListMembershipCommand</code>
+     * and returns a <code>Predicate</code> which specifies the status of <code>Membership</code>s to be shown.
+     */
+    public Predicate<Membership> parse(String args) {
         String trimmedArgs = args.trim().toLowerCase();
+        MembershipStatusPredicate predicate = new MembershipStatusPredicate();
+
         if (trimmedArgs.isEmpty()) {
-            return membership -> !membership.getStatus().equals(MembershipStatus.EXPIRED);
-        }
-        if (args.contains("*")) {
-            return membership -> true;
+            return predicate;
         }
 
-        Predicate<Membership> predicate = membership -> false;
+        if (args.contains("*")) {
+            predicate.addPredicate("*");
+            return predicate;
+        }
+
         if (args.contains("a")) {
-            predicate = predicate.or(membership -> membership.getStatus().equals(
-                    MembershipStatus.ACTIVE));
+            predicate.addPredicate("a");
         }
         if (args.contains("c")) {
-            predicate = predicate.or(membership -> membership.getStatus().equals(
-                    MembershipStatus.CANCELLED));
+            predicate.addPredicate("c");
         }
         if (args.contains("e")) {
-            predicate = predicate.or(membership -> membership.getStatus().equals(
-                    MembershipStatus.EXPIRED));
+            predicate.addPredicate("e");
         }
         if (args.contains("p")) {
-            predicate = predicate.or(membership -> membership.getStatus().equals(
-                    MembershipStatus.PENDING_CANCELLATION));
+            predicate.addPredicate("p");
         }
+
         return predicate;
     }
 

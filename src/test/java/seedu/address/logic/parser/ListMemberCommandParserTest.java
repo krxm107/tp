@@ -22,7 +22,8 @@ public class ListMemberCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsListCommand() {
-        assertParseSuccess(parser, "1", new ListMemberCommand(INDEX_FIRST_CLUB));
+        assertParseSuccess(parser, "1",
+                new ListMemberCommand(INDEX_FIRST_CLUB, membership -> true));
     }
 
     @Test

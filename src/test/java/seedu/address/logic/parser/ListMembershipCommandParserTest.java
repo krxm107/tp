@@ -22,7 +22,7 @@ public class ListMembershipCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsListCommand() {
-        assertParseSuccess(parser, "1", new ListMembershipCommand(INDEX_FIRST_CLUB));
+        assertParseSuccess(parser, "1", new ListMembershipCommand(INDEX_FIRST_CLUB, membership -> true));
     }
 
     @Test

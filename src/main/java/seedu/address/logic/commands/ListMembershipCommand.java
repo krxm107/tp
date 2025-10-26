@@ -15,7 +15,7 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Lists all memberships of a person identified using it's displayed index from the address book.
+ * Lists memberships of a person identified using it's displayed index from the address book.
  */
 public class ListMembershipCommand extends Command {
 
@@ -78,6 +78,7 @@ public class ListMembershipCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("targetIndex", targetIndex)
+                .add("predicate", predicate)
                 .toString();
     }
 }
