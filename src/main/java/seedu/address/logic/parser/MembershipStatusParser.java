@@ -1,10 +1,8 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.membership.Membership;
-import seedu.address.model.membership.MembershipStatus;
-
 import java.util.function.Predicate;
+
+import seedu.address.model.membership.Membership;
 
 /**
  * Parses the membership status arguments of a list member or list membership command
