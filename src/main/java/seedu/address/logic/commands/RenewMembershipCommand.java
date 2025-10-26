@@ -73,4 +73,21 @@ public class RenewMembershipCommand extends Command {
                 clubToRenew.getName(),
                 durationInMonths));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RenewMembershipCommand)) {
+            return false;
+        }
+
+        RenewMembershipCommand otherRenewCommand = (RenewMembershipCommand) other;
+        return personIndex.equals(otherRenewCommand.personIndex)
+                && clubIndex.equals(otherRenewCommand.clubIndex)
+                && durationInMonths == otherRenewCommand.durationInMonths;
+    }
 }

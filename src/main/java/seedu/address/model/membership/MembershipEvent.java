@@ -1,6 +1,7 @@
 package seedu.address.model.membership;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Represents a single, immutable transaction in a membership's lifecycle.
@@ -46,5 +47,25 @@ public class MembershipEvent {
     public String toString() {
         return String.format("[%s] on %s: Added %d months. New Expiry: %s",
                 eventType, eventDate, monthsAdded, newExpiryDate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MembershipEvent that = (MembershipEvent) o;
+        return monthsAdded == that.monthsAdded
+                && eventType == that.eventType
+                && Objects.equals(eventDate, that.eventDate)
+                && Objects.equals(newExpiryDate, that.newExpiryDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventType, eventDate, monthsAdded, newExpiryDate);
     }
 }

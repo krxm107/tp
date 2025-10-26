@@ -17,9 +17,10 @@ import seedu.address.model.club.Club;
 public class DeleteClubCommand extends Command {
 
     public static final String COMMAND_WORD = "delete_club";
+    public static final String COMMAND_SHORT = "deletec";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the club identified by the index number used in the displayed club list.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Deletes the club identified by the index number used in the displayed club list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 

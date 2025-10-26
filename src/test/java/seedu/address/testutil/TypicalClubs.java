@@ -63,6 +63,16 @@ public class TypicalClubs {
     }
 
     public static List<Club> getTypicalClubs() {
-        return new ArrayList<>(Arrays.asList(ARCHERY, BALL, CHESS, DANCE, ENGLISH, FRENCH, GAME));
+        // return a copy to prevent modification of the original list
+        // prevent test leak
+        return new ArrayList<>(Arrays.asList(
+                new ClubBuilder(ARCHERY).build(),
+                new ClubBuilder(BALL).build(),
+                new ClubBuilder(CHESS).build(),
+                new ClubBuilder(DANCE).build(),
+                new ClubBuilder(ENGLISH).build(),
+                new ClubBuilder(FRENCH).build(),
+                new ClubBuilder(GAME).build()
+        ));
     }
 }

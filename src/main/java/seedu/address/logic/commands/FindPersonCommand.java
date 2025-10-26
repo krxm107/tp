@@ -13,10 +13,11 @@ import seedu.address.model.person.Person;
  * Finds and lists all persons in address book matching any number of search instructions.
  */
 public class FindPersonCommand extends Command {
+    public static final String COMMAND_WORD = "find_person";
+    public static final String COMMAND_SHORT = "findp";
 
-    public static final String COMMAND_WORD = "findp";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Find persons that match all of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Find persons that match all of "
             + "the specified search instructions and display them in the list on the right.\n"
             + SearchParser.MESSAGE_USAGE
             + "Search Keywords: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag\n"

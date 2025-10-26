@@ -68,55 +68,54 @@ public class AddressBookParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
+        switch (commandWord.toLowerCase()) {
 
-        // The use of magic literal here signals a legacy feature.
-        case "add", AddPersonCommand.COMMAND_WORD:
+        case AddPersonCommand.COMMAND_WORD, AddPersonCommand.COMMAND_SHORT:
             return new AddPersonCommandParser().parse(arguments);
 
-        case AddClubCommand.COMMAND_WORD:
+        case AddClubCommand.COMMAND_WORD, AddClubCommand.COMMAND_SHORT:
             return new AddClubCommandParser().parse(arguments);
 
-        case EditPersonCommand.COMMAND_WORD:
+        case EditPersonCommand.COMMAND_WORD, EditPersonCommand.COMMAND_SHORT:
             return new EditPersonCommandParser().parse(arguments);
 
-        case EditClubCommand.COMMAND_WORD:
+        case EditClubCommand.COMMAND_WORD, EditClubCommand.COMMAND_SHORT:
             return new EditClubCommandParser().parse(arguments);
 
-        case DeletePersonCommand.COMMAND_WORD:
+        case DeletePersonCommand.COMMAND_WORD, DeletePersonCommand.COMMAND_SHORT:
             return new DeletePersonCommandParser().parse(arguments);
 
-        case DeleteClubCommand.COMMAND_WORD:
+        case DeleteClubCommand.COMMAND_WORD, DeleteClubCommand.COMMAND_SHORT:
             return new DeleteClubCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommandParser().parse(arguments);
 
-        case FindClubCommand.COMMAND_WORD:
+        case FindClubCommand.COMMAND_WORD, FindClubCommand.COMMAND_SHORT:
             return new FindClubCommandParser().parse(arguments);
 
-        case FindPersonCommand.COMMAND_WORD:
+        case FindPersonCommand.COMMAND_WORD, FindPersonCommand.COMMAND_SHORT:
             return new FindPersonCommandParser().parse(arguments);
 
-        case FilterPersonCommand.COMMAND_WORD:
+        case FilterPersonCommand.COMMAND_WORD, FilterPersonCommand.COMMAND_SHORT:
             return new FilterPersonCommandParser().parse(arguments);
 
-        case FilterClubCommand.COMMAND_WORD:
+        case FilterClubCommand.COMMAND_WORD, FilterClubCommand.COMMAND_SHORT:
             return new FilterClubCommandParser().parse(arguments);
 
         case ListAllCommand.COMMAND_WORD:
             return new ListAllCommand();
 
-        case ListMemberCommand.COMMAND_WORD:
+        case ListMemberCommand.COMMAND_WORD, ListMemberCommand.COMMAND_SHORT:
             return new ListMemberCommandParser().parse(arguments);
 
-        case ListMembershipCommand.COMMAND_WORD:
+        case ListMembershipCommand.COMMAND_WORD, ListMembershipCommand.COMMAND_SHORT:
             return new ListMembershipCommandParser().parse(arguments);
 
-        case AddToCommand.COMMAND_WORD:
+        case AddToCommand.COMMAND_WORD, AddToCommand.COMMAND_SHORT:
             return new AddToCommandParser().parse(arguments);
 
-        case RemoveFromCommand.COMMAND_WORD:
+        case RemoveFromCommand.COMMAND_WORD, RemoveFromCommand.COMMAND_SHORT:
             return new RemoveFromCommandParser().parse(arguments);
 
         case RenewMembershipCommand.COMMAND_WORD:
@@ -128,10 +127,10 @@ public class AddressBookParser {
         case ReactivateMembershipCommand.COMMAND_WORD:
             return new ReactivateMembershipCommandParser().parse(arguments);
 
-        case GetClubCommand.COMMAND_WORD:
+        case GetClubCommand.COMMAND_WORD, GetClubCommand.COMMAND_SHORT:
             return new GetClubCommandParser().parse(arguments);
 
-        case GetPersonCommand.COMMAND_WORD:
+        case GetPersonCommand.COMMAND_WORD, GetPersonCommand.COMMAND_SHORT:
             return new GetPersonCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:

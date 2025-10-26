@@ -30,8 +30,10 @@ import seedu.address.model.person.Person;
 public class AddPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "add_person";
+    public static final String COMMAND_SHORT = "addp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
