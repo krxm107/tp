@@ -129,7 +129,7 @@ Examples:
 
 ![Add Person](images/AddPersonImage.png)
 
-### Adding a club: `add_club`
+### Adding a club: `add_club` (or `addc`)
 
 Adding a club to ClubHub lets you keep track of different clubs in one place. 
 By entering details like the club’s name, email, phone and address, you can easily manage and reach out to them whenever needed. 
