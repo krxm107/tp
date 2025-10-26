@@ -28,9 +28,9 @@ public class ListMembershipCommand extends Command {
             + "): List all memberships of a person identified by its index number in the displayed list."
             + "\nParameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
             + "Optional keywords may be added to specify which membership statuses to show.\n"
-            + "Keywords: a - active, c - cancelled, e - expired, p - pending expiration\n"
+            + "Keywords: a - active, c - cancelled, e - expired, p - pending cancellation\n"
             + "Example: " + COMMAND_WORD + " 1 - shows all non-expired memberships\n"
-            + "Example: " + COMMAND_WORD + " 1 /ap - shows all memberships that are active or pending expiration";
+            + "Example: " + COMMAND_WORD + " 1 /ap - shows all memberships that are active or pending cancellation";
 
     public static final String MESSAGE_LIST_SUCCESS = "Listed all memberships";
 
