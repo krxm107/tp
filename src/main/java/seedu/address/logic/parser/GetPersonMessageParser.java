@@ -17,7 +17,7 @@ public class GetPersonMessageParser {
         if (args.isEmpty()) {
             return format(person);
         } else {
-            return getPersonDetails(person, args);
+            return getPersonDetails(person, args.toLowerCase());
         }
     }
 
