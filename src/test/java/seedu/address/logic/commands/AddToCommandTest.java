@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalClubs.ARCHERY;
 import static seedu.address.testutil.TypicalClubs.BALL;
@@ -50,7 +51,8 @@ public class AddToCommandTest {
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(AddToCommand.MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), clubToAddTo.getName()) + "\n";
+        String expectedMessage = String.format(
+                AddToCommand.MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), clubToAddTo.getName()) + "\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         Person expectedPerson = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -65,9 +67,11 @@ public class AddToCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        AddToCommand addToCommand = new AddToCommand(
+                new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(AddToCommand.MESSAGE_ADDED_TO_CLUB, firstPerson.getName() + ", " + secondPerson.getName(), clubToAddTo.getName()) + "\n";
+        String expectedMessage = String.format(AddToCommand.MESSAGE_ADDED_TO_CLUB,
+                firstPerson.getName() + ", " + secondPerson.getName(), clubToAddTo.getName()) + "\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         Person expectedFirstPerson = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -86,7 +90,8 @@ public class AddToCommandTest {
         model.addMembership(new Membership(personToAdd, clubToAddTo));
 
         AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        String expectedMessage = String.format(AddToCommand.MESSAGE_DUPLICATE_MEMBERSHIP, personToAdd.getName(), clubToAddTo.getName()) + "\n";
+        String expectedMessage = String.format(AddToCommand.MESSAGE_DUPLICATE_MEMBERSHIP,
+                personToAdd.getName(), clubToAddTo.getName()) + "\n";
 
         assertCommandSuccess(addToCommand, model, expectedMessage, model);
     }
@@ -96,7 +101,8 @@ public class AddToCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         AddToCommand addToCommand = new AddToCommand(new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()) + "\n";
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED,
+                outOfBoundIndex.getOneBased()) + "\n";
         assertCommandSuccess(addToCommand, model, expectedMessage, model);
     }
 
@@ -105,29 +111,30 @@ public class AddToCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
         AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
 
-        String expectedMessage = String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()) + "\n";
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
+                outOfBoundIndex.getOneBased()) + "\n";
         assertCommandSuccess(addToCommand, model, expectedMessage, model);
     }
 
     @Test
     public void equals() {
-        AddToCommand addToFirstCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        AddToCommand addToSecondCommand = new AddToCommand(new Index[]{INDEX_SECOND_PERSON}, new Index[]{INDEX_SECOND_CLUB});
+        AddToCommand addToFirstCommand = new AddToCommand(
+                new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        AddToCommand addToSecondCommand = new AddToCommand(
+                new Index[]{INDEX_SECOND_PERSON}, new Index[]{INDEX_SECOND_CLUB});
 
         // same object -> returns true
-        assertTrue(addToFirstCommand.equals(addToFirstCommand));
+        assertEquals(addToFirstCommand, addToFirstCommand);
 
         // same values -> returns true
-        AddToCommand addToFirstCommandCopy = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        assertTrue(addToFirstCommand.equals(addToFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addToFirstCommand.equals(1));
+        AddToCommand addToFirstCommandCopy = new AddToCommand(
+                new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        assertEquals(addToFirstCommand, addToFirstCommandCopy);
 
         // null -> returns false
-        assertFalse(addToFirstCommand.equals(null));
+        assertNotNull(addToFirstCommand);
 
         // different command -> returns false
-        assertFalse(addToFirstCommand.equals(addToSecondCommand));
+        assertNotEquals(addToFirstCommand, addToSecondCommand);
     }
 }
