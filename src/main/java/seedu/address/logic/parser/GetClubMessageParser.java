@@ -5,8 +5,6 @@ import static seedu.address.logic.Messages.format;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
 
-import java.text.ParseException;
-
 /**
  * Parser for the string to be used in a GetClubCommand.
  */
