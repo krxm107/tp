@@ -15,8 +15,7 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
     private boolean expired = false;
     private boolean pending = false;
 
-    private Predicate<Membership> predicate = membership ->
-            !membership.getStatus().equals(MembershipStatus.EXPIRED);
+    private Predicate<Membership> predicate = membership -> true;
 
     /**
      * Adds a predicate for a particular membership status indicated by the keyword
