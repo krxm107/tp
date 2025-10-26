@@ -3,7 +3,9 @@ layout: page
 title: User Guide
 ---
 
-ClubHub allows you to manage your contacts on your desktop with keyboard commands. If you type fast, you can complete your contact management tasks faster with ClubHub than with mouse-based apps.
+ClubHub is a fast, keyboard-driven **contact management app** designed for people *who run multiple groups or clubs* — such as gym managers, volunteer coordinators, or hobby group organizers. Instead of juggling messy spreadsheets or address books, ClubHub lets you create, view, search, and organize contacts across different groups entirely from your keyboard.
+
+If you type quickly, you can manage memberships, roles, and clubs faster and more efficiently with ClubHub than with mouse-based apps.
 
 * Table of Contents
 {:toc}
@@ -16,6 +18,9 @@ ClubHub allows you to manage your contacts on your desktop with keyboard command
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
+  
+   ![Download guide 1](images/DownloadGuide1.png)
+   ![Download guide 2](images/DownloadGuide2.png)
 
 3. Copy the file to the folder you want to use as the _home folder_ for ClubHub.
 
@@ -122,6 +127,8 @@ Examples:
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison p/1234567`
 
+![Add Person](images/AddPersonImage.png)
+
 ### Adding a club: `add_club` (or `addc`)
 
 Adding a club to ClubHub lets you keep track of different clubs in one place. 
@@ -155,6 +162,8 @@ Format: `add_to m/INDEXES c/INDEXES [d/DURATION]`
 
 Examples:
 * `add_to m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
+  
+![Add To](images/AddToImage.png)
 
 ### Removing multiple persons from multiple clubs : `remove_from`  (or `deletem`)
 
@@ -193,13 +202,15 @@ Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`
 * Cancels the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
 * The index refers to the index number shown in the displayed person list & club list accordingly.
 * The index **must be a positive integer** 1, 2, 3, …​
-* The membership remains valid until the expiry date. The membership cannot be renewed but can be reactivated.
+* The membership **remains valid until the expiry date**. The membership cannot be renewed but can be reactivated.
 * The membership will not be deleted.
 * To remove the person from the club, use the `remove_from` command.
 
 Examples:
 * `cancel m/1 c/2` Cancels the membership of the 1st person in the 2nd club.
- 
+
+![Cancel](images/CancelledImage.png)
+
 ### Reactivating membership of a person in a club : `reactivate`
 
 Reactivates the **cancelled** membership of a person in a club with renewal duration given.
