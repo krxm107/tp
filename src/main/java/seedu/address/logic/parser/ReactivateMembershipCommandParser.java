@@ -30,8 +30,8 @@ public class ReactivateMembershipCommandParser implements Parser<ReactivateMembe
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             ReactivateMembershipCommand.MESSAGE_USAGE));
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());

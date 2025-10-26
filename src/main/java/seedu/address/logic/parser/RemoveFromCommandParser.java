@@ -28,9 +28,8 @@ public class RemoveFromCommandParser implements Parser<RemoveFromCommand> {
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE));
         }
-
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
             Index[] personIndexes = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_MEMBER).get());
             Index[] clubIndexes = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_CLUB).get());
             return new RemoveFromCommand(personIndexes, clubIndexes);
