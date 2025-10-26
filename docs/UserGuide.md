@@ -22,9 +22,9 @@ If you type quickly, you can manage memberships, roles, and clubs faster and mor
    ![Download guide 1](images/DownloadGuide1.png)
    ![Download guide 2](images/DownloadGuide2.png)
 
-4. Copy the file to the folder you want to use as the _home folder_ for ClubHub.
+3. Copy the file to the folder you want to use as the _home folder_ for ClubHub.
 
-5. Open a command terminal.
+4. Open a command terminal.
 
 If you're using Windows:
 
