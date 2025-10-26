@@ -145,7 +145,7 @@ public class Club implements Searchable {
     }
 
     /**
-     * Removes membership from both the club and the person.
+     * Removes membership from the club
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */

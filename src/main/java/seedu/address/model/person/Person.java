@@ -178,6 +178,11 @@ public class Person implements Searchable {
         this.memberships.remove(membership);
     }
 
+    /**
+     * Removes membership from the person.
+     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     public void removeClub(Club club) {
         // Find the specific membership object to remove
         memberships.stream()
