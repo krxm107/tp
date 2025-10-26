@@ -35,7 +35,7 @@ public class AddToCommand extends Command {
             + PREFIX_CLUB + "1 3 "
             + PREFIX_DURATION + "12";
 
-    private static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
+    public static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
 
     private final Index[] personIndexes;
     private final Index[] clubIndexes;
@@ -165,4 +165,3 @@ public class AddToCommand extends Command {
                 && durationInMonths == otherAddToCommand.durationInMonths;
     }
 }
-
