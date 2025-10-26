@@ -414,6 +414,7 @@
     -fx-background-radius: 4px;
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI Semibold";
+    -fx-wrap-text: "true";
 }
 
 /* Status-specific background colors */
