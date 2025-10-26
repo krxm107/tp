@@ -59,6 +59,9 @@ public class GetClubCommand extends Command {
         return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
     }
 
+    /**
+     * Logic for copying text to clipboard. Extracted to allow testing.
+     */
     public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
