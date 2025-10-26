@@ -20,11 +20,12 @@ import seedu.address.model.person.Person;
 public class ListMemberCommand extends Command {
 
     public static final String COMMAND_WORD = "list_members";
+    public static final String COMMAND_SHORT = "listmc"; // list members for clubs
 
     public static final String MESSAGE_SUCCESS = "Listed all members";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all members (non-expired) of a club identified by its index number in the displayed list.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): List all members (non-expired) of a club identified by its index number in the displayed list.\n"
             + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
             + "Optional keywords may be added to specify which member statuses to show.\n"
             + "Keywords: a - active, c - cancelled, e - expired, p - pending expiration, * - all\n"
