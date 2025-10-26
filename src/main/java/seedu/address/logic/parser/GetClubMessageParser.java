@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.get;
+package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.format;
 
@@ -20,7 +20,7 @@ public class GetClubMessageParser {
         } else if (args.contains("*")) {
             return getFullClubDetails(club);
         } else {
-            return getClubDetails(club, args);
+            return getClubDetails(club, args.toLowerCase());
         }
     }
 

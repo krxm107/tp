@@ -9,7 +9,7 @@ import seedu.address.commons.util.CopyUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.get.GetClubMessageParser;
+import seedu.address.logic.parser.GetClubMessageParser;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
@@ -54,13 +54,20 @@ public class GetClubCommand extends Command {
 
         Club clubToCopy = lastShownList.get(targetIndex.getZeroBased());
         String details = new GetClubMessageParser().parse(clubToCopy, keywords);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
+    }
+
+    /**
+     * Logic for copying text to clipboard. Extracted to allow testing.
+     */
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_CLUB_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
     }
 
     @Override

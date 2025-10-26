@@ -9,7 +9,7 @@ import seedu.address.commons.util.CopyUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.get.GetPersonMessageParser;
+import seedu.address.logic.parser.GetPersonMessageParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -54,13 +54,20 @@ public class GetPersonCommand extends Command {
 
         Person personToCopy = lastShownList.get(targetIndex.getZeroBased());
         String details = new GetPersonMessageParser().parse(personToCopy, keywords);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
+    }
+
+    /**
+     * Logic for copying text to clipboard. Extracted to allow testing.
+     */
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_PERSON_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.get;
+package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.format;
 
@@ -17,7 +17,7 @@ public class GetPersonMessageParser {
         if (args.isEmpty()) {
             return format(person);
         } else {
-            return getPersonDetails(person, args);
+            return getPersonDetails(person, args.toLowerCase());
         }
     }
 
