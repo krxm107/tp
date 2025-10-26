@@ -33,6 +33,7 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
         case "c" -> setCanceled();
         case "e" -> setExpired();
         case "p" -> setPending();
+        default -> setNothing();
         }
     }
 
@@ -91,4 +92,6 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
         predicate = predicate.or(membership ->
                 membership.getStatus().equals(MembershipStatus.PENDING_CANCELLATION));
     }
+
+    private void setNothing() {}
 }

@@ -25,8 +25,8 @@ public class ListMembershipCommand extends Command {
     public static final String COMMAND_SHORT = "listmp"; // list members for person
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
-            + "): List all memberships (non-expired) of a person identified by its index number in the displayed list.\n"
-            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
+            + "): List all memberships (non-expired) of a person identified by its index number in the displayed list."
+            + "\nParameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
             + "Optional keywords may be added to specify which membership statuses to show.\n"
             + "Keywords: a - active, c - cancelled, e - expired, p - pending expiration, * - all\n"
             + "Example: " + COMMAND_WORD + " 1 - shows all non-expired memberships\n"
@@ -37,6 +37,9 @@ public class ListMembershipCommand extends Command {
     private final Index targetIndex;
     private final Predicate<Membership> predicate;
 
+    /**
+     * Creates a <code>ListMembershipCommand</code> with the targetIndex and predicate for filtering membership statuses.
+     */
     public ListMembershipCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
         this.predicate = predicate;

@@ -37,6 +37,9 @@ public class ListMemberCommand extends Command {
     private final Index targetIndex;
     private final Predicate<Membership> predicate;
 
+    /**
+     * Creates a <code>ListMemberCommand</code> with the targetIndex and predicate for filtering membership statuses.
+     */
     public ListMemberCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
         this.predicate = predicate;
