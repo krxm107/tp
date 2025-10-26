@@ -145,7 +145,7 @@ public class Club implements Searchable {
     }
 
     /**
-     * Removes membership from both the club and the person.
+     * Removes membership from the club
      * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
@@ -156,7 +156,6 @@ public class Club implements Searchable {
                 .findFirst()
                 .ifPresent(membershipToRemove -> {
                     memberships.remove(membershipToRemove);
-                    person.removeMembership(membershipToRemove); // Maintain bidirectional link
                 });
         // Also remember to delete membership from ModelManager
     }
