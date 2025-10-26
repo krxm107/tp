@@ -132,10 +132,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteClub(Club target) {
-        // delete all memberships related to the club
-        for (Membership m : target.getMemberships()) {
-            this.deleteMembership(m);
-        }
         addressBook.removeClub(target);
     }
 

@@ -167,6 +167,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             oldM.getClub().addMembership(newM); // add the rebuilt membership to the club
 
             // Attach the rebuilt membership to the edited person
+            editedPerson.removeClub(newM.getClub());
             editedPerson.addMembership(newM);
 
             // Detach the old membership object from the old person
@@ -206,7 +207,11 @@ public class AddressBook implements ReadOnlyAddressBook {
             );
 
             memberships.setMembership(oldM, newM);
-            oldM.getPerson().removeMembership(oldM); // removes oldM
+
+
+            oldM.getClub().addMembership(newM); // add the rebuilt membership to the club
+
+            oldM.getPerson().removeClub(target); // removes oldM
             target.removeMember(oldM.getPerson()); // removes oldM link on the club side
 
             // Attach rebuilt membership to both sides

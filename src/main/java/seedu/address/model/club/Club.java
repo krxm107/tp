@@ -156,7 +156,6 @@ public class Club implements Searchable {
                 .findFirst()
                 .ifPresent(membershipToRemove -> {
                     memberships.remove(membershipToRemove);
-                    person.removeMembership(membershipToRemove); // Maintain bidirectional link
                 });
         // Also remember to delete membership from ModelManager
     }
