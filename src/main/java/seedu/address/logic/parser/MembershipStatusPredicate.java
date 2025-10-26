@@ -28,7 +28,6 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
         }
 
         switch (keyword) {
-        case "*" -> setAll();
         case "a" -> setActive();
         case "c" -> setCanceled();
         case "e" -> setExpired();
@@ -59,14 +58,6 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
                 && canceled == otherPredicate.canceled
                 && expired == otherPredicate.expired
                 && pending == otherPredicate.pending;
-    }
-
-    private void setAll() {
-        active = true;
-        canceled = true;
-        expired = true;
-        pending = true;
-        predicate = membership -> true;
     }
 
     private void setActive() {
