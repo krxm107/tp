@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
-import seedu.address.logic.parser.GetClubMessageParser;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
