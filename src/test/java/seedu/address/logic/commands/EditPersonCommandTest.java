@@ -81,9 +81,7 @@ public class EditPersonCommandTest {
         EditPersonCommand editPersonCommand = new EditPersonCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage =
-                String.format(EditPersonCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-                        Messages.format(editedPerson));
+        String expectedMessage = EditPersonCommand.UNCHANGED_PERSON_WARNING;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 

@@ -54,6 +54,10 @@ public class EditClubCommand extends Command {
     public static final String MESSAGE_DUPLICATE_CLUB_NAME = "A club with this name already exists.";
     public static final String MESSAGE_DUPLICATE_CLUB_EMAIL = "A club with this email already exists.";
 
+    public static final String UNCHANGED_CLUB_WARNING =
+            "There was no change to this club "
+            + "since the original and edited details are the same.";
+
     private final Index index;
     private final EditClubDescriptor editClubDescriptor;
 
@@ -82,8 +86,7 @@ public class EditClubCommand extends Command {
         Club editedClub = createEditedClub(clubToEdit, editClubDescriptor);
 
         if (clubToEdit.equals(editedClub)) {
-            return new CommandResult("There was no change to this club " +
-                    "since the original and edited details are the same.");
+            return new CommandResult(UNCHANGED_CLUB_WARNING);
         }
 
         // Existing broad duplicate check (keeps previous semantics)
