@@ -30,7 +30,9 @@ public class RenewMembershipCommandParser implements Parser<RenewMembershipComma
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             RenewMembershipCommand.MESSAGE_USAGE));
         }
+
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
+
         try {
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());

@@ -30,8 +30,10 @@ public class CancelMembershipCommandParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             CancelMembershipCommand.MESSAGE_USAGE));
         }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
+
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             return new CancelMembershipCommand(personIndex, clubIndex);
