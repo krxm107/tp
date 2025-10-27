@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.Messages;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.ClubBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -66,7 +67,9 @@ public class GetClubMessageParserTest {
 
     @Test
     public void testGetFull() {
-        String expected = club.getMemberships().stream().map(Membership::getPerson).map(Messages::format)
+        String expected = club.getMemberships().stream()
+                .filter(membership -> !membership.getStatus().equals(MembershipStatus.CANCELLED))
+                .map(Membership::getPerson).map(Messages::format)
                 .reduce(Messages.format(club), (s1, s2) -> s1 + "\n" + s2);
         assertEquals(parser.parse(club, "***"), expected);
     }
