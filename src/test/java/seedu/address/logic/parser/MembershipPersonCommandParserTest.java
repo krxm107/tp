@@ -8,12 +8,12 @@ import static seedu.address.model.membership.MembershipStatus.EXPIRED;
 import static seedu.address.model.membership.MembershipStatus.PENDING_CANCELLATION;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.MembershipPersonCommand;
 import seedu.address.logic.search.predicates.MembershipStatusPredicate;
-
-import java.util.Arrays;
 
 public class MembershipPersonCommandParserTest {
 

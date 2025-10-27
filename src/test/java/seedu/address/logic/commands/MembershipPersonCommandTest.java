@@ -24,6 +24,7 @@ import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
  * {@code MembershipPersonCommand}.
