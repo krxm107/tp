@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddClubCommand;
+import seedu.address.logic.commands.AddMembershipCommand;
 import seedu.address.logic.commands.AddPersonCommand;
-import seedu.address.logic.commands.AddToCommand;
 import seedu.address.logic.commands.CancelMembershipCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -114,8 +114,8 @@ public class AddressBookParser {
         case ListMembershipCommand.COMMAND_WORD, ListMembershipCommand.COMMAND_SHORT:
             return new ListMembershipCommandParser().parse(arguments);
 
-        case AddToCommand.COMMAND_WORD, AddToCommand.COMMAND_SHORT:
-            return new AddToCommandParser().parse(arguments);
+        case AddMembershipCommand.COMMAND_WORD, AddMembershipCommand.COMMAND_SHORT:
+            return new AddMembershipCommandParser().parse(arguments);
 
         case RemoveFromCommand.COMMAND_WORD, RemoveFromCommand.COMMAND_SHORT:
             return new RemoveFromCommandParser().parse(arguments);

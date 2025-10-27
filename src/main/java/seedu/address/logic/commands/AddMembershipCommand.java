@@ -19,8 +19,8 @@ import seedu.address.model.person.Person;
 /**
  * Adds a Person to a Club
  */
-public class AddToCommand extends Command {
-    public static final String COMMAND_WORD = "add_to";
+public class AddMembershipCommand extends Command {
+    public static final String COMMAND_WORD = "add_membership";
     public static final String COMMAND_SHORT = "addm"; // add member
 
     public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
@@ -47,7 +47,7 @@ public class AddToCommand extends Command {
      * @param personIndexes of the person in the filtered person list to edit
      * @param clubIndexes of the club in the filtered club list to edit
      */
-    public AddToCommand(Index[] personIndexes, Index[] clubIndexes) {
+    public AddMembershipCommand(Index[] personIndexes, Index[] clubIndexes) {
         requireAllNonNull(personIndexes, clubIndexes);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
@@ -58,7 +58,7 @@ public class AddToCommand extends Command {
      * @param clubIndexes of the club in the filtered club list to edit
      * @param durationInMonths duration of membership in months
      */
-    public AddToCommand(Index[] personIndexes, Index[] clubIndexes, int durationInMonths) {
+    public AddMembershipCommand(Index[] personIndexes, Index[] clubIndexes, int durationInMonths) {
         requireAllNonNull(personIndexes, clubIndexes, durationInMonths);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
@@ -157,13 +157,13 @@ public class AddToCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddToCommand)) {
+        if (!(other instanceof AddMembershipCommand)) {
             return false;
         }
 
-        AddToCommand otherAddToCommand = (AddToCommand) other;
-        return Arrays.equals(personIndexes, otherAddToCommand.personIndexes)
-                && Arrays.equals(clubIndexes, otherAddToCommand.clubIndexes)
-                && durationInMonths == otherAddToCommand.durationInMonths;
+        AddMembershipCommand otherAddMembershipCommand = (AddMembershipCommand) other;
+        return Arrays.equals(personIndexes, otherAddMembershipCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherAddMembershipCommand.clubIndexes)
+                && durationInMonths == otherAddMembershipCommand.durationInMonths;
     }
 }
