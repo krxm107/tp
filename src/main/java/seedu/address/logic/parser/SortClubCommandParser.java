@@ -10,7 +10,6 @@ import seedu.address.logic.commands.SortClubCommand;
 import seedu.address.logic.commands.SortPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.club.Club;
-import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new SortClubCommand object.

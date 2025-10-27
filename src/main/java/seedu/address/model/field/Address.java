@@ -86,16 +86,11 @@ public class Address implements Comparable<Address> {
 
     @Override
     public int compareTo(Address address) {
-<<<<<<< Updated upstream
-        return this.value.compareTo(address.value);
-=======
         if (this.value.equals("")) { // if no address, sort lower
             return 1;
-        }
-        else if (address.value.equals("")){
+        } else if (address.value.equals("")) {
             return -1;
         }
         return this.value.toLowerCase().compareTo(address.value.toLowerCase());
->>>>>>> Stashed changes
     }
 }
