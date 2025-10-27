@@ -26,9 +26,9 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for RemoveFromCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for DeleteMembershipCommand.
  */
-public class RemoveFromCommandTest {
+public class DeleteMembershipCommandTest {
 
     private Model model;
     private Model expectedModel;
@@ -51,16 +51,16 @@ public class RemoveFromCommandTest {
         Membership membership = new Membership(personToRemove, clubToRemoveFrom);
         model.addMembership(membership);
 
-        RemoveFromCommand removeFromCommand = new RemoveFromCommand(
+        DeleteMembershipCommand deleteMembershipCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(RemoveFromCommand.MESSAGE_REMOVED_FROM_CLUB,
+        String expectedMessage = String.format(DeleteMembershipCommand.MESSAGE_REMOVED_FROM_CLUB,
                 personToRemove.getName(), clubToRemoveFrom.getName()) + "\n";
 
         expectedModel.addMembership(membership); // Add to expected model first
         expectedModel.deleteMembership(membership); // Then delete
 
-        assertCommandSuccess(removeFromCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteMembershipCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -74,10 +74,10 @@ public class RemoveFromCommandTest {
         model.addMembership(firstMembership);
         model.addMembership(secondMembership);
 
-        RemoveFromCommand removeFromCommand = new RemoveFromCommand(
+        DeleteMembershipCommand deleteMembershipCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(RemoveFromCommand.MESSAGE_REMOVED_FROM_CLUB,
+        String expectedMessage = String.format(DeleteMembershipCommand.MESSAGE_REMOVED_FROM_CLUB,
                 firstPerson.getName() + ", " + secondPerson.getName(), clubToRemoveFrom.getName()) + "\n";
 
         expectedModel.addMembership(firstMembership);
@@ -85,56 +85,56 @@ public class RemoveFromCommandTest {
         expectedModel.deleteMembership(firstMembership);
         expectedModel.deleteMembership(secondMembership);
 
-        assertCommandSuccess(removeFromCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteMembershipCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_nonExistentMembership_reportsError() {
         Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Club club = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        RemoveFromCommand removeFromCommand = new RemoveFromCommand(
+        DeleteMembershipCommand deleteMembershipCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(RemoveFromCommand.MESSAGE_NOTEXIST_MEMBERSHIP,
+        String expectedMessage = String.format(DeleteMembershipCommand.MESSAGE_NOTEXIST_MEMBERSHIP,
                 person.getName(), club.getName()) + "\n";
 
-        assertCommandSuccess(removeFromCommand, model, expectedMessage, model);
+        assertCommandSuccess(deleteMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidPersonIndex_reportsError() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemoveFromCommand removeFromCommand = new RemoveFromCommand(
+        DeleteMembershipCommand deleteMembershipCommand = new DeleteMembershipCommand(
                 new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";
-        assertCommandSuccess(removeFromCommand, model, expectedMessage, model);
+        assertCommandSuccess(deleteMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidClubIndex_reportsError() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        RemoveFromCommand removeFromCommand = new RemoveFromCommand(
+        DeleteMembershipCommand deleteMembershipCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";
-        assertCommandSuccess(removeFromCommand, model, expectedMessage, model);
+        assertCommandSuccess(deleteMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void equals() {
-        RemoveFromCommand removeFromFirstCommand = new RemoveFromCommand(
+        DeleteMembershipCommand removeFromFirstCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        RemoveFromCommand removeFromSecondCommand = new RemoveFromCommand(
+        DeleteMembershipCommand removeFromSecondCommand = new DeleteMembershipCommand(
                 new Index[]{INDEX_SECOND_PERSON}, new Index[]{INDEX_SECOND_CLUB});
 
         // same object -> returns true
         assertTrue(removeFromFirstCommand.equals(removeFromFirstCommand));
 
         // same values -> returns true
-        RemoveFromCommand removeFromFirstCommandCopy = new RemoveFromCommand(
+        DeleteMembershipCommand removeFromFirstCommandCopy = new DeleteMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
         assertTrue(removeFromFirstCommand.equals(removeFromFirstCommandCopy));
 

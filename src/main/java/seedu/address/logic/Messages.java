@@ -17,7 +17,7 @@ public class Messages {
             Unknown command!
             Available commands:
                 add_person, add_club,
-                add_to, remove_from,
+                add_membership, delete_membership,
                 cancel, renew, reactivate,
                 delete_person, delete_club,
                 edit_person, edit_club,

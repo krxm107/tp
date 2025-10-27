@@ -15,6 +15,7 @@ import seedu.address.logic.commands.CancelMembershipCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteClubCommand;
+import seedu.address.logic.commands.DeleteMembershipCommand;
 import seedu.address.logic.commands.DeletePersonCommand;
 import seedu.address.logic.commands.EditClubCommand;
 import seedu.address.logic.commands.EditPersonCommand;
@@ -30,7 +31,6 @@ import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListMemberCommand;
 import seedu.address.logic.commands.ListMembershipCommand;
 import seedu.address.logic.commands.ReactivateMembershipCommand;
-import seedu.address.logic.commands.RemoveFromCommand;
 import seedu.address.logic.commands.RenewMembershipCommand;
 import seedu.address.logic.commands.SortClubCommand;
 import seedu.address.logic.commands.SortPersonCommand;
@@ -117,8 +117,8 @@ public class AddressBookParser {
         case AddMembershipCommand.COMMAND_WORD, AddMembershipCommand.COMMAND_SHORT:
             return new AddMembershipCommandParser().parse(arguments);
 
-        case RemoveFromCommand.COMMAND_WORD, RemoveFromCommand.COMMAND_SHORT:
-            return new RemoveFromCommandParser().parse(arguments);
+        case DeleteMembershipCommand.COMMAND_WORD, DeleteMembershipCommand.COMMAND_SHORT:
+            return new DeleteMembershipCommandParser().parse(arguments);
 
         case RenewMembershipCommand.COMMAND_WORD:
             return new RenewMembershipCommandParser().parse(arguments);

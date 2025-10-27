@@ -18,8 +18,8 @@ import seedu.address.model.person.Person;
 /**
  * Removes a Person from a Club
  */
-public class RemoveFromCommand extends Command {
-    public static final String COMMAND_WORD = "remove_from";
+public class DeleteMembershipCommand extends Command {
+    public static final String COMMAND_WORD = "delete_membership";
     public static final String COMMAND_SHORT = "deletem"; // delete membership
     public static final String MESSAGE_REMOVED_FROM_CLUB = "%1$s removed from %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
@@ -41,7 +41,7 @@ public class RemoveFromCommand extends Command {
      * @param personIndexes of the person in the filtered person list to edit
      * @param clubIndexes of the club in the filtered club list to edit
      */
-    public RemoveFromCommand(Index[] personIndexes, Index[] clubIndexes) {
+    public DeleteMembershipCommand(Index[] personIndexes, Index[] clubIndexes) {
         requireAllNonNull(personIndexes, clubIndexes);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
@@ -131,12 +131,12 @@ public class RemoveFromCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RemoveFromCommand)) {
+        if (!(other instanceof DeleteMembershipCommand)) {
             return false;
         }
 
-        RemoveFromCommand otherRemoveFromCommand = (RemoveFromCommand) other;
-        return Arrays.equals(personIndexes, otherRemoveFromCommand.personIndexes)
-                && Arrays.equals(clubIndexes, otherRemoveFromCommand.clubIndexes);
+        DeleteMembershipCommand otherDeleteMembershipCommand = (DeleteMembershipCommand) other;
+        return Arrays.equals(personIndexes, otherDeleteMembershipCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherDeleteMembershipCommand.clubIndexes);
     }
 }
