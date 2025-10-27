@@ -1,6 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.format;
+import static seedu.address.logic.parser.CliSyntax.ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.EMAIL;
+import static seedu.address.logic.parser.CliSyntax.MEMBER;
+import static seedu.address.logic.parser.CliSyntax.NAME;
+import static seedu.address.logic.parser.CliSyntax.PHONE;
 
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
@@ -26,19 +31,19 @@ public class GetClubMessageParser {
 
     private String getClubDetails(Club club, String args) {
         StringBuilder sb = new StringBuilder();
-        if (args.contains("n")) {
+        if (args.contains(NAME)) {
             sb.append(club.getName()).append(" ");
         }
-        if (args.contains("p")) {
+        if (args.contains(PHONE)) {
             sb.append(club.getPhone()).append(" ");
         }
-        if (args.contains("e")) {
+        if (args.contains(EMAIL)) {
             sb.append(club.getEmail()).append(" ");
         }
-        if (args.contains("a")) {
+        if (args.contains(ADDRESS)) {
             sb.append(club.getAddress()).append(" ");
         }
-        if (args.contains("m")) {
+        if (args.contains(MEMBER)) {
             club.getMemberships().stream().forEach(membership ->
                     sb.append(membership.getPersonName()).append(" "));
         }
