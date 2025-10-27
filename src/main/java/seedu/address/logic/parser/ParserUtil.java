@@ -81,7 +81,7 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String strippedName = name.strip();
-        if (!Name.isValidName(strippedName)) {
+        if (!strippedName.isBlank() && !Name.isValidName(strippedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(strippedName);
@@ -133,7 +133,7 @@ public class ParserUtil {
         requireNonNull(email);
         String strippedEmail = email.strip();
 
-        if (!Email.isValidEmail(strippedEmail)) {
+        if (!strippedEmail.isBlank() && !Email.isValidEmail(strippedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
 
