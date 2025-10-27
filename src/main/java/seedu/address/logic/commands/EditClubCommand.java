@@ -193,6 +193,14 @@ public class EditClubCommand extends Command {
             setTags(toCopy.tags);
         }
 
+        public boolean hasNoEmail() {
+            return getEmail().isEmpty() || getEmail().get().isBlank();
+        }
+
+        public boolean hasNoName() {
+            return getName().isEmpty() || getName().get().isBlank();
+        }
+
         /**
          * Returns true if at least one field is edited.
          */

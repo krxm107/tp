@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -84,6 +85,10 @@ public class EditClubCommandParser implements Parser<EditClubCommand> {
             editClubDescriptor.setAddress(parsedAddress); // "" clears; invalid non-empty → error
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editClubDescriptor::setTags);
+
+        if (editClubDescriptor.hasNoName() && editClubDescriptor.hasNoEmail()) {
+            throw new ParseException(MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY);
+        }
 
         if (!editClubDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditClubCommand.MESSAGE_NOT_EDITED);

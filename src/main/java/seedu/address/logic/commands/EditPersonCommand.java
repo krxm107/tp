@@ -221,6 +221,14 @@ public class EditPersonCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public boolean hasNoEmail() {
+            return getEmail().isEmpty() || getEmail().get().isBlank();
+        }
+
+        public boolean hasNoName() {
+            return getName().isEmpty() || getName().get().isBlank();
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.

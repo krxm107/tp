@@ -37,6 +37,10 @@ public class Name implements Comparable<Name> {
         return NameValidator.validate(test).isValid();
     }
 
+    public boolean isBlank() {
+        return fullName.isBlank();
+    }
+
     @Override
     public String toString() {
         return fullName;
