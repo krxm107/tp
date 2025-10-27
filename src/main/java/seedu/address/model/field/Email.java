@@ -7,7 +7,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
-public class Email {
+public class Email implements Comparable<Email> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Invalid email format.\n"
@@ -119,4 +119,8 @@ public class Email {
         return value.hashCode();
     }
 
+    @Override
+    public int compareTo(Email email) {
+        return this.value.compareTo(email.value);
+    }
 }

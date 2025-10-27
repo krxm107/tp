@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -343,6 +344,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return memberships.asUnmodifiableObservableList();
     }
 
+    public void sortPersonList(Comparator<Person> personComparator) {
+        persons.sort(personComparator);
+    }
+
+    public void sortClubList(Comparator<Club> clubComparator) {
+        clubs.sort(clubComparator);
+    }
 
     @Override
     public boolean equals(Object other) {

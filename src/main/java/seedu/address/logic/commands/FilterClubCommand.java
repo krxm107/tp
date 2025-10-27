@@ -48,8 +48,8 @@ public class FilterClubCommand extends Command {
             return false;
         }
 
-        FilterClubCommand otherFindCommand = (FilterClubCommand) other;
-        return predicate.equals(otherFindCommand.predicate);
+        FilterClubCommand otherFilterClubCommand = (FilterClubCommand) other;
+        return predicate.equals(otherFilterClubCommand.predicate);
     }
 
     @Override
