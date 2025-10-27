@@ -99,6 +99,9 @@ public class Phone implements Comparable<Phone> {
 
     @Override
     public int compareTo(Phone phone) {
+        if (this.value.equals("")) { // if no phone, sort lower
+            return 1;
+        }
         return Integer.getInteger(this.value)
                 .compareTo(Integer.getInteger(phone.value));
     }
