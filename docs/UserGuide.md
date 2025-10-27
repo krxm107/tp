@@ -430,6 +430,32 @@ Examples:
 * `find_club` followed by `get_club 2 /*` copies all details (including member details) of the 2nd club in the club list.
   ![result for 'get_club 2 /*'](images/getClubFullResult.png)
 
+### Sorting persons : `sort_person` (or `sortp`)
+
+Sorts persons in the person list in ascending order of the provided fields.
+
+Format: `sort_person [n/] [p/] [e/] [a/]`
+
+* `n/` sorts the list by person name, `p/` by phone number, `e/` by email, and `a/` by address.
+* Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
+
+Examples:
+* `sort_person n/` sorts the person list based on the ascending alphabetical order of their names.
+* `sortp a/ n/` sorts the person list in ascending order of the addresses. For persons with the same address, they will be sorted by their names.
+
+### Sorting clubs : `sort_club` (or `sortc`)
+
+Sorts clubs in the club list in ascending order of the provided fields.
+
+Format: `sort_club [n/] [p/] [e/] [a/]`
+
+* `n/` sorts the list by club name, `p/` by phone number, `e/` by email, and `a/` by address.
+* Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
+
+Examples:
+* `sort_club n/` sorts the club list based on the ascending alphabetical order of their names.
+* `sortc a/ n/` sorts the club list in ascending order of the addresses. For clubs with the same address, they will be sorted by their names.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from ClubHub.
@@ -477,25 +503,27 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action | Format | Short form | Examples
---------|------------------|------------|------------------|
-**Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>| `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
-**Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
-**Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br> | `addm`     | `add_to m/1 2 c/3 4 d/6`
-**Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br> | `deletem`  | `remove_from m/1 2 c/3 4`
-**Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> |            | `renew m/1 c/2 d/6`
-**Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br> |            | `cancel m/1 c/2`
-**Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br> |            | `reactivate m/1 c/2 d/6`
-**Clear** | `clear`
-**Delete Person** | `delete_person INDEX`<br> | `deletep`  | `delete_person 3`
-**Delete Club** | `delete_club INDEX`<br> | `deletec`  | `delete_club 3`
-**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
-**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
+Action | Format                                                                                                                               | Short form | Examples
+--------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
+**Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
+**Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                           | `addm`     | `add_to m/1 2 c/3 4 d/6`
+**Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `remove_from m/1 2 c/3 4`
+**Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
+**Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
+**Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
+**Clear** | `clear`                                                                                                                              
+**Delete Person** | `delete_person INDEX`<br>                                                                                                            | `deletep`  | `delete_person 3`
+**Delete Club** | `delete_club INDEX`<br>                                                                                                              | `deletec`  | `delete_club 3`
+**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
+**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                      | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
 **Find Person** | `findp [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> | `findp`    | `find_person n/ James Jake t/ friend`
 **Find Club** | `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
-**List Memberships** | `list_memberships INDEX`</br> | `listmp`   | `list_memberships 1`
-**List Members** | `list_members INDEX`</br> | `listmc`   | `list_members 1`
-**Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br> | `getp`     | `get_person 2 /pae`
-**Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br> | `getc`     | `get_club 2 /*`
-**Help** | `help`
-**Exit** | `exit`
+**List Memberships** | `list_memberships INDEX`</br>                                                                                                        | `listmp`   | `list_memberships 1`
+**List Members** | `list_members INDEX`</br>                                                                                                            | `listmc`   | `list_members 1`
+**Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                       | `getp`     | `get_person 2 /pae`
+**Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                         | `getc`     | `get_club 2 /*`
+**Sort Persons** | `sort_person [n/] [p/] [e/] [a/]`</br>                                                                                               | `sortp`    | `sort_person a/ n/`
+**Sort Clubs** | `sort_club [n/] [p/] [e/] [a/]`</br>                                                                                                 | `sortc`    | `sort_club a/ n/`
+**Help** | `help`                                                                                                                               
+**Exit** | `exit`                                                                                                                               
