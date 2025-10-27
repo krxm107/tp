@@ -23,7 +23,7 @@ public class Messages {
                 edit_person, edit_club,
                 list, membership_person, membership_club,
                 get_club, get_person,
-                findp, findc,
+                find_person, find_club,
                 help, exit, clear
             Type 'help' to see more details on each command.
             """;
