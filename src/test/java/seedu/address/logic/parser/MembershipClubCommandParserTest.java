@@ -12,7 +12,7 @@ import seedu.address.logic.search.predicates.MembershipStatusPredicate;
 
 public class MembershipClubCommandParserTest {
 
-    private ListMemberCommandParser parser = new ListMemberCommandParser();
+    private MembershipClubCommandParser parser = new MembershipClubCommandParser();
 
     @Test
     public void parse_validArgs_returnsListCommand() {

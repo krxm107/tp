@@ -9,7 +9,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new MembershipClubCommand object
  */
-public class ListMemberCommandParser implements Parser<MembershipClubCommand> {
+public class MembershipClubCommandParser implements Parser<MembershipClubCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the MembershipClubCommand

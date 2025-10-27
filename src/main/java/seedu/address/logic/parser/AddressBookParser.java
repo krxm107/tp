@@ -109,7 +109,7 @@ public class AddressBookParser {
             return new ListAllCommand();
 
         case MembershipClubCommand.COMMAND_WORD, MembershipClubCommand.COMMAND_SHORT:
-            return new ListMemberCommandParser().parse(arguments);
+            return new MembershipClubCommandParser().parse(arguments);
 
         case MembershipPersonCommand.COMMAND_WORD, MembershipPersonCommand.COMMAND_SHORT:
             return new MembershipPersonCommandParser().parse(arguments);
