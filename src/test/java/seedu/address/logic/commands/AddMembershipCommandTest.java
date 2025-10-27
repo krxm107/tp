@@ -49,7 +49,8 @@ public class AddMembershipCommandTest {
     public void execute_addSinglePersonToSingleClub_success() {
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(
+                new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
         String expectedMessage = String.format(
                 AddMembershipCommand.MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), clubToAddTo.getName()) + "\n";
@@ -89,7 +90,8 @@ public class AddMembershipCommandTest {
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         model.addMembership(new Membership(personToAdd, clubToAddTo));
 
-        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
         String expectedMessage = String.format(AddMembershipCommand.MESSAGE_DUPLICATE_MEMBERSHIP,
                 personToAdd.getName(), clubToAddTo.getName()) + "\n";
 
@@ -99,7 +101,8 @@ public class AddMembershipCommandTest {
     @Test
     public void execute_invalidPersonIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";
@@ -109,7 +112,8 @@ public class AddMembershipCommandTest {
     @Test
     public void execute_invalidClubIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";

@@ -6,7 +6,7 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.membership.MembershipStatus;
 
 /**
- * Represents a combined predicate for a <code>MembershipClubCommand</code> or <code>ListMembershipCommand</code>
+ * Represents a combined predicate for a <code>MembershipClubCommand</code> or <code>MembershipPersonCommand</code>
  */
 public class MembershipStatusPredicate implements Predicate<Membership> {
     private boolean standard = true;

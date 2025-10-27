@@ -21,7 +21,7 @@ public class Messages {
                 cancel, renew, reactivate,
                 delete_person, delete_club,
                 edit_person, edit_club,
-                list, list_members, list_memberships,
+                list, membership_person, membership_club,
                 get_club, get_person,
                 findp, findc,
                 help, exit, clear

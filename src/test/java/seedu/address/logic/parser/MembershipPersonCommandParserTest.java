@@ -7,40 +7,40 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.commands.ListMembershipCommand;
+import seedu.address.logic.commands.MembershipPersonCommand;
 
-public class ListMembershipCommandParserTest {
+public class MembershipPersonCommandParserTest {
 
-    private ListMembershipCommandParser parser = new ListMembershipCommandParser();
+    private MembershipPersonCommandParser parser = new MembershipPersonCommandParser();
 
     @Test
     public void parse_validArgs_returnsListCommand() {
         // No keywords
         assertParseSuccess(parser, "1  ",
-                new ListMembershipCommand(INDEX_FIRST_PERSON, new MembershipStatusPredicate()));
+                new MembershipPersonCommand(INDEX_FIRST_PERSON, new MembershipStatusPredicate()));
 
         // Empty keywords
         assertParseSuccess(parser, "1 /  ",
-                new ListMembershipCommand(INDEX_FIRST_PERSON, new MembershipStatusPredicate()));
+                new MembershipPersonCommand(INDEX_FIRST_PERSON, new MembershipStatusPredicate()));
 
         // Valid keywords
         MembershipStatusPredicate predicate = new MembershipStatusPredicate();
         predicate.addPredicate("e");
         predicate.addPredicate("p");
-        assertParseSuccess(parser, "1 /ep", new ListMembershipCommand(INDEX_FIRST_PERSON, predicate));
+        assertParseSuccess(parser, "1 /ep", new MembershipPersonCommand(INDEX_FIRST_PERSON, predicate));
 
         // Valid keywords with random letters
-        assertParseSuccess(parser, "1 / efgp  ", new ListMembershipCommand(INDEX_FIRST_PERSON, predicate));
+        assertParseSuccess(parser, "1 / efgp  ", new MembershipPersonCommand(INDEX_FIRST_PERSON, predicate));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
         // Missing index
         assertParseFailure(parser, "/ep", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ListMembershipCommand.MESSAGE_USAGE));
+                MembershipPersonCommand.MESSAGE_USAGE));
 
         // Invalid index
         assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ListMembershipCommand.MESSAGE_USAGE));
+                MembershipPersonCommand.MESSAGE_USAGE));
     }
 }
