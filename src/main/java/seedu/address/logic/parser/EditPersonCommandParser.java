@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_EMAIL_IS_COMPULSORY;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY;
+import static seedu.address.logic.Messages.MESSAGE_NAME_IS_COMPULSORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -53,19 +55,7 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
-        // Only these are required: NAME, EMAIL
-        if ((!arePrefixesPresent(argMultimap, PREFIX_EMAIL)) && (!arePrefixesPresent(argMultimap, PREFIX_NAME))) {
-            throw new ParseException(Messages.MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY);
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_EMAIL)) {
-            throw new ParseException(Messages.MESSAGE_EMAIL_IS_COMPULSORY);
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
-            throw new ParseException(Messages.MESSAGE_NAME_IS_COMPULSORY);
-        }
-
+        // Missing preamble
         if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPersonCommand.MESSAGE_USAGE));
         }
@@ -85,8 +75,17 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
+        // Only these are required: NAME, EMAIL
         if (editPersonDescriptor.hasNoName() && editPersonDescriptor.hasNoEmail()) {
             throw new ParseException(MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY);
+        }
+
+        if (editPersonDescriptor.hasNoEmail()) {
+            throw new ParseException(MESSAGE_EMAIL_IS_COMPULSORY);
+        }
+
+        if (editPersonDescriptor.hasNoName()) {
+            throw new ParseException(MESSAGE_NAME_IS_COMPULSORY);
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
