@@ -21,11 +21,6 @@ public class MembershipStatusParser {
             return predicate;
         }
 
-        if (args.contains("*")) {
-            predicate.addPredicate("*");
-            return predicate;
-        }
-
         if (args.contains("a")) {
             predicate.addPredicate("a");
         }
@@ -38,7 +33,6 @@ public class MembershipStatusParser {
         if (args.contains("p")) {
             predicate.addPredicate("p");
         }
-
         return predicate;
     }
 

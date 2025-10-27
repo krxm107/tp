@@ -15,8 +15,7 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
     private boolean expired = false;
     private boolean pending = false;
 
-    private Predicate<Membership> predicate = membership ->
-            !membership.getStatus().equals(MembershipStatus.EXPIRED);
+    private Predicate<Membership> predicate = membership -> true;
 
     /**
      * Adds a predicate for a particular membership status indicated by the keyword
@@ -28,7 +27,6 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
         }
 
         switch (keyword) {
-        case "*" -> setAll();
         case "a" -> setActive();
         case "c" -> setCanceled();
         case "e" -> setExpired();
@@ -59,14 +57,6 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
                 && canceled == otherPredicate.canceled
                 && expired == otherPredicate.expired
                 && pending == otherPredicate.pending;
-    }
-
-    private void setAll() {
-        active = true;
-        canceled = true;
-        expired = true;
-        pending = true;
-        predicate = membership -> true;
     }
 
     private void setActive() {
