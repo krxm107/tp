@@ -141,10 +141,10 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case SortClubCommand.COMMAND_WORD:
+        case SortClubCommand.COMMAND_WORD, SortClubCommand.COMMAND_SHORT:
             return new SortClubCommandParser().parse(arguments);
 
-        case SortPersonCommand.COMMAND_WORD:
+        case SortPersonCommand.COMMAND_WORD, SortPersonCommand.COMMAND_SHORT:
             return new SortPersonCommandParser().parse(arguments);
 
         default:
