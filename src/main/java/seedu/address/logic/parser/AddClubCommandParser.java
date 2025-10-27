@@ -64,7 +64,7 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
         }
 
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
 
         // duplicates check is fine even if phone is absent
