@@ -90,13 +90,15 @@ public class MembershipPersonCommandTest {
     @Test
     public void equals() {
         MembershipPersonCommand listMembershipFirstCommand = new MembershipPersonCommand(INDEX_FIRST_PERSON, predicate);
-        MembershipPersonCommand listMembershipSecondCommand = new MembershipPersonCommand(INDEX_SECOND_PERSON, predicate);
+        MembershipPersonCommand listMembershipSecondCommand =
+                new MembershipPersonCommand(INDEX_SECOND_PERSON, predicate);
 
         // same object -> returns true
         assertTrue(listMembershipFirstCommand.equals(listMembershipFirstCommand));
 
         // same values -> returns true
-        MembershipPersonCommand listMembershipFirstCommandCopy = new MembershipPersonCommand(INDEX_FIRST_PERSON, predicate);
+        MembershipPersonCommand listMembershipFirstCommandCopy =
+                new MembershipPersonCommand(INDEX_FIRST_PERSON, predicate);
         assertTrue(listMembershipFirstCommand.equals(listMembershipFirstCommandCopy));
 
         // different types -> returns false

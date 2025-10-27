@@ -38,7 +38,8 @@ public class MembershipClubCommand extends Command {
     private final Predicate<Membership> predicate;
 
     /**
-     * Creates a <code>MembershipClubCommand</code> with the targetIndex and predicate for filtering membership statuses.
+     * Creates a <code>MembershipClubCommand</code>
+     * with the targetIndex and predicate for filtering membership statuses.
      */
     public MembershipClubCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;

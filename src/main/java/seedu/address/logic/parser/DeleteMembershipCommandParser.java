@@ -26,7 +26,8 @@ public class DeleteMembershipCommandParser implements Parser<DeleteMembershipCom
                 PREFIX_MEMBER, PREFIX_CLUB);
         if (!arePrefixesPresent(argMultimap, PREFIX_MEMBER, PREFIX_CLUB)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMembershipCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteMembershipCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);

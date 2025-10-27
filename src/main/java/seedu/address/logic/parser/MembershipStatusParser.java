@@ -10,7 +10,8 @@ import seedu.address.model.membership.Membership;
 public class MembershipStatusParser {
 
     /**
-     * Parses the arguments in the context of a <code>MembershipClubCommand</code> or <code>MembershipPersonCommand</code>
+     * Parses the arguments in the context of a
+     * <code>MembershipClubCommand</code> or <code>MembershipPersonCommand</code>
      * and returns a <code>Predicate</code> which specifies the status of <code>Membership</code>s to be shown.
      */
     public Predicate<Membership> parse(String args) {
