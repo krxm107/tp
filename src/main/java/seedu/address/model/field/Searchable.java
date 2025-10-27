@@ -2,6 +2,8 @@ package seedu.address.model.field;
 
 import java.util.Set;
 
+import javafx.collections.ObservableList;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -18,5 +20,7 @@ public interface Searchable {
     public Address getAddress();
 
     public Set<Tag> getTags();
+
+    public ObservableList<Membership> getMemberships();
 
 }
