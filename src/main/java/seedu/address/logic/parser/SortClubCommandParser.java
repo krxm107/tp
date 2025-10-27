@@ -10,6 +10,7 @@ import seedu.address.logic.commands.SortClubCommand;
 import seedu.address.logic.commands.SortPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.club.Club;
+import seedu.address.model.person.Person;
 
 /**
  * Parses input arguments and creates a new SortClubCommand object.
@@ -40,13 +41,18 @@ public class SortClubCommandParser implements Parser<SortClubCommand> {
                 .orElse(null); // return null if no valid fields
     }
 
-    private static Function<Club, String> fieldToKey(String field) {
-        return switch (field.toLowerCase()) {
-        case "n/" -> c -> c.getName().toString();
-        case "p/" -> c -> c.getPhone().toString();
-        case "e/" -> c -> c.getEmail().toString();
-        case "a/" -> c -> c.getAddress().toString();
-        default -> c -> "";
-        };
+    private static Function<Club, Comparable> fieldToKey(String field) {
+        switch (field.toLowerCase()) {
+        case "n/":
+            return Club::getName;
+        case "p/":
+            return Club::getPhone;
+        case "e/":
+            return Club::getEmail;
+        case "a/":
+            return Club::getAddress;
+        default:
+            return p -> "";
+        }
     }
 }

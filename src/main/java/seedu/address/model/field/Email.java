@@ -121,6 +121,6 @@ public class Email implements Comparable<Email> {
 
     @Override
     public int compareTo(Email email) {
-        return this.value.compareTo(email.value);
+        return this.value.toLowerCase().compareTo(email.value.toLowerCase());
     }
 }

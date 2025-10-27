@@ -39,13 +39,18 @@ public class SortPersonCommandParser implements Parser<SortPersonCommand> {
                 .orElse(null); // return null if no valid fields
     }
 
-    private static Function<Person, String> fieldToKey(String field) {
-        return switch (field.toLowerCase()) {
-        case "n/" -> p -> p.getName().toString();
-        case "p/" -> p -> p.getPhone().toString();
-        case "e/" -> p -> p.getEmail().toString();
-        case "a/" -> p -> p.getAddress().toString();
-        default -> p -> "";
-        };
+    private static Function<Person, Comparable> fieldToKey(String field) {
+        switch (field.toLowerCase()) {
+        case "n/":
+            return Person::getName;
+        case "p/":
+            return Person::getPhone;
+        case "e/":
+            return Person::getEmail;
+        case "a/":
+            return Person::getAddress;
+        default:
+            return p -> "";
+        }
     }
 }
