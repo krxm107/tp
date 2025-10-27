@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DURATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEMBER;
 
 import java.util.Arrays;
@@ -16,35 +17,52 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Removes a Person from a Club
+ * Adds a Person to a Club
  */
-public class RemoveFromCommand extends Command {
-    public static final String COMMAND_WORD = "remove_from";
-    public static final String COMMAND_SHORT = "deletem"; // delete membership
-    public static final String MESSAGE_REMOVED_FROM_CLUB = "%1$s removed from %2$s";
+public class AddMembershipCommand extends Command {
+    public static final String COMMAND_WORD = "add_membership";
+    public static final String COMMAND_SHORT = "addm"; // add member
+
+    public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
-            + "): Removes a person from a club\n"
+            + "): Adds multiple persons to multiple clubs with membership duration\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
             + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
             + PREFIX_CLUB + "Club INDEXes (must be positive integers separated by space)\n"
+            + PREFIX_DURATION + "Duration in months (must be between 1 and 24, optional, default is 12)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
-            + PREFIX_CLUB + "1 3";
+            + PREFIX_CLUB + "1 3 "
+            + PREFIX_DURATION + "12";
 
-    public static final String MESSAGE_NOTEXIST_MEMBERSHIP = "%1$s is NOT in %2$s";
+    public static final String MESSAGE_DUPLICATE_MEMBERSHIP = "%1$s is already in %2$s";
+
     private final Index[] personIndexes;
     private final Index[] clubIndexes;
+    private int durationInMonths = Membership.DEFAULT_DURATION_IN_MONTHS;
 
     /**
      * @param personIndexes of the person in the filtered person list to edit
      * @param clubIndexes of the club in the filtered club list to edit
      */
-    public RemoveFromCommand(Index[] personIndexes, Index[] clubIndexes) {
+    public AddMembershipCommand(Index[] personIndexes, Index[] clubIndexes) {
         requireAllNonNull(personIndexes, clubIndexes);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
+    }
+
+    /**
+     * @param personIndexes of the person in the filtered person list to edit
+     * @param clubIndexes of the club in the filtered club list to edit
+     * @param durationInMonths duration of membership in months
+     */
+    public AddMembershipCommand(Index[] personIndexes, Index[] clubIndexes, int durationInMonths) {
+        requireAllNonNull(personIndexes, clubIndexes, durationInMonths);
+        this.personIndexes = personIndexes;
+        this.clubIndexes = clubIndexes;
+        this.durationInMonths = durationInMonths;
     }
 
     private void concatInvalidIndexMessage(
@@ -62,12 +80,20 @@ public class RemoveFromCommand extends Command {
         }
     }
 
-    private void concatNotExistInClubMessage(StringBuilder builder, String personNames, String clubName) {
-        builder.append(String.format(MESSAGE_NOTEXIST_MEMBERSHIP, personNames, clubName)).append("\n");
+    private void concatDuplicateMembershipMessage(StringBuilder builder, String personName, String clubName) {
+        builder.append(String.format(MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName)).append("\n");
     }
 
-    private void concatRemovedFromClubMessage(StringBuilder builder, String personNames, String clubName) {
-        builder.append(String.format(MESSAGE_REMOVED_FROM_CLUB, personNames, clubName)).append("\n");
+    private void concatAddedToClubMessage(StringBuilder builder, String personNames, String clubName) {
+        builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
+    }
+
+    private Membership createMembership(Person person, Club club) throws CommandException {
+        try {
+            return new Membership(person, club, durationInMonths);
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
+        }
     }
 
     @Override
@@ -78,7 +104,7 @@ public class RemoveFromCommand extends Command {
 
         for (Index clubIndex : clubIndexes) {
             StringBuilder personNamesBuilder = new StringBuilder();
-            boolean isFirstClubIndex = (clubIndex == clubIndexes[0]);
+            boolean isFirstClubIndex = clubIndex == clubIndexes[0];
             if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
                 concatInvalidIndexMessage(outputMessageBuilder, false, isFirstClubIndex, clubIndex);
                 continue; // Skip to the next club index
@@ -87,7 +113,7 @@ public class RemoveFromCommand extends Command {
             String clubName = club.getName().toString();
             for (Index personIndex : personIndexes) {
                 if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-                    // Add invalid person index message once only for each invalid person index
+                    // Add invalid person index message once only per person index
                     // Achieved by only adding when processing the first club index
                     concatInvalidIndexMessage(outputMessageBuilder, true, isFirstClubIndex, personIndex);
                     continue; // Skip to the next club index
@@ -95,20 +121,20 @@ public class RemoveFromCommand extends Command {
                 Person person = lastShownPersonList.get(personIndex.getZeroBased());
                 String personName = person.getName().toString();
 
-                // Check if membership doesn't exist
-                Membership toRemove = new Membership(person, club);
-                if (!model.hasMembership(toRemove)) {
-                    concatNotExistInClubMessage(outputMessageBuilder, personName, clubName);
-                    continue; // Skip to the next person index
+                // Check if membership already exists
+                Membership toAdd = createMembership(person, club);
+                if (model.hasMembership(toAdd)) {
+                    concatDuplicateMembershipMessage(outputMessageBuilder, personName, clubName);
+                    continue; //Skip adding this membership and move to the next person
                 }
-                // Only add the person who are in the club to personNamesBuilder
-                // for MESSAGE_REMOVED_FROM_CLUB message
+                //Only add the person who are not already in the club to personNamesBuilder
+                // for MESSAGE_ADDED_TO_CLUB message
                 personNamesBuilder.append(personName).append(", ");
 
-                club.removeMember(person);
-                person.removeClub(club);
-                // Model also keep track of memberships
-                model.deleteMembership(toRemove);
+                club.addMembership(toAdd);
+                person.addMembership(toAdd);
+                // model keep track of the generic membership without role. may change this later
+                model.addMembership(toAdd);
             }
             // Also handle the case where no new memberships were added
             if (personNamesBuilder.length() == 0) {
@@ -118,7 +144,7 @@ public class RemoveFromCommand extends Command {
             assert personNamesBuilder.length() >= 2;
             personNamesBuilder.setLength(personNamesBuilder.length() - 2);
             String personNames = personNamesBuilder.toString();
-            concatRemovedFromClubMessage(outputMessageBuilder, personNames, clubName);
+            concatAddedToClubMessage(outputMessageBuilder, personNames, clubName);
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
@@ -131,12 +157,13 @@ public class RemoveFromCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RemoveFromCommand)) {
+        if (!(other instanceof AddMembershipCommand)) {
             return false;
         }
 
-        RemoveFromCommand otherRemoveFromCommand = (RemoveFromCommand) other;
-        return Arrays.equals(personIndexes, otherRemoveFromCommand.personIndexes)
-                && Arrays.equals(clubIndexes, otherRemoveFromCommand.clubIndexes);
+        AddMembershipCommand otherAddMembershipCommand = (AddMembershipCommand) other;
+        return Arrays.equals(personIndexes, otherAddMembershipCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherAddMembershipCommand.clubIndexes)
+                && durationInMonths == otherAddMembershipCommand.durationInMonths;
     }
 }

@@ -17,10 +17,10 @@ import seedu.address.model.person.Person;
 /**
  * Lists members in a club identified using it's displayed index from the address book.
  */
-public class ListMemberCommand extends Command {
+public class MembershipClubCommand extends Command {
 
-    public static final String COMMAND_WORD = "list_members";
-    public static final String COMMAND_SHORT = "listmc"; // list members for clubs
+    public static final String COMMAND_WORD = "membership_club";
+    public static final String COMMAND_SHORT = "mc"; // list members for clubs
 
     public static final String MESSAGE_SUCCESS = "Listed all members";
 
@@ -38,9 +38,10 @@ public class ListMemberCommand extends Command {
     private final Predicate<Membership> predicate;
 
     /**
-     * Creates a <code>ListMemberCommand</code> with the targetIndex and predicate for filtering membership statuses.
+     * Creates a <code>MembershipClubCommand</code>
+     * with the targetIndex and predicate for filtering membership statuses.
      */
-    public ListMemberCommand(Index targetIndex, Predicate<Membership> predicate) {
+    public MembershipClubCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
         this.predicate = predicate;
     }
@@ -69,13 +70,13 @@ public class ListMemberCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ListMemberCommand)) {
+        if (!(other instanceof MembershipClubCommand)) {
             return false;
         }
 
-        ListMemberCommand otherListMemberCommand = (ListMemberCommand) other;
-        return targetIndex.equals(otherListMemberCommand.targetIndex)
-                && predicate.equals(otherListMemberCommand.predicate);
+        MembershipClubCommand otherMembershipClubCommand = (MembershipClubCommand) other;
+        return targetIndex.equals(otherMembershipClubCommand.targetIndex)
+                && predicate.equals(otherMembershipClubCommand.predicate);
     }
 
     @Override

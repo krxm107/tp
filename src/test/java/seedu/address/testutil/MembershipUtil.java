@@ -1,6 +1,6 @@
 package seedu.address.testutil;
 
-import seedu.address.logic.commands.AddToCommand;
+import seedu.address.logic.commands.AddMembershipCommand;
 import seedu.address.model.membership.Membership;
 
 /**
@@ -12,7 +12,7 @@ public class MembershipUtil {
      * Returns an add command string for adding the {@code membership}.
      */
     public static String getAddToCommand(Membership membership) {
-        return AddToCommand.COMMAND_WORD + " " + getMembershipDetails(membership);
+        return AddMembershipCommand.COMMAND_WORD + " " + getMembershipDetails(membership);
     }
 
     /**

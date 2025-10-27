@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
@@ -34,7 +34,7 @@ public class Club implements Searchable {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final ObservableSet<Membership> memberships = FXCollections.observableSet(new HashSet<>());
+    private final ObservableList<Membership> memberships = FXCollections.observableArrayList();
 
     /**
      * Constructs a {@code Person}.
@@ -163,7 +163,7 @@ public class Club implements Searchable {
     /**
      * Returns the observable set of memberships for this club including all statuses
      */
-    public ObservableSet<Membership> getMemberships() {
+    public ObservableList<Membership> getMemberships() {
         return this.memberships;
     }
 

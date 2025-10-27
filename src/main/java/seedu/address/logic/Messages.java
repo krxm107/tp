@@ -17,13 +17,13 @@ public class Messages {
             Unknown command!
             Available commands:
                 add_person, add_club,
-                add_to, remove_from,
+                add_membership, delete_membership,
                 cancel, renew, reactivate,
                 delete_person, delete_club,
                 edit_person, edit_club,
-                list, list_members, list_memberships,
+                list, membership_person, membership_club,
                 get_club, get_person,
-                findp, findc,
+                find_person, find_club,
                 help, exit, clear
             Type 'help' to see more details on each command.
             """;

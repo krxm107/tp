@@ -17,12 +17,12 @@ import seedu.address.model.person.Person;
 /**
  * Lists memberships of a person identified using it's displayed index from the address book.
  */
-public class ListMembershipCommand extends Command {
+public class MembershipPersonCommand extends Command {
 
-    public static final String COMMAND_WORD = "list_memberships";
+    public static final String COMMAND_WORD = "membership_person";
+    public static final String COMMAND_SHORT = "mp"; // list members for person
 
     public static final String MESSAGE_SUCCESS = "Listed all memberships";
-    public static final String COMMAND_SHORT = "listmp"; // list members for person
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): List all memberships of a person identified by its index number in the displayed list."
@@ -38,10 +38,10 @@ public class ListMembershipCommand extends Command {
     private final Predicate<Membership> predicate;
 
     /**
-     * Creates a <code>ListMembershipCommand</code> with the targetIndex
+     * Creates a <code>MembershipPersonCommand</code> with the targetIndex
      * and predicate for filtering membership statuses.
      */
-    public ListMembershipCommand(Index targetIndex, Predicate<Membership> predicate) {
+    public MembershipPersonCommand(Index targetIndex, Predicate<Membership> predicate) {
         this.targetIndex = targetIndex;
         this.predicate = predicate;
     }
@@ -70,11 +70,11 @@ public class ListMembershipCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ListMembershipCommand)) {
+        if (!(other instanceof MembershipPersonCommand)) {
             return false;
         }
 
-        ListMembershipCommand otherListMemberhipCommand = (ListMembershipCommand) other;
+        MembershipPersonCommand otherListMemberhipCommand = (MembershipPersonCommand) other;
         return targetIndex.equals(otherListMemberhipCommand.targetIndex)
                 && predicate.equals(otherListMemberhipCommand.predicate);
     }

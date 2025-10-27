@@ -27,9 +27,9 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for AddToCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for AddMembershipCommand.
  */
-public class AddToCommandTest {
+public class AddMembershipCommandTest {
 
     private Model model;
 
@@ -49,17 +49,18 @@ public class AddToCommandTest {
     public void execute_addSinglePersonToSingleClub_success() {
         Person personToAdd = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(
+                new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
         String expectedMessage = String.format(
-                AddToCommand.MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), clubToAddTo.getName()) + "\n";
+                AddMembershipCommand.MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), clubToAddTo.getName()) + "\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         Person expectedPerson = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Club expectedClub = expectedModel.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         expectedModel.addMembership(new Membership(expectedPerson, expectedClub));
 
-        assertCommandSuccess(addToCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addMembershipCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -67,10 +68,10 @@ public class AddToCommandTest {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        AddToCommand addToCommand = new AddToCommand(
+        AddMembershipCommand addMembershipCommand = new AddMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON, INDEX_SECOND_PERSON}, new Index[]{INDEX_FIRST_CLUB});
 
-        String expectedMessage = String.format(AddToCommand.MESSAGE_ADDED_TO_CLUB,
+        String expectedMessage = String.format(AddMembershipCommand.MESSAGE_ADDED_TO_CLUB,
                 firstPerson.getName() + ", " + secondPerson.getName(), clubToAddTo.getName()) + "\n";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -80,7 +81,7 @@ public class AddToCommandTest {
         expectedModel.addMembership(new Membership(expectedFirstPerson, expectedClub));
         expectedModel.addMembership(new Membership(expectedSecondPerson, expectedClub));
 
-        assertCommandSuccess(addToCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(addMembershipCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -89,45 +90,48 @@ public class AddToCommandTest {
         Club clubToAddTo = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         model.addMembership(new Membership(personToAdd, clubToAddTo));
 
-        AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        String expectedMessage = String.format(AddToCommand.MESSAGE_DUPLICATE_MEMBERSHIP,
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
+        String expectedMessage = String.format(AddMembershipCommand.MESSAGE_DUPLICATE_MEMBERSHIP,
                 personToAdd.getName(), clubToAddTo.getName()) + "\n";
 
-        assertCommandSuccess(addToCommand, model, expectedMessage, model);
+        assertCommandSuccess(addMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidPersonIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AddToCommand addToCommand = new AddToCommand(new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{outOfBoundIndex}, new Index[]{INDEX_FIRST_CLUB});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";
-        assertCommandSuccess(addToCommand, model, expectedMessage, model);
+        assertCommandSuccess(addMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidClubIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        AddToCommand addToCommand = new AddToCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
+        AddMembershipCommand addMembershipCommand =
+                new AddMembershipCommand(new Index[]{INDEX_FIRST_PERSON}, new Index[]{outOfBoundIndex});
 
         String expectedMessage = String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
                 outOfBoundIndex.getOneBased()) + "\n";
-        assertCommandSuccess(addToCommand, model, expectedMessage, model);
+        assertCommandSuccess(addMembershipCommand, model, expectedMessage, model);
     }
 
     @Test
     public void equals() {
-        AddToCommand addToFirstCommand = new AddToCommand(
+        AddMembershipCommand addToFirstCommand = new AddMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
-        AddToCommand addToSecondCommand = new AddToCommand(
+        AddMembershipCommand addToSecondCommand = new AddMembershipCommand(
                 new Index[]{INDEX_SECOND_PERSON}, new Index[]{INDEX_SECOND_CLUB});
 
         // same object -> returns true
         assertEquals(addToFirstCommand, addToFirstCommand);
 
         // same values -> returns true
-        AddToCommand addToFirstCommandCopy = new AddToCommand(
+        AddMembershipCommand addToFirstCommandCopy = new AddMembershipCommand(
                 new Index[]{INDEX_FIRST_PERSON}, new Index[]{INDEX_FIRST_CLUB});
         assertEquals(addToFirstCommand, addToFirstCommandCopy);
 
