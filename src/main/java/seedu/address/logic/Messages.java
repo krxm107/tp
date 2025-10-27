@@ -40,6 +40,10 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
+    public static final String MESSAGE_EMAIL_IS_COMPULSORY = "Email is a compulsory field!";
+    public static final String MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY = "Name and email are both compulsory fields!";
+    public static final String MESSAGE_NAME_IS_COMPULSORY = "Name is a compulsory field!";
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
