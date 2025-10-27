@@ -1,7 +1,9 @@
 package seedu.address.logic.search.predicates;
 
+import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.membership.MembershipStatus;
 
@@ -9,35 +11,16 @@ import seedu.address.model.membership.MembershipStatus;
  * Represents a combined predicate for a <code>MembershipClubCommand</code> or <code>MembershipPersonCommand</code>
  */
 public class MembershipStatusPredicate implements Predicate<Membership> {
-    private boolean standard = true;
-    private boolean active = false;
-    private boolean canceled = false;
-    private boolean expired = false;
-    private boolean pending = false;
+    private final List<MembershipStatus> statuses;
 
-    private Predicate<Membership> predicate = membership -> true;
-
-    /**
-     * Adds a predicate for a particular membership status indicated by the keyword
-     */
-    public void addPredicate(String keyword) {
-        if (standard) {
-            standard = false;
-            predicate = membership -> false;
-        }
-
-        switch (keyword) {
-        case "a" -> setActive();
-        case "c" -> setCanceled();
-        case "e" -> setExpired();
-        case "p" -> setPending();
-        default -> setNothing();
-        }
+    public MembershipStatusPredicate(List<MembershipStatus> statuses) {
+        this.statuses = statuses;
     }
 
     @Override
     public boolean test(Membership membership) {
-        return predicate.test(membership);
+        return statuses.stream()
+                .anyMatch(status -> membership.getStatus().equals(status));
     }
 
     @Override
@@ -51,37 +34,12 @@ public class MembershipStatusPredicate implements Predicate<Membership> {
             return false;
         }
 
-        MembershipStatusPredicate otherPredicate = (MembershipStatusPredicate) other;
-        return standard == otherPredicate.standard
-                && active == otherPredicate.active
-                && canceled == otherPredicate.canceled
-                && expired == otherPredicate.expired
-                && pending == otherPredicate.pending;
+        MembershipStatusPredicate otherMembershipStatusPredicate = (MembershipStatusPredicate) other;
+        return statuses.equals(otherMembershipStatusPredicate.statuses);
     }
 
-    private void setActive() {
-        active = true;
-        predicate = predicate.or(membership ->
-                membership.getStatus().equals(MembershipStatus.ACTIVE));
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).add("statuses", statuses).toString();
     }
-
-    private void setCanceled() {
-        canceled = true;
-        predicate = predicate.or(membership ->
-                membership.getStatus().equals(MembershipStatus.CANCELLED));
-    }
-
-    private void setExpired() {
-        expired = true;
-        predicate = predicate.or(membership ->
-                membership.getStatus().equals(MembershipStatus.EXPIRED));
-    }
-
-    private void setPending() {
-        pending = true;
-        predicate = predicate.or(membership ->
-                membership.getStatus().equals(MembershipStatus.PENDING_CANCELLATION));
-    }
-
-    private void setNothing() {}
 }
