@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditClubCommand;
 import seedu.address.logic.commands.EditClubCommand.EditClubDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -47,6 +48,14 @@ public class EditClubCommandParser implements Parser<EditClubCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+
+        boolean nameGivenButEmpty = argMultimap.getValue(PREFIX_NAME).isPresent()
+                && !ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_NAME);
+        boolean emailGivenButEmpty = argMultimap.getValue(PREFIX_EMAIL).isPresent()
+                && !ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_EMAIL);
+        if (nameGivenButEmpty || emailGivenButEmpty) {
+            throw new ParseException(Messages.MESSAGE_NAME_EMAIL_COMPULSORY);
+        }
 
         EditClubDescriptor editClubDescriptor = new EditClubDescriptor();
 

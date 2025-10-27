@@ -17,63 +17,74 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditPersonCommand;
 import seedu.address.logic.commands.EditPersonCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.field.Address;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new EditPersonCommand object
+ * Parses input arguments and creates a new EditPersonCommand object.
+ * NOTE: We do NOT throw “Name and email are compulsory” here; that is enforced in execute()
+ * after the index is validated so that invalid index wins.
  */
 public class EditPersonCommandParser implements Parser<EditPersonCommand> {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the EditPersonCommand
-     * and returns an EditPersonCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
+    @Override
     public EditPersonCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         Index index;
-
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            EditPersonCommand.MESSAGE_USAGE),
-                    pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPersonCommand.MESSAGE_USAGE), pe);
         }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
+        // Only parse when value is non-empty. If present but empty, set the empty-flag.
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            String raw = argMultimap.getValue(PREFIX_NAME).get().trim();
+            if (raw.isEmpty()) {
+                editPersonDescriptor.setNameEmptyFlag(true);
+            } else {
+                editPersonDescriptor.setName(ParserUtil.parseName(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            String raw = argMultimap.getValue(PREFIX_PHONE).get().trim();
+            if (!raw.isEmpty()) {
+                editPersonDescriptor.setPhone(ParserUtil.parsePhone(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            String raw = argMultimap.getValue(PREFIX_EMAIL).get().trim();
+            if (raw.isEmpty()) {
+                editPersonDescriptor.setEmailEmptyFlag(true);
+            } else {
+                editPersonDescriptor.setEmail(ParserUtil.parseEmail(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            Address parsedAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-            editPersonDescriptor.setAddress(parsedAddress); // "" clears; invalid non-empty → error
+            String raw = argMultimap.getValue(PREFIX_ADDRESS).get().trim();
+            if (!raw.isEmpty()) {
+                editPersonDescriptor.setAddress(ParserUtil.parseAddress(raw));
+            }
         }
+
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditPersonCommand.MESSAGE_NOT_EDITED);
+            // Keep the project’s existing error message when literally nothing is provided.
+            throw new ParseException("At least one field to edit must be provided.");
         }
 
         return new EditPersonCommand(index, editPersonDescriptor);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
@@ -86,5 +97,4 @@ public class EditPersonCommandParser implements Parser<EditPersonCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-
 }

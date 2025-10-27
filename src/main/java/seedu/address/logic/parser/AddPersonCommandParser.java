@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.field.Address;
@@ -51,6 +52,11 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
                 args, PREFIX_CLUB, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
         // Only these are required: NAME, EMAIL
+        if (!ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_NAME)
+                || !ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_EMAIL)) {
+            throw new ParseException(Messages.MESSAGE_NAME_EMAIL_COMPULSORY);
+        }
+
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));

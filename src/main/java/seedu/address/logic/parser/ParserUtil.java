@@ -172,4 +172,12 @@ public class ParserUtil {
 
         return tagSet;
     }
+
+    public static boolean isNonEmptyValuePresent(ArgumentMultimap args, Prefix prefix) {
+        if (!args.getValue(prefix).isPresent()) {
+            return false;
+        }
+        String v = args.getValue(prefix).get().trim();
+        return !v.isEmpty();
+    }
 }

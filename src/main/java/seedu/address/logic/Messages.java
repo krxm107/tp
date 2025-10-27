@@ -28,6 +28,9 @@ public class Messages {
             Type 'help' to see more details on each command.
             """;
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
+
+    public static final String MESSAGE_NAME_EMAIL_COMPULSORY = "Name and email are compulsory";
+
     // Todo: format these strings to print the person/club's index number too
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
     public static final String MESSAGE_INVALID_CLUB_DISPLAYED_INDEX = "The club index provided is invalid";
