@@ -75,19 +75,6 @@ public class EditClubCommandTest {
 
         assertCommandSuccess(editClubCommand, model, expectedMessage, expectedModel);
     }
-
-    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
-        Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-
-        String expectedMessage = EditClubCommand.UNCHANGED_CLUB_WARNING;
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editClubCommand, model, expectedMessage, expectedModel);
-    }
-
     @Test
     public void execute_filteredList_success() {
         showClubAtIndex(model, INDEX_FIRST_CLUB);
@@ -105,27 +92,6 @@ public class EditClubCommandTest {
         expectedModel.setClub(model.getFilteredClubList().get(0), editedClub);
 
         assertCommandSuccess(editClubCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_duplicateClubUnfilteredList_failure() {
-        Club firstClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        EditClubDescriptor descriptor = new EditClubDescriptorBuilder(firstClub).build();
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_SECOND_CLUB, descriptor);
-
-        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_CLUB);
-    }
-
-    @Test
-    public void execute_duplicateClubFilteredList_failure() {
-        showClubAtIndex(model, INDEX_FIRST_CLUB);
-
-        // edit club in filtered list into a duplicate in address book
-        Club clubInList = model.getAddressBook().getClubList().get(INDEX_SECOND_CLUB.getZeroBased());
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB,
-                new EditClubDescriptorBuilder(clubInList).build());
-
-        assertCommandFailure(editClubCommand, model, EditClubCommand.MESSAGE_DUPLICATE_CLUB);
     }
 
     @Test

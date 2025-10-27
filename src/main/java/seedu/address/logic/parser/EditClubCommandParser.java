@@ -14,75 +14,74 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditClubCommand;
 import seedu.address.logic.commands.EditClubCommand.EditClubDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.field.Address;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new EditClubCommand object
+ * Parses input arguments and creates a new EditClubCommand object.
+ * Compulsory Name/Email check is deferred to execute() after index validation.
  */
 public class EditClubCommandParser implements Parser<EditClubCommand> {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the EditClubCommand
-     * and returns an EditClubCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
+    @Override
     public EditClubCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         Index index;
-
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            EditClubCommand.MESSAGE_USAGE),
-                    pe);
-        }
-
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
-
-        boolean nameGivenButEmpty = argMultimap.getValue(PREFIX_NAME).isPresent()
-                && !ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_NAME);
-        boolean emailGivenButEmpty = argMultimap.getValue(PREFIX_EMAIL).isPresent()
-                && !ParserUtil.isNonEmptyValuePresent(argMultimap, PREFIX_EMAIL);
-        if (nameGivenButEmpty || emailGivenButEmpty) {
-            throw new ParseException(Messages.MESSAGE_NAME_EMAIL_COMPULSORY);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditClubCommand.MESSAGE_USAGE), pe);
         }
 
         EditClubDescriptor editClubDescriptor = new EditClubDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editClubDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            String raw = argMultimap.getValue(PREFIX_NAME).get().trim();
+            if (raw.isEmpty()) {
+                editClubDescriptor.setNameEmptyFlag(true);
+            } else {
+                editClubDescriptor.setName(ParserUtil.parseName(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editClubDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            String raw = argMultimap.getValue(PREFIX_PHONE).get().trim();
+            if (!raw.isEmpty()) {
+                editClubDescriptor.setPhone(ParserUtil.parsePhone(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editClubDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            String raw = argMultimap.getValue(PREFIX_EMAIL).get().trim();
+            if (raw.isEmpty()) {
+                editClubDescriptor.setEmailEmptyFlag(true);
+            } else {
+                editClubDescriptor.setEmail(ParserUtil.parseEmail(raw));
+            }
         }
+
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            Address parsedAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
-            editClubDescriptor.setAddress(parsedAddress); // "" clears; invalid non-empty → error
+            String raw = argMultimap.getValue(PREFIX_ADDRESS).get().trim();
+            if (!raw.isEmpty()) {
+                editClubDescriptor.setAddress(ParserUtil.parseAddress(raw));
+            }
         }
+
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editClubDescriptor::setTags);
 
         if (!editClubDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditClubCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException("At least one field to edit must be provided.");
         }
 
         return new EditClubCommand(index, editClubDescriptor);
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
@@ -95,5 +94,4 @@ public class EditClubCommandParser implements Parser<EditClubCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-
 }
