@@ -10,6 +10,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
@@ -81,9 +82,15 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String strippedName = name.strip();
+
+        if (strippedName.isBlank()) {
+            throw new ParseException(Messages.MESSAGE_NAME_AND_EMAIL_COMPULSORY);
+        }
+
         if (!Name.isValidName(strippedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
+
         return new Name(strippedName);
     }
 
@@ -132,6 +139,11 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String strippedEmail = email.strip();
+
+        if (strippedEmail.isBlank()) {
+            throw new ParseException(Messages.MESSAGE_NAME_AND_EMAIL_COMPULSORY);
+        }
+
         if (!Email.isValidEmail(strippedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }

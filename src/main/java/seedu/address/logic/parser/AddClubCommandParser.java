@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.club.Club;
@@ -49,8 +50,12 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
                 args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
         // Only these are required: NAME, EMAIL
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)) {
+            throw new ParseException(Messages.MESSAGE_NAME_AND_EMAIL_COMPULSORY);
+        }
+
+        // Missing preamble
+        if (!argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
 
