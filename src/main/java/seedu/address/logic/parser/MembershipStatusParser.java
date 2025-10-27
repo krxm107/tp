@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import java.util.function.Predicate;
 
+import seedu.address.logic.search.predicates.MembershipStatusPredicate;
 import seedu.address.model.membership.Membership;
 
 /**

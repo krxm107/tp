@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.MembershipClubCommand;
+import seedu.address.logic.search.predicates.MembershipStatusPredicate;
 
 public class MembershipClubCommandParserTest {
 
