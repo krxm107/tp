@@ -15,8 +15,10 @@ import seedu.address.model.club.Club;
 public class SortClubCommand extends Command {
 
     public static final String COMMAND_WORD = "sort_club";
+    public static final String COMMAND_SHORT = "sortc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all clubs by "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Sorts all clubs by "
             + "the specified fields (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [n/] [p/] [e/] [a/] …\u200B\n"
             + "Example: " + COMMAND_WORD + " n/ p/";

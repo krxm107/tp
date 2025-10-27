@@ -15,8 +15,10 @@ import seedu.address.model.person.Person;
 public class SortPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "sort_person";
+    public static final String COMMAND_SHORT = "sortp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons by "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Sorts all persons by "
             + "the specified fields (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: [n/] [p/] [e/] [a/] …\u200B\n"
             + "Example: " + COMMAND_WORD + " n/ p/";
