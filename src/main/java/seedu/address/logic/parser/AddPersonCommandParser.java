@@ -1,7 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_EMAIL_IS_COMPULSORY;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY;
+import static seedu.address.logic.Messages.MESSAGE_NAME_IS_COMPULSORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -74,6 +77,18 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
 
+        if (email.isBlank()) {
+            throw new ParseException(MESSAGE_EMAIL_IS_COMPULSORY);
+        }
+
+        if (name.isBlank()) {
+            throw new ParseException(MESSAGE_NAME_IS_COMPULSORY);
+        }
+
+        if (email.isBlank() && name.isBlank()) {
+            throw new ParseException(MESSAGE_NAME_AND_EMAIL_ARE_COMPULSORY);
+        }
+        
         // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
 
