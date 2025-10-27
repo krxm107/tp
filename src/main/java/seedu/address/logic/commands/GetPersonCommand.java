@@ -23,7 +23,7 @@ public class GetPersonCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): Copies details of a person identified by the index number to the user's clipboard.\n"
-            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL KEYWORDS]\n"
             + "Optional keywords may be added to copy specified fields only.\n"
             + "Keywords: n - name, p - phone, e - email, a - address, m - memberships\n"
             + "Example: " + COMMAND_WORD + " 1 - copies name, phone, email, address and tags\n"

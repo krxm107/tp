@@ -17,23 +17,20 @@ public class GetPersonCommandParserTest {
     public void parse_validArgs_returnsGetPersonCommand() {
         // no specifications
         GetPersonCommand expectedGetCommand = new GetPersonCommand(INDEX_FIRST_CLUB, "");
-        assertParseSuccess(parser, "1", expectedGetCommand);
-
-        // empty specifications
-        assertParseSuccess(parser, "1 /   ", expectedGetCommand);
+        assertParseSuccess(parser, "1  ", expectedGetCommand);
 
         // with specifications
         expectedGetCommand = new GetPersonCommand(INDEX_FIRST_CLUB, "aenpt");
-        assertParseSuccess(parser, "1 / a e n p t", expectedGetCommand);
+        assertParseSuccess(parser, "1   a e n p t", expectedGetCommand);
 
         // with extra characters
-        assertParseSuccess(parser, "1 /abcdenptuv123", expectedGetCommand);
+        assertParseSuccess(parser, "1 abcdenptuv123", expectedGetCommand);
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
         // missing index
-        assertParseFailure(parser, "/aenpt1",
+        assertParseFailure(parser, "aenpt 1",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, GetPersonCommand.MESSAGE_USAGE));
 
         // invalid index
