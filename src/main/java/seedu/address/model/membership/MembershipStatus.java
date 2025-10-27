@@ -1,5 +1,7 @@
 package seedu.address.model.membership;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ public enum MembershipStatus {
      * a membership or get command result.
      */
     public static List<MembershipStatus> getDefaultStatuses() {
-        return List.of(ACTIVE, EXPIRED, PENDING_CANCELLATION);
+        return Arrays.asList(ACTIVE, EXPIRED, PENDING_CANCELLATION);
     }
 
     /**
@@ -24,7 +26,7 @@ public enum MembershipStatus {
      * a membership or get command.
      */
     public static List<MembershipStatus> getStatuses(String args) {
-        List<MembershipStatus> statuses = List.of();
+        List<MembershipStatus> statuses = new ArrayList<>();
         if (args.contains("a")) {
             statuses.add(ACTIVE);
         }

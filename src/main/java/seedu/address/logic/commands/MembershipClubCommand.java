@@ -26,7 +26,7 @@ public class MembershipClubCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): List all members of a club identified by its index number in the displayed list.\n"
-            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL KEYWORDS]\n"
             + "Optional keywords may be added to specify which member statuses to show.\n"
             + "Keywords: a - active, c - cancelled, e - expired, p - pending cancellation\n"
             + "Example: " + COMMAND_WORD + " 1 - shows all non-expired members\n"

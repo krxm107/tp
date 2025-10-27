@@ -22,6 +22,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 
 /**
@@ -31,7 +32,7 @@ import seedu.address.model.person.Person;
 public class MembershipClubCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Predicate<Membership> predicate = new MembershipStatusPredicate();
+    private Predicate<Membership> predicate = new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -110,8 +111,8 @@ public class MembershipClubCommandTest {
         assertFalse(listMemberFirstCommand.equals(listMemberSecondCommand));
 
         // different predicate -> returns false
-        MembershipStatusPredicate differentPredicate = new MembershipStatusPredicate();
-        differentPredicate.addPredicate("*");
+        MembershipStatusPredicate differentPredicate =
+                new MembershipStatusPredicate(MembershipStatus.getStatuses("a"));
         MembershipClubCommand listMemberThirdCommand = new MembershipClubCommand(INDEX_FIRST_CLUB, differentPredicate);
         assertFalse(listMemberFirstCommand.equals(listMemberThirdCommand));
     }

@@ -5,9 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.MembershipPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.search.parsers.StatusParser;
 import seedu.address.logic.search.predicates.MembershipStatusPredicate;
-import seedu.address.model.club.Club;
 import seedu.address.model.membership.MembershipStatus;
 
 /**
@@ -33,10 +31,10 @@ public class MembershipPersonCommandParser implements Parser<MembershipPersonCom
 
         if (parts.length == 1) {
             return new MembershipPersonCommand(index,
-                    new MembershipStatusPredicate(MembershipStatus.getStatuses(parts[1])));
+                    new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses()));
         } else {
             return new MembershipPersonCommand(index,
-                    new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses()));
+                    new MembershipStatusPredicate(MembershipStatus.getStatuses(parts[1])));
         }
     }
 
