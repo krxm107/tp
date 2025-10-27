@@ -1,14 +1,14 @@
 package seedu.address.logic.search.predicates;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.MembershipStatus;
 
-import java.util.List;
-import java.util.function.Predicate;
-
 /**
- * Tests that a {@code Searchable}'s {@code Tag}s match any of the keywords given.
+ * Tests that a {@code Searchable}'s {@code Membership}s match any of the <code>MembershipStatus</code>es given.
  */
 public class StatusesMatchPredicate<T extends Searchable> implements Predicate<T> {
     private final List<MembershipStatus> statuses;
