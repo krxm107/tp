@@ -8,7 +8,7 @@ ClubHub is a fast, keyboard-driven **contact management app** designed for peopl
 If you type quickly, you can manage memberships, roles, and clubs faster and more efficiently with ClubHub than with mouse-based apps.
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
