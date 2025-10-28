@@ -28,7 +28,7 @@ public class GetHistoryCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_GET_HISTORY_SUCCESS = "Copied membership history for %1$s:\n%2$s";
+    public static final String MESSAGE_GET_HISTORY_SUCCESS = "Copied membership history:\n%2$s";
     public static final String MESSAGE_GET_HISTORY_FAILURE = "Failed to copy membership history for %1s to clipboard";
     public static final String MESSAGE_NO_MEMBERSHIPS = "%1$s has no membership.";
 
@@ -77,6 +77,7 @@ public class GetHistoryCommand extends Command {
      */
     private String formatHistory(Person person) {
         StringBuilder sb = new StringBuilder();
+        sb.append("Membership history for ").append(person.getName().fullName).append(":\n");
         ObservableList<Membership> memberships = person.getMemberships();
         if (memberships.isEmpty()) {
             sb.append(String.format(MESSAGE_NO_MEMBERSHIPS, person.getName().fullName));
