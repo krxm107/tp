@@ -70,11 +70,32 @@ public class CancelMembershipCommandTest {
         Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Club club = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
         model.cancelMembership(person, club);
+        // Manually set it to CANCELLED for this test case
+        model.getFilteredMembershipList().stream()
+                .filter(m -> m.getPerson().isSamePerson(person) && m.getClub().isSameClub(club))
+                .findFirst().get().updateStatus(); // This will move it to CANCELLED if expired, or keep as PENDING
+        // To be certain, we can manually set it
+        model.getFilteredMembershipList().stream()
+                .filter(m -> m.getPerson().isSamePerson(person) && m.getClub().isSameClub(club))
+                .findFirst().get().statusProperty().set(MembershipStatus.CANCELLED);
 
         // Then, try to cancel it again
         CancelMembershipCommand command = new CancelMembershipCommand(INDEX_FIRST_PERSON, INDEX_FIRST_CLUB);
 
-        assertCommandFailure(command, model, "Membership is already cancelled.");
+        assertCommandFailure(command, model, Membership.MESSAGE_ALREADY_CANCELLED);
+    }
+
+    @Test
+    public void execute_cancelPendingCancellationMembership_throwsCommandException() {
+        // First, cancel the membership, which will set it to PENDING_CANCELLATION
+        Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Club club = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
+        model.cancelMembership(person, club);
+
+        // Then, try to cancel it again
+        CancelMembershipCommand command = new CancelMembershipCommand(INDEX_FIRST_PERSON, INDEX_FIRST_CLUB);
+
+        assertCommandFailure(command, model, Membership.MESSAGE_IS_PENDING_CANCELLATION);
     }
 
     @Test
@@ -90,8 +111,7 @@ public class CancelMembershipCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         CancelMembershipCommand command = new CancelMembershipCommand(outOfBoundIndex, INDEX_FIRST_CLUB);
 
-        assertCommandFailure(command, model, String.format(
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
+        assertCommandFailure(command, model, String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
@@ -99,8 +119,7 @@ public class CancelMembershipCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
         CancelMembershipCommand command = new CancelMembershipCommand(INDEX_FIRST_PERSON, outOfBoundIndex);
 
-        assertCommandFailure(command, model, String.format(
-                Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
+        assertCommandFailure(command, model, String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test

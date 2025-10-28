@@ -26,6 +26,7 @@ public class Membership {
     public static final int MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 24;
     public static final String MESSAGE_ALREADY_CANCELLED = "Membership is already cancelled.";
     public static final String MESSAGE_IS_PENDING_CANCELLATION = "Membership is already pending cancellation.";
+    public static final String MESSAGE_INVALID_STATUS_FOR_REACTIVATION = "Only expired, pending cancellation or cancelled memberships can be reactivated.";
 
     private static final Logger logger = LogsCenter.getLogger(Membership.class);
 
@@ -172,7 +173,7 @@ public class Membership {
      * Cancels the membership.
      */
     public void cancel() {
-        if (getStatus() == MembershipStatus.CANCELLED ) {
+        if (getStatus() == MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException(MESSAGE_ALREADY_CANCELLED);
         } else if (getStatus() == MembershipStatus.PENDING_CANCELLATION) {
             throw new IllegalArgumentException(MESSAGE_IS_PENDING_CANCELLATION);
@@ -207,7 +208,7 @@ public class Membership {
      */
     public void reactivate(int durationInMonths) {
         if (getStatus() == MembershipStatus.ACTIVE) {
-            throw new IllegalArgumentException("Only expired, pending cancellation or cancelled memberships can be reactivated.");
+            throw new IllegalArgumentException(MESSAGE_INVALID_STATUS_FOR_REACTIVATION);
         }
         if (!isValidMembershipDuration(durationInMonths)) {
             throw new IllegalArgumentException("Membership duration must be between "
