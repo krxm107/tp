@@ -34,7 +34,7 @@ public class GetHistoryCommand extends Command {
 
     private final Index targetIndex;
 
-    public GetHistoryCommand(Index targetIndex, String keywords) {
+    public GetHistoryCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
