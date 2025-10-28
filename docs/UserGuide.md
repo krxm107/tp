@@ -146,11 +146,11 @@ Examples:
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
 * `addc n/Cycling e/cycling@example.com a/45 Cycling Street p/1234567`
 
-### Adding multiple persons to multiple clubs : `add_to`  (or `addm`)
+### Adding multiple persons to multiple clubs : `add_membership`  (or `addm`)
 
-Adds multiple persons to multiple clubs in the club manager.
+Adds multiple persons to multiple clubs.
 
-Format: `add_to m/INDEXES c/INDEXES [d/DURATION]`
+Format: `add_membership m/INDEXES c/INDEXES [d/DURATION]`
 
 * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
 * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
@@ -161,7 +161,7 @@ Format: `add_to m/INDEXES c/INDEXES [d/DURATION]`
 * The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
 
 Examples:
-* `add_to m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
+* `add_membership m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
   
 ![Add To](images/AddToImage.png)
 
@@ -430,6 +430,16 @@ Examples:
 * `find_club` followed by `get_club 2 /*` copies all details (including member details) of the 2nd club in the club list.
   ![result for 'get_club 2 /*'](images/getClubFullResult.png)
 
+### Getting a person's membership history: `get_history` (or `geth`)
+Gets and displays the membership history of the specified person in all clubs they have been a member of.
+Format: `get_history INDEX`
+* The target person is specified by its `INDEX` shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* Displays the membership history of the target person in all clubs they have been a member of.
+
+Examples:
+* `get_history 2` displays the membership history of the 2nd person in the contact list.
+ 
 ### Sorting persons : `sort_person` (or `sortp`)
 
 Sorts persons in the person list in ascending order of the provided fields.
@@ -455,6 +465,11 @@ Format: `sort_club [n/] [p/] [e/] [a/]`
 Examples:
 * `sort_club n/` sorts the club list based on the ascending alphabetical order of their names.
 * `sortc a/ n/` sorts the club list in ascending order of the addresses. For clubs with the same address, they will be sorted by their names.
+
+### Auto scroll to newly added/deleted/edited/changed person or club
+
+When a person or club is changed, the person list or club list will automatically scroll to show the newly changed entry.
+If there are multiple entries changed (e.g. when using `add_membership`, `delete_membership`), the list will scroll to show the last entry in the list of edited entries.
 
 ### Clearing all entries : `clear`
 
@@ -507,7 +522,7 @@ Action | Format                                                                 
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
 **Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
-**Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                           | `addm`     | `add_to m/1 2 c/3 4 d/6`
+**Add to Clubs** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
 **Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `remove_from m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
