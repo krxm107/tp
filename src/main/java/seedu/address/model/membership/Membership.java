@@ -142,6 +142,8 @@ public class Membership {
         }
         if (getStatus() == MembershipStatus.CANCELLED) {
             throw new IllegalArgumentException("Membership is cancelled. Please reactivate instead.");
+        } else if (getStatus() == MembershipStatus.PENDING_CANCELLATION) {
+            throw new IllegalArgumentException("Membership is pending cancellation. Please reactivate instead.");
         } else if (getStatus() == MembershipStatus.EXPIRED) {
             throw new IllegalArgumentException("Membership has expired. Please reactivate instead.");
         }
