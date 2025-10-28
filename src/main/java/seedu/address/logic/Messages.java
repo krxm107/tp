@@ -13,7 +13,20 @@ import seedu.address.model.person.Person;
  */
 public class Messages {
 
-    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
+    public static final String MESSAGE_UNKNOWN_COMMAND = """
+            Unknown command!
+            Available commands:
+                add_person, add_club,
+                add_membership, delete_membership,
+                cancel, renew, reactivate,
+                delete_person, delete_club,
+                edit_person, edit_club,
+                list, membership_person, membership_club,
+                get_club, get_person, get_history
+                find_person, find_club,
+                help, exit, clear
+            Type 'help' to see more details on each command.
+            """;
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     // Todo: format these strings to print the person/club's index number too
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
@@ -24,8 +37,8 @@ public class Messages {
     public static final String MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED = "%1$d is an invalid club index";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_CLUBS_LISTED_OVERVIEW = "%1$d clubs listed!";
-    public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_DUPLICATE_PREFIXES =
+                "The following prefix(es) are duplicated: ";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -36,7 +49,7 @@ public class Messages {
         Set<String> duplicateFields =
                 Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
-        return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+        return MESSAGE_DUPLICATE_PREFIXES + String.join(" ", duplicateFields);
     }
 
     /**

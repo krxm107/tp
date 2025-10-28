@@ -14,4 +14,14 @@ public class CliSyntax {
     public static final Prefix PREFIX_MEMBER = new Prefix("m/");
     public static final Prefix PREFIX_CLUB = new Prefix("c/");
     public static final Prefix PREFIX_DURATION = new Prefix("d/");
+
+    /* Field definitions */
+    public static final String NAME = "n";
+    public static final String PHONE = "p";
+    public static final String EMAIL = "e";
+    public static final String ADDRESS = "a";
+    public static final String TAG = "t";
+    public static final String MEMBER = "m";
+    public static final String CLUB = "c";
+    public static final String DURATION = "d";
 }

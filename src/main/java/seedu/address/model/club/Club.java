@@ -8,13 +8,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -22,7 +24,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Club in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Club {
+public class Club implements Searchable {
 
     // Identity fields
     private final Name name;
@@ -32,15 +34,15 @@ public class Club {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final ObservableSet<Membership> memberships = FXCollections.observableSet(new HashSet<>());
+    private final ObservableList<Membership> memberships = FXCollections.observableArrayList();
 
     /**
-     * Constructs a {@code Person}.
+     * Constructs a {@code Club}.
      *
-     * @param name    The person's name (required).
-     * @param phone   The person's phone number (optional; may be empty).
-     * @param email   The person's email address (required).
-     * @param address The person's address (optional; maybe be empty).
+     * @param name    The club's name (required).
+     * @param phone   The club's phone number (optional; may be empty).
+     * @param email   The club's email address (required).
+     * @param address The club's address (optional; maybe be empty).
      * @param tags    A set of tags (non-null; may be empty).
      *
      *     <p>
@@ -57,6 +59,10 @@ public class Club {
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
+
+        assert tags.size() <= 5;
+        assert tags.stream().allMatch(tag -> tag.tagName.length() <= 20);
+
         this.tags.addAll(tags);
     }
 
@@ -97,11 +103,16 @@ public class Club {
             return false;
         }
 
-        return otherClub.getName().equals(getName()) || otherClub.getEmail().equals(getEmail());
+        return name.fullName.equalsIgnoreCase(otherClub.name.fullName)
+                || email.value.equalsIgnoreCase(otherClub.email.value);
     }
 
     public boolean addMembership(Membership membership) {
         return memberships.add(membership);
+    }
+
+    public boolean phoneHasNonNumericNonSpaceCharacter() {
+        return getPhone().containsNonNumericNonSpaceCharacter();
     }
 
     /**
@@ -134,9 +145,7 @@ public class Club {
     }
 
     /**
-     * Removes membership from both the club and the person.
-     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
+     * Removes membership of a person from the club
      */
     public void removeMember(Person person) {
         // Find the specific membership object to remove
@@ -145,13 +154,25 @@ public class Club {
                 .findFirst()
                 .ifPresent(membershipToRemove -> {
                     memberships.remove(membershipToRemove);
-                    person.removeMembership(membershipToRemove); // Maintain bidirectional link
                 });
         // Also remember to delete membership from ModelManager
     }
 
-    public ObservableSet<Membership> getMemberships() {
+    /**
+     * Returns the observable set of memberships for this club including all statuses
+     */
+    public ObservableList<Membership> getMemberships() {
         return this.memberships;
+    }
+
+    /**
+     * Returns the number of members in this club including pending cancellation membership
+     * and exclude cancelled membership.
+     */
+    public int getMemberCount() {
+        return (int) memberships.stream()
+                .filter(membership -> membership.getStatus() != MembershipStatus.CANCELLED)
+                .count();
     }
 
     /**

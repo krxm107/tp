@@ -28,7 +28,7 @@ public final class AddressValidatorTest {
 
         @Test
         void invalid_containsDisallowedChars() {
-            assertFalse(AddressValidator.isValid("Unit @ 12")); // @ is not allowed
+            assertFalse(AddressValidator.isValid("Unit !? 12")); // @ is not allowed
             assertFalse(AddressValidator.isValid("Street * Name")); // * is not allowed
             assertFalse(AddressValidator.isValid("Blk 1 ~ 2")); // ~ not allowed
         }
@@ -55,7 +55,7 @@ public final class AddressValidatorTest {
         @Test
         void validateOrThrow_throwsOnInvalid() {
             assertThrows(IllegalArgumentException.class, () ->
-                    AddressValidator.validateOrThrow("Unit @ 12", false));
+                    AddressValidator.validateOrThrow("Unit !? 12", false));
         }
 
         @Test
@@ -78,7 +78,7 @@ public final class AddressValidatorTest {
 
         @Test
         void stillRejects_badChars_orTooLong() {
-            assertFalse(AddressValidator.isValid("Unit @ 12", true)); // bad char
+            assertFalse(AddressValidator.isValid("Unit !? 12", true)); // bad char
             String over150 = "A".repeat(AddressValidator.MAX_LENGTH + 1);
             assertFalse(AddressValidator.isValid(over150, true)); // too long
         }

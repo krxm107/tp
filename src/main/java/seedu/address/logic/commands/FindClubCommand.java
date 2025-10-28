@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
-import seedu.address.logic.parser.FindCommandPredicate;
-import seedu.address.logic.parser.search.SearchParser;
+import seedu.address.logic.search.CombinedSearchPredicate;
+import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
@@ -13,19 +13,20 @@ import seedu.address.model.club.Club;
  * Finds and lists all clubs in address book matching any number of search instructions.
  */
 public class FindClubCommand extends Command {
+    public static final String COMMAND_WORD = "find_club";
+    public static final String COMMAND_SHORT = "findc";
 
-    public static final String COMMAND_WORD = "findc";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clubs whose match all of "
-            + "the specified search instructions and displays them as a list with index numbers."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Find clubs that match all of "
+            + "the specified search instructions and display them in the list on the left.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Keywords: /n - search by name /t - search by tag (name)\n"
+            + "Search Keywords: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag\n"
             + "Example: " + COMMAND_WORD + " /n tennis basketball /t school t/NUS"
             + " - searches for all clubs tagged with 'school' and 'NUS' that contain either 'tennis' or 'basketball'";
 
-    private final FindCommandPredicate<Club> predicate;
+    private final CombinedSearchPredicate<Club> predicate;
 
-    public FindClubCommand(FindCommandPredicate<Club> predicate) {
+    public FindClubCommand(CombinedSearchPredicate<Club> predicate) {
         this.predicate = predicate;
     }
 

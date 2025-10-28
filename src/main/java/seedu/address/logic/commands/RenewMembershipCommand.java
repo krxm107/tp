@@ -54,10 +54,12 @@ public class RenewMembershipCommand extends Command {
         List<Club> lastShownClubList = model.getFilteredClubList();
 
         if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, personIndex.getOneBased()));
         }
         if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, clubIndex.getOneBased()));
         }
         Person personToRenew = lastShownPersonList.get(personIndex.getZeroBased());
         Club clubToRenew = lastShownClubList.get(clubIndex.getZeroBased());
@@ -72,5 +74,22 @@ public class RenewMembershipCommand extends Command {
                 personToRenew.getName(),
                 clubToRenew.getName(),
                 durationInMonths));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RenewMembershipCommand)) {
+            return false;
+        }
+
+        RenewMembershipCommand otherRenewCommand = (RenewMembershipCommand) other;
+        return personIndex.equals(otherRenewCommand.personIndex)
+                && clubIndex.equals(otherRenewCommand.clubIndex)
+                && durationInMonths == otherRenewCommand.durationInMonths;
     }
 }

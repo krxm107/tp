@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -47,9 +48,9 @@ public class UniquePersonList implements Iterable<Person> {
         // 1. The membership set itself (for additions/removals)
         // 2. All the individual status properties (for status changes)
         // 3. All the individual expiry date properties (for expiry date changes)
-        Stream membershipsStream = Stream.of(person.getMemberships());
-        Stream membershipStatusStream = Stream.of(membershipStatuses);
-        Stream membershipExpiryDateStream = Stream.of(membershipExpiryDates);
+        Stream<Observable> membershipsStream = Stream.of(person.getMemberships());
+        Stream<Observable> membershipStatusStream = Stream.of(membershipStatuses);
+        Stream<Observable> membershipExpiryDateStream = Stream.of(membershipExpiryDates);
 
         return (Observable[]) Stream.of(membershipsStream, membershipStatusStream, membershipExpiryDateStream)
                 .flatMap(s -> s)
@@ -65,6 +66,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
+        // Identity check should be email-only (case-insensitive) via isSamePerson
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 
@@ -139,6 +141,10 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
+    }
+
+    public void sort(Comparator<Person> personComparator) {
+        internalList.sort(personComparator);
     }
 
     @Override

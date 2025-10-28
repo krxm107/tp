@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
-import seedu.address.logic.parser.FindCommandPredicate;
-import seedu.address.logic.parser.search.SearchParser;
+import seedu.address.logic.search.CombinedSearchPredicate;
+import seedu.address.logic.search.parsers.SearchParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -13,23 +13,24 @@ import seedu.address.model.person.Person;
  * Finds and lists all persons in address book matching any number of search instructions.
  */
 public class FindPersonCommand extends Command {
+    public static final String COMMAND_WORD = "find_person";
+    public static final String COMMAND_SHORT = "findp";
 
-    public static final String COMMAND_WORD = "findp";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose match all of "
-            + "the specified search instructions and displays them as a list with index numbers. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Find persons that match all of "
+            + "the specified search instructions and display them in the list on the right.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Keywords: /n - search by name /t - search by tag (name)\n"
+            + "Search Keywords: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag\n"
             + "Example: " + COMMAND_WORD + " /n alice bob /t friend /t NUS"
             + " - searches for all persons tagged as 'friend' and 'NUS' with names containing 'alice' or 'bob'";
 
-    private final FindCommandPredicate<Person> predicate;
+    private final CombinedSearchPredicate<Person> predicate;
 
-    public FindPersonCommand(FindCommandPredicate<Person> predicate) {
+    public FindPersonCommand(CombinedSearchPredicate<Person> predicate) {
         this.predicate = predicate;
     }
 
-    public FindCommandPredicate<Person> getPredicate() {
+    public CombinedSearchPredicate<Person> getPredicate() {
         return predicate;
     }
 

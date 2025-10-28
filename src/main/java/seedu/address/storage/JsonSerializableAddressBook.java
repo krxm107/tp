@@ -63,9 +63,7 @@ class JsonSerializableAddressBook {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
         clubs.addAll(source.getClubList().stream().map(JsonAdaptedClub::new).collect(Collectors.toList()));
 
-        Set<Membership> allMemberships = source.getClubList().stream()
-                .flatMap(club -> club.getMemberships().stream())
-                .collect(Collectors.toSet());
+        Set<Membership> allMemberships = source.getMembershipList().stream().collect(Collectors.toSet());
 
         memberships.addAll(allMemberships.stream()
                 .map(JsonAdaptedMembership::new)
@@ -103,7 +101,7 @@ class JsonSerializableAddressBook {
 
             // Use the model's own logic to create the membership link.
             Membership membership = new Membership(person, club, jsonAdaptedMembership.getJoinDate(),
-                    jsonAdaptedMembership.getExpiryDate(), jsonAdaptedMembership.getRenewalHistory(),
+                    jsonAdaptedMembership.getExpiryDate(), jsonAdaptedMembership.getMembershipEventHistory(),
                     jsonAdaptedMembership.getStatus());
             club.addMembership(membership);
             person.addMembership(membership);

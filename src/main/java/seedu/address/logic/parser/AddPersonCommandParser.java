@@ -50,7 +50,7 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_CLUB, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_TAG);
 
-        // ✅ Only these are required: NAME, EMAIL
+        // Only these are required: NAME, EMAIL
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
@@ -61,9 +61,6 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-
-        // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
-        final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
 
         // AddPersonCommandParser.java
         Address address = null;

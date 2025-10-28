@@ -93,13 +93,15 @@ public class PersonCard extends UiPart<Region> {
                     String exp = membership.getExpiryDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     Label membershipLabel = new Label(clubName + ": until " + exp);
                     membershipLabel.getStyleClass().add("membership-label");
-
                     switch (membership.getStatus()) {
                     case ACTIVE:
                         membershipLabel.getStyleClass().add("membership-active");
                         break;
                     case EXPIRED:
                         membershipLabel.getStyleClass().add("membership-expired");
+                        break;
+                    case PENDING_CANCELLATION:
+                        membershipLabel.getStyleClass().add("membership-pending-cancellation");
                         break;
                     case CANCELLED:
                         membershipLabel.getStyleClass().add("membership-cancelled");

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipEvent;
 import seedu.address.model.membership.MembershipStatus;
 
 /**
@@ -23,7 +24,7 @@ class JsonAdaptedMembership {
     private final String clubName;
     private final String joinDate;
     private final String expiryDate;
-    private final List<JsonAdaptedRenewalDate> renewalHistory = new ArrayList<>();
+    private final List<JsonAdaptedMembershipEvent> membershipEventHistory = new ArrayList<>();
     private final String status;
 
     @JsonCreator
@@ -31,14 +32,15 @@ class JsonAdaptedMembership {
                                  @JsonProperty("clubName") String clubName,
                                  @JsonProperty("joinDate") String joinDate,
                                  @JsonProperty("expiryDate") String expiryDate,
-                                 @JsonProperty("renewalHistory") List<JsonAdaptedRenewalDate> renewalHistory,
+                                 @JsonProperty("membershipEventHistory")
+                                     List<JsonAdaptedMembershipEvent> membershipEventHistory,
                                  @JsonProperty("status") String status) {
         this.personEmail = personEmail;
         this.clubName = clubName;
         this.joinDate = joinDate;
         this.expiryDate = expiryDate;
-        if (renewalHistory != null) {
-            this.renewalHistory.addAll(renewalHistory);
+        if (membershipEventHistory != null) {
+            this.membershipEventHistory.addAll(membershipEventHistory);
         }
         this.status = status;
     }
@@ -52,9 +54,9 @@ class JsonAdaptedMembership {
         clubName = source.getClub().getName().fullName;
         joinDate = source.getJoinDate().toString();
         expiryDate = source.getExpiryDate().toString();
-        // How can i store renewalHistory as a string?
-        renewalHistory.addAll(source.getRenewalHistory().stream()
-                .map(JsonAdaptedRenewalDate::new)
+
+        membershipEventHistory.addAll(source.getMembershipEventHistory().stream()
+                .map(JsonAdaptedMembershipEvent::new)
                 .toList());
         status = source.getStatus().toString();
     }
@@ -79,9 +81,9 @@ class JsonAdaptedMembership {
         return MembershipStatus.valueOf(status);
     }
 
-    public List<LocalDate> getRenewalHistory() throws IllegalValueException {
-        return renewalHistory.stream()
-                .map(JsonAdaptedRenewalDate::toModelType)
+    public List<MembershipEvent> getMembershipEventHistory() throws IllegalValueException {
+        return membershipEventHistory.stream()
+                .map(JsonAdaptedMembershipEvent::toModelType)
                 .collect(Collectors.toList());
     }
 }

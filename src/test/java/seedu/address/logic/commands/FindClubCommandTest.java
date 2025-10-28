@@ -16,13 +16,16 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.parser.FindCommandPredicate;
+import seedu.address.logic.search.CombinedSearchPredicate;
+import seedu.address.logic.search.predicates.AddressMatchesPredicate;
+import seedu.address.logic.search.predicates.EmailMatchesPredicate;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
+import seedu.address.logic.search.predicates.PhoneMatchesPredicate;
+import seedu.address.logic.search.predicates.TagsMatchPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.club.Club;
-import seedu.address.model.club.ClubContainsKeywordsPredicate;
-import seedu.address.model.club.ClubContainsTagsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindClubCommand}.
@@ -33,11 +36,11 @@ public class FindClubCommandTest {
 
     @Test
     public void equals() {
-        FindCommandPredicate<Club> firstPredicate = new FindCommandPredicate<>();
-        FindCommandPredicate<Club> secondPredicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> firstPredicate = new CombinedSearchPredicate<>();
+        CombinedSearchPredicate<Club> secondPredicate = new CombinedSearchPredicate<>();
 
-        firstPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("first")));
-        secondPredicate.add(new ClubContainsKeywordsPredicate(Collections.singletonList("second")));
+        firstPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("first")));
+        secondPredicate.add(new NameMatchesPredicate<>(Collections.singletonList("second")));
 
         FindClubCommand findFirstCommand = new FindClubCommand(firstPredicate);
         FindClubCommand findSecondCommand = new FindClubCommand(secondPredicate);
@@ -50,7 +53,9 @@ public class FindClubCommandTest {
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        FindPersonCommand findPersonCommand = new FindPersonCommand(new CombinedSearchPredicate<>());
+        FindClubCommand findClubCommand = new FindClubCommand(new CombinedSearchPredicate<>());
+        assertFalse(findClubCommand.equals(findPersonCommand));
 
         // null -> returns false
         assertFalse(findFirstCommand.equals(null));
@@ -62,7 +67,7 @@ public class FindClubCommandTest {
     @Test
     public void execute_noSearchParameters_allClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 7);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -72,8 +77,8 @@ public class FindClubCommandTest {
     @Test
     public void execute_zeroKeywords_noClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 0);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
-        predicate.add(prepareClubPredicate(" "));
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
+        predicate.add(prepareNamePredicate(" "));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -83,8 +88,8 @@ public class FindClubCommandTest {
     @Test
     public void execute_multipleKeywords_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 3);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
-        predicate.add(prepareClubPredicate("Archery Balls Chess"));
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
+        predicate.add(prepareNamePredicate("Archer Ball Chess"));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -94,9 +99,9 @@ public class FindClubCommandTest {
     @Test
     public void execute_multipleSearchParameters_multipleClubsFound() {
         String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 2);
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
-        predicate.add(prepareClubPredicate("Archery Balls Chess"));
-        predicate.add(prepareTagPredicate("sports"));
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
+        predicate.add(prepareNamePredicate("Archer Ball Chess"));
+        predicate.add(prepareTagPredicate("sport"));
         FindClubCommand command = new FindClubCommand(predicate);
         expectedModel.updateFilteredClubList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -104,25 +109,61 @@ public class FindClubCommandTest {
     }
 
     @Test
+    public void execute_multipleSearchParameters_oneClubFound() {
+        String expectedMessage = String.format(MESSAGE_CLUBS_LISTED_OVERVIEW, 1);
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
+        predicate.add(prepareNamePredicate("Archer"));
+        predicate.add(prepareTagPredicate("sport"));
+        predicate.add(prepareAddressPredicate("Wes"));
+        predicate.add(prepareEmailPredicate("archery"));
+        predicate.add(preparePhonePredicate("1253"));
+        FindClubCommand command = new FindClubCommand(predicate);
+        expectedModel.updateFilteredClubList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Collections.singletonList(ARCHERY), model.getFilteredClubList());
+    }
+
+    @Test
     public void toStringMethod() {
-        FindCommandPredicate<Club> predicate = new FindCommandPredicate<>();
-        predicate.add(new ClubContainsKeywordsPredicate(Arrays.asList("keyword")));
+        CombinedSearchPredicate<Club> predicate = new CombinedSearchPredicate<>();
+        predicate.add(new NameMatchesPredicate<>(Arrays.asList("keyword")));
         FindClubCommand findCommand = new FindClubCommand(predicate);
         String expected = FindClubCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code ClubContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code NameMatchesPredicate}.
      */
-    private ClubContainsKeywordsPredicate prepareClubPredicate(String userInput) {
-        return new ClubContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private NameMatchesPredicate<Club> prepareNamePredicate(String userInput) {
+        return new NameMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 
     /**
-     * Parses {@code userInput} into a {@code TagContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code TagsMatchPredicate}.
      */
-    private ClubContainsTagsPredicate prepareTagPredicate(String userInput) {
-        return new ClubContainsTagsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private TagsMatchPredicate<Club> prepareTagPredicate(String userInput) {
+        return new TagsMatchPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code AddressMatchesPredicate}.
+     */
+    private AddressMatchesPredicate<Club> prepareAddressPredicate(String userInput) {
+        return new AddressMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code EmailMatchesPredicate}.
+     */
+    private EmailMatchesPredicate<Club> prepareEmailPredicate(String userInput) {
+        return new EmailMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code PhoneMatchesPredicate}.
+     */
+    private PhoneMatchesPredicate<Club> preparePhonePredicate(String userInput) {
+        return new PhoneMatchesPredicate<>(Arrays.asList(userInput.split("\\s+")));
     }
 }

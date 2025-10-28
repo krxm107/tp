@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new RenewMembershipCommand object
  */
-public class RenewMembershipCommandParser {
+public class RenewMembershipCommandParser implements Parser<RenewMembershipCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the RenewMembershipCommand
@@ -30,13 +30,15 @@ public class RenewMembershipCommandParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             RenewMembershipCommand.MESSAGE_USAGE));
         }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
+
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB, PREFIX_DURATION);
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());
             return new RenewMembershipCommand(personIndex, clubIndex, durationInMonths);
-        } catch (ParseException pe) {
+        } catch (NumberFormatException | ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenewMembershipCommand.MESSAGE_USAGE), pe);
         }

@@ -14,8 +14,10 @@ import seedu.address.model.person.FilterPersonPredicate;
 public class FilterPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "filter_person";
+    public static final String COMMAND_SHORT = "filterp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose fields contains any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Finds all persons whose fields contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…\u200B\n"
             + "Example: " + COMMAND_WORD + "n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01";
@@ -45,8 +47,8 @@ public class FilterPersonCommand extends Command {
             return false;
         }
 
-        FilterPersonCommand otherFindCommand = (FilterPersonCommand) other;
-        return predicate.equals(otherFindCommand.predicate);
+        FilterPersonCommand otherFilterPersonCommand = (FilterPersonCommand) other;
+        return predicate.equals(otherFilterPersonCommand.predicate);
     }
 
     @Override
