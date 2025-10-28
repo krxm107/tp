@@ -7,6 +7,8 @@ import seedu.address.logic.search.predicates.StatusesMatchPredicate;
 import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.MembershipStatus;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 /**
  * Parses input arguments for a search by tag instruction
  */
@@ -18,11 +20,12 @@ public class StatusParser<T extends Searchable> implements SearchParser<T> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Predicate<T> parse(String args) throws ParseException {
-        if (args.isBlank()) {
-            return new StatusesMatchPredicate<>(MembershipStatus.getDefaultStatuses());
-        } else {
-            return new StatusesMatchPredicate<>(MembershipStatus.getStatuses(args));
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
+
+        return new StatusesMatchPredicate<>(MembershipStatus.getStatuses(trimmedArgs));
     }
 
 }
