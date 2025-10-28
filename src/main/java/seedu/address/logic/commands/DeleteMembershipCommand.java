@@ -61,10 +61,12 @@ public class DeleteMembershipCommand extends Command {
         List<Index> invalidClubs = findInvalidIndexes(clubIndexes, lastShownClubList.size());
 
         for (Index idx : invalidPersons) {
-            appendToMessage(outputMessageBuilder, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
         }
         for (Index idx : invalidClubs) {
-            appendToMessage(outputMessageBuilder, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
         }
 
         List<Index> validPersons = findValidIndexes(personIndexes, lastShownPersonList.size());

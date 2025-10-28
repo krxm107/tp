@@ -107,11 +107,6 @@ public class EditPersonCommand extends Command {
     }
 
     private void checkDuplicate(Model model, Person personToEdit, Person editedPerson) throws CommandException {
-        // Existing broad duplicate check (keeps previous semantics)
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-
         for (Person p : model.getAddressBook().getPersonList()) {
             if (p.equals(personToEdit)) {
                 continue;
