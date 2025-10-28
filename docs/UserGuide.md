@@ -118,7 +118,7 @@ You only need to provide the essential information of name and email, and you ca
 Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+Name and email are both mandatory. Duplicate person names are allowed. Email must be unique to a person.  
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -140,13 +140,18 @@ You only need to provide the essential information of name and email, and you ca
 Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+Name and email are both mandatory. Club names and email must be unique to a club.
 </div>
 
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning:**  
 Phone numbers are allowed to have letters and some special characters.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Duplicate clubs that differ only by white spaces are allowed.
 </div>
 
 Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
@@ -250,7 +255,7 @@ Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…�
     specifying any tags after it.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-All fields can be editted to a different case. However, name and email remain mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+All fields can be edited to a different case. However, name and email remain mandatory. Duplicate person names are allowed. Email must be unique to a person.  
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -275,7 +280,7 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * You can remove all the club’s tags by typing `t/` without specifying any tags after it.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+Name and email are both mandatory. Club names and email must be unique to a club.
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -550,10 +555,10 @@ _Details coming soon ..._
 
 Action | Format                                                                                                                               | Short form | Examples
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
-**Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
-**Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
+**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Add to Clubs** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
-**Remove from Clubs** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `delete_membership m/1 2 c/3 4`
+**Remove from Clubs** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                             | `deletem`  | `delete_membership m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
 **Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
