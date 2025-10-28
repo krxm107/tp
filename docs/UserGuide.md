@@ -118,7 +118,12 @@ You only need to provide the essential information of name and email, and you ca
 Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-ame and email are both mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique.  
+Name and email are both mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters. 
 </div>
 
 Command examples:
@@ -135,13 +140,13 @@ You only need to provide the essential information of name and email, and you ca
 Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Club names and email must be unique.
+Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
 </div>
 
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning:**  
-Duplicate clubs that differ only by white spaces are allowed.
+Phone numbers are allowed to have letters and some special characters.
 </div>
 
 Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
@@ -244,16 +249,22 @@ Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…�
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+All fields can be editted to a different case. However, name and email remain mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters.
+</div>
+
 Command examples:
 *  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editp 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a club : `edit_club`  (or `editc`)
 
-Editing a club in ClubHub helps you keep its
-details up to date without having to create a new entry.
-You can quickly change its name, phone, email, address, or tags,
-so your contact list always stays accurate and organised.
+Editing a club in ClubHub helps you keep club details up to date without having to create a new entry.
 
 Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -261,8 +272,23 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
-* You can remove all the club’s tags by typing `t/` without
-  specifying any tags after it.
+* You can remove all the club’s tags by typing `t/` without specifying any tags after it.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Duplicate clubs that differ only by white spaces are allowed.
+</div>
+
+Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
 
 Command examples:
 *  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
@@ -507,8 +533,8 @@ _Details coming soon ..._
 
 Action | Format                                                                                                                               | Short form | Examples
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
-**Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
-**Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
+**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`                                                                  | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Add to Clubs** | `add_to m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                           | `addm`     | `add_to m/1 2 c/3 4 d/6`
 **Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `remove_from m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
