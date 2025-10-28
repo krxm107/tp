@@ -27,8 +27,8 @@ public class DeleteMembershipCommand extends Command {
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: \n"
-            + PREFIX_MEMBER + "Person INDEXes (must be positive integers separated by space)\n"
-            + PREFIX_CLUB + "Club INDEXes (must be positive integers separated by space)\n"
+            + PREFIX_MEMBER + "Person INDEXES (must be positive integers separated by space)\n"
+            + PREFIX_CLUB + "Club INDEXES (must be positive integers separated by space)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3";
