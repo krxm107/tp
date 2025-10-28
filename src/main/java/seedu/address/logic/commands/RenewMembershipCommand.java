@@ -54,10 +54,12 @@ public class RenewMembershipCommand extends Command {
         List<Club> lastShownClubList = model.getFilteredClubList();
 
         if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, personIndex.getOneBased()));
         }
         if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, clubIndex.getOneBased()));
         }
         Person personToRenew = lastShownPersonList.get(personIndex.getZeroBased());
         Club clubToRenew = lastShownClubList.get(clubIndex.getZeroBased());

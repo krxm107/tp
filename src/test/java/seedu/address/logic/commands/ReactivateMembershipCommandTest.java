@@ -131,7 +131,7 @@ public class ReactivateMembershipCommandTest {
         ReactivateMembershipCommand command =
                 new ReactivateMembershipCommand(INDEX_FIRST_PERSON, INDEX_FIRST_CLUB, VALID_DURATION);
 
-        assertCommandFailure(command, model, "Only expired or cancelled memberships can be reactivated.");
+        assertCommandFailure(command, model, Membership.MESSAGE_INVALID_STATUS_FOR_REACTIVATION);
     }
 
     @Test
@@ -153,7 +153,8 @@ public class ReactivateMembershipCommandTest {
         ReactivateMembershipCommand command =
                 new ReactivateMembershipCommand(outOfBoundIndex, INDEX_FIRST_CLUB, VALID_DURATION);
 
-        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, model, String.format(
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
@@ -164,7 +165,8 @@ public class ReactivateMembershipCommandTest {
         ReactivateMembershipCommand command =
                 new ReactivateMembershipCommand(INDEX_FIRST_PERSON, outOfBoundIndex, VALID_DURATION);
 
-        assertCommandFailure(command, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        assertCommandFailure(command, model, String.format(
+                Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test

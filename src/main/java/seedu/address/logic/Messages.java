@@ -37,8 +37,8 @@ public class Messages {
     public static final String MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED = "%1$d is an invalid club index";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_CLUBS_LISTED_OVERVIEW = "%1$d clubs listed!";
-    public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_DUPLICATE_PREFIXES =
+                "The following prefix(es) are duplicated: ";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -49,7 +49,7 @@ public class Messages {
         Set<String> duplicateFields =
                 Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
-        return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+        return MESSAGE_DUPLICATE_PREFIXES + String.join(" ", duplicateFields);
     }
 
     /**
