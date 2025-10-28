@@ -26,7 +26,8 @@ public class Membership {
     public static final int MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 24;
     public static final String MESSAGE_ALREADY_CANCELLED = "Membership is already cancelled.";
     public static final String MESSAGE_IS_PENDING_CANCELLATION = "Membership is already pending cancellation.";
-    public static final String MESSAGE_INVALID_STATUS_FOR_REACTIVATION = "Only expired, pending cancellation or cancelled memberships can be reactivated.";
+    public static final String MESSAGE_INVALID_STATUS_FOR_REACTIVATION =
+            "Only expired, pending cancellation or cancelled memberships can be reactivated.";
 
     private static final Logger logger = LogsCenter.getLogger(Membership.class);
 

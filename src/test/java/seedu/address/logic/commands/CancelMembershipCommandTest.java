@@ -111,7 +111,8 @@ public class CancelMembershipCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         CancelMembershipCommand command = new CancelMembershipCommand(outOfBoundIndex, INDEX_FIRST_CLUB);
 
-        assertCommandFailure(command, model, String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
+        assertCommandFailure(command, model, String.format(
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
@@ -119,7 +120,8 @@ public class CancelMembershipCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
         CancelMembershipCommand command = new CancelMembershipCommand(INDEX_FIRST_PERSON, outOfBoundIndex);
 
-        assertCommandFailure(command, model, String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
+        assertCommandFailure(command, model, String.format(
+                Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
