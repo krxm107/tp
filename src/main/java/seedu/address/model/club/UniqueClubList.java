@@ -3,6 +3,7 @@ package seedu.address.model.club;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,10 @@ public class UniqueClubList implements Iterable<Club> {
     public boolean contains(Club toCheck) {
         requireNonNull(toCheck);
         return internalList.stream().anyMatch(toCheck::isSameClub);
+    }
+
+    public void sort(Comparator<Club> clubComparator) {
+        internalList.sort(clubComparator);
     }
 
     /**

@@ -414,6 +414,7 @@
     -fx-background-radius: 4px;
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI Semibold";
+    -fx-wrap-text: "true";
 }
 
 /* Status-specific background colors */
@@ -423,6 +424,10 @@
 
 .membership-expired {
     -fx-background-color: #c95d5d; /* A clear red */
+}
+
+.membership-pending-cancellation {
+    -fx-background-color: #c19829; /* A noticeable yellow */
 }
 
 .membership-cancelled {

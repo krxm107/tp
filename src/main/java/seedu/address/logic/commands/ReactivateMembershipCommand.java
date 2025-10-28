@@ -21,10 +21,10 @@ public class ReactivateMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "reactivate";
     public static final String MESSAGE_REACTIVATED_MEMBERSHIP =
-            "%1$s membership in %2$s reactivated. Extended by %3$s months.";
+            "%1$s membership in %2$s reactivated. Extended by %3$s month(s).";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Reactivates a person's membership in a club "
-            + "by extending the expiry date by the specified duration in months.\n"
+            + "by extending the expiry date by the specified duration in month.\n"
             + "If expiry date was in the past, setting new expiry date from today.\n"
             + "If expiry date was in the future, extending from current expiry date.\n"
             + "Parameters: "
@@ -74,5 +74,22 @@ public class ReactivateMembershipCommand extends Command {
                 personToReactivate.getName(),
                 clubToReactivate.getName(),
                 durationInMonths));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ReactivateMembershipCommand)) {
+            return false;
+        }
+
+        ReactivateMembershipCommand otherReactivateCommand = (ReactivateMembershipCommand) other;
+        return personIndex.equals(otherReactivateCommand.personIndex)
+                && clubIndex.equals(otherReactivateCommand.clubIndex)
+                && durationInMonths == otherReactivateCommand.durationInMonths;
     }
 }

@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
+        // Identity check should be email-only (case-insensitive) via isSamePerson
         return internalList.stream().anyMatch(toCheck::isSamePerson);
     }
 
@@ -139,6 +141,10 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
+    }
+
+    public void sort(Comparator<Person> personComparator) {
+        internalList.sort(personComparator);
     }
 
     @Override

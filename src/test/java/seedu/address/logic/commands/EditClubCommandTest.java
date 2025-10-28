@@ -5,12 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_ART;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BALL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BALL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BALL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showClubAtIndex;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalClubs.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_CLUB;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_CLUB;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditClubCommand.EditClubDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -57,11 +59,11 @@ public class EditClubCommandTest {
         Club lastClub = model.getFilteredClubList().get(indexLastClub.getZeroBased());
 
         ClubBuilder clubInList = new ClubBuilder(lastClub);
-        Club editedClub = clubInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Club editedClub = clubInList.withName(VALID_NAME_BALL).withPhone(VALID_PHONE_BALL)
                 .withTags(VALID_TAG_HUSBAND).build();
 
-        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName(VALID_NAME_BALL)
+                .withPhone(VALID_PHONE_BALL).withTags(VALID_TAG_HUSBAND).build();
         EditClubCommand editClubCommand = new EditClubCommand(indexLastClub, descriptor);
 
         String expectedMessage =
@@ -79,9 +81,7 @@ public class EditClubCommandTest {
         EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
         Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
 
-        String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
-                        Messages.format(editedClub));
+        String expectedMessage = EditClubCommand.UNCHANGED_CLUB_WARNING;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -93,9 +93,9 @@ public class EditClubCommandTest {
         showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         Club clubInFilteredList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        Club editedClub = new ClubBuilder(clubInFilteredList).withName(VALID_NAME_BOB).build();
+        Club editedClub = new ClubBuilder(clubInFilteredList).withName(VALID_NAME_BALL).build();
         EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB,
-                new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditClubDescriptorBuilder().withName(VALID_NAME_BALL).build());
 
         String expectedMessage =
                 String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
@@ -131,7 +131,7 @@ public class EditClubCommandTest {
     @Test
     public void execute_invalidClubIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName(VALID_NAME_BALL).build();
         EditClubCommand editClubCommand = new EditClubCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
@@ -149,7 +149,7 @@ public class EditClubCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
 
         EditClubCommand editClubCommand = new EditClubCommand(outOfBoundIndex,
-                new EditClubDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditClubDescriptorBuilder().withName(VALID_NAME_BALL).build());
 
         assertCommandFailure(editClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
@@ -170,7 +170,7 @@ public class EditClubCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(true)));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_CLUB, DESC_ART)));
@@ -190,17 +190,19 @@ public class EditClubCommandTest {
     }
 
     @Test
-    public void execute_editToDuplicateName_success() throws Exception {
-        Model model = new ModelManager();
-        Club alice = new ClubBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Club bob = new ClubBuilder().withName("Bob").withEmail("bob@example.com").build();
-        model.addClub(alice);
-        model.addClub(bob);
+    public void execute_editToDuplicateName_failure() {
+        assertThrows(CommandException.class, () -> {
+            Model model = new ModelManager();
+            Club archery = new ClubBuilder().withName("Archery").withEmail("archery@example.com").build();
+            Club ball = new ClubBuilder().withName("Ball").withEmail("ball@example.com").build();
+            model.addClub(archery);
+            model.addClub(ball);
 
-        // Change Bob's name to "Alice" but keep unique email -> allowed
-        EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName("Alice").build();
-        EditClubCommand editBob = new EditClubCommand(Index.fromOneBased(2), descriptor);
+            // Change Ball's name to "Archery" but keep unique email -> allowed
+            EditClubDescriptor descriptor = new EditClubDescriptorBuilder().withName("Archery").build();
+            EditClubCommand editBall = new EditClubCommand(Index.fromOneBased(2), descriptor);
 
-        editBob.execute(model); // success if no exception
+            editBall.execute(model); // success if no exception
+        });
     }
 }

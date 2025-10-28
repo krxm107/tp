@@ -30,8 +30,10 @@ import seedu.address.model.person.Person;
 public class AddPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "add_person";
+    public static final String COMMAND_SHORT = "addp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
@@ -48,6 +50,9 @@ public class AddPersonCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane "
             + PREFIX_EMAIL + "jane@abc.com ";
+
+    public static final String MESSAGE_DUPLICATE_PERSON_EMAIL =
+            "A person with this email already exists.";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -114,9 +119,17 @@ public class AddPersonCommand extends Command {
                 }
             }
 
-            CommandResult result = new CommandResult(
+            CommandResult result = null;
+
+            if (personToAdd.phoneHasNonNumericNonSpaceCharacter()) {
+                result = new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters "
+                        + "other than digits and spaces", personToAdd.getPhone()));
+            } else {
+                result = new CommandResult(
                     String.format("New person added: %s",
-                            Messages.format(personToAdd)));
+                        Messages.format(personToAdd)));
+            }
+
             logger.exiting(cls, mtd, result);
             return result;
 

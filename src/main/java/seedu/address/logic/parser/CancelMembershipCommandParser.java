@@ -14,7 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new CancelMembershipCommand object
  */
-public class CancelMembershipCommandParser {
+public class CancelMembershipCommandParser implements Parser<CancelMembershipCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the CancelMembershipCommand
@@ -30,8 +30,10 @@ public class CancelMembershipCommandParser {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                             CancelMembershipCommand.MESSAGE_USAGE));
         }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
+
         try {
-            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MEMBER, PREFIX_CLUB);
             Index personIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_MEMBER).get());
             Index clubIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CLUB).get());
             return new CancelMembershipCommand(personIndex, clubIndex);

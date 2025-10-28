@@ -13,7 +13,20 @@ import seedu.address.model.person.Person;
  */
 public class Messages {
 
-    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
+    public static final String MESSAGE_UNKNOWN_COMMAND = """
+            Unknown command!
+            Available commands:
+                add_person, add_club,
+                add_membership, delete_membership,
+                cancel, renew, reactivate,
+                delete_person, delete_club,
+                edit_person, edit_club,
+                list, membership_person, membership_club,
+                get_club, get_person,
+                find_person, find_club,
+                help, exit, clear
+            Type 'help' to see more details on each command.
+            """;
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     // Todo: format these strings to print the person/club's index number too
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";

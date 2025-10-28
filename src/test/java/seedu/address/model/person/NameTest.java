@@ -28,7 +28,7 @@ public final class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", ".", "---", "'''", "....", // empty / only punctuation
-        "Jane@Doe", "John Doe*", // invalid symbols
+        "John Doe*", // invalid symbols
         "John\\Doe" // backslash not allowed (forward slash is)
     })
     void constructorInvalidNameThrowsIllegalArgumentException(String s) {
@@ -52,7 +52,7 @@ public final class NameTest {
     @ValueSource(strings = {
         "John Doe",
         "Dr. Jane A. Doe",
-        "O’Connor",
+        "O'Connor",
         "Jean-Luc Picard",
         "Ali s/o Ahmad", // forward slash allowed
         "Tan / Koh", // slash with spaces
@@ -66,7 +66,7 @@ public final class NameTest {
     @ParameterizedTest
     @ValueSource(strings = {
         "", "   ", ".", "---", "'''", "....",
-        "Jane@Doe", "John Doe*",
+        "John Doe*",
         "John\\Doe"
     })
     void isValidNameInvalidReturnsFalse(String s) {
@@ -79,18 +79,18 @@ public final class NameTest {
     class EqualityAndHashCode {
 
         @Test
-        void equalWhen() {
+        void assertExtraSpacesBreaksEquality() {
             Name a = new Name("  John   Doe ");
             Name b = new Name("John Doe");
-            assertEquals(a, b);
-            assertEquals(a.hashCode(), b.hashCode());
+            assertNotEquals(a, b);
+            assertNotEquals(a.hashCode(), b.hashCode());
         }
 
         @Test
-        void equalWhenCaseDiffersIfNormalizerIsCaseInsensitive() {
+        void notEqualIfCaseDiffers() {
             Name a = new Name("JOHN DOE");
             Name b = new Name("john doe");
-            assertEquals(a, b);
+            assertNotEquals(a, b);
         }
 
         @Test

@@ -21,7 +21,8 @@ public class TypicalPersonsAndClubs {
         AddressBook ab = TypicalClubs.getTypicalAddressBook();
         List<Person> persons = TypicalPersons.getTypicalPersons();
         List<Club> clubs = TypicalClubs.getTypicalClubs();
-        Membership m = new Membership(persons.get(0), clubs.get(0), 1);
+        // Use a longer duration to prevent the membership from expiring during testing
+        Membership m = new Membership(persons.get(0), clubs.get(0), 12);
         persons.get(0).addMembership(m);
         clubs.get(0).addMembership(m);
         ab.setPersons(persons);

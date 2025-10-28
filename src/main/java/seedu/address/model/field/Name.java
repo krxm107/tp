@@ -9,16 +9,15 @@ import seedu.address.model.field.validator.NameValidator;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name implements Comparable<Name> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain letters A–Z, a–z, digits 0–9, "
-                    + "spaces, hyphens, apostrophes, periods, and slashes (/).\n\n"
+            "Allowed characters: "
+            + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
+            + "slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @"
                     + NameValidator.LENGTH_BOUND_WARNING;
 
     public final String fullName;
-
-    private String normalizedFullName = null;
 
     /**
      * Constructs a {@code Name}.
@@ -38,14 +37,6 @@ public class Name {
         return NameValidator.validate(test).isValid();
     }
 
-    private String getNameKey() {
-        if (normalizedFullName == null) {
-            normalizedFullName = NameValidator.nameKey(fullName);
-        }
-
-        return normalizedFullName;
-    }
-
     @Override
     public String toString() {
         return fullName;
@@ -63,12 +54,16 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return getNameKey().equals(otherName.getNameKey());
+        return fullName.equals(otherName.fullName);
     }
 
     @Override
     public int hashCode() {
-        return getNameKey().hashCode();
+        return fullName.hashCode();
     }
 
+    @Override
+    public int compareTo(Name name) {
+        return this.fullName.toLowerCase().compareTo(name.fullName.toLowerCase());
+    }
 }

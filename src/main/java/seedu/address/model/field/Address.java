@@ -14,7 +14,7 @@ import seedu.address.model.field.validator.AddressValidator;
  * </p>
  * Guarantees: immutable; valid if non-empty.
  */
-public class Address {
+public class Address implements Comparable<Address> {
 
     public static final String MESSAGE_CONSTRAINTS = "Address must consist of "
             + "only letters A-Z a-z, digits, whitespace, \n"
@@ -84,4 +84,13 @@ public class Address {
         return Objects.hashCode(value);
     }
 
+    @Override
+    public int compareTo(Address address) {
+        if (this.value.equals("")) { // if no address, sort lower
+            return 1;
+        } else if (address.value.equals("")) {
+            return -1;
+        }
+        return this.value.toLowerCase().compareTo(address.value.toLowerCase());
+    }
 }

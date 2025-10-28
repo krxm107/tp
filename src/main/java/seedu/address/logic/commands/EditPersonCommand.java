@@ -34,8 +34,10 @@ import seedu.address.model.tag.Tag;
 public class EditPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "edit_person";
+    public static final String COMMAND_SHORT = "editp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -48,9 +50,16 @@ public class EditPersonCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
+    public static final String MESSAGE_DUPLICATE_PERSON_EMAIL =
+            "A person with this email already exists.";
+
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    public static final String UNCHANGED_PERSON_WARNING =
+            "There was no change to this person "
+            + "since the original and edited details are the same.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -79,12 +88,29 @@ public class EditPersonCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (personToEdit.equals(editedPerson)) {
+            return new CommandResult(UNCHANGED_PERSON_WARNING);
+        }
+
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.equals(personToEdit)) {
+                continue;
+            }
+
+            if (p.getEmail().value.equalsIgnoreCase(editedPerson.getEmail().value)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON_EMAIL);
+            }
         }
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        if (editedPerson.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, "
+                    + "'%s', contains characters "
+                    + "other than digits and spaces", editedPerson.getPhone()));
+        }
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 

@@ -7,13 +7,17 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableSet;
+import javafx.collections.ObservableList;
+import javafx.util.Callback;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.club.Club;
 import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.Membership;
 import seedu.address.model.tag.Tag;
 
@@ -21,7 +25,13 @@ import seedu.address.model.tag.Tag;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class Person implements Searchable {
+
+    // The extractor for the memberships list within this Person
+    private static final Callback<Membership, Observable[]> MEMBERSHIP_EXTRACTOR = membership -> new Observable[] {
+            membership.statusProperty(),
+            membership.expiryDateProperty()
+    };
 
     // Identity fields
     private final Name name;
@@ -31,7 +41,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final ObservableSet<Membership> memberships;
+    private final ObservableList<Membership> memberships = FXCollections.observableArrayList(MEMBERSHIP_EXTRACTOR);
 
     /**
      * Constructs a {@code Person}.
@@ -56,8 +66,11 @@ public class Person {
         this.phone = (phone == null) ? new Phone("") : phone;
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
+
+        assert tags.size() <= 5;
+        assert tags.stream().allMatch(tag -> tag.tagName.length() <= 20);
+
         this.tags.addAll(tags);
-        this.memberships = FXCollections.observableSet(new HashSet<>());
     }
 
     public Name getName() {
@@ -76,6 +89,10 @@ public class Person {
         return address;
     }
 
+    public boolean phoneHasNonNumericNonSpaceCharacter() {
+        return getPhone().containsNonNumericNonSpaceCharacter();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -84,7 +101,7 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
-    public ObservableSet<Membership> getMemberships() {
+    public ObservableList<Membership> getMemberships() {
         return this.memberships;
     }
 
@@ -111,7 +128,7 @@ public class Person {
             return false;
         }
 
-        return otherPerson.getEmail().equals(getEmail());
+        return this.email.value.equalsIgnoreCase(otherPerson.email.value);
     }
 
     /**
@@ -159,5 +176,21 @@ public class Person {
 
     public void removeMembership(Membership membership) {
         this.memberships.remove(membership);
+    }
+
+    /**
+     * Removes membership from the person.
+     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public void removeClub(Club club) {
+        // Find the specific membership object to remove
+        memberships.stream()
+                .filter(m -> m.getClub().equals(club))
+                .findFirst()
+                .ifPresent(membershipToRemove -> {
+                    memberships.remove(membershipToRemove);
+                });
+        // Also remember to delete membership from ModelManager
     }
 }

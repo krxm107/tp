@@ -20,7 +20,7 @@ public class CancelMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "cancel";
     public static final String MESSAGE_CANCELLED_MEMBERSHIP =
-            "%1$s membership in %2$s cancelled. Membership remains valid till expiry date.";
+            "%1$s membership in %2$s cancelled. Membership only remains valid till expiry date.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Cancel a person's membership in a club"
             + "Current membership is still valid until expiry date.\n"
@@ -55,18 +55,34 @@ public class CancelMembershipCommand extends Command {
         if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
         }
-        Person personToRenew = lastShownPersonList.get(personIndex.getZeroBased());
-        Club clubToRenew = lastShownClubList.get(clubIndex.getZeroBased());
-        // Catch out of range duration
+        Person personToCancel = lastShownPersonList.get(personIndex.getZeroBased());
+        Club clubToCancelIn = lastShownClubList.get(clubIndex.getZeroBased());
+
         try {
-            model.cancelMembership(personToRenew, clubToRenew);
+            model.cancelMembership(personToCancel, clubToCancelIn);
         } catch (IllegalArgumentException e) {
             throw new CommandException(e.getMessage());
         }
         return new CommandResult(String.format(
                 MESSAGE_CANCELLED_MEMBERSHIP,
-                personToRenew.getName(),
-                clubToRenew.getName()
+                personToCancel.getName(),
+                clubToCancelIn.getName()
         ));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof CancelMembershipCommand)) {
+            return false;
+        }
+
+        CancelMembershipCommand otherCancelCommand = (CancelMembershipCommand) other;
+        return personIndex.equals(otherCancelCommand.personIndex)
+                && clubIndex.equals(otherCancelCommand.clubIndex);
     }
 }

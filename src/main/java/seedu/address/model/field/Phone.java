@@ -14,11 +14,11 @@ import seedu.address.model.field.validator.PhoneValidator;
  * </p>
  * Guarantees: immutable; valid if non-empty.
  */
-public class Phone {
+public class Phone implements Comparable<Phone> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers or spaces, "
-                    + "and they must contain at least 6 and at most 15 digits.";
+            "Phones must contain a minimum of 6 non-whitespace characters "
+                    + "and a maximum of 15 non-whitespace characters.";
 
     public final String value;
 
@@ -48,6 +48,26 @@ public class Phone {
         return PhoneValidator.validate(test).isValid();
     }
 
+    /**
+     * Returns true if the phone contains a character that isn't numeric or a whitespace.
+     */
+    public boolean containsNonNumericNonSpaceCharacter() {
+        for (int i = 0; i < value.length(); i++) {
+            final char currChar = value.charAt(i);
+            if ('0' <= currChar && currChar <= '9') {
+                continue;
+            }
+
+            if (Character.isSpaceChar((int) currChar)) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     /** Returns true if this phone field was provided by the user. */
     public boolean isPresent() {
         return value != null && !value.isEmpty();
@@ -75,5 +95,15 @@ public class Phone {
     @Override
     public int hashCode() {
         return Objects.hashCode(value);
+    }
+
+    @Override
+    public int compareTo(Phone phone) {
+        if (this.value.equals("")) { // if no phone, sort lower
+            return 1;
+        } else if (phone.value.equals("")) {
+            return -1;
+        }
+        return this.value.compareTo(phone.value);
     }
 }
