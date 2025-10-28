@@ -92,7 +92,8 @@ public class RenewMembershipCommandTest {
         RenewMembershipCommand renewMembershipCommand =
                 new RenewMembershipCommand(outOfBoundIndex, INDEX_FIRST_CLUB, VALID_DURATION);
 
-        assertCommandFailure(renewMembershipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(renewMembershipCommand, model, String.format(
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
@@ -101,7 +102,8 @@ public class RenewMembershipCommandTest {
         RenewMembershipCommand renewMembershipCommand =
                 new RenewMembershipCommand(INDEX_FIRST_PERSON, outOfBoundIndex, VALID_DURATION);
 
-        assertCommandFailure(renewMembershipCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        assertCommandFailure(renewMembershipCommand, model, String.format(
+                Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
