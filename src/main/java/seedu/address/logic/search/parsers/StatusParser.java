@@ -1,13 +1,13 @@
 package seedu.address.logic.search.parsers;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.search.predicates.StatusesMatchPredicate;
 import seedu.address.model.field.Searchable;
 import seedu.address.model.membership.MembershipStatus;
-
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments for a search by tag instruction
