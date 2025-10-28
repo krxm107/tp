@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
 /**
- * Finds and lists all clubs in address book matching any number of search instructions.
+ * Finds and lists all clubs in address book matching any number of search conditions.
  */
 public class FindClubCommand extends Command {
     public static final String COMMAND_WORD = "find_club";
@@ -18,9 +18,10 @@ public class FindClubCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): Find clubs that match all of "
-            + "the specified search instructions and display them in the list on the left.\n"
+            + "the specified search conditions and display them in the list on the left.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Keywords: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag\n"
+            + "Search Conditions: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag, "
+            + "m/ - by membership statuses (a, c, e, p)\n"
             + "Example: " + COMMAND_WORD + " /n tennis basketball /t school t/NUS"
             + " - searches for all clubs tagged with 'school' and 'NUS' that contain either 'tennis' or 'basketball'";
 
