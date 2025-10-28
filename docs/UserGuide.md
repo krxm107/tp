@@ -123,8 +123,9 @@ You only need to provide the essential information of name and email, and you ca
 
 Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+Name and email are both mandatory. Club name and email must be unique to a club.
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -151,8 +152,9 @@ You only need to provide the essential information of name and email, and you ca
 
 Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+Name and email are both mandatory. Duplicate person names are allowed. Email must be unique to a person.
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -365,8 +367,10 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
 * You can remove all the club’s tags by typing `t/` without specifying any tags after it.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+All fields can be edited to a different case. However, name and email remain mandatory. 
+Name and email are unique to a club.
 </div>
 
 <div markdown="span" class="alert alert-warning">
@@ -380,6 +384,8 @@ Duplicate clubs that differ only by white spaces are allowed.
 </div>
 
 Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
+
+Example: "ClubHub" is considered a different club from "Club Hub".
 
 Command examples:
 *  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
@@ -400,8 +406,10 @@ Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…�
 * You can remove all the person’s tags by typing `t/` without
   specifying any tags after it.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-All fields can be editted to a different case. However, name and email remain mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+All fields can be edited to a different case. However, name and email remain mandatory. 
+Duplicate person names are allowed. Email must be unique to a person.
 </div>
 
 <div markdown="span" class="alert alert-warning">
