@@ -24,6 +24,8 @@ public class Membership {
     public static final int MAXIMUM_RENEWAL_DURATION_IN_MONTHS = 24;
     public static final int MINIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 1;
     public static final int MAXIMUM_MEMBERSHIP_DURATION_IN_MONTHS = 24;
+    public static final String MESSAGE_ALREADY_CANCELLED = "Membership is already cancelled.";
+    public static final String MESSAGE_IS_PENDING_CANCELLATION = "Membership is already pending cancellation.";
 
     private static final Logger logger = LogsCenter.getLogger(Membership.class);
 
@@ -168,10 +170,11 @@ public class Membership {
      * Cancels the membership.
      */
     public void cancel() {
-        if (getStatus() == MembershipStatus.CANCELLED || getStatus() == MembershipStatus.PENDING_CANCELLATION) {
-            throw new IllegalArgumentException("Membership is already cancelled.");
+        if (getStatus() == MembershipStatus.CANCELLED ) {
+            throw new IllegalArgumentException(MESSAGE_ALREADY_CANCELLED);
+        } else if (getStatus() == MembershipStatus.PENDING_CANCELLATION) {
+            throw new IllegalArgumentException(MESSAGE_IS_PENDING_CANCELLATION);
         }
-
         LocalDate today = LocalDate.now();
         LocalDate expiry = this.expiryDate.get();
         // Check if expiry date is in the past
