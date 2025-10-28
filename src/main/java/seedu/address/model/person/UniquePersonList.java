@@ -48,9 +48,9 @@ public class UniquePersonList implements Iterable<Person> {
         // 1. The membership set itself (for additions/removals)
         // 2. All the individual status properties (for status changes)
         // 3. All the individual expiry date properties (for expiry date changes)
-        Stream membershipsStream = Stream.of(person.getMemberships());
-        Stream membershipStatusStream = Stream.of(membershipStatuses);
-        Stream membershipExpiryDateStream = Stream.of(membershipExpiryDates);
+        Stream<Observable> membershipsStream = Stream.of(person.getMemberships());
+        Stream<Observable> membershipStatusStream = Stream.of(membershipStatuses);
+        Stream<Observable> membershipExpiryDateStream = Stream.of(membershipExpiryDates);
 
         return (Observable[]) Stream.of(membershipsStream, membershipStatusStream, membershipExpiryDateStream)
                 .flatMap(s -> s)
