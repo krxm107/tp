@@ -113,38 +113,47 @@ Format: `help`
 ### Adding a person: `add_person` (or `addp`)
 
 Adding a person to ClubHub helps you keep your contacts organized and easy to find.
-By entering their details — like name, email, phone, and address — you can store everything in one place.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
-This ensures you'll never have to dig through scattered notes or emails again to find someone’s contact.
 
 Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+Name and email are both mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
 </div>
 
-Examples:
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters. 
+</div>
+
+Command examples:
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison p/1234567`
+* `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison`
 
 ![Add Person](images/AddPersonImage.png)
 
 ### Adding a club: `add_club` (or `addc`)
 
-Adding a club to ClubHub lets you keep track of different clubs in one place. 
-By entering details like the club’s name, email, phone and address, you can easily manage and reach out to them whenever needed. 
-You can include as much or as little information as the club's name and email — and update it later if things change. 
-This makes it simple to stay connected with all your clubs without juggling multiple sources.
+Adding a club to ClubHub lets you keep track of different clubs in one place.
+You only need to provide the essential information of name and email, and you can always edit or add more later.
 
 Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A club can have any number of tags (including 0)
+Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
 </div>
 
-Examples:
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters.
+</div>
+
+Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
+
+Command examples:
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
-* `addc n/Cycling e/cycling@example.com a/45 Cycling Street p/1234567`
+* `addc n/Cycling e/cycling@example.com`
 
 ### Adding multiple persons to multiple clubs : `add_membership`  (or `addm`)
 
@@ -189,7 +198,7 @@ Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
 * The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+Command examples:
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
 
 ### Cancel membership of a person in a club : `cancel`
@@ -206,7 +215,7 @@ Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`
 * The membership will not be deleted.
 * To remove the person from the club, use the `delete_membership` command.
 
-Examples:
+Command examples:
 * `cancel m/1 c/2` Cancels the membership of the 1st person in the 2nd club.
 
 ![Cancel](images/CancelledImage.png)
@@ -223,15 +232,13 @@ Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 * If expiry date was in the past, setting new expiry date from today.
 * If expiry date was in the future, extending from current expiry date.
  
-Examples:
+Command examples:
 * `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
 
 ### Editing a person : `edit_person`  (or `editp`)
 
 Editing a person in ClubHub helps you keep their
 details up to date without having to create a new entry.
-You can quickly change their name, phone, email, address, or tags,
-so your contact list always stays accurate and organised.
 
 Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -242,16 +249,22 @@ Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…�
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
 
-Examples:
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+All fields can be editted to a different case. However, name and email remain mandatory, and case insensitive. Duplicate person names are allowed. Email must be unique to a person.  
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters.
+</div>
+
+Command examples:
 *  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editp 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a club : `edit_club`  (or `editc`)
 
-Editing a club in ClubHub helps you keep its
-details up to date without having to create a new entry.
-You can quickly change its name, phone, email, address, or tags,
-so your contact list always stays accurate and organised.
+Editing a club in ClubHub helps you keep club details up to date without having to create a new entry.
 
 Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -259,10 +272,25 @@ Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
-* You can remove all the club’s tags by typing `t/` without
-  specifying any tags after it.
+* You can remove all the club’s tags by typing `t/` without specifying any tags after it.
 
-Examples:
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Name and email are both mandatory, and case insensitive. Club names and email must be unique to a club.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Phone numbers are allowed to have letters and some special characters.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Duplicate clubs that differ only by white spaces are allowed.
+</div>
+
+Example: NUS Higher Mother Tongue Club ("NUS HMT Club") is considered a different club from NUS High Mother Tongue Club ("NUSH MT Club").
+
+Command examples:
 *  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
 *  `editc 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
  
@@ -286,7 +314,7 @@ Search conditions:
 * Search conditions of the same type may be repeated. Each will be treated as a separate condition.
   e.g. To search for `Hans Bo` without returning `Hans Gruber` or `Bo Yang`, use `n/ Hans n/ Bo`
 
-Examples:
+Command examples:
 * `find_person` returns all persons 
 * `find_person n/ Alex` returns `alex` and `Alex yeoh`
 * `find_person n/ alex david` returns `alex` and `Alex yeoh` and `David Li`
@@ -315,7 +343,7 @@ Search conditions:
 * Search conditions of the same type may be repeated. Each will be treated as a separate condition.
   e.g. To search for `Eight Ball` without returning `Basket Ball` or `eight pm dance`, use `n/ Eight n/ Ball`
 
-Examples:
+Command examples:
 * `find_club` returns all clubs
 * `find_club n/ Study` returns `study` and `NUS Study`
 * `find_club n/ NUS study` returns `study` and `NUS Study` and `NUS Guitar`
@@ -335,7 +363,7 @@ Format: `list_memberships INDEX`
 * In the club list, all clubs associated with the target are displayed
 * In the person list, only the target is displayed
 
-Examples:
+Command examples:
 * `find_person` followed by `list_memberships 2` lists the 2nd person in the contact list and all clubs which they are a member of.
 * `find_person n/ Betsy` followed by `list_memberships 1` lists the 1st person in the results of the `find` command and their associated clubs.
 
@@ -350,7 +378,7 @@ Format: `list_members INDEX`
 * In the person list, all persons associated with the target are displayed
 * In the club list, only the target is displayed
 
-Examples:
+Command examples:
 * `find_club` followed by `list_members 2` lists the 2nd club in the club list and all its members.
 * `find_club n/ Tennis` followed by `list_members 1` lists the 1st club in the results of the `find` command and its members.
 
@@ -364,7 +392,7 @@ Format: `delete_person INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+Command examples:
 * `find_person` followed by `delete_person 2` deletes the 2nd person in the contact list.
 * `find_person n/ Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find_person` command.
 
@@ -376,7 +404,7 @@ Format: `delete_club INDEX`
 * The index refers to the index number shown in the displayed club list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+Command examples:
 * `find_club` followed by `delete_club 2` deletes the 2nd club in the club list.
 * `find_club n/ Tennis` followed by `delete_club 1` deletes the 1st club in the results of the `find_club` command.
 
@@ -399,7 +427,7 @@ Optional conditions:
 * Multiple optional conditions may be added by appending each keyword. Non-matching keywords are ignored.
   e.g. `get_person 1 /abcde` will copy the 1st person's address and email to the clipboard. 
 
-Examples:
+Command examples:
 * `find_person n/ John` followed by `get_person 1 /pe` copies the phone number and email address of the 1st person in the results of the `find` command.
 * `find_person` followed by `get_person 2` copies all details (excluding memberships) of the 2nd person in the contact list.
  ![result for 'get_person 2'](images/getPersonResult.png)
@@ -424,7 +452,7 @@ Optional conditions:
 * Multiple optional conditions may be added by appending each keyword. Non-matching keywords are ignored.
   e.g. `get_person 1 /abcde` will copy the 1st club's address and email to the clipboard.
 
-Examples:
+Command examples:
 * `find_club n/ Band` followed by `get_club 1 /pe` copies the phone number and email address of the 1st club in the results of the `find` command.
 * `find_club` followed by `get_club 2` copies all details (excluding members) of the 2nd club in the club list.
 * `find_club` followed by `get_club 2 /*` copies all details (including member details) of the 2nd club in the club list.
@@ -449,7 +477,7 @@ Format: `sort_person [n/] [p/] [e/] [a/]`
 * `n/` sorts the list by person name, `p/` by phone number, `e/` by email, and `a/` by address.
 * Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
 
-Examples:
+Command examples:
 * `sort_person n/` sorts the person list based on the ascending alphabetical order of their names.
 * `sortp a/ n/` sorts the person list in ascending order of the addresses. For persons with the same address, they will be sorted by their names.
 
@@ -462,7 +490,7 @@ Format: `sort_club [n/] [p/] [e/] [a/]`
 * `n/` sorts the list by club name, `p/` by phone number, `e/` by email, and `a/` by address.
 * Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
 
-Examples:
+Command examples:
 * `sort_club n/` sorts the club list based on the ascending alphabetical order of their names.
 * `sortc a/ n/` sorts the club list in ascending order of the addresses. For clubs with the same address, they will be sorted by their names.
 
