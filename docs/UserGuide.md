@@ -165,18 +165,18 @@ Examples:
   
 ![Add To](images/AddToImage.png)
 
-### Removing multiple persons from multiple clubs : `remove_from`  (or `deletem`)
+### Removing multiple persons from multiple clubs : `delete_membership`  (or `deletem`)
 
 Removes multiple persons from multiple clubs in the club manager.
 
-Format: `remove_from m/INDEXES c/INDEXES`
+Format: `delete_membership m/INDEXES c/INDEXES`
 
 * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
 * Removes the membership of the persons at the specified `PERSON_INDEXES` from the clubs at the specified `CLUB_INDEXES`.
 * The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
 
 Examples:
-* `remove_from m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
+* `delete_membership m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
 
 ### Renew membership of a person in a club : `renew`
 
@@ -185,10 +185,9 @@ Renews the membership of a person in a club with renewal duration given.
 Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 
 * Renew the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
+* Only active memberships can be renewed.
 * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
 * The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
-* If expiry date was in the past, setting new expiry date from today.
-* If expiry date was in the future, extending from current expiry date.
 
 Examples:
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
@@ -202,9 +201,10 @@ Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`
 * Cancels the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
 * The index refers to the index number shown in the displayed person list & club list accordingly.
 * The index **must be a positive integer** 1, 2, 3, …​
-* The membership **remains valid until the expiry date**. The membership cannot be renewed but can be reactivated.
+* The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
+* The Pending Cancellation status will change to Cancelled status when past the expiry date.
 * The membership will not be deleted.
-* To remove the person from the club, use the `remove_from` command.
+* To remove the person from the club, use the `delete_membership` command.
 
 Examples:
 * `cancel m/1 c/2` Cancels the membership of the 1st person in the 2nd club.
@@ -213,7 +213,7 @@ Examples:
 
 ### Reactivating membership of a person in a club : `reactivate`
 
-Reactivates the **cancelled** membership of a person in a club with renewal duration given.
+Reactivates expired, pending cancellation, or cancelled membership of a person in a club with duration given.
 
 Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 
@@ -523,7 +523,7 @@ Action | Format                                                                 
 **Add Person** | `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                  | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br>                                                                    | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Add to Clubs** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
-**Remove from Clubs** | `remove_from m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `remove_from m/1 2 c/3 4`
+**Remove from Clubs** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                                   | `deletem`  | `delete_membership m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
 **Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
