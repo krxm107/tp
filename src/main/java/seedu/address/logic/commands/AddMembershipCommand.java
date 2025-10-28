@@ -17,7 +17,7 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a Person to a Club
+ * Adds 1 or more Persons to 1 or more Clubs
  */
 public class AddMembershipCommand extends Command {
     public static final String COMMAND_WORD = "add_membership";
@@ -65,27 +65,8 @@ public class AddMembershipCommand extends Command {
         this.durationInMonths = durationInMonths;
     }
 
-    private void concatInvalidIndexMessage(
-            StringBuilder builder, boolean isPerson, boolean isFirstClubIndex, Index index) {
-        if (isPerson && isFirstClubIndex) {
-            builder
-                    .append(String.format(
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
-                    .append("\n");
-        } else if (!isPerson) {
-            builder
-                    .append(String.format(
-                            Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
-                    .append("\n");
-        }
-    }
-
-    private void concatDuplicateMembershipMessage(StringBuilder builder, String personName, String clubName) {
-        builder.append(String.format(MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName)).append("\n");
-    }
-
-    private void concatAddedToClubMessage(StringBuilder builder, String personNames, String clubName) {
-        builder.append(String.format(MESSAGE_ADDED_TO_CLUB, personNames, clubName)).append("\n");
+    private void appendToMessage(StringBuilder builder, String message, Object... args) {
+        builder.append(String.format(message, args)).append("\n");
     }
 
     private Membership createMembership(Person person, Club club) throws CommandException {
@@ -102,29 +83,34 @@ public class AddMembershipCommand extends Command {
         List<Club> lastShownClubList = model.getFilteredClubList();
         StringBuilder outputMessageBuilder = new StringBuilder();
 
-        for (Index clubIndex : clubIndexes) {
+        List<Index> invalidPersons = findInvalidIndexes(personIndexes, lastShownPersonList.size());
+        List<Index> invalidClubs = findInvalidIndexes(clubIndexes, lastShownClubList.size());
+
+        for (Index idx : invalidPersons) {
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+        }
+        for (Index idx : invalidClubs) {
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+        }
+
+        List<Index> validPersons = findValidIndexes(personIndexes, lastShownPersonList.size());
+        List<Index> validClubs = findValidIndexes(clubIndexes, lastShownClubList.size());
+
+        for (Index clubIndex : validClubs) {
             StringBuilder personNamesBuilder = new StringBuilder();
-            boolean isFirstClubIndex = clubIndex == clubIndexes[0];
-            if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                concatInvalidIndexMessage(outputMessageBuilder, false, isFirstClubIndex, clubIndex);
-                continue; // Skip to the next club index
-            }
             Club club = lastShownClubList.get(clubIndex.getZeroBased());
             String clubName = club.getName().toString();
-            for (Index personIndex : personIndexes) {
-                if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-                    // Add invalid person index message once only per person index
-                    // Achieved by only adding when processing the first club index
-                    concatInvalidIndexMessage(outputMessageBuilder, true, isFirstClubIndex, personIndex);
-                    continue; // Skip to the next club index
-                }
+
+            for (Index personIndex : validPersons) {
                 Person person = lastShownPersonList.get(personIndex.getZeroBased());
                 String personName = person.getName().toString();
 
                 // Check if membership already exists
                 Membership toAdd = createMembership(person, club);
                 if (model.hasMembership(toAdd)) {
-                    concatDuplicateMembershipMessage(outputMessageBuilder, personName, clubName);
+                    appendToMessage(outputMessageBuilder, MESSAGE_DUPLICATE_MEMBERSHIP, personName, clubName);
                     continue; //Skip adding this membership and move to the next person
                 }
                 //Only add the person who are not already in the club to personNamesBuilder
@@ -133,7 +119,6 @@ public class AddMembershipCommand extends Command {
 
                 club.addMembership(toAdd);
                 person.addMembership(toAdd);
-                // model keep track of the generic membership without role. may change this later
                 model.addMembership(toAdd);
             }
             // Also handle the case where no new memberships were added
@@ -144,10 +129,22 @@ public class AddMembershipCommand extends Command {
             assert personNamesBuilder.length() >= 2;
             personNamesBuilder.setLength(personNamesBuilder.length() - 2);
             String personNames = personNamesBuilder.toString();
-            concatAddedToClubMessage(outputMessageBuilder, personNames, clubName);
+            appendToMessage(outputMessageBuilder, MESSAGE_ADDED_TO_CLUB, personNames, clubName);
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
+    }
+
+    private List<Index> findInvalidIndexes(Index[] indexes, int size) {
+        return Arrays.stream(indexes)
+                .filter(i -> i.getZeroBased() >= size)
+                .toList();
+    }
+
+    private List<Index> findValidIndexes(Index[] indexes, int size) {
+        return Arrays.stream(indexes)
+                .filter(i -> i.getZeroBased() < size)
+                .toList();
     }
 
     @Override

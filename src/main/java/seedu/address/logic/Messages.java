@@ -22,7 +22,7 @@ public class Messages {
                 delete_person, delete_club,
                 edit_person, edit_club,
                 list, membership_person, membership_club,
-                get_club, get_person,
+                get_club, get_person, get_history
                 find_person, find_club,
                 help, exit, clear
             Type 'help' to see more details on each command.

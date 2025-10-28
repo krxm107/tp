@@ -39,7 +39,7 @@ public class AddMembershipCommandParser implements Parser<AddMembershipCommand> 
             if (argMultimap.getValue(PREFIX_DURATION).isEmpty()) {
                 return new AddMembershipCommand(personIndexes, clubIndexes);
             }
-            int durationInMonths = Integer.parseInt(argMultimap.getValue(CliSyntax.PREFIX_DURATION).get());
+            int durationInMonths = Integer.parseInt(argMultimap.getValue(PREFIX_DURATION).get());
             return new AddMembershipCommand(personIndexes, clubIndexes, durationInMonths);
         } catch (NumberFormatException | ParseException pe) {
             throw new ParseException(

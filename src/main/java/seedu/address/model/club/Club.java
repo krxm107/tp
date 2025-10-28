@@ -37,12 +37,12 @@ public class Club implements Searchable {
     private final ObservableList<Membership> memberships = FXCollections.observableArrayList();
 
     /**
-     * Constructs a {@code Person}.
+     * Constructs a {@code Club}.
      *
-     * @param name    The person's name (required).
-     * @param phone   The person's phone number (optional; may be empty).
-     * @param email   The person's email address (required).
-     * @param address The person's address (optional; maybe be empty).
+     * @param name    The club's name (required).
+     * @param phone   The club's phone number (optional; may be empty).
+     * @param email   The club's email address (required).
+     * @param address The club's address (optional; maybe be empty).
      * @param tags    A set of tags (non-null; may be empty).
      *
      *     <p>
@@ -145,9 +145,7 @@ public class Club implements Searchable {
     }
 
     /**
-     * Removes membership from the club
-     * Returns an immutable membership set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
+     * Removes membership of a person from the club
      */
     public void removeMember(Person person) {
         // Find the specific membership object to remove

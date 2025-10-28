@@ -77,9 +77,9 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Club person = new Club(name, phone, email, address, tagList);
+        Club club = new Club(name, phone, email, address, tagList);
 
-        return new AddClubCommand(person);
+        return new AddClubCommand(club);
     }
 
     /**
