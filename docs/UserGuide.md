@@ -260,62 +260,99 @@ Command examples:
 
 ## Listing and Finding
 
-### Locating clubs: `find_club` (or `findc`)
+### Listing all clubs and contacts: `list`
 
-Finds and displays clubs that match all search conditions specified with the command. If no search condition is provided, `find_club` displays the full list of clubs.
+### Finding clubs: `find_club` (or `findc`)
 
-Format: `find_club [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
-Search conditions:
-`n/ [NAMES]` - match clubs containing any of the names (separated by whitespace) specified in NAMES
-`t/ [TAGS]` - match clubs tagged with tags containing any of the names (separated by whitespace) specified in TAGS
+Finds and displays clubs (in the left list) that match all search conditions specified within the command. 
+If no condition is provided, `find_club` displays all clubs. Possible search conditions include:<br>
+* `n/` - by name
+* `a/` - by address
+* `e/` - by email
+* `p/` - by phone
+* `t/` - by tag
+* `m/` - by membership status<br>
+Each search condition is to be supplied with one or more search keywords.<br>
 
-* The search is case-insensitive. e.g. `archery` will match `Archery`
-* The order of the search conditions and keywords does not matter.
-  e.g. `n/ Archery NUS` will match `n/ NUS Archery` and `n/ Archery t/ evening` will match `t/ evening n/ Archery`
-* Only full words will be matched e.g. `ArcheryNUS` will not match `Archery`
-* All search conditions must be met for the target (i.e. `AND` search).
-  e.g. `n/ Ball t/ evening` will only return clubs with both `Ball` in their name and are tagged with `evening`
-* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
-  e.g. `n/ Eight Ball` may return `Basket Ball`, `eight pm dance`
-* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
-  e.g. To search for `Eight Ball` without returning `Basket Ball` or `eight pm dance`, use `n/ Eight n/ Ball`
+Format: `find_club [SEARCH_CONDITIONS SEARCH_KEYWORDS]...`<br>
 
-Command examples:
-* `find_club` returns all clubs
-* `find_club n/ Study` returns `study` and `NUS Study`
-* `find_club n/ NUS study` returns `study` and `NUS Study` and `NUS Guitar`
-* `find_club n/ NUS n/ study` returns `NUS Study`
-* `findc t/ NTU` returns all clubs tagged with `NTU`
-* `findc n/ Study t/ NTU` returns only `study` because `study` is tagged with `NTU` but `NUS Study` is not <br>
+**Basic Usage: Finding by single field**<br>
+
+The find_club command can be used to locate clubs using their basic fields, such as their name, address, email,
+phone and tags. To do so, use the matching search condition (as displayed in the previous section) followed 
+by the keyword you wish to match for that condition (e.g. `findc n/ Archery`). **Do note that there should be
+a space before each search condition or keyword.**<br>
+
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+Can't remember the exact value of the field? Not to worry, find matches keywords by substrings and is case-insensitive,
+meaning that calling "findc n/ dance" will return clubs with names like "Dance" and "breakdance".
+</div>
+
+**Advanced Usage: Supplying multiple keywords**<br>
+
+Each search condition may be supplied with multiple keywords, **any of** which may be used to match the target. For
+example, `findc n/ Monday Tuesday` would return clubs with names like "Monday Dance" and "Tuesday Yoga".<br>
+
+**Advanced Usage: Supplying multiple conditions**<br>
+
+Each command may also be supplied with multiple search conditions. However, unlike the case with keywords, 
+**all conditions** must match the target. For example, `findc t/ 8pm n/ Archery n/ Tuesday` will only return clubs
+tagged with "8pm" whose names contain both "Archery" and "Tuesday".<br>
+
+**Advanced Usage: Finding by membership status**<br>
+
+The find_club command can be used to locate clubs containing memberships of a particular status, such as clubs with
+expired memberships. To do so, use the `m/` condition, **but only with the following keywords:**<br>
+* `a` - for active memberships
+* `e` - for expired memberships
+* `p` - for memberships pending cancellation
+* `c` - for canceled memberships<br>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**  
+Unlike other search conditions, "m/" is able to match all identifiable keywords within a single string of letters.
+This means that "findc m/ active" will return all active, expired and canceled members, since the keywords
+"a", "c", and "e" are all present.
+</div>
+
+**Command examples**<br>
+
+Here are some sample commands:<br>
+* `findc` returns all clubs
+* `findc n/ Study` returns `study` and `Monday Study`
+* `findc n/ Monday study` returns `study` and `Monday Study` and `Monday Guitar`
+* `findc n/ Monday n/ study` returns `Monday Study`
+* `findc n/ Study t/ 8pm` returns only `study` because `study` is tagged with `8pm` but `Monday Study` is not <br>
   ![result for 'findc n/ Study t/ NTU'](images/findStudyNtuResult.png)
 
 
-### Locating persons: `find_person` (or `findp`)
+### Finding persons: `find_person` (or `findp`)
 
-Finds and displays persons that match all search conditions specified with the command. If no search condition is provided, `find_person` displays the full list of persons.
+Finds and displays persons (in the right list) that match all search conditions specified within the command.
+If no condition is provided, `find_person` displays all persons. Possible search conditions include:<br>
+* `n/` - by name
+* `a/` - by address
+* `e/` - by email
+* `p/` - by phone
+* `t/` - by tag
+* `m/` - by membership status<br>
+Each search condition is to be supplied with one or more search keywords.<br>
 
-Format: `find_person [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`
-Search conditions:
-`n/ [NAMES]` - match persons containing any of the names (separated by whitespace) specified in NAMES
-`t/ [TAGS]` - match persons tagged with tags containing any of the names (separated by whitespace) specified in TAGS
+Format: `find_person [SEARCH_CONDITIONS SEARCH_KEYWORDS]...`<br>
 
-* The search is case-insensitive. e.g. `hans` will match `Hans`
-* The order of the search conditions and keywords does not matter.
-  e.g. `n/ Hans Bo` will match `n/ Bo Hans` and `n/ Hans t/ friend` will match `t/ friend n/ Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* All search conditions must be met for the target (i.e. `AND` search).
-  e.g. `n/ Hans t/ friend` will only return persons with both `Hans` in their name and are tagged with `friend`
-* Within each search condition, targets need only match one of the specified keywords (i.e. `OR` search).
-  e.g. `n/ Hans Bo` may return `Hans Gruber`, `Bo Yang`
-* Search conditions of the same type may be repeated. Each will be treated as a separate condition.
-  e.g. To search for `Hans Bo` without returning `Hans Gruber` or `Bo Yang`, use `n/ Hans n/ Bo`
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+The find_person command is identical to the find_club command in its usage, the only difference being that it
+searches for people rather than clubs. Hence, you may refer to the find_club command above for detailed guidance 
+on its usage.
+</div>
 
 Command examples:
-* `find_person` returns all persons
-* `find_person n/ Alex` returns `alex` and `Alex yeoh`
-* `find_person n/ alex david` returns `alex` and `Alex yeoh` and `David Li`
-* `find_person n/ alex n/ Yeoh` returns `Alex yeoh`
-* `findp t/ friend` returns all persons tagged with `friend`
+* `findp` returns all persons
+* `findp n/ Alex` returns `alex` and `Alex yeoh`
+* `findp n/ alex david` returns `alex` and `Alex yeoh` and `David Li`
+* `findp n/ alex n/ Yeoh` returns `Alex yeoh`
 * `findp n/ Alex t/ friend` returns only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not <br>
   ![result for 'findp n/ Alex t/ friend'](images/findAlexFriendResult.png)
 
