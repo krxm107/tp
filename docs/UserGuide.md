@@ -555,14 +555,14 @@ _Details coming soon ..._
 
 Action | Format                                                                                                                               | Short form | Examples
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
+**Help** | `help`                                                                                                                               
 **Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
 **Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
-**Add to Clubs** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
-**Remove from Clubs** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                             | `deletem`  | `delete_membership m/1 2 c/3 4`
+**Add Membership** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
+**Delete Membership** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                             | `deletem`  | `delete_membership m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
 **Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
-**Clear** | `clear`                                                                                                                              
 **Delete Person** | `delete_person INDEX`<br>                                                                                                            | `deletep`  | `delete_person 3`
 **Delete Club** | `delete_club INDEX`<br>                                                                                                              | `deletec`  | `delete_club 3`
 **Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
@@ -573,7 +573,8 @@ Action | Format                                                                 
 **List Members** | `list_members INDEX`</br>                                                                                                            | `listmc`   | `list_members 1`
 **Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                       | `getp`     | `get_person 2 /pae`
 **Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                         | `getc`     | `get_club 2 /*`
+**Get History** | `get_history INDEX`</br>                                                                                                             | `geth`     | `get_history 2`
 **Sort Persons** | `sort_person [n/] [p/] [e/] [a/]`</br>                                                                                               | `sortp`    | `sort_person a/ n/`
 **Sort Clubs** | `sort_club [n/] [p/] [e/] [a/]`</br>                                                                                                 | `sortc`    | `sort_club a/ n/`
-**Help** | `help`                                                                                                                               
+**Clear** | `clear`                                                                                                                              
 **Exit** | `exit`                                                                                                                               
