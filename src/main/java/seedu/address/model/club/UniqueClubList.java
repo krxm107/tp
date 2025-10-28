@@ -125,8 +125,8 @@ public class UniqueClubList implements Iterable<Club> {
 
     public Optional<Club> getClub(Name name) {
         return internalList.stream()
-                .filter(person ->
-                        person.getName().equals(name)
+                .filter(club ->
+                        club.getName().equals(name)
                 )
                 .findFirst();
     }
