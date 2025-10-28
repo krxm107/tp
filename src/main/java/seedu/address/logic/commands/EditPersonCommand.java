@@ -92,15 +92,7 @@ public class EditPersonCommand extends Command {
             return new CommandResult(UNCHANGED_PERSON_WARNING);
         }
 
-        for (Person p : model.getAddressBook().getPersonList()) {
-            if (p.equals(personToEdit)) {
-                continue;
-            }
-
-            if (p.getEmail().value.equalsIgnoreCase(editedPerson.getEmail().value)) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON_EMAIL);
-            }
-        }
+        checkDuplicate(model, personToEdit, editedPerson);
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -112,6 +104,22 @@ public class EditPersonCommand extends Command {
         }
 
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private void checkDuplicate(Model model, Person personToEdit, Person editedPerson) throws CommandException {
+        // Existing broad duplicate check (keeps previous semantics)
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.equals(personToEdit)) {
+                continue;
+            }
+            if (p.getEmail().value.equalsIgnoreCase(editedPerson.getEmail().value)) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON_EMAIL);
+            }
+        }
     }
 
     /**

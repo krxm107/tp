@@ -15,7 +15,7 @@ import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 
 /**
- * Lists memberships of a person identified using it's displayed index from the address book.
+ * Lists memberships of a person identified using its displayed index from the address book.
  */
 public class MembershipPersonCommand extends Command {
 
@@ -32,8 +32,6 @@ public class MembershipPersonCommand extends Command {
             + "Keywords: a - active, c - cancelled, e - expired, p - pending cancellation\n"
             + "Example: " + COMMAND_WORD + " 1 - shows all existing memberships\n"
             + "Example: " + COMMAND_WORD + " 1 /ap - shows all memberships that are active or pending cancellation";
-
-    public static final String MESSAGE_LIST_SUCCESS = "Listed all memberships";
 
     private final Index targetIndex;
     private final Predicate<Membership> predicate;
@@ -61,7 +59,7 @@ public class MembershipPersonCommand extends Command {
         Predicate<Club> isMemberOf = club -> club.getMemberships().stream().filter(predicate)
                 .map(Membership::getPerson).anyMatch(person -> person.equals(personToDisplay));
         model.updateFilteredClubList(isMemberOf);
-        return new CommandResult(MESSAGE_LIST_SUCCESS);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override

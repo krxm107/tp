@@ -91,6 +91,21 @@ public class EditClubCommand extends Command {
             return new CommandResult(UNCHANGED_CLUB_WARNING);
         }
 
+        checkDuplicate(model, clubToEdit, editedClub);
+
+        model.setClub(clubToEdit, editedClub);
+        model.updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
+
+        if (editedClub.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, "
+                    + "'%s', contains characters "
+                    + "other than digits and spaces", editedClub.getPhone()));
+        }
+
+        return new CommandResult(String.format(MESSAGE_EDIT_CLUB_SUCCESS, Messages.format(editedClub)));
+    }
+
+    private void checkDuplicate(Model model, Club clubToEdit, Club editedClub) throws CommandException {
         // Existing broad duplicate check (keeps previous semantics)
         if (!clubToEdit.isSameClub(editedClub) && model.hasClub(editedClub)) {
             throw new CommandException(MESSAGE_DUPLICATE_CLUB);
@@ -113,17 +128,6 @@ public class EditClubCommand extends Command {
                 throw new CommandException(MESSAGE_DUPLICATE_CLUB_EMAIL);
             }
         }
-
-        model.setClub(clubToEdit, editedClub);
-        model.updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
-
-        if (editedClub.phoneHasNonNumericNonSpaceCharacter()) {
-            return new CommandResult(String.format("WARNING: The phone number added, "
-                    + "'%s', contains characters "
-                    + "other than digits and spaces", editedClub.getPhone()));
-        }
-
-        return new CommandResult(String.format(MESSAGE_EDIT_CLUB_SUCCESS, Messages.format(editedClub)));
     }
 
     /**
