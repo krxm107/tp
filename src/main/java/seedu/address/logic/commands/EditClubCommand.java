@@ -34,8 +34,10 @@ import seedu.address.model.tag.Tag;
 public class EditClubCommand extends Command {
 
     public static final String COMMAND_WORD = "edit_club";
+    public static final String COMMAND_SHORT = "editc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the club identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Edits the details of the club identified "
             + "by the index number used in the displayed club list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -53,6 +55,10 @@ public class EditClubCommand extends Command {
     public static final String MESSAGE_DUPLICATE_CLUB = "This club already exists in the address book.";
     public static final String MESSAGE_DUPLICATE_CLUB_NAME = "A club with this name already exists.";
     public static final String MESSAGE_DUPLICATE_CLUB_EMAIL = "A club with this email already exists.";
+
+    public static final String UNCHANGED_CLUB_WARNING =
+            "There was no change to this club "
+            + "since the original and edited details are the same.";
 
     private final Index index;
     private final EditClubDescriptor editClubDescriptor;
@@ -81,6 +87,25 @@ public class EditClubCommand extends Command {
         Club clubToEdit = lastShownList.get(index.getZeroBased());
         Club editedClub = createEditedClub(clubToEdit, editClubDescriptor);
 
+        if (clubToEdit.equals(editedClub)) {
+            return new CommandResult(UNCHANGED_CLUB_WARNING);
+        }
+
+        checkDuplicate(model, clubToEdit, editedClub);
+
+        model.setClub(clubToEdit, editedClub);
+        model.updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
+
+        if (editedClub.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, "
+                    + "'%s', contains characters "
+                    + "other than digits and spaces", editedClub.getPhone()));
+        }
+
+        return new CommandResult(String.format(MESSAGE_EDIT_CLUB_SUCCESS, Messages.format(editedClub)));
+    }
+
+    private void checkDuplicate(Model model, Club clubToEdit, Club editedClub) throws CommandException {
         // Existing broad duplicate check (keeps previous semantics)
         if (!clubToEdit.isSameClub(editedClub) && model.hasClub(editedClub)) {
             throw new CommandException(MESSAGE_DUPLICATE_CLUB);
@@ -103,17 +128,6 @@ public class EditClubCommand extends Command {
                 throw new CommandException(MESSAGE_DUPLICATE_CLUB_EMAIL);
             }
         }
-
-        model.setClub(clubToEdit, editedClub);
-        model.updateFilteredClubList(PREDICATE_SHOW_ALL_CLUBS);
-
-        if (editedClub.phoneHasNonNumericNonSpaceCharacter()) {
-            return new CommandResult(String.format("WARNING: The phone number added, "
-                    + "'%s', contains characters "
-                    + "other than digits and spaces", editedClub.getPhone()));
-        }
-
-        return new CommandResult(String.format(MESSAGE_EDIT_CLUB_SUCCESS, Messages.format(editedClub)));
     }
 
     /**

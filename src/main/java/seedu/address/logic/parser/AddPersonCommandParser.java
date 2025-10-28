@@ -62,9 +62,6 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
 
-        // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
-        final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
-
         // AddPersonCommandParser.java
         Address address = null;
         try {

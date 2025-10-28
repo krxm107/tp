@@ -16,27 +16,30 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
+import seedu.address.logic.search.predicates.MembershipStatusPredicate;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
+import seedu.address.model.membership.MembershipStatus;
 import seedu.address.model.person.Person;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
- * {@code ListMemberCommand}.
+ * {@code MembershipClubCommand}.
  */
-public class ListMemberCommandTest {
+public class MembershipClubCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Predicate<Membership> predicate = new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
+        MembershipClubCommand membershipClubCommand = new MembershipClubCommand(INDEX_FIRST_CLUB, predicate);
 
-        String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
+        String expectedMessage = MembershipClubCommand.MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updateFilteredClubList(club -> club.equals(clubMembersToList));
@@ -44,15 +47,15 @@ public class ListMemberCommandTest {
                 .anyMatch(club -> club.equals(clubMembersToList));
         expectedModel.updateFilteredPersonList(isInClub);
 
-        assertCommandSuccess(listMemberCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(membershipClubCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClubList().size() + 1);
-        ListMemberCommand listMemberCommand = new ListMemberCommand(outOfBoundIndex);
+        MembershipClubCommand membershipClubCommand = new MembershipClubCommand(outOfBoundIndex, predicate);
 
-        assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        assertCommandFailure(membershipClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     @Test
@@ -60,9 +63,9 @@ public class ListMemberCommandTest {
         showClubAtIndex(model, INDEX_FIRST_CLUB);
 
         Club clubMembersToList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        ListMemberCommand listMemberCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
+        MembershipClubCommand membershipClubCommand = new MembershipClubCommand(INDEX_FIRST_CLUB, predicate);
 
-        String expectedMessage = ListMemberCommand.MESSAGE_SUCCESS;
+        String expectedMessage = MembershipClubCommand.MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.updateFilteredClubList(club -> club.equals(clubMembersToList));
@@ -70,7 +73,7 @@ public class ListMemberCommandTest {
                 .anyMatch(club -> club.equals(clubMembersToList));
         expectedModel.updateFilteredPersonList(isInClub);
 
-        assertCommandSuccess(listMemberCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(membershipClubCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -81,21 +84,21 @@ public class ListMemberCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClubList().size());
 
-        ListMemberCommand listMemberCommand = new ListMemberCommand(outOfBoundIndex);
+        MembershipClubCommand membershipClubCommand = new MembershipClubCommand(outOfBoundIndex, predicate);
 
-        assertCommandFailure(listMemberCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        assertCommandFailure(membershipClubCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        ListMemberCommand listMemberFirstCommand = new ListMemberCommand(INDEX_FIRST_CLUB);
-        ListMemberCommand listMemberSecondCommand = new ListMemberCommand(INDEX_SECOND_CLUB);
+        MembershipClubCommand listMemberFirstCommand = new MembershipClubCommand(INDEX_FIRST_CLUB, predicate);
+        MembershipClubCommand listMemberSecondCommand = new MembershipClubCommand(INDEX_SECOND_CLUB, predicate);
 
         // same object -> returns true
         assertTrue(listMemberFirstCommand.equals(listMemberFirstCommand));
 
         // same values -> returns true
-        ListMemberCommand listMemberFirstCommandCopy = new ListMemberCommand(INDEX_FIRST_CLUB);
+        MembershipClubCommand listMemberFirstCommandCopy = new MembershipClubCommand(INDEX_FIRST_CLUB, predicate);
         assertTrue(listMemberFirstCommand.equals(listMemberFirstCommandCopy));
 
         // different types -> returns false
@@ -106,14 +109,21 @@ public class ListMemberCommandTest {
 
         // different club -> returns false
         assertFalse(listMemberFirstCommand.equals(listMemberSecondCommand));
+
+        // different predicate -> returns false
+        MembershipStatusPredicate differentPredicate =
+                new MembershipStatusPredicate(MembershipStatus.getStatuses("a"));
+        MembershipClubCommand listMemberThirdCommand = new MembershipClubCommand(INDEX_FIRST_CLUB, differentPredicate);
+        assertFalse(listMemberFirstCommand.equals(listMemberThirdCommand));
     }
 
     @Test
     public void toStringMethod() {
         Index targetIndex = Index.fromOneBased(1);
-        ListMemberCommand listMemberCommand = new ListMemberCommand(targetIndex);
-        String expected = ListMemberCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
-        assertEquals(expected, listMemberCommand.toString());
+        MembershipClubCommand membershipClubCommand = new MembershipClubCommand(targetIndex, predicate);
+        String expected = MembershipClubCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + ", "
+                + "predicate=" + predicate + "}";
+        assertEquals(expected, membershipClubCommand.toString());
     }
 
 }

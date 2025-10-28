@@ -30,8 +30,10 @@ import seedu.address.model.person.Person;
 public class AddPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "add_person";
+    public static final String COMMAND_SHORT = "addp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
@@ -78,11 +80,19 @@ public class AddPersonCommand extends Command {
         this.clubIndexes = clubIndexes;
     }
 
-    private void addMembershipToAll(Model model, Person personToAdd, Club club) {
-        Membership membershipToAdd = new Membership(personToAdd, club);
-        club.addMembership(membershipToAdd);
-        personToAdd.addMembership(membershipToAdd);
-        model.addMembership(membershipToAdd);
+    private void addMembershipToAll(Model model, Person personToAdd) {
+        List<Club> lastShownClubList = model.getFilteredClubList();
+        for (Index clubIndex : clubIndexes) {
+            if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+                continue; // Skip to the next club index
+            }
+
+            Club club = lastShownClubList.get(clubIndex.getZeroBased());
+            Membership membershipToAdd = new Membership(personToAdd, club);
+            club.addMembership(membershipToAdd);
+            personToAdd.addMembership(membershipToAdd);
+            model.addMembership(membershipToAdd);
+        }
     }
 
     @Override
@@ -107,14 +117,7 @@ public class AddPersonCommand extends Command {
             logger.info(() -> "Person added: " + personToAdd);
 
             if (clubIndexes != null) {
-                List<Club> lastShownClubList = model.getFilteredClubList();
-                for (Index clubIndex : clubIndexes) {
-                    if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                        continue; // Skip to the next club index
-                    }
-                    Club club = lastShownClubList.get(clubIndex.getZeroBased());
-                    addMembershipToAll(model, personToAdd, club);
-                }
+                addMembershipToAll(model, personToAdd);
             }
 
             CommandResult result = null;
@@ -124,8 +127,7 @@ public class AddPersonCommand extends Command {
                         + "other than digits and spaces", personToAdd.getPhone()));
             } else {
                 result = new CommandResult(
-                    String.format("New person added: %s",
-                        Messages.format(personToAdd)));
+                    String.format("New person added: %s", Messages.format(personToAdd)));
             }
 
             logger.exiting(cls, mtd, result);

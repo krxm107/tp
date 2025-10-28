@@ -15,11 +15,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemoveFromCommand;
+import seedu.address.logic.commands.DeleteMembershipCommand;
 
-public class RemoveFromCommandParserTest {
+public class DeleteMembershipCommandParserTest {
 
-    private final RemoveFromCommandParser parser = new RemoveFromCommandParser();
+    private final DeleteMembershipCommandParser parser = new DeleteMembershipCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
@@ -30,12 +30,12 @@ public class RemoveFromCommandParserTest {
 
         assertParseSuccess(parser,
                 VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC,
-                new RemoveFromCommand(expectedMemberIndexes, expectedClubIndexes));
+                new DeleteMembershipCommand(expectedMemberIndexes, expectedClubIndexes));
     }
 
     @Test
     public void parse_missingCompulsoryPrefix_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMembershipCommand.MESSAGE_USAGE);
 
         // missing member prefix
         assertParseFailure(parser, VALID_CLUB_INDEX_DESC, expectedMessage);
@@ -46,7 +46,7 @@ public class RemoveFromCommandParserTest {
 
     @Test
     public void parse_invalidIndex_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMembershipCommand.MESSAGE_USAGE);
 
         // invalid member index
         assertParseFailure(parser, INVALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC, expectedMessage);
@@ -57,7 +57,7 @@ public class RemoveFromCommandParserTest {
 
     @Test
     public void parse_nonEmptyPreamble_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveFromCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMembershipCommand.MESSAGE_USAGE);
 
         assertParseFailure(parser,
                 "randomtext " + VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC,

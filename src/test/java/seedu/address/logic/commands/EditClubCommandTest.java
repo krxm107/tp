@@ -81,9 +81,7 @@ public class EditClubCommandTest {
         EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
         Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
 
-        String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
-                        Messages.format(editedClub));
+        String expectedMessage = EditClubCommand.UNCHANGED_CLUB_WARNING;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -172,7 +170,7 @@ public class EditClubCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(true)));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_CLUB, DESC_ART)));

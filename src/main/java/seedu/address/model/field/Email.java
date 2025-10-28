@@ -7,16 +7,18 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  * Represents a Person's email in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
-public class Email {
+public class Email implements Comparable<Email> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Invalid email format.\n"
                     + "Emails must follow the pattern LOCAL_PART@DOMAIN (e.g. example@domain.com).\n"
-                    + "• LOCAL_PART and DOMAIN must each start and end with a letter or digit.\n"
+                    + "• LOCAL_PART must start and end with a letter or digit.\n"
                     + "• LOCAL_PART may contain letters, digits, '.', '-', '_' and '+'.\n"
                     + "• LOCAL_PART must be at most 64 characters long.\n"
                     + "• The entire email must be at most 150 characters long.\n"
-                    + "• DOMAIN must end with a label of at least 2 characters.";
+                    + "• Domain may contain letters, digits and periods.\n"
+                    + "• DOMAIN must start with a letter or a digit "
+                    + "and end with a period, followed by a label of at least 2 characters.";
 
 
     private static final String SPECIAL_CHARACTERS = "+_.-";
@@ -119,4 +121,8 @@ public class Email {
         return value.hashCode();
     }
 
+    @Override
+    public int compareTo(Email email) {
+        return this.value.toLowerCase().compareTo(email.value.toLowerCase());
+    }
 }

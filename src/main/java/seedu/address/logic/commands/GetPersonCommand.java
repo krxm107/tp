@@ -9,7 +9,7 @@ import seedu.address.commons.util.CopyUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.get.GetPersonMessageParser;
+import seedu.address.logic.parser.GetPersonMessageParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
@@ -19,13 +19,14 @@ import seedu.address.model.person.Person;
 public class GetPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "get_person";
+    public static final String COMMAND_SHORT = "getp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Copies all details of a person identified by the index number to the user's clipboard.\n"
-            + "Optional keywords may be added to copy specified fields only\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Copies details of a person identified by the index number to the user's clipboard.\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL KEYWORDS]\n"
+            + "Optional keywords may be added to copy specified fields only.\n"
             + "Keywords: n - name, p - phone, e - email, a - address, m - memberships\n"
-            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " 1 - copies all details fully labeled\n"
+            + "Example: " + COMMAND_WORD + " 1 - copies name, phone, email, address and tags\n"
             + "Example: " + COMMAND_WORD + " 1 /p - copies phone number only";
 
     public static final String MESSAGE_GET_PERSON_SUCCESS = "Copied: %1$s";
@@ -54,13 +55,20 @@ public class GetPersonCommand extends Command {
 
         Person personToCopy = lastShownList.get(targetIndex.getZeroBased());
         String details = new GetPersonMessageParser().parse(personToCopy, keywords);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
+    }
+
+    /**
+     * Logic for copying text to clipboard. Extracted to allow testing.
+     */
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_PERSON_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
     }
 
     @Override

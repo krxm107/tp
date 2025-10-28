@@ -18,11 +18,12 @@ import seedu.address.model.person.Person;
 /**
  * Removes a Person from a Club
  */
-public class RemoveFromCommand extends Command {
-    public static final String COMMAND_WORD = "remove_from";
+public class DeleteMembershipCommand extends Command {
+    public static final String COMMAND_WORD = "delete_membership";
+    public static final String COMMAND_SHORT = "deletem"; // delete membership
     public static final String MESSAGE_REMOVED_FROM_CLUB = "%1$s removed from %2$s";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Removes a person from a club\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Removes a person from a club\n"
             + "Person identified by the index number used in the displayed person list.\n"
             + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: "
@@ -40,33 +41,14 @@ public class RemoveFromCommand extends Command {
      * @param personIndexes of the person in the filtered person list to edit
      * @param clubIndexes of the club in the filtered club list to edit
      */
-    public RemoveFromCommand(Index[] personIndexes, Index[] clubIndexes) {
+    public DeleteMembershipCommand(Index[] personIndexes, Index[] clubIndexes) {
         requireAllNonNull(personIndexes, clubIndexes);
         this.personIndexes = personIndexes;
         this.clubIndexes = clubIndexes;
     }
 
-    private void concatInvalidIndexMessage(
-            StringBuilder builder, boolean isPerson, boolean isFirstClubIndex, Index index) {
-        if (isPerson && isFirstClubIndex) {
-            builder
-                    .append(String.format(
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
-                    .append("\n");
-        } else if (!isPerson) {
-            builder
-                    .append(String.format(
-                            Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, index.getOneBased()))
-                    .append("\n");
-        }
-    }
-
-    private void concatNotExistInClubMessage(StringBuilder builder, String personNames, String clubName) {
-        builder.append(String.format(MESSAGE_NOTEXIST_MEMBERSHIP, personNames, clubName)).append("\n");
-    }
-
-    private void concatRemovedFromClubMessage(StringBuilder builder, String personNames, String clubName) {
-        builder.append(String.format(MESSAGE_REMOVED_FROM_CLUB, personNames, clubName)).append("\n");
+    private void appendToMessage(StringBuilder builder, String message, Object... args) {
+        builder.append(String.format(message, args)).append("\n");
     }
 
     @Override
@@ -75,29 +57,34 @@ public class RemoveFromCommand extends Command {
         List<Club> lastShownClubList = model.getFilteredClubList();
         StringBuilder outputMessageBuilder = new StringBuilder();
 
-        for (Index clubIndex : clubIndexes) {
+        List<Index> invalidPersons = findInvalidIndexes(personIndexes, lastShownPersonList.size());
+        List<Index> invalidClubs = findInvalidIndexes(clubIndexes, lastShownClubList.size());
+
+        for (Index idx : invalidPersons) {
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+        }
+        for (Index idx : invalidClubs) {
+            appendToMessage(outputMessageBuilder,
+                    Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, idx.getOneBased());
+        }
+
+        List<Index> validPersons = findValidIndexes(personIndexes, lastShownPersonList.size());
+        List<Index> validClubs = findValidIndexes(clubIndexes, lastShownClubList.size());
+
+        for (Index clubIndex : validClubs) {
             StringBuilder personNamesBuilder = new StringBuilder();
-            boolean isFirstClubIndex = (clubIndex == clubIndexes[0]);
-            if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                concatInvalidIndexMessage(outputMessageBuilder, false, isFirstClubIndex, clubIndex);
-                continue; // Skip to the next club index
-            }
             Club club = lastShownClubList.get(clubIndex.getZeroBased());
             String clubName = club.getName().toString();
-            for (Index personIndex : personIndexes) {
-                if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-                    // Add invalid person index message once only for each invalid person index
-                    // Achieved by only adding when processing the first club index
-                    concatInvalidIndexMessage(outputMessageBuilder, true, isFirstClubIndex, personIndex);
-                    continue; // Skip to the next club index
-                }
+
+            for (Index personIndex : validPersons) {
                 Person person = lastShownPersonList.get(personIndex.getZeroBased());
                 String personName = person.getName().toString();
 
                 // Check if membership doesn't exist
                 Membership toRemove = new Membership(person, club);
                 if (!model.hasMembership(toRemove)) {
-                    concatNotExistInClubMessage(outputMessageBuilder, personName, clubName);
+                    appendToMessage(outputMessageBuilder, MESSAGE_NOTEXIST_MEMBERSHIP, personName, clubName);
                     continue; // Skip to the next person index
                 }
                 // Only add the person who are in the club to personNamesBuilder
@@ -105,6 +92,7 @@ public class RemoveFromCommand extends Command {
                 personNamesBuilder.append(personName).append(", ");
 
                 club.removeMember(person);
+                person.removeClub(club);
                 // Model also keep track of memberships
                 model.deleteMembership(toRemove);
             }
@@ -116,10 +104,22 @@ public class RemoveFromCommand extends Command {
             assert personNamesBuilder.length() >= 2;
             personNamesBuilder.setLength(personNamesBuilder.length() - 2);
             String personNames = personNamesBuilder.toString();
-            concatRemovedFromClubMessage(outputMessageBuilder, personNames, clubName);
+            appendToMessage(outputMessageBuilder, MESSAGE_REMOVED_FROM_CLUB, personNames, clubName);
         }
         String outputMessage = outputMessageBuilder.toString();
         return new CommandResult(outputMessage);
+    }
+
+    private List<Index> findInvalidIndexes(Index[] indexes, int size) {
+        return Arrays.stream(indexes)
+                .filter(i -> i.getZeroBased() >= size)
+                .toList();
+    }
+
+    private List<Index> findValidIndexes(Index[] indexes, int size) {
+        return Arrays.stream(indexes)
+                .filter(i -> i.getZeroBased() < size)
+                .toList();
     }
 
     @Override
@@ -129,12 +129,12 @@ public class RemoveFromCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof RemoveFromCommand)) {
+        if (!(other instanceof DeleteMembershipCommand)) {
             return false;
         }
 
-        RemoveFromCommand otherRemoveFromCommand = (RemoveFromCommand) other;
-        return Arrays.equals(personIndexes, otherRemoveFromCommand.personIndexes)
-                && Arrays.equals(clubIndexes, otherRemoveFromCommand.clubIndexes);
+        DeleteMembershipCommand otherDeleteMembershipCommand = (DeleteMembershipCommand) other;
+        return Arrays.equals(personIndexes, otherDeleteMembershipCommand.personIndexes)
+                && Arrays.equals(clubIndexes, otherDeleteMembershipCommand.clubIndexes);
     }
 }

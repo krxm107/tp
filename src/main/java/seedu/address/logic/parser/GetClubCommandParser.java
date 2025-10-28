@@ -17,7 +17,7 @@ public class GetClubCommandParser implements Parser<GetClubCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public GetClubCommand parse(String args) throws ParseException {
-        String[] parts = args.split("/");
+        String[] parts = args.trim().split(" ", 2);
         Index index;
 
         try {

@@ -18,11 +18,11 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddToCommand;
+import seedu.address.logic.commands.AddMembershipCommand;
 
-public class AddToCommandParserTest {
+public class AddMembershipCommandParserTest {
 
-    private final AddToCommandParser parser = new AddToCommandParser();
+    private final AddMembershipCommandParser parser = new AddMembershipCommandParser();
 
 
 
@@ -36,17 +36,17 @@ public class AddToCommandParserTest {
         // with duration
         assertParseSuccess(parser,
                 VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC + VALID_DURATION_DESC,
-                new AddToCommand(expectedMemberIndexes, expectedClubIndexes, VALID_DURATION));
+                new AddMembershipCommand(expectedMemberIndexes, expectedClubIndexes, VALID_DURATION));
 
         // without duration
         assertParseSuccess(parser,
                 VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC,
-                new AddToCommand(expectedMemberIndexes, expectedClubIndexes, 12)); // default duration
+                new AddMembershipCommand(expectedMemberIndexes, expectedClubIndexes, 12)); // default duration
     }
 
     @Test
     public void parse_missingCompulsoryPrefix_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembershipCommand.MESSAGE_USAGE);
 
         // missing member prefix
         assertParseFailure(parser,
@@ -64,7 +64,7 @@ public class AddToCommandParserTest {
 
     @Test
     public void parse_invalidIndex_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembershipCommand.MESSAGE_USAGE);
 
         // invalid member index
         assertParseFailure(parser,
@@ -79,7 +79,7 @@ public class AddToCommandParserTest {
 
     @Test
     public void parse_invalidDuration_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembershipCommand.MESSAGE_USAGE);
 
         assertParseFailure(parser,
                 VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC + INVALID_DURATION_DESC,
@@ -88,7 +88,7 @@ public class AddToCommandParserTest {
 
     @Test
     public void parse_nonEmptyPreamble_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddToCommand.MESSAGE_USAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMembershipCommand.MESSAGE_USAGE);
 
         assertParseFailure(parser,
                 "randomtext " + VALID_MEMBER_INDEX_DESC + VALID_CLUB_INDEX_DESC,
