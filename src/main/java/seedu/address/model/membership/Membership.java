@@ -207,7 +207,7 @@ public class Membership {
      */
     public void reactivate(int durationInMonths) {
         if (getStatus() == MembershipStatus.ACTIVE) {
-            throw new IllegalArgumentException("Only expired or cancelled memberships can be reactivated.");
+            throw new IllegalArgumentException("Only expired, pending cancellation or cancelled memberships can be reactivated.");
         }
         if (!isValidMembershipDuration(durationInMonths)) {
             throw new IllegalArgumentException("Membership duration must be between "
