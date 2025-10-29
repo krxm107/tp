@@ -24,6 +24,7 @@ public class Messages {
                 list, membership_person, membership_club,
                 get_club, get_person, get_history
                 find_person, find_club,
+                sort_person, sort_club,
                 help, exit, clear
             Type 'help' to see more details on each command.
             """;
