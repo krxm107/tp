@@ -21,7 +21,7 @@ public class Phone implements Comparable<Phone> {
             "Phone numbers should either be empty or contain between 6 and 30 characters.";
 
     // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
-    public static final String VALIDATION_REGEX = "^$|^.{6,30}$";
+    public static final String VALIDATION_REGEX = "^$|^[A-Za-z0-9\\s\\-'.#/,&():;@]{6,30}$";
 
     public final String value;
 
