@@ -6,8 +6,6 @@ import java.text.Normalizer;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import seedu.address.model.field.Phone;
-
 /**
  * Validates and normalizes phone numbers for add_person.
  * <p>
@@ -18,8 +16,7 @@ import seedu.address.model.field.Phone;
  */
 public final class PhoneValidator {
 
-
-    private static final String LENGTH_CONSTRAINTS =
+    public static final String LENGTH_CONSTRAINTS =
             String.format("Phone should either be empty or "
                     + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
 

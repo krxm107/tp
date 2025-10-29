@@ -39,7 +39,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddPersonCommand;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
-import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -161,7 +161,7 @@ public class AddPersonCommandParserTest {
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.INVALID_PHONE_WARNING);
+                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, PhoneValidator.INVALID_PHONE_WARNING);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
