@@ -7,7 +7,7 @@ ClubHub is a fast, keyboard-driven **contact management app** designed for peopl
 
 Tired of juggling messy spreadsheets or address books? ClubHub lets you create, view, search, and organize contacts across different groups - all without taking your hands off your keyboard.
 
-With its intuitive, keyboard-first workflow, Clubhib lets you manage memberships, roles, and clubs with unmatched speed and effeciency. Stay organised and focus on what matters most - your members and your community.
+With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and effeciency. Stay organised and focus on what matters most - your members and your community.
 
 * Table of Contents
 {:toc}
@@ -275,7 +275,7 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 
 ### Listing all clubs and contacts: `list` 
 
-</br>
+<br>
 
 ### Finding persons: `find_person` (or `findp`)
 
@@ -292,7 +292,7 @@ Each search condition is to be supplied with one or more search keywords.
 
 Format: `find_person [SEARCH_CONDITION SEARCH_KEYWORDS]...`
 
-</br>**Basic Usage: Finding by single field**
+<br>**Basic Usage: Finding by single field**
 
 The find_person command can be used to locate persons using their basic fields, such as their name, address, email,
 phone and tags. To do so, use the matching search condition (as displayed in the previous section) followed
@@ -305,18 +305,18 @@ Can't remember the exact value of the field? Not to worry, find matches keywords
 meaning that calling "findp n/ john" will return persons with names like "John" and "johnathan lee".
 </div>
 
-</br>**Advanced Usage: Supplying multiple keywords**
+<br>**Advanced Usage: Supplying multiple keywords**
 
 Each search condition may be supplied with multiple keywords, **any of** which may be used to match the target. For
 example, `findp n/ Lee Li` would return persons with names like "Jane Li" and "Lee Richard".
 
-</br>**Advanced Usage: Supplying multiple conditions**
+<br>**Advanced Usage: Supplying multiple conditions**
 
 Each command may also be supplied with multiple search conditions. However, unlike the case with keywords,
 **all conditions** must match the target. For example, `findp t/ friend n/ John n/ Lee` will only return persons
 tagged with "friend" whose names contain both "John" and "Lee".
 
-</br>**Advanced Usage: Finding by membership status**
+<br>**Advanced Usage: Finding by membership status**
 
 The find_club command can be used to locate persons with memberships of a particular status, such as persons with
 expired memberships. To do so, use the `s/` condition, **but only with the following keywords:**
@@ -332,15 +332,15 @@ This means that "findp s/ active" will return all active, expired and canceled m
 "a", "c", and "e" are all present.
 </div>
 
-</br>**Command examples:**
+<br>**Command examples:**
 * `findp` displays all persons
 * `findp n/ Alex` displays `alex` and `Alex yeoh`
 * `findp n/ alex david` displays `alex` and `Alex yeoh` and `David Li`
 * `findp n/ alex n/ Yeoh` displays `Alex yeoh`
-* `findp n/ Alex t/ friend` displays only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not </br>
+* `findp n/ Alex t/ friend` displays only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not <br>
   ![result for 'findp n/ Alex t/ friend'](images/findAlexFriendResult.png)
   
-</br>
+<br>
 
 ### Finding clubs: `find_club` (or `findc`)
 
@@ -357,7 +357,7 @@ Each search condition is to be supplied with one or more search keywords.
 
 Format: `find_club [SEARCH_CONDITION SEARCH_KEYWORDS]...`
 
-</br>
+<br>
 
 <div markdown="span" class="alert alert-info">
 ℹ️ Info:  
@@ -366,7 +366,7 @@ searches for clubs rather than persons. Hence, you may refer to the find_person 
 on its usage.
 </div>
 
-</br>**Command examples**
+<br>**Command examples**
 
 Here are some sample commands:
 * `findc` displays all clubs
@@ -415,7 +415,7 @@ Finds and displays a person and the clubs which they are a member of. By default
 Format: `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>
 Index refers to the current index of the person in the right list.
 
-</br>**Command examples:**
+<br>**Command examples:**
 
 Suppose Jane is the second person in the current list. Jane has an active membership with ClubA, an expired one with 
 ClubE, one pending cancellation with ClubP, and a canceled one with ClubC.
