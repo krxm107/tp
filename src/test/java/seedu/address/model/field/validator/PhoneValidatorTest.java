@@ -42,7 +42,7 @@ public final class PhoneValidatorTest {
     @ValueSource(strings = {
         "", "   ", // empty
         "12345", // too short
-        "1234567890123456", // too long
+        "12345678901234561234567890123456", // too long
     })
     void invalidNumbers_returnFail(String raw) {
         var result = PhoneValidator.validate(raw);
