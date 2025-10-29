@@ -265,7 +265,7 @@ If no condition is provided, `find_person` displays all persons. Possible search
 * `e/` - by email
 * `p/` - by phone
 * `t/` - by tag
-* `m/` - by membership status<br>
+* `s/` - by membership status<br>
 Each search condition is to be supplied with one or more search keywords.<br>
 
 Format: `find_person [SEARCH_CONDITIONS SEARCH_KEYWORDS]...`<br>
@@ -294,7 +294,7 @@ If no condition is provided, `find_club` displays all clubs. Possible search con
 * `e/` - by email
 * `p/` - by phone
 * `t/` - by tag
-* `m/` - by membership status<br>
+* `s/` - by membership status<br>
 Each search condition is to be supplied with one or more search keywords.<br>
 
 Format: `find_club [SEARCH_CONDITIONS SEARCH_KEYWORDS]...`<br>
@@ -326,7 +326,7 @@ tagged with "8pm" whose names contain both "Archery" and "Tuesday".<br>
 **Advanced Usage: Finding by membership status**<br>
 
 The find_club command can be used to locate clubs containing memberships of a particular status, such as clubs with
-expired memberships. To do so, use the `m/` condition, **but only with the following keywords:**<br>
+expired memberships. To do so, use the `s/` condition, **but only with the following keywords:**<br>
 * `a` - for active memberships
 * `e` - for expired memberships
 * `p` - for memberships pending cancellation
@@ -334,8 +334,8 @@ expired memberships. To do so, use the `m/` condition, **but only with the follo
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning:**  
-Unlike other search conditions, "m/" is able to match all identifiable keywords within a single string of letters.
-This means that "findc m/ active" will return all active, expired and canceled members, since the keywords
+Unlike other search conditions, "s/" is able to match all identifiable keywords within a single string of letters.
+This means that "findc s/ active" will return all active, expired and canceled members, since the keywords
 "a", "c", and "e" are all present.
 </div>
 
