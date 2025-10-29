@@ -15,6 +15,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -97,7 +98,7 @@ public class ParserUtil {
         requireNonNull(phone);
         String strippedPhone = phone.strip();
         if (!Phone.isValidPhone(strippedPhone)) {
-            throw new ParseException(Phone.INVALID_PHONE_WARNING);
+            throw new ParseException(PhoneValidator.INVALID_PHONE_WARNING);
         }
         return new Phone(strippedPhone);
     }

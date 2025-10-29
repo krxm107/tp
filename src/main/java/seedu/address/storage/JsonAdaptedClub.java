@@ -15,6 +15,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -82,7 +83,7 @@ class JsonAdaptedClub {
         if (phone == null || phone.strip().isEmpty()) {
             modelPhone = new Phone(""); // optional phone
         } else if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.INVALID_PHONE_WARNING);
+            throw new IllegalValueException(PhoneValidator.INVALID_PHONE_WARNING);
         } else {
             modelPhone = new Phone(phone);
         }
