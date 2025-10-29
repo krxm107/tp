@@ -18,10 +18,17 @@ import seedu.address.model.field.validator.PhoneValidator;
 public class Phone implements Comparable<Phone> {
 
     private static final String LENGTH_CONSTRAINTS
-            = String.format("Phone numbers should either be empty or "
+            = String.format("Phones should either be empty or "
                     + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
 
-    public static final String MESSAGE_CONSTRAINTS = LENGTH_CONSTRAINTS;
+    public static final String INVALID_PHONE_WARNING
+            = "The phone is invalid.\n"
+            + LENGTH_CONSTRAINTS
+            + "\nPhones must consist of "
+            + "only letters A-Z a-z, digits, whitespace, \n"
+            + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
+            + "commas, ampersands, parentheses, semicolons, colons, "
+            + "or at signs @.";
 
 
     // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
@@ -40,7 +47,7 @@ public class Phone implements Comparable<Phone> {
      */
     public Phone(String phone) {
         requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidPhone(phone), INVALID_PHONE_WARNING);
         value = phone;
     }
 

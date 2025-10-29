@@ -162,7 +162,7 @@ public class AddClubCommandParserTest {
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOOKS + INVALID_PHONE_DESC + EMAIL_DESC_BOOKS + ADDRESS_DESC_BOOKS
-                + TAG_DESC_BIG + TAG_DESC_CASUAL, Phone.MESSAGE_CONSTRAINTS);
+                + TAG_DESC_BIG + TAG_DESC_CASUAL, Phone.INVALID_PHONE_WARNING);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOOKS + PHONE_DESC_BOOKS + INVALID_EMAIL_DESC + ADDRESS_DESC_BOOKS

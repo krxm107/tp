@@ -97,7 +97,7 @@ public class ParserUtil {
         requireNonNull(phone);
         String strippedPhone = phone.strip();
         if (!Phone.isValidPhone(strippedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Phone.INVALID_PHONE_WARNING);
         }
         return new Phone(strippedPhone);
     }

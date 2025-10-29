@@ -55,7 +55,7 @@ public class JsonAdaptedClubTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedClub club =
                 new JsonAdaptedClub(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
-        String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
+        String expectedMessage = Phone.INVALID_PHONE_WARNING;
         assertThrows(IllegalValueException.class, expectedMessage, club::toModelType);
     }
 

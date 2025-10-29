@@ -82,7 +82,7 @@ class JsonAdaptedClub {
         if (phone == null || phone.strip().isEmpty()) {
             modelPhone = new Phone(""); // optional phone
         } else if (!Phone.isValidPhone(phone)) {
-            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(Phone.INVALID_PHONE_WARNING);
         } else {
             modelPhone = new Phone(phone);
         }
