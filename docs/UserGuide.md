@@ -597,7 +597,7 @@ If your changes to the data file makes its format invalid, ClubHub will discard 
 Furthermore, certain edits can cause ClubHub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Auto scroll to newly added/deleted/edited/changed person or club
+### Auto scroll to newly added/deleted/edited person, club, or membership
 
 When a person or club is changed, the person list or club list will automatically scroll to show the newly changed entry.
 If there are multiple entries changed (e.g. when using `add_membership`, `delete_membership`), the list will scroll to show the last entry in the list of edited entries.
