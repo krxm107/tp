@@ -17,12 +17,12 @@ import seedu.address.model.field.validator.PhoneValidator;
  */
 public class Phone implements Comparable<Phone> {
 
-    private static final String LENGTH_CONSTRAINTS
-            = String.format("Phone should either be empty or "
+    public static final String LENGTH_CONSTRAINTS =
+            String.format("Phone should either be empty or "
                     + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
 
-    public static final String INVALID_PHONE_WARNING
-            = "The phone is invalid.\n"
+    public static final String INVALID_PHONE_WARNING =
+            "The phone is invalid.\n"
             + LENGTH_CONSTRAINTS
             + "\nPhone must consist of "
             + "only letters A-Z a-z, digits, whitespace, \n"
