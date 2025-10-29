@@ -12,9 +12,10 @@ import seedu.address.model.field.validator.NameValidator;
 public class Name implements Comparable<Name> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Allowed characters: "
+            "The name contains invalid characters.\n"
+            + "Allowed characters: "
             + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
-            + "slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @"
+            + "\nslash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.\n"
                     + NameValidator.LENGTH_BOUND_WARNING;
 
     public final String fullName;
