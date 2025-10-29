@@ -11,6 +11,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.membership.Membership;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -59,6 +60,16 @@ public class SampleDataUtil {
 
         for (Club sampleClub : getSampleClubs()) {
             sampleAb.addClub(sampleClub);
+        }
+
+        int[][] personClubPairs = {{0, 0}, {0, 1}, {1, 0}, {2, 0}, {3, 1}, {4, 0}, {4, 1}};
+        for (int[] pair : personClubPairs) {
+            Person person = sampleAb.getPersonList().get(pair[0]);
+            Club club = sampleAb.getClubList().get(pair[1]);
+            Membership m = new Membership(person, club);
+            sampleAb.addMembership(m);
+            person.addMembership(m);
+            club.addMembership(m);
         }
 
         return sampleAb;
