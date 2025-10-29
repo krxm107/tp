@@ -1,5 +1,7 @@
 package seedu.address.logic.search.parsers;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.function.Predicate;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -18,11 +20,12 @@ public class StatusParser<T extends Searchable> implements SearchParser<T> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Predicate<T> parse(String args) throws ParseException {
-        if (args.isBlank()) {
-            return new StatusesMatchPredicate<>(MembershipStatus.getDefaultStatuses());
-        } else {
-            return new StatusesMatchPredicate<>(MembershipStatus.getStatuses(args));
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
+
+        return new StatusesMatchPredicate<>(MembershipStatus.getStatuses(trimmedArgs));
     }
 
 }
