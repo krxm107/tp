@@ -12,8 +12,8 @@ Class "<<interface>>\nSearchable" as Searchable {
 + getMemberships()
 }
 
-Person <|.. Searchable
-Club <|.. Searchable
+Person ..|> Searchable
+Club ..|> Searchable
 
 package "Search classes"{
 Class "<<interface>>\nSearchParser" as SearchParser
@@ -24,7 +24,7 @@ Class CombinedSearchPredicate<R>
 }
 
 XYZMatchesPredicate ..> Searchable
-XYZParser <|.. SearchParser
+XYZParser ..|> SearchParser
 FindCommand --> "1" CombinedSearchPredicate
 CombinedSearchPredicate --> "*" XYZMatchesPredicate
 XYZMatchesPredicate ..> SearchUtil
