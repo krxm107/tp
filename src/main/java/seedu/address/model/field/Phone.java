@@ -17,8 +17,12 @@ import seedu.address.model.field.validator.PhoneValidator;
  */
 public class Phone implements Comparable<Phone> {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should either be empty or contain between 6 and 30 characters.";
+    private static final String LENGTH_CONSTRAINTS
+            = String.format("Phone numbers should either be empty or "
+                    + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
+
+    public static final String MESSAGE_CONSTRAINTS = LENGTH_CONSTRAINTS;
+
 
     // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
     public static final String VALIDATION_REGEX = "^$|^[A-Za-z0-9\\s\\-'.#/,&():;@]{6,30}$";

@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public final class PhoneValidator {
 
     public static final int MIN_DIGITS = 6;
-    public static final int MAX_DIGITS = 15;
+    public static final int MAX_DIGITS = 30;
 
     private static final Pattern ALLOWED =
             Pattern.compile("^[A-Za-z0-9\\s\\-'.#/,&():;@]+$");
