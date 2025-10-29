@@ -2,6 +2,7 @@ package seedu.address.model.field;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.field.validator.PhoneValidator.INVALID_PHONE_WARNING;
 
 import java.util.Objects;
 
@@ -16,24 +17,6 @@ import seedu.address.model.field.validator.PhoneValidator;
  * Guarantees: immutable; valid if non-empty.
  */
 public class Phone implements Comparable<Phone> {
-
-    public static final String LENGTH_CONSTRAINTS =
-            String.format("Phone should either be empty or "
-                    + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
-
-    public static final String INVALID_PHONE_WARNING =
-            "The phone is invalid.\n"
-            + LENGTH_CONSTRAINTS
-            + "\nPhone must consist of "
-            + "only letters A-Z a-z, digits, whitespace, \n"
-            + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
-            + "commas, ampersands, parentheses, semicolons, colons, "
-            + "or at signs @.";
-
-
-    // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
-    public static final String VALIDATION_REGEX = "^$|^[A-Za-z0-9\\s\\-'.#/,&():;@]{6,30}$";
-
     public final String value;
 
     /**
@@ -56,7 +39,7 @@ public class Phone implements Comparable<Phone> {
      * An empty string is treated as invalid (but constructible as optional).
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return PhoneValidator.validate(test).isValid();
     }
 
     /**
