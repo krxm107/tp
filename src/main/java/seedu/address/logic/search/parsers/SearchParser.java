@@ -10,9 +10,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public interface SearchParser<T> {
 
-    String MESSAGE_USAGE = "Parameters: /SEARCH_INSTRUCTION1 [SEARCH_PARAMETERS1] "
-            + "/SEARCH_INSTRUCTION2 [SEARCH_PARAMETERS2]...\n"
-            + "For each instruction, one or more search parameters must be provided,"
+    String MESSAGE_USAGE = "Parameters: [SEARCH_CONDITIONS SEARCH_KEYWORDS]...\n"
+            + "For each condition, one or more search keywords must be provided,"
             + " any of which may be used to match the target.\n";
 
     /**
