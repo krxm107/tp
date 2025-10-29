@@ -273,7 +273,7 @@ Format: `find_person [SEARCH_CONDITIONS SEARCH_KEYWORDS]...`<br>
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
 The find_person command is identical to the find_club command in its usage, the only difference being that it
-searches for people rather than clubs. Hence, you may refer to the find_club command above for detailed guidance 
+searches for people rather than clubs. Hence, you may refer to the find_club command below for detailed guidance 
 on its usage.
 </div>
 
