@@ -1,5 +1,6 @@
 package seedu.address.model.field;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
@@ -17,8 +18,10 @@ import seedu.address.model.field.validator.PhoneValidator;
 public class Phone implements Comparable<Phone> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Phones must contain a minimum of 6 non-whitespace characters "
-                    + "and a maximum of 15 non-whitespace characters.";
+            "Phone numbers should either be empty or contain between 6 and 30 characters.";
+
+    // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
+    public static final String VALIDATION_REGEX = "^$|^.{6,30}$";
 
     public final String value;
 
@@ -32,12 +35,9 @@ public class Phone implements Comparable<Phone> {
      *              </ul>
      */
     public Phone(String phone) {
-        if (phone == null || phone.strip().isEmpty()) {
-            this.value = "";
-            return;
-        }
+        requireNonNull(phone);
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
-        this.value = PhoneValidator.normalize(phone);
+        value = phone;
     }
 
     /**
@@ -45,7 +45,7 @@ public class Phone implements Comparable<Phone> {
      * An empty string is treated as invalid (but constructible as optional).
      */
     public static boolean isValidPhone(String test) {
-        return PhoneValidator.validate(test).isValid();
+        return test.matches(VALIDATION_REGEX);
     }
 
     /**
