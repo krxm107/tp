@@ -16,12 +16,13 @@ import seedu.address.model.field.validator.AddressValidator;
  */
 public class Address implements Comparable<Address> {
 
-    public static final String MESSAGE_CONSTRAINTS = "Address must consist of "
+    public static final String MESSAGE_CONSTRAINTS = "The address is invalid.\n"
+            + "Address must consist of "
             + "only letters A-Z a-z, digits, whitespace, \n"
             + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
-            + "commas, ampersands, parentheses, semicolons, "
-            + "or colons."
-            + "\n\nAn Address must be at most 150 characters long.";
+            + "commas, ampersands, parentheses, semicolons, colons, "
+            + "or at signs @."
+            + "\nAn Address must be at most 150 characters long.";
 
     public final String value;
 
