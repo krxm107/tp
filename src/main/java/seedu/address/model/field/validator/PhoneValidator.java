@@ -16,13 +16,26 @@ import java.util.regex.Pattern;
  */
 public final class PhoneValidator {
 
-    public static final int MIN_DIGITS = 6;
-    public static final int MAX_DIGITS = 15;
+    public static final String LENGTH_CONSTRAINTS =
+            String.format("Phone should either be empty or "
+                    + "contain between %d and %d characters.", PhoneValidator.MIN_DIGITS, PhoneValidator.MAX_DIGITS);
 
-    private static final Pattern ALLOWED =
-            Pattern.compile("^[A-Za-z0-9\\s\\-'.#/,&():;@]+$");
+    public static final String INVALID_PHONE_WARNING =
+            "The phone is invalid.\n"
+                    + LENGTH_CONSTRAINTS
+                    + "\nPhone must consist of "
+                    + "only letters A-Z a-z, digits, whitespace, \n"
+                    + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
+                    + "commas, ampersands, parentheses, semicolons, colons, "
+                    + "or at signs @.";
+
+    public static final int MIN_DIGITS = 6;
+    public static final int MAX_DIGITS = 30;
 
     private static final Pattern WS = Pattern.compile("\\s+");
+
+    // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
+    private static final Pattern VALIDATION_REGEX = Pattern.compile("^$|^[A-Za-z0-9\\s\\-'.#/,&():;@]{6,30}$");
 
     private PhoneValidator() {
 
@@ -42,25 +55,14 @@ public final class PhoneValidator {
      *     a {@link NameValidator.ValidationResult} representing success or failure
      */
     public static ValidationResult validate(String raw) {
-        if (raw == null) {
-            return ValidationResult.fail("Phone number is required.");
-        }
+        assert raw != null;
+
         String normalized = normalize(raw);
-
-        if (normalized.isEmpty()) {
-            return ValidationResult.fail("Phone number cannot be empty.");
+        if (VALIDATION_REGEX.matcher(raw).matches()) {
+            return ValidationResult.ok(normalized);
+        } else {
+            return ValidationResult.fail(PhoneValidator.INVALID_PHONE_WARNING);
         }
-        if (!ALLOWED.matcher(normalized).matches()) {
-            return ValidationResult.fail("Phone number must contain only digits.");
-        }
-        if (normalized.length() < MIN_DIGITS) {
-            return ValidationResult.fail("Phone number must have at least " + MIN_DIGITS + " digits.");
-        }
-        if (normalized.length() > MAX_DIGITS) {
-            return ValidationResult.fail("Phone number must have at most " + MAX_DIGITS + " digits.");
-        }
-
-        return ValidationResult.ok(normalized);
     }
 
     /** Remove unnecessary whitespaces. */
