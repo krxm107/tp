@@ -1,3 +1,5 @@
+@startuml
+
 box Command
 participant "fpcp:FindPersonCommandParser" as FindPersonCommandParser
 participant "fpc:FindPersonCommand" as FindPersonCommand
@@ -26,7 +28,7 @@ activate NameParser
 NameParser --> FindPersonCommandParser
 deactivate NameParser
 
-FindPersonCommandParser -> NameParser: np.parse(args)
+FindPersonCommandParser -> NameParser: np.parse(argsForName)
 activate NameParser
 
 create NameMatchesPredicate
@@ -54,3 +56,5 @@ deactivate FindPersonCommand
 
 FindPersonCommandParser -->[: return fpc
 deactivate FindPersonCommandParser
+
+@enduml
