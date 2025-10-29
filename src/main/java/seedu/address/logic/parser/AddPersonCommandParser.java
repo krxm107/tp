@@ -56,11 +56,22 @@ public class AddPersonCommandParser implements Parser<AddPersonCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPersonCommand.MESSAGE_USAGE));
         }
 
-        // duplicates check is fine even if phone is absent
+        // duplicate prefixes check
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLUB, PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE);
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        String rawName = argMultimap.getValue(PREFIX_NAME).orElse("").trim();
+        String rawEmail = argMultimap.getValue(PREFIX_EMAIL).orElse("").trim();
+
+        if (rawName.isEmpty()) {
+            throw new ParseException("Name is mandatory.");
+        }
+        if (rawEmail.isEmpty()) {
+            throw new ParseException("Email is mandatory.");
+        }
+
+        Name name = ParserUtil.parseName(rawName);
+        Email email = ParserUtil.parseEmail(rawEmail);
+
 
         // AddPersonCommandParser.java
         Address address = null;

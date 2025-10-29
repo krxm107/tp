@@ -54,12 +54,22 @@ public class AddClubCommandParser implements Parser<AddClubCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClubCommand.MESSAGE_USAGE));
         }
 
-        // duplicates check is fine even if phone is absent
+        // duplicate prefixes check
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_PHONE);
 
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        String rawName = argMultimap.getValue(PREFIX_NAME).orElse("").trim();
+        String rawEmail = argMultimap.getValue(PREFIX_EMAIL).orElse("").trim();
 
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        if (rawName.isEmpty()) {
+            throw new ParseException("Name is mandatory.");
+        }
+        if (rawEmail.isEmpty()) {
+            throw new ParseException("Email is mandatory.");
+        }
+
+        Name name = ParserUtil.parseName(rawName);
+        Email email = ParserUtil.parseEmail(rawEmail);
+
 
         // Address is optional. If the user supplies `p/` with no value, it is treated as absent.
         final String rawAddress = argMultimap.getValue(PREFIX_ADDRESS).orElse(null);
