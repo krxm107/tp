@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddMembershipCommand.MESSAGE_ADDED_TO_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -80,10 +81,15 @@ public class AddPersonCommand extends Command {
         this.clubIndexes = clubIndexes;
     }
 
-    private void addMembershipToAll(Model model, Person personToAdd) {
+    private String addMembershipToAll(Model model, Person personToAdd) {
+        StringBuilder sb = new StringBuilder();
         List<Club> lastShownClubList = model.getFilteredClubList();
+        StringBuilder validClubs = new StringBuilder();
         for (Index clubIndex : clubIndexes) {
             if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+                sb.append(String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
+                        clubIndex.getOneBased()));
+                sb.append(System.lineSeparator());
                 continue; // Skip to the next club index
             }
 
@@ -92,7 +98,15 @@ public class AddPersonCommand extends Command {
             club.addMembership(membershipToAdd);
             personToAdd.addMembership(membershipToAdd);
             model.addMembership(membershipToAdd);
+            validClubs.append(club.getName()).append(", ");
         }
+        if (validClubs.length() > 2) {
+            // Remove trailing comma and space
+            validClubs.setLength(validClubs.length() - 2);
+            assert validClubs.length() > 2;
+            sb.append(String.format(MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), validClubs));
+        }
+        return sb.toString();
     }
 
     @Override
@@ -116,20 +130,26 @@ public class AddPersonCommand extends Command {
             model.addPerson(personToAdd);
             logger.info(() -> "Person added: " + personToAdd);
 
+            String addMembershipResult = "";
             if (clubIndexes != null) {
-                addMembershipToAll(model, personToAdd);
+                addMembershipResult = addMembershipToAll(model, personToAdd);
             }
 
             CommandResult result = null;
+            String addPersonResult;
 
             if (personToAdd.phoneHasNonNumericNonSpaceCharacter()) {
-                result = new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters "
-                        + "other than digits and spaces", personToAdd.getPhone()));
+                addPersonResult = String.format("WARNING: The phone number added, '%s', contains characters "
+                        + "other than digits and spaces", personToAdd.getPhone());
             } else {
-                result = new CommandResult(
-                    String.format("New person added: %s", Messages.format(personToAdd)));
+                addPersonResult = String.format("New person added: %s", Messages.format(personToAdd));
             }
-
+            String finalResultMessage = addPersonResult;
+            if (!addMembershipResult.isEmpty()) {
+                addMembershipResult = "\nMembership addition result:\n" + addMembershipResult;
+                finalResultMessage += addMembershipResult;
+            }
+            result = new CommandResult(finalResultMessage);
             logger.exiting(cls, mtd, result);
             return result;
 

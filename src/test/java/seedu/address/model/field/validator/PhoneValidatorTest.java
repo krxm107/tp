@@ -13,6 +13,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public final class PhoneValidatorTest {
 
+    @Test
+    void emptyNumber_returnOk() {
+        assertTrue(PhoneValidator.validate("").isValid());
+    }
+
     // VALID CASES
     @ParameterizedTest
     @ValueSource(strings = {
@@ -40,9 +45,9 @@ public final class PhoneValidatorTest {
     // INVALID CASES
     @ParameterizedTest
     @ValueSource(strings = {
-        "", "   ", // empty
+        "   ", // empty
         "12345", // too short
-        "1234567890123456", // too long
+        "12345678901234561234567890123456", // too long
     })
     void invalidNumbers_returnFail(String raw) {
         var result = PhoneValidator.validate(raw);

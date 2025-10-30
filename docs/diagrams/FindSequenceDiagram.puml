@@ -1,0 +1,60 @@
+@startuml
+
+box Command
+participant "fpcp:FindPersonCommandParser" as FindPersonCommandParser
+participant "fpc:FindPersonCommand" as FindPersonCommand
+end box
+
+box Search
+participant "csp:CombinedSearchPredicate" as CombinedSearchPredicate
+participant "np:NameParser" as NameParser
+participant "nmp:NameMatchesPredicate" as NameMatchesPredicate
+end box
+
+[-> FindPersonCommandParser: fpcp.parse(args)
+activate FindPersonCommandParser
+
+create CombinedSearchPredicate
+FindPersonCommandParser -> CombinedSearchPredicate
+activate CombinedSearchPredicate
+
+CombinedSearchPredicate --> FindPersonCommandParser
+deactivate CombinedSearchPredicate
+
+create NameParser
+FindPersonCommandParser -> NameParser
+activate NameParser
+
+NameParser --> FindPersonCommandParser
+deactivate NameParser
+
+FindPersonCommandParser -> NameParser: np.parse(argsForName)
+activate NameParser
+
+create NameMatchesPredicate
+NameParser -> NameMatchesPredicate: new NameMatchesPredicate(parsedArgs)
+activate NameMatchesPredicate
+
+NameMatchesPredicate --> NameParser
+deactivate NameMatchesPredicate
+
+NameParser --> FindPersonCommandParser: return nmp
+deactivate NameParser
+
+FindPersonCommandParser -> CombinedSearchPredicate: csp.add(nmp)
+activate CombinedSearchPredicate
+
+CombinedSearchPredicate --> FindPersonCommandParser
+deactivate CombinedSearchPredicate
+
+create FindPersonCommand
+FindPersonCommandParser -> FindPersonCommand: new FindPersonCommand(csp)
+activate FindPersonCommand
+
+FindPersonCommand --> FindPersonCommandParser
+deactivate FindPersonCommand
+
+FindPersonCommandParser -->[: return fpc
+deactivate FindPersonCommandParser
+
+@enduml

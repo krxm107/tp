@@ -31,10 +31,12 @@ public final class PhoneTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "", // Empty and / or blank Strings
         "81234567",
         "  8123 4567 ",
         "123456", // exactly MIN
-        "123456789012345" // exactly MAX
+        "123456789012345123456789012345", // exactly MAX
+        "1234567890123456"
     })
     void isValidPhoneValidReturnsTrue(String s) {
         assertTrue(Phone.isValidPhone(s), "Expected valid: " + s);
@@ -42,9 +44,8 @@ public final class PhoneTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "", "   ",
+        "   ", // Blank but not empty, too few whitespaces
         "12345",
-        "1234567890123456",
     })
     void isValidPhoneInvalidReturnsFalse(String s) {
         assertFalse(Phone.isValidPhone(s), "Expected invalid: " + s);
@@ -56,11 +57,11 @@ public final class PhoneTest {
     class EqualityAndHashCode {
 
         @Test
-        void equalWhenOnlyWhitespaceDiffers() {
+        void notEqualWhenOnlyWhitespaceDiffers() {
             Phone a = new Phone("  8123  4567 ");
             Phone b = new Phone("81234567");
-            assertEquals(a, b);
-            assertEquals(a.hashCode(), b.hashCode());
+            assertNotEquals(a, b);
+            assertNotEquals(a.hashCode(), b.hashCode());
         }
 
         @Test
@@ -71,15 +72,11 @@ public final class PhoneTest {
         }
     }
 
-    // ---------- toString returns normalized String ----------
-
     @Test
-    void toStringReturnsOriginalInputNormalized() {
+    void toStringReturnsOriginalInputWithOriginalSpaces() {
         Phone p = new Phone("  8123  4567 ");
-        assertEquals("81234567", p.toString());
+        assertEquals("  8123  4567 ", p.toString());
     }
-
-    // ---------- boundary helpers ----------
 
     @Test
     void minDigitsAccepted() {

@@ -78,6 +78,20 @@ public class RenewMembershipCommandTest {
     }
 
     @Test
+    public void execute_renewPendingCancellation_throwsCommandException() {
+        // First, cancel the membership to set it to PENDING_CANCELLATION
+        Person person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Club club = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
+        model.cancelMembership(person, club);
+
+        RenewMembershipCommand renewMembershipCommand =
+                new RenewMembershipCommand(INDEX_FIRST_PERSON, INDEX_FIRST_CLUB, VALID_DURATION);
+
+        assertCommandFailure(renewMembershipCommand, model,
+                "Membership is pending cancellation. Please reactivate instead.");
+    }
+
+    @Test
     public void execute_nonExistentMembership_throwsCommandException() {
         // BENSON is not in any club initially
         RenewMembershipCommand renewMembershipCommand =
@@ -92,7 +106,8 @@ public class RenewMembershipCommandTest {
         RenewMembershipCommand renewMembershipCommand =
                 new RenewMembershipCommand(outOfBoundIndex, INDEX_FIRST_CLUB, VALID_DURATION);
 
-        assertCommandFailure(renewMembershipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(renewMembershipCommand, model, String.format(
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test
@@ -101,7 +116,8 @@ public class RenewMembershipCommandTest {
         RenewMembershipCommand renewMembershipCommand =
                 new RenewMembershipCommand(INDEX_FIRST_PERSON, outOfBoundIndex, VALID_DURATION);
 
-        assertCommandFailure(renewMembershipCommand, model, Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+        assertCommandFailure(renewMembershipCommand, model, String.format(
+                Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, outOfBoundIndex.getOneBased()));
     }
 
     @Test

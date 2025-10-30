@@ -1,0 +1,35 @@
+@startuml
+
+Class FindCommand
+Class Person
+Class Club
+Class "<<interface>>\nSearchable" as Searchable {
++ getName()
++ getPhone()
++ getAddress()
++ getEmail()
++ getTags()
++ getMemberships()
+}
+
+Person ..|> Searchable
+Club ..|> Searchable
+
+package "Search classes"{
+Class "<<interface>>\nSearchParser" as SearchParser
+Class XYZParser<T extends Searchable>
+Class XYZMatchesPredicate<T extends Searchable>
+Class SearchUtil
+Class CombinedSearchPredicate<R>
+}
+
+XYZMatchesPredicate ..> Searchable
+XYZParser ..|> SearchParser
+FindCommand --> "1" CombinedSearchPredicate
+CombinedSearchPredicate --> "*" XYZMatchesPredicate
+XYZMatchesPredicate ..> SearchUtil
+FindCommand ..> XYZParser
+XYZParser ..> XYZMatchesPredicate: <<create>>
+
+@enduml
+

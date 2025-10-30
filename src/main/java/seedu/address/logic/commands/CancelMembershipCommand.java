@@ -20,7 +20,8 @@ public class CancelMembershipCommand extends Command {
 
     public static final String COMMAND_WORD = "cancel";
     public static final String MESSAGE_CANCELLED_MEMBERSHIP =
-            "%1$s membership in %2$s cancelled. Membership only remains valid till expiry date.";
+            "If expiry date has passed, %1$s membership in %2$s is cancelled .\n"
+            + "Otherwise, the membership is pending cancellation and remains valid until expiry date.";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Cancel a person's membership in a club"
             + "Current membership is still valid until expiry date.\n"
@@ -50,10 +51,12 @@ public class CancelMembershipCommand extends Command {
         List<Club> lastShownClubList = model.getFilteredClubList();
 
         if (personIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX_DETAILED, personIndex.getOneBased()));
         }
         if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX);
+            throw new CommandException(
+                    String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED, clubIndex.getOneBased()));
         }
         Person personToCancel = lastShownPersonList.get(personIndex.getZeroBased());
         Club clubToCancelIn = lastShownClubList.get(clubIndex.getZeroBased());
