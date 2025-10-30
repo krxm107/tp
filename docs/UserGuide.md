@@ -3,9 +3,11 @@ layout: page
 title: User Guide
 ---
 
-ClubHub is a fast, keyboard-driven **contact management app** designed for people *who run multiple groups or clubs* — such as gym managers, volunteer coordinators, or hobby group organizers. Instead of juggling messy spreadsheets or address books, ClubHub lets you create, view, search, and organize contacts across different groups entirely from your keyboard.
+ClubHub is a fast, keyboard-driven **contact management app** designed for people *who run multiple groups or clubs* — from gym managers and volunteer coordinators to hobby group organizers. 
 
-If you type quickly, you can manage memberships, roles, and clubs faster and more efficiently with ClubHub than with mouse-based apps.
+Tired of juggling messy spreadsheets or address books? ClubHub lets you create, view, search, and organize contacts across different groups - all without taking your hands off your keyboard.
+
+With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and effeciency. Stay organised and focus on what matters most - your members and your community.
 
 * Table of Contents
 {:toc}
@@ -108,7 +110,7 @@ Type the command in the command box and press Enter to execute it. e.g. typing *
 
 ## Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a link to the user guide page.
 
 ![help message](images/helpMessage.png)
 
@@ -145,7 +147,7 @@ Phone numbers are allowed to have letters and some special characters.
 Persons can have the same name. Persons can share the same address or phone number.
 </div>
 
-Command examples:
+**Command examples:**
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison`
 
@@ -182,7 +184,7 @@ Club names that differ only by white spaces are allowed.
 
 Example: "ClubHub" is considered a different club from "Club Hub".
 
-Command examples:
+**Command examples:**
 * `add_club n/Bowling Club p/93456789 e/bowling@example.com a/15 Boon Lay Way`
 * `addc n/Cycling e/cycling@example.com`
 
@@ -190,67 +192,65 @@ Command examples:
 
 ## Memberships
 
-### Adding multiple persons to multiple clubs : `add_membership`  (or `addm`)
+### Adding memberships of multiple persons to multiple clubs : `add_membership`  (or `addm`)
 
 Adds multiple persons to multiple clubs.
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+You can add a new person directly to existing clubs with add_person c/INDEXES!
+</div>
 
-Format: `add_membership m/INDEXES c/INDEXES [d/DURATION]`
+**Format: `add_membership m/INDEXES c/INDEXES [d/DURATION]`**
 
-* The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
-* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
-* The default duration is 12 months if not specified.
-* Join date is set to today’s date.
-* Expiry date is set to join date plus duration months.
-* Adds the membership of the persons at the specified `PERSON_INDEXES` to the clubs at the specified `CLUB_INDEXES`.
-* The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
+> * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+> * The default duration is 12 months if not specified.
+> * Join date is set to today’s date.
+> * Expiry date is set to join date plus duration.
 
-Examples:
+**Command examples:**
 * `add_membership m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
   
 ![Add To](images/AddToImage.png)
 
-### Removing multiple persons from multiple clubs : `delete_membership`  (or `deletem`)
+### Delete memberships of multiple persons from multiple clubs : `delete_membership`  (or `deletem`)
 
 Removes multiple persons from multiple clubs in the club manager.
 
-Format: `delete_membership m/INDEXES c/INDEXES`
+**Format: `delete_membership m/INDEXES c/INDEXES`**
 
-* The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
-* Removes the membership of the persons at the specified `PERSON_INDEXES` from the clubs at the specified `CLUB_INDEXES`.
-* The indexes refer to the index numbers shown in the displayed person list & club list accordingly. The indexes **must be positive integers** 1, 2, 3, …​
+> * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
 
-Examples:
+**Command examples:**
 * `delete_membership m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
 
 ### Renew membership of a person in a club : `renew`
 
 Renews the membership of a person in a club with renewal duration given.
 
-Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
+**Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
-* Renew the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
 * Only active memberships can be renewed.
 * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
-* The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
 
-Command examples:
+**Command examples:**
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
 
 ### Cancel membership of a person in a club : `cancel`
 
 Cancels the membership of a person in a club.
 
-Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`
+**Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`**
 
-* Cancels the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
-* The index refers to the index number shown in the displayed person list & club list accordingly.
-* The index **must be a positive integer** 1, 2, 3, …​
 * The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
-* The Pending Cancellation status will change to Cancelled status when past the expiry date.
-* The membership will not be deleted.
-* To remove the person from the club, use the `delete_membership` command.
+* The membership status will change from **Pending Cancellation** to **Cancelled** when the expiry date has passed.
 
-Command examples:
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+The membership will not be deleted. To remove the person and his membership history from the club, use `delete_membership`.
+</div>
+
+
+**Command examples:**
 * `cancel m/1 c/2` Cancels the membership of the 1st person in the 2nd club.
 
 ![Cancel](images/CancelledImage.png)
@@ -259,15 +259,14 @@ Command examples:
 
 Reactivates expired, pending cancellation, or cancelled membership of a person in a club with duration given.
 
-Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`
 
-* Reactivates the membership of the person at the specified `PERSON_INDEX` in the club at the specified `CLUB_INDEX`.
-* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
-* The index refers to the index number shown in the displayed person list & club list accordingly. The index **must be a positive integer** 1, 2, 3, …​
-* If expiry date was in the past, setting new expiry date from today.
-* If expiry date was in the future, extending from current expiry date.
+**Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
+
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+> * If expiry date was in the past, setting new expiry date from today.
+> * If expiry date was in the future, extending from current expiry date.
  
-Command examples:
+**Command examples:**
 * `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -276,7 +275,7 @@ Command examples:
 
 ### Listing all clubs and contacts: `list` 
 
-</br>
+<br>
 
 ### Finding persons: `find_person` (or `findp`)
 
@@ -291,9 +290,9 @@ If no condition is provided, `find_person` displays all persons. Possible search
 
 Each search condition is to be supplied with one or more search keywords.
 
-Format: `find_person [SEARCH_CONDITIONS SEARCH_KEYWORDS]`
+Format: `find_person [SEARCH_CONDITION SEARCH_KEYWORDS]...`
 
-</br>**Basic Usage: Finding by single field**
+<br>**Basic Usage: Finding by single field**
 
 The find_person command can be used to locate persons using their basic fields, such as their name, address, email,
 phone and tags. To do so, use the matching search condition (as displayed in the previous section) followed
@@ -306,18 +305,18 @@ Can't remember the exact value of the field? Not to worry, find matches keywords
 meaning that calling "findp n/ john" will return persons with names like "John" and "johnathan lee".
 </div>
 
-</br>**Advanced Usage: Supplying multiple keywords**
+<br>**Advanced Usage: Supplying multiple keywords**
 
 Each search condition may be supplied with multiple keywords, **any of** which may be used to match the target. For
 example, `findp n/ Lee Li` would return persons with names like "Jane Li" and "Lee Richard".
 
-</br>**Advanced Usage: Supplying multiple conditions**
+<br>**Advanced Usage: Supplying multiple conditions**
 
 Each command may also be supplied with multiple search conditions. However, unlike the case with keywords,
 **all conditions** must match the target. For example, `findp t/ friend n/ John n/ Lee` will only return persons
 tagged with "friend" whose names contain both "John" and "Lee".
 
-</br>**Advanced Usage: Finding by membership status**
+<br>**Advanced Usage: Finding by membership status**
 
 The find_club command can be used to locate persons with memberships of a particular status, such as persons with
 expired memberships. To do so, use the `s/` condition, **but only with the following keywords:**
@@ -333,15 +332,15 @@ This means that "findp s/ active" will return all active, expired and canceled m
 "a", "c", and "e" are all present.
 </div>
 
-</br>**Command examples:**
+<br>**Command examples:**
 * `findp` displays all persons
 * `findp n/ Alex` displays `alex` and `Alex yeoh`
 * `findp n/ alex david` displays `alex` and `Alex yeoh` and `David Li`
 * `findp n/ alex n/ Yeoh` displays `Alex yeoh`
-* `findp n/ Alex t/ friend` displays only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not </br>
+* `findp n/ Alex t/ friend` displays only `Alex yeoh` because `Alex yeoh` is tagged with `friend` but `alex` is not <br>
   ![result for 'findp n/ Alex t/ friend'](images/findAlexFriendResult.png)
   
-</br>
+<br>
 
 ### Finding clubs: `find_club` (or `findc`)
 
@@ -356,9 +355,9 @@ If no condition is provided, `find_club` displays all clubs. Possible search con
 
 Each search condition is to be supplied with one or more search keywords.
 
-Format: `find_club [SEARCH_CONDITIONS SEARCH_KEYWORDS]`
+Format: `find_club [SEARCH_CONDITION SEARCH_KEYWORDS]...`
 
-</br>
+<br>
 
 <div markdown="span" class="alert alert-info">
 ℹ️ Info:  
@@ -367,17 +366,43 @@ searches for clubs rather than persons. Hence, you may refer to the find_person 
 on its usage.
 </div>
 
-</br>**Command examples**
+<br>**Command examples**
 
 Here are some sample commands:
 * `findc` displays all clubs
 * `findc n/ Study` displays `study` and `Monday Study`
 * `findc n/ Monday study` displays `study` and `Monday Study` and `Monday Guitar`
 * `findc n/ Monday n/ study` displays `Monday Study`
-* `findc n/ Study t/ 8pm` displays only `study` because `study` is tagged with `8pm` but `Monday Study` is not </br>
+* `findc n/ Study t/ 8pm` displays only `study` because `study` is tagged with `8pm` but `Monday Study` is not <br>
   ![result for 'findc n/ Study t/ NTU'](images/findStudyNtuResult.png)
   
-</br>
+<br>
+
+### Filter persons : `filter_persons` (or `filterp`)
+
+Filters the person list by the provided field(s).
+
+Format: `filter_persons [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`
+
+* `[n/NAME]` filters the person list by the specified name, `[p/PHONE_NUMBER]` by phone number, `[e/EMAIL]` by email, and `[a/ADDRESS]` by address.
+* 1 or more fields can be included. The app will filter the list based on all matching fields provided.
+
+**Command examples:**
+* `filter_person n/Alex` filters the person list with names containing 'Alex'
+* `filter_person n/Alex t/friend` filters the person list with names containing 'Alex' and tags containing 'friend'
+
+### Filter clubs : `filter_clubs` (or `filterc`)
+
+Filters the club list by the provided field(s).
+
+Format: `filter_clubs [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`
+
+* `[n/NAME]` filters the club list by the specified name, `[p/PHONE_NUMBER]` by phone number, `[e/EMAIL]` by email, and `[a/ADDRESS]` by address.
+* 1 or more fields can be included. The app will filter the list based on all matching fields provided.
+
+**Command examples:**
+* `filter_club n/ball` filters the club list with names containing 'ball'
+* `filter_club n/ball t/sports` filters the club list with names containing 'ball' and tags containing 'sports'.
 
 ### Displaying a person and their associated clubs : `membership_person` (or `mp`)
 
@@ -387,17 +412,17 @@ Finds and displays a person and the clubs which they are a member of. By default
 * `p` - for memberships pending cancellation
 * `c` - for canceled memberships
 
-Format: `membership_person INDEX [MEMBERSHIP_CONDITIONS]`</br>
+Format: `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>
 Index refers to the current index of the person in the right list.
 
-</br>**Command examples:**
+<br>**Command examples:**
 
 Suppose Jane is the second person in the current list. Jane has an active membership with ClubA, an expired one with 
 ClubE, one pending cancellation with ClubP, and a canceled one with ClubC.
 * `membership_person 2` displays Jane along with ClubA, ClubE and ClubP
 * `membership_person 2 p c` displays Jane along with ClubP and ClubC.
 
-</br>
+<br>
 
 ### Displaying a club and their associated persons : `membership_club` (or `mc`)
 
@@ -407,16 +432,16 @@ Finds and displays a club and persons which are members of it. By default, displ
 * `p` - for memberships pending cancellation
 * `c` - for canceled memberships
 
-Format: `membership_club INDEX [MEMBERSHIP_CONDITIONS]`</br>
+Format: `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>
 Index refers to the current index of the club in the left list.
 
-</br>**Command examples:**
+<br>**Command examples:**
 
 Suppose Archery is the second club in the current list. Archery has an active member PersonA, an expired member PersonE, one pending cancellation PersonP, and a canceled member PersonC.
 * `membership_club 2` displays Archery along with PersonA, PersonE and PersonP
 * `membership_club 2 p c` displays Archery along with PersonP and PersonC.
 
-</br>
+<br>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -494,28 +519,28 @@ Command examples:
 
 ### Getting a person's details : `get_person` (or `getp`)
 
-Copies the details of a person to the user's clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
+Copies the details of a person to the clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
 * `n` - include name
 * `p` - include phone
 * `e` - include email
 * `a` - include address
 * `m` - include names of all clubs which this person is a member of
 
-Format: `get_person INDEX [OPTIONAL_CONDITIONS]`</br>
+Format: `get_person INDEX [OPTIONAL_CONDITIONS]`<br>
 Index refers to the current index of the person in the right list.
 
-</br>
+<br>
 
 **Command examples:**
 * `get_person 1 p e` copies the phone and email of the 1st person in the right list.
-* `get_person 2` copies the name, phone, email, address and tags of the 2nd person in the right list.</br>
+* `get_person 2` copies the name, phone, email, address and tags of the 2nd person in the right list.<br>
   ![result for 'get_person 2'](images/getPersonResult.png)
   
-</br>
+<br>
 
 ### Copying a club's details : `get_club` (or `getc`)
 
-Copies the details of a club to the user's clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
+Copies the details of a club to the clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
 * `n` - include name
 * `p` - include phone
 * `e` - include email
@@ -523,28 +548,31 @@ Copies the details of a club to the user's clipboard. By default, copies the nam
 * `m` - include names of all persons which are members of this club
 * `*` - include the name, phone, email, address and tags of the club **and all its members**
 
-Format: `get_club INDEX [OPTIONAL_CONDITIONS]`</br>
+Format: `get_club INDEX [OPTIONAL_CONDITIONS]`<br>
 Index refers to the current index of the person in the right list.
 
-</br>
+<br>
 
 **Command examples:**
 * `get_club 1 p e` copies the phone and email of the 1st club in the left list.
 * `get_club 2` copies the name, phone, email, address and tags of the 2nd club in the left list.
-* `get_club 2 *` copies the name, phone, email, address and tags of the 2nd club (in the left list) and its members.</br>
+* `get_club 2 *` copies the name, phone, email, address and tags of the 2nd club (in the left list) and its members.<br>
   ![result for 'get_club 2 /*'](images/getClubFullResult.png)
   
-</br>
+<br>
 
 ### Getting a person's membership history: `get_history` (or `geth`)
-Gets and displays the membership history of the specified person in all clubs they have been a member of.
-Format: `get_history INDEX`
-* The target person is specified by its `INDEX` shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* Displays the membership history of the target person in all clubs they have been a member of.
+Copies the membership history of a person to the clipboard.
 
-Examples:
-* `get_history 2` displays the membership history of the 2nd person in the contact list.
+**Format: `get_history INDEX`**
+
+<br>
+Index refers to the current index of the person in the right list.
+
+<br>
+
+**Command examples:**
+* `get_history 2` copies the membership history of the 2nd person in the right list.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -560,7 +588,7 @@ Format: `delete_person INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Command examples:
+**Command examples:**
 * `find_person` followed by `delete_person 2` deletes the 2nd person in the contact list.
 * `find_person n/ Betsy` followed by `delete_person 1` deletes the 1st person in the results of the `find_person` command.
 
@@ -572,7 +600,7 @@ Format: `delete_club INDEX`
 * The index refers to the index number shown in the displayed club list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Command examples:
+**Command examples:**
 * `find_club` followed by `delete_club 2` deletes the 2nd club in the club list.
 * `find_club n/ Tennis` followed by `delete_club 1` deletes the 1st club in the results of the `find_club` command.
 
@@ -582,29 +610,29 @@ Command examples:
 
 ### Sorting persons : `sort_person` (or `sortp`)
 
-Sorts persons in the person list in ascending order of the provided fields.
+Sorts the person list by the provided field(s) in ascending order.
 
 Format: `sort_person [n/] [p/] [e/] [a/]`
 
-* `n/` sorts the list by person name, `p/` by phone number, `e/` by email, and `a/` by address.
-* Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
+* `n/` sorts the person list by name, `p/` by phone number, `e/` by email, and `a/` by address.
+* 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
-Command examples:
-* `sort_person n/` sorts the person list based on the ascending alphabetical order of their names.
-* `sortp a/ n/` sorts the person list in ascending order of the addresses. For persons with the same address, they will be sorted by their names.
+**Command examples:**
+* `sort_person n/` sorts the person list by their names in ascending alphabetical order.
+* `sortp a/ n/` sorts the person list by their address in ascending alphabetical order, followed by their names if there are persons with the same address.
 
 ### Sorting clubs : `sort_club` (or `sortc`)
 
-Sorts clubs in the club list in ascending order of the provided fields.
+Sorts the club list in ascending order of the provided fields.
 
 Format: `sort_club [n/] [p/] [e/] [a/]`
 
-* `n/` sorts the list by club name, `p/` by phone number, `e/` by email, and `a/` by address.
-* Any number of fields can be included. The app will sort the list based on the first provided field, with the next field used as a tiebreaker.
+* `n/` sorts the club list by name, `p/` by phone number, `e/` by email, and `a/` by address.
+* 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
-Command examples:
-* `sort_club n/` sorts the club list based on the ascending alphabetical order of their names.
-* `sortc a/ n/` sorts the club list in ascending order of the addresses. For clubs with the same address, they will be sorted by their names.
+**Command examples:**
+* `sort_club n/` sorts the club list by their names in ascending alphabetical order.
+* `sortc a/ n/` sorts the club list by their address in ascending alphabetical order, followed by their names if there are clubs with the same address.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -614,7 +642,7 @@ Command examples:
 
 Clears all entries from ClubHub.
 
-Need to confirm with capitalized YES.
+Need to confirm with a capitalized YES.
 
 Format: `clear YES`
 
@@ -623,6 +651,11 @@ Format: `clear YES`
 Exits the program.
 
 Format: `exit`
+
+### Command history
+
+Clubhub saves your previous commands typed, allowing you to navigate through repetitive commands seamlessly using the up / down arrow keys.
+
 
 ### Saving the data
 
@@ -637,9 +670,10 @@ If your changes to the data file makes its format invalid, ClubHub will discard 
 Furthermore, certain edits can cause ClubHub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Auto scroll to newly added/deleted/edited person, club, or membership
+### Auto scroll
 
-When a person or club is changed, the person list or club list will automatically scroll to show the newly changed entry.
+When a person, club, or membership is changed, the person list or club list will automatically scroll to show the newly changed entry.
+
 If there are multiple entries changed (e.g. when using `add_membership`, `delete_membership`), the list will scroll to show the last entry in the list of edited entries.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -663,25 +697,28 @@ If there are multiple entries changed (e.g. when using `add_membership`, `delete
 Action | Format                                                                                                                               | Short form | Examples
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
 **Help** | `help`                                                                                                                               
-**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665`
-**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG] [c/CLUB_INDEXES]​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/1 3`
+**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Add Membership** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
 **Delete Membership** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                             | `deletem`  | `delete_membership m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
 **Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
-**Find Person** | `findp [SEARCH_CONDITIONS SEARCH_KEYWORDS] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> | `findp`    | `find_person n/ James Jake t/ friend`
-**Find Club** | `findc [SEARCH_CONDITION_1 SEARCH_KEYWORDS_1] [SEARCH_CONDITION_2 SEARCH_KEYWORDS_2] ... [SEARCH_CONDITION_N SEARCH_KEYWORDS_N]`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
-**List Memberships** | `list_memberships INDEX`</br>                                                                                                        | `listmp`   | `list_memberships 1`
-**List Members** | `list_members INDEX`</br>                                                                                                            | `listmc`   | `list_members 1`
+**List All** | `list` | |
+**Find Person** | `findp [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findp`    | `find_person n/ James Jake t/ friend`
+**Find Club** | `findc [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
+**Filter Person** | `filter_person [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterp` | `filter_person n/Alex`
+**Filter Club** | `filter_club [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterc` | `filter_club t/sports`
+**Display Memberships for Person** | `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                        | `listmp`   | `membership_person 1 a e`
+**Display Memberships for Club** | `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                            | `listmc`   | `membership_club 1 a e`
 **Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
 **Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                      | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
-**Get Person** | `get_person INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                       | `getp`     | `get_person 2 /pae`
-**Get Club** | `get_club INDEX [/OPTIONAL_CONDITIONS]`</br>                                                                                         | `getc`     | `get_club 2 /*`
-**Get History** | `get_history INDEX`</br>                                                                                                             | `geth`     | `get_history 2`
+**Get Person** | `get_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                       | `getp`     | `get_person 2 p a e`
+**Get Club** | `get_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                         | `getc`     | `get_club 2 *`
+**Get History** | `get_history INDEX` <br>                                                                                                             | `geth`     | `get_history 2`
 **Delete Person** | `delete_person INDEX`<br>                                                                                                            | `deletep`  | `delete_person 3`
 **Delete Club** | `delete_club INDEX`<br>                                                                                                              | `deletec`  | `delete_club 3`
-**Sort Persons** | `sort_person [n/] [p/] [e/] [a/]`</br>                                                                                               | `sortp`    | `sort_person a/ n/`
-**Sort Clubs** | `sort_club [n/] [p/] [e/] [a/]`</br>                                                                                                 | `sortc`    | `sort_club a/ n/`
+**Sort Persons** | `sort_person [n/] [p/] [e/] [a/]`<br>                                                                                               | `sortp`    | `sort_person a/ n/`
+**Sort Clubs** | `sort_club [n/] [p/] [e/] [a/]`<br>                                                                                                 | `sortc`    | `sort_club a/ n/`
 **Clear** | `clear`                                                                                                                              
 **Exit** | `exit`                                                                                                                               
