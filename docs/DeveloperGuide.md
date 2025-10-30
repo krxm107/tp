@@ -467,6 +467,7 @@ Example: add_club n/Gymnastics e/gymnastics@abc.com ". <br> Use case resumes at 
 * **Command**: Text instruction for using the program via CLI
 * **Mainstream OS**: Windows, Linux, Unix, MacOS that is up to date (version within the past year)
 * **Standard hardware**: Any modern, store-bought laptop or personal computer (not including mobile devices)
+* **MSS**: Main Success Scenario. The typical flow of steps in a use case where the users
 
 --------------------------------------------------------------------------------------------------------------------
 
