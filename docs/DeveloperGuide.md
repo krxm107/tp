@@ -124,6 +124,7 @@ The `Model` component,
 
 * stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores `Club` and `Membership` in a similar manner as `Person`
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -264,6 +265,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 * manages multiple clubs
 * has a need to manage a significant number of persons
+* want to keep track of their members' membership expiry date and history
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
@@ -310,6 +312,12 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | 28 | user                             | tag multiple persons at once                             | speed up tagging                                                            | **    |
 | 29 | user                             | search by multiple fields at once                        | more precisely find persons                                                 | **    |
 | 30 | user                             | undo my last action                                      | easily go back on my mistakes                                               | **    |
+| 31 | user                             | add membership | track who belongs to which club | ***    |
+| 32 | user                             | delete membership | remove a member from a group | ***    |
+| 33 | user                             | renew membership | extend an active membership duration | ***    |
+| 34 | user                             | cancel membership | cancel a membership | ***    |
+| 35 | user                             | reactivate membership | reactivate an expired, pending cancellation or cancelled membership | ***    |
+| 36 | user                             | get membership history | to improve business strategy | **    |
 
 ### Use cases
 
@@ -458,38 +466,112 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample persons. The window size may not be optimum.
+   2. Double-click the jar file.<br> Expected: Shows the GUI with a set of sample persons and clubs. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+    
+### Clearing sample data
 
-1. _{ more test cases …​ }_
+1. Test case: `clear` <br> Expected: A warning message is displayed, prompting the user to enter `clear YES` to confirm the clear.
+    
+2. Test case: `clear YES` <br> Expected: All data is cleared from the app.
+    
+    
+### Adding persons and clubs
+    
+Prerequisites: None
 
-### Deleting a person
+1. Adding a person <br> Test case: `add_person n/John Doe e/john@example.com p/91234567 a/123 Clementi Rd`<br> Expected: A new person is created in the list. Details of the created person shown in the status message. 
 
-1. Deleting a person while all persons are being shown
+2. Adding an invalid person <br> Test case: `add_person e/alex@example.com t/friend` <br> Expected: No new person is created as named not provided. Error message is displayed to the user.
+    
+3. Adding a club <br> Test case: `add_club n/Basketball e/basket@example.com p/98765432` <br> Expected: A new club is created in the list. Details of the created club shown in the status message. 
+    
+5. Adding an invalid club <br> Test case: `add_club n/Reading Club e/reading t/hobby` <br> Expected: No new club is created due to invalid email. Error message is displayed to the user.
+    
+### Managing memberships
+    
+Prerequisites: Multiple persons and clubs in the app.
+    
+1. Adding memberships <br> Test case: `add_membership m/1 2 c/1 2 d/6` <br> Expected: Persons at indexes 1 and 2 added to clubs at indexes 1 and 2 with expiry 6 months from today.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+2. Deleting memberships <br> Test case: `delete_membership m/1 2 3 c/1 2 3` <br> Expected: Existing memberships between these persons and clubs removed. The result message contains a line for each successful deletion and a line for each unsuccessful deletion (invalid indexes, no memberships to delete).
+    
+3. Renewing membership <br> Test case: `renew m/1 c/1 d/3` <br> Expected: Membership of person 1 for club 1 extended by 3 months.
 
-   1. Test case: `delete+person 1`<br>
-      Expected: First person is deleted from the list. Details of the deleted person shown in the status message. Timestamp in the status bar is updated.
+4. Canceling membership <br> Test case: `cancel m/1 c/1` <br> Expected: Membership badge of person 1 for club 1 changes to yellow, signifying cancelled and valid until expiry.
 
-   1. Test case: `delete_person 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+5. Reactivating membership <br> Test case: `reactivate m/1 c/1 d/12` <br> Expected: Membership of person 1 for club 1 reactivated if previously cancelled/expired; expiry set 12 months ahead. Otherwise, membership duration remains the same and error message is displayed.
+    
+### Listing and Finding
+    
+Prerequisites: Have multiple clubs and persons with memberships in the app.
 
-   1. Other incorrect delete commands to try: `delete_person`, `delete_person x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Finding persons by name and phone number <br> Test case: `find_person n/John p/91234567` <br> Expected: Persons with "John" in name and phonen number 91234567 displayed in person list.
 
-### Saving data
+2. Finding clubs by name <br> Test case: `find_club n/Club` <br> Expected: Clubs with name containing "Club" displayed in club list.
 
-1. Dealing with missing/corrupted data files
+4. Displaying memberships for a person <br> Test case: `membership_person 1` <br> Expected: Person at index 1 and all the clubs who they are a member of are displayed.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+5. Displaying memberships for a club <br> Test case: `membership_club 2` <br> Expected: Club at index 2 and all its members are displayed.
+    
+6. List all entries <br> Test case: `list` <br> Expected: Full lists of persons and clubs displayed.
+    
+### Editing persons and clubs
+    
+Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
 
-1. _{ more test cases …​ }_
+1. Editing a person <br> Test case: `edit_person 1 p/98761234 e/johndoe@example.com` <br> Expected: Person at index 1 of the currently displayed list has phone number and email updated. Memberships of the person remains the same.
+
+2. Editing tags <br> Test case: `editp 2 t/vip` <br> Expected: 'vip' becomes the only tag for person 2. All previously existing tags cleared. Memberships of the person remains the same.
+
+3. Editing a club <br> Test case: `edit_club 1 n/CS Club e/cs@example.com p/` <br> Expected: Club at index 1 has phone number and email updated, phone number removed. Member count of the club remains the same.
+    
+4. Editing with no changes <br> Test case: `editc 1 n/CS Club` <br> Expected: Error message displayed: "There was no change to this club since the original and edited details are the same." Member count of the club remains the same.
+    
+### Getting person and club info
+    
+Prerequisites: Have multiple clubs and persons with memberships in the app.
+
+1. Getting person details <br> Test case: `get_person 1 p e` <br> Expected: Person 1’s phone and email copied to clipboard.
+
+2. Getting all person info <br> Test case: `getp 2` <br> Expected: All details of person 2 copied to clipboard.
+
+3. Getting club details with members <br> Test case: `get_club 1 *` <br> Expected: Club 1’s details and its members copied to clipboard.
+
+4. Getting membership history <br> Test case: `get_history 1` <br> Expected: Person 1’s full membership history copied to clipboard.
+
+
+### Deleting persons and clubs
+    
+Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
+
+1. Deleting a person <br> Test case: `delete_person 1`<br> Expected: Person at index 1 of the currently displayed list is deleted from the list. Details of the deleted person shown in the status message.
+
+2. Invalid deletion <br> Test case: `delete_person 0`<br> Expected: No person is deleted. Error message shown.
+
+### Data Saving
+
+1. Data persistence <br> Test case: Add a person → close → reopen app. <br> Expected: Added person still present.
+
+2. Missing data file <br> Test case: Delete data/addressbook.json → relaunch app. <br> Expected: App recreates data file with sample data.
+
+3. Corrupted data file <br> Test case: Edit addressbook.json and remove closing brace → relaunch. <br> Expected: App regenerates empty save file, starts with no data.
+
+### Keyboard Navigation and Auto-Scroll
+
+1. Command history <br> Test case: Enter several commands → press ↑ / ↓ arrows. <br> Expected: Previous commands reappear in input box.
+
+2. Auto-scroll <br> Test case: `add_membership m/1 2 c/1 3` <br> Expected: Lists scroll automatically to the last updated entry.
+    
+## Appendix: Planned Enhancements
+    Total members: 5
+    
+    Will be updated later.
+    

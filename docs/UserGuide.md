@@ -3,9 +3,9 @@ layout: page
 title: User Guide
 ---
 
-ClubHub is a fast, keyboard-driven **contact management app** designed for people *who run multiple groups or clubs* — from gym managers and volunteer coordinators to hobby group organizers. 
+ClubHub is a fast, keyboard-driven **contact & membership management app** designed for people *who run multiple groups or clubs* — from gym managers and volunteer coordinators to hobby group organizers. 
 
-Tired of juggling messy spreadsheets or address books? ClubHub lets you create, view, search, and organize contacts across different groups - all without taking your hands off your keyboard.
+Tired of juggling messy spreadsheets or address books? Want to keep track of who hasn't paid yet? ClubHub lets you create, view, search, and organize contacts and memberships across different groups - all without taking your hands off your keyboard.
 
 With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and effeciency. Stay organised and focus on what matters most - your members and your community.
 
@@ -18,10 +18,13 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. You can get Java 17 here  if you don't have it yet.<br>
+[Java 17 for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html)<br>
+[Java 17 for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html)<br>
+
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
+2. Download the latest ClubHub app`.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
   
    ![Download guide 1](images/DownloadGuide1.png)
    ![Download guide 2](images/DownloadGuide2.png)
@@ -112,9 +115,9 @@ Type the command in the command box and press Enter to execute it. e.g. typing *
 
 Shows a link to the user guide page.
 
-![help message](images/helpMessage.png)
+**Format: `help`**
 
-Format: `help`
+![help message](images/helpMessage.png)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -125,7 +128,7 @@ Format: `help`
 Adding a person to ClubHub helps you keep your contacts organized and easy to find.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
 
-Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
+**Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG] [c/CLUB_INDEXES]​`**
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info on Mandatory Fields:**  
@@ -149,7 +152,7 @@ Persons can have the same name. Persons can share the same address or phone numb
 
 **Command examples:**
 * `add_person n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison`
+* `addp n/Betsy Crowe e/betsycrowe@example.com a/Newgate Prison c/1 3`
 
 ![Add Person](images/AddPersonImage.png)
 
@@ -159,7 +162,7 @@ Persons can have the same name. Persons can share the same address or phone numb
 Adding a club to ClubHub lets you keep track of different clubs in one place.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
 
-Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`
+**Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]​`**
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info on Mandatory Fields:**  
@@ -192,16 +195,23 @@ Example: "ClubHub" is considered a different club from "Club Hub".
 
 ## Memberships
 
+<div markdown="block" class="alert alert-info">
+    * There are 4 membership status: **Active, Expired, Pending Cancellation, and Cancelled**.<br>
+    * A person with an expired membership is still considered as a member. The club owner can contact the person to reactivate or cancel his membership.<br>
+    * Only a person with a Cancelled membership is considered no longer a member.<br>
+    
+    
+</div>
 ### Adding memberships of multiple persons to multiple clubs : `add_membership`  (or `addm`)
 
-Adds multiple persons to multiple clubs.
+Adds multiple persons' memberships to multiple clubs.
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 You can add a new person directly to existing clubs with add_person c/INDEXES!
 </div>
 
-**Format: `add_membership m/INDEXES c/INDEXES [d/DURATION]`**
+**Format: `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]`**
 
-> * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+> * `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
 > * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
 > * The default duration is 12 months if not specified.
 > * Join date is set to today’s date.
@@ -214,24 +224,29 @@ You can add a new person directly to existing clubs with add_person c/INDEXES!
 
 ### Delete memberships of multiple persons from multiple clubs : `delete_membership`  (or `deletem`)
 
-Removes multiple persons from multiple clubs in the club manager.
+Deletes multiple persons' memberships from multiple clubs in the club manager.
 
-**Format: `delete_membership m/INDEXES c/INDEXES`**
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**      
+    `deletem` will delete the person's membership history as well. To keep the membership history, use `cancel` instead.
+</div>
 
-> * The `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+**Format: `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES`**
+
+> * `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
 
 **Command examples:**
 * `delete_membership m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
 
 ### Renew membership of a person in a club : `renew`
 
-Renews the membership of a person in a club with renewal duration given.
+Renews the active membership of a person in a club with renewal duration given.
 
 **Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
-* Only active memberships can be renewed.
-* `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
-
+> * Only active memberships can be renewed.
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+ 
 **Command examples:**
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
 
@@ -241,8 +256,8 @@ Cancels the membership of a person in a club.
 
 **Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`**
 
-* The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
-* The membership status will change from **Pending Cancellation** to **Cancelled** when the expiry date has passed.
+> * The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
+> * The membership status will change from **Pending Cancellation** to **Cancelled** when the expiry date has passed.
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
@@ -259,6 +274,10 @@ The membership will not be deleted. To remove the person and his membership hist
 
 Reactivates expired, pending cancellation, or cancelled membership of a person in a club with duration given.
 
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+    Membership still active? See `renew` to extend an active membership.
+</div>
 
 **Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
@@ -275,7 +294,7 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 
 ### Listing all clubs and contacts: `list` 
 
-<br>
+Simply lists every club and person you have saved in ClubHub.
 
 ### Finding persons: `find_person` (or `findp`)
 
@@ -290,7 +309,7 @@ If no condition is provided, `find_person` displays all persons. Possible search
 
 Each search condition is to be supplied with one or more search keywords.
 
-Format: `find_person [SEARCH_CONDITION SEARCH_KEYWORDS]...`
+**Format: `find_person [SEARCH_CONDITION SEARCH_KEYWORDS]...`**
 
 <br>**Basic Usage: Finding by single field**
 
@@ -355,7 +374,7 @@ If no condition is provided, `find_club` displays all clubs. Possible search con
 
 Each search condition is to be supplied with one or more search keywords.
 
-Format: `find_club [SEARCH_CONDITION SEARCH_KEYWORDS]...`
+**Format: `find_club [SEARCH_CONDITION SEARCH_KEYWORDS]...`**
 
 <br>
 
@@ -378,32 +397,6 @@ Here are some sample commands:
   
 <br>
 
-### Filter persons : `filter_persons` (or `filterp`)
-
-Filters the person list by the provided field(s).
-
-Format: `filter_persons [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`
-
-* `[n/NAME]` filters the person list by the specified name, `[p/PHONE_NUMBER]` by phone number, `[e/EMAIL]` by email, and `[a/ADDRESS]` by address.
-* 1 or more fields can be included. The app will filter the list based on all matching fields provided.
-
-**Command examples:**
-* `filter_person n/Alex` filters the person list with names containing 'Alex'
-* `filter_person n/Alex t/friend` filters the person list with names containing 'Alex' and tags containing 'friend'
-
-### Filter clubs : `filter_clubs` (or `filterc`)
-
-Filters the club list by the provided field(s).
-
-Format: `filter_clubs [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`
-
-* `[n/NAME]` filters the club list by the specified name, `[p/PHONE_NUMBER]` by phone number, `[e/EMAIL]` by email, and `[a/ADDRESS]` by address.
-* 1 or more fields can be included. The app will filter the list based on all matching fields provided.
-
-**Command examples:**
-* `filter_club n/ball` filters the club list with names containing 'ball'
-* `filter_club n/ball t/sports` filters the club list with names containing 'ball' and tags containing 'sports'.
-
 ### Displaying a person and their associated clubs : `membership_person` (or `mp`)
 
 Finds and displays a person and the clubs which they are a member of. By default, displays all clubs where the person has a non-canceled membership. Any number of optional conditions may be provided to specify (by status) which memberships and their associated clubs are to be displayed. Conditions include:
@@ -412,7 +405,7 @@ Finds and displays a person and the clubs which they are a member of. By default
 * `p` - for memberships pending cancellation
 * `c` - for canceled memberships
 
-Format: `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>
+**Format: `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>**
 Index refers to the current index of the person in the right list.
 
 <br>**Command examples:**
@@ -432,7 +425,7 @@ Finds and displays a club and persons which are members of it. By default, displ
 * `p` - for memberships pending cancellation
 * `c` - for canceled memberships
 
-Format: `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>
+**Format: `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>**
 Index refers to the current index of the club in the left list.
 
 <br>**Command examples:**
@@ -452,7 +445,7 @@ Suppose Archery is the second club in the current list. Archery has an active me
 Editing a person in ClubHub helps you keep their
 details up to date without having to create a new entry.
 
-Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+**Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -483,7 +476,7 @@ Command examples:
 
 Editing a club in ClubHub helps you keep club details up to date without having to create a new entry.
 
-Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+**Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
 
 * Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -526,8 +519,9 @@ Copies the details of a person to the clipboard. By default, copies the name, ph
 * `a` - include address
 * `m` - include names of all clubs which this person is a member of
 
-Format: `get_person INDEX [OPTIONAL_CONDITIONS]`<br>
-Index refers to the current index of the person in the right list.
+**Format: `get_person INDEX [OPTIONAL_CONDITIONS]`**
+
+Index refers to the index in the person list.
 
 <br>
 
@@ -548,8 +542,9 @@ Copies the details of a club to the clipboard. By default, copies the name, phon
 * `m` - include names of all persons which are members of this club
 * `*` - include the name, phone, email, address and tags of the club **and all its members**
 
-Format: `get_club INDEX [OPTIONAL_CONDITIONS]`<br>
-Index refers to the current index of the person in the right list.
+**Format: `get_club INDEX [OPTIONAL_CONDITIONS]` **
+
+Index refers to the index in the club list.
 
 <br>
 
@@ -566,8 +561,7 @@ Copies the membership history of a person to the clipboard.
 
 **Format: `get_history INDEX`**
 
-<br>
-Index refers to the current index of the person in the right list.
+Index refers to the index in the person list.
 
 <br>
 
@@ -582,7 +576,7 @@ Index refers to the current index of the person in the right list.
 
 Deletes the specified person from ClubHub.
 
-Format: `delete_person INDEX`
+**Format: `delete_person INDEX`**
 
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
@@ -594,7 +588,7 @@ Format: `delete_person INDEX`
 
 ### Deleting a club : `delete_club` (or `deletec`)
 
-Format: `delete_club INDEX`
+**Format: `delete_club INDEX`**
 
 * Deletes the club at the specified `INDEX`.
 * The index refers to the index number shown in the displayed club list.
@@ -612,7 +606,7 @@ Format: `delete_club INDEX`
 
 Sorts the person list by the provided field(s) in ascending order.
 
-Format: `sort_person [n/] [p/] [e/] [a/]`
+**Format: `sort_person [n/] [p/] [e/] [a/]`**
 
 * `n/` sorts the person list by name, `p/` by phone number, `e/` by email, and `a/` by address.
 * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
@@ -625,7 +619,7 @@ Format: `sort_person [n/] [p/] [e/] [a/]`
 
 Sorts the club list in ascending order of the provided fields.
 
-Format: `sort_club [n/] [p/] [e/] [a/]`
+**Format: `sort_club [n/] [p/] [e/] [a/]`**
 
 * `n/` sorts the club list by name, `p/` by phone number, `e/` by email, and `a/` by address.
 * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
@@ -644,13 +638,13 @@ Clears all entries from ClubHub.
 
 Need to confirm with a capitalized YES.
 
-Format: `clear YES`
+**Format: `clear YES`**
 
 ### Exiting the program : `exit`
 
 Exits the program.
 
-Format: `exit`
+**Format: `exit`**
 
 ### Command history
 
