@@ -711,8 +711,8 @@ Action | Format                                                                 
 **Find Club** | `findc [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
 **Filter Person** | `filter_person [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterp` | `filter_person n/Alex`
 **Filter Club** | `filter_club [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterc` | `filter_club t/sports`
-**Display Memberships for Person** | `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                        | `listmp`   | `membership_person 1 a e`
-**Display Memberships for Club** | `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                            | `listmc`   | `membership_club 1 a e`
+**Display Memberships for Person** | `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                        | `mp`   | `membership_person 1 a e`
+**Display Memberships for Club** | `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                            | `mc`   | `membership_club 1 a e`
 **Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
 **Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                      | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
 **Get Person** | `get_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                       | `getp`     | `get_person 2 p a e`
