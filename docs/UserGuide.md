@@ -57,7 +57,8 @@ If you're using Linux:
     
     A terminal window will open.
 
-`cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application.<br>
+`cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
+
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -78,7 +79,7 @@ Type the command in the command box and press Enter to execute it. e.g. typing *
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command Formats
+## Command formats
 
 <div markdown="block" class="alert alert-info">
 
@@ -128,7 +129,7 @@ Shows a link to the user guide page.
 Adding a person to ClubHub helps you keep your contacts organized and easy to find.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
 
-**Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG] [c/CLUB_INDEXES]​`**
+**Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]… [c/CLUB_INDEXES]​`**
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info on Mandatory Fields:**  
@@ -162,7 +163,7 @@ Persons can have the same name. Persons can share the same address or phone numb
 Adding a club to ClubHub lets you keep track of different clubs in one place.
 You only need to provide the essential information of name and email, and you can always edit or add more later.
 
-**Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]​`**
+**Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`**
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info on Mandatory Fields:**  
@@ -195,13 +196,20 @@ Example: "ClubHub" is considered a different club from "Club Hub".
 
 ## Memberships
 
+![Memberships](images/MembershipStatuses.png)
+*Green: Active, Red: Expired, Amber: Pending Cancellation, Grey: Cancelled*
+
 <div markdown="block" class="alert alert-info">
-    * There are 4 membership status: **Active, Expired, Pending Cancellation, and Cancelled**.<br>
-    * A person with an expired membership is still considered as a member. The club owner can contact the person to reactivate or cancel his membership.<br>
-    * Only a person with a Cancelled membership is considered no longer a member.<br>
+
+**:information_source: Notes about membership status:**<br>
     
+* There are 4 membership status: **Active, Expired, Pending Cancellation, and Cancelled**.
     
+* A person with an expired membership is still considered as a member. The club owner can contact the person and decide to reactivate or cancel his membership.
+    
+* Only a person with a Cancelled membership is considered no longer a member.    
 </div>
+
 ### Adding memberships of multiple persons to multiple clubs : `add_membership`  (or `addm`)
 
 Adds multiple persons' memberships to multiple clubs.
@@ -691,8 +699,8 @@ If there are multiple entries changed (e.g. when using `add_membership`, `delete
 Action | Format                                                                                                                               | Short form | Examples
 --------|--------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
 **Help** | `help`                                                                                                                               
-**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG] [c/CLUB_INDEXES]​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/1 3`
-**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
+**Add Person** | `add_person n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]… [c/CLUB_INDEXES]​` <br>                                                              | `addp`     | `add_person n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/1 3`
+**Add Club** | `add_club n/NAME [p/PHONE_NUMBER] e/EMAIL [a/ADDRESS] [t/TAG]…​` <br>                                                                | `addc`     | `add_club n/Basketball Club p/22232434 e/basketball@example.com a/123, Bukit Batok Rd, 1234865`
 **Add Membership** | `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]` <br>                                                                   | `addm`     | `add_membership m/1 2 c/3 4 d/6`
 **Delete Membership** | `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES` <br>                                                                             | `deletem`  | `delete_membership m/1 2 c/3 4`
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
