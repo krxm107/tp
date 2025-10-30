@@ -29,10 +29,10 @@ public class CommandList {
     public static String getPrevCommand() {
         if (currentCommand > 0) {
             currentCommand--;
-        }
-        else if (currentCommand < 0) {
+        } else if (currentCommand < 0) {
             return "";
         }
+
         return COMMAND_LIST.get(currentCommand);
     }
 
@@ -44,10 +44,10 @@ public class CommandList {
     public static String getNextCommand() {
         if (currentCommand < COMMAND_LIST.size() - 1) {
             currentCommand++;
-        }
-        else if (currentCommand > COMMAND_LIST.size() - 1) {
+        } else if (currentCommand > COMMAND_LIST.size() - 1) {
             return "";
         }
+
         return COMMAND_LIST.get(currentCommand);
     }
 }

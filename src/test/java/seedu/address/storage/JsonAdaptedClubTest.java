@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
-import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 
 public class JsonAdaptedClubTest {
     private static final String INVALID_NAME = "R?!chel";
@@ -55,7 +55,7 @@ public class JsonAdaptedClubTest {
     public void toModelType_invalidPhone_throwsIllegalValueException() {
         JsonAdaptedClub club =
                 new JsonAdaptedClub(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
-        String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
+        String expectedMessage = PhoneValidator.INVALID_PHONE_WARNING;
         assertThrows(IllegalValueException.class, expectedMessage, club::toModelType);
     }
 

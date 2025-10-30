@@ -60,7 +60,7 @@
                         <Image url="@/images/email.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="email" styleClass="cell_small_label" />
+                <Label fx:id="email" styleClass="cell_small_label" wrapText="true" />
             </HBox>
         </VBox>
       <rowConstraints>
