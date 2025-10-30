@@ -574,3 +574,4 @@ Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs 
     Total members: 5
     
     Will be updated later.
+    
