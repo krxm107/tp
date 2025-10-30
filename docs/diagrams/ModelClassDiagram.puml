@@ -28,8 +28,6 @@ Package Model as ModelPackage <<Rectangle>>{
         - status: MembershipStatus
     }
 
-    Enum MembershipStatus
-
     Class Address
     Class Email
     Class Name
