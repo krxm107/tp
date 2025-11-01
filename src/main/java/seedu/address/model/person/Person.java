@@ -105,7 +105,7 @@ public class Person implements Searchable {
         return this.memberships;
     }
 
-    public boolean checkTagListValidity() {
+    public boolean hasValidTagList() {
         return tags != null && tags.stream().allMatch(tag -> tag.isValid()) && tags.size() <= 10;
     }
 

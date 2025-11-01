@@ -90,7 +90,7 @@ public class Club implements Searchable {
         return Collections.unmodifiableSet(tags);
     }
 
-    public boolean checkTagListValidity() {
+    public boolean hasValidTagList() {
         return tags != null && tags.stream().allMatch(tag -> tag.isValid()) && tags.size() <= 10;
     }
 
