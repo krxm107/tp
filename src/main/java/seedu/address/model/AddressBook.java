@@ -90,11 +90,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         setClubs(newData.getClubList());
         setMemberships(newData.getMembershipList());
 
-        if (validatePersonList(newData.getPersonList())) {
+        if (!validatePersonList(newData.getPersonList())) {
             clearAllData();
         }
 
-        if (validateClubList(newData.getClubList())) {
+        if (!validateClubList(newData.getClubList())) {
             clearAllData();
         }
 
