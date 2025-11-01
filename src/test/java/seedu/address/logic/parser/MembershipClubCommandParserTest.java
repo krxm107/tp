@@ -31,9 +31,6 @@ public class MembershipClubCommandParserTest {
 
         // Valid keywords
         assertParseSuccess(parser, "1 a c", new MembershipClubCommand(INDEX_FIRST_CLUB, testPredicate));
-
-        // Valid keywords with random letters
-        assertParseSuccess(parser, "1   abcd  ", new MembershipClubCommand(INDEX_FIRST_CLUB, testPredicate));
     }
 
     @Test
@@ -44,6 +41,10 @@ public class MembershipClubCommandParserTest {
 
         // Invalid index
         assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                MembershipClubCommand.MESSAGE_USAGE));
+
+        // Valid keywords with random letters
+        assertParseFailure(parser, "1   abcd  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 MembershipClubCommand.MESSAGE_USAGE));
     }
 }

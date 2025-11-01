@@ -31,10 +31,6 @@ public class MembershipPersonCommandParserTest {
 
         // Valid keywords
         assertParseSuccess(parser, "1 e p", new MembershipPersonCommand(INDEX_FIRST_PERSON, testPredicate));
-
-        // Valid keywords with random letters
-        assertParseSuccess(parser, "1   efgp  ",
-                new MembershipPersonCommand(INDEX_FIRST_PERSON, testPredicate));
     }
 
     @Test
@@ -45,6 +41,10 @@ public class MembershipPersonCommandParserTest {
 
         // Invalid index
         assertParseFailure(parser, "-1", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                MembershipPersonCommand.MESSAGE_USAGE));
+
+        // Valid keywords with random letters
+        assertParseFailure(parser, "1   efgp  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 MembershipPersonCommand.MESSAGE_USAGE));
     }
 }
