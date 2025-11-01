@@ -23,6 +23,9 @@ public class StatusParser<T extends Searchable> implements SearchParser<T> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        } else if (!MembershipStatus.containsStatus(args)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    "Valid statuses are: a - active, c - cancelled, e - expired, p - pending cancellation."));
         }
 
         return new StatusesMatchPredicate<>(MembershipStatus.getStatuses(trimmedArgs));
