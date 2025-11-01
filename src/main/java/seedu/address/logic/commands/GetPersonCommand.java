@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.function.Function;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CopyUtil;
@@ -23,25 +24,24 @@ public class GetPersonCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): Copies details of a person identified by the index number to the user's clipboard.\n"
-            + "Parameters: INDEX (must be a positive integer) [OPTIONAL_KEYWORDS]\n"
-            + "Optional keywords may be added to copy specified fields only.\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL_KEYWORD]\n"
+            + "An optional keyword may be added to specify what to copy.\n"
             + "Keywords: n - name, p - phone, e - email, a - address, m - memberships\n"
             + "Example: " + COMMAND_WORD + " 1 - copies name, phone, email, address and tags\n"
-            + "Example: " + COMMAND_WORD + " 1 /p - copies phone number only";
+            + "Example: " + COMMAND_WORD + " 1 p - copies phone number";
 
     public static final String MESSAGE_GET_PERSON_SUCCESS = "Copied: %1$s";
     public static final String MESSAGE_GET_PERSON_FAILURE = "Failed to copy person to clipboard";
 
     private final Index targetIndex;
-    private final String keywords;
+    private final Function<Person, String> mapper;
 
     /**
-     * {@code keywords} refer to optional words used to specify what fields to copy.
-     * Is an empty string if no words were entered by the user.
+     * {@code mapper} Is the function that maps the person to the copied string.
      */
-    public GetPersonCommand(Index targetIndex, String keywords) {
+    public GetPersonCommand(Index targetIndex, Function<Person, String> mapper) {
         this.targetIndex = targetIndex;
-        this.keywords = keywords;
+        this.mapper = mapper;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class GetPersonCommand extends Command {
         }
 
         Person personToCopy = lastShownList.get(targetIndex.getZeroBased());
-        String details = new GetPersonMessageParser().parse(personToCopy, keywords);
+        String details = mapper.apply(personToCopy);
         copyToClipboard(details);
 
         return new CommandResult(String.format(MESSAGE_GET_PERSON_SUCCESS, details));
