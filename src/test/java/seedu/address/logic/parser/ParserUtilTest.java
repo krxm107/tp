@@ -25,7 +25,7 @@ public class ParserUtilTest {
     // At sign (@) is allowed
     private static final String VALID_NAME_WITH_AT_SIGN = "R@chel";
 
-    private static final String INVALID_PHONE = "+651234";
+    private static final String VALID_PHONE_WITH_PLUS_SIGN = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
@@ -89,8 +89,9 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
+    public void parsePhone_plusSignIsValidChar() throws Exception {
+        Phone expectedPhone = new Phone(VALID_PHONE_WITH_PLUS_SIGN);
+        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE_WITH_PLUS_SIGN));
     }
 
     @Test
