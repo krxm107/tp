@@ -66,6 +66,8 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        primaryStage.setMinWidth(1000);
+        primaryStage.setMinHeight(600);
 
         setAccelerators();
 
