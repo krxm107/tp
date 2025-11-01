@@ -32,6 +32,9 @@ public class MembershipPersonCommandParser implements Parser<MembershipPersonCom
         if (parts.length == 1) {
             return new MembershipPersonCommand(index,
                     new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses()));
+        } else if (!MembershipStatus.containsStatus(parts[1])) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MembershipPersonCommand.MESSAGE_USAGE));
         } else {
             return new MembershipPersonCommand(index,
                     new MembershipStatusPredicate(MembershipStatus.getStatuses(parts[1])));

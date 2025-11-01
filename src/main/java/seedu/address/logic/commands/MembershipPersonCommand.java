@@ -31,7 +31,7 @@ public class MembershipPersonCommand extends Command {
             + "Optional keywords may be added to specify which membership statuses to show.\n"
             + "Keywords: a - active, c - cancelled, e - expired, p - pending cancellation\n"
             + "Example: " + COMMAND_WORD + " 1 - shows all existing memberships\n"
-            + "Example: " + COMMAND_WORD + " 1 /ap - shows all memberships that are active or pending cancellation";
+            + "Example: " + COMMAND_WORD + " 1 a p - shows all memberships that are active or pending cancellation";
 
     private final Index targetIndex;
     private final Predicate<Membership> predicate;

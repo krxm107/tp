@@ -41,4 +41,8 @@ public enum MembershipStatus {
         }
         return statuses;
     }
+
+    public static boolean containsStatus(String args) {
+        return args.toLowerCase().matches("[aepc\\s]*");
+    }
 }
