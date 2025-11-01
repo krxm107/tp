@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.MembershipClubCommand;
 import seedu.address.logic.commands.MembershipPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.search.predicates.MembershipStatusPredicate;
@@ -32,6 +33,9 @@ public class MembershipPersonCommandParser implements Parser<MembershipPersonCom
         if (parts.length == 1) {
             return new MembershipPersonCommand(index,
                     new MembershipStatusPredicate(MembershipStatus.getDefaultStatuses()));
+        } else if (!MembershipStatus.containsStatus(parts[1])) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MembershipClubCommand.MESSAGE_USAGE));
         } else {
             return new MembershipPersonCommand(index,
                     new MembershipStatusPredicate(MembershipStatus.getStatuses(parts[1])));

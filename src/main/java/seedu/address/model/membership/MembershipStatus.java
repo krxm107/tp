@@ -3,6 +3,7 @@ package seedu.address.model.membership;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Represents the status of a Membership.
@@ -40,5 +41,9 @@ public enum MembershipStatus {
             statuses.add(CANCELLED);
         }
         return statuses;
+    }
+
+    public static boolean containsStatus(String args) {
+        return args.toLowerCase().matches("[aepc\\s]*");
     }
 }
