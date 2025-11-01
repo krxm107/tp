@@ -323,7 +323,7 @@ Each search condition is to be supplied with one or more search keywords.
 
 The find_person command can be used to locate persons using their basic fields, such as their name, address, email,
 phone and tags. To do so, use the matching search condition (as displayed in the previous section) followed
-by the keyword you wish to match for that condition (e.g. `findc n/ John`). **Do note that there should be
+by the keyword you wish to match for that condition (e.g. `findp n/ John`). **Do note that there should be
 a space before each search condition or keyword.**
 
 <div markdown="span" class="alert alert-info">
