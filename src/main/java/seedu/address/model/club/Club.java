@@ -90,6 +90,10 @@ public class Club implements Searchable {
         return Collections.unmodifiableSet(tags);
     }
 
+    public boolean checkTagListValidity() {
+        return tags != null && tags.stream().allMatch(tag -> tag.isValid()) && tags.size() <= 10;
+    }
+
     /**
      * Returns true if both clubs have the same name and / or the same email.
      * This defines a weaker notion of equality between two clubs.
