@@ -43,6 +43,10 @@ public class Name implements Comparable<Name> {
     public String toString() {
         return fullName;
     }
+    
+    public boolean isSameName(Name other) {
+        return NameValidator.normalize(fullName).equalsIgnoreCase(NameValidator.normalize(other.fullName));
+    }
 
     @Override
     public boolean equals(Object other) {
