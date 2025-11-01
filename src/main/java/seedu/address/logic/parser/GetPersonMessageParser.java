@@ -42,7 +42,7 @@ public class GetPersonMessageParser {
         }
         if (args.contains(MEMBER)) {
             person.getMemberships().stream().forEach(membership ->
-                    sb.append(membership.getClubName()).append(" "));
+                    sb.append(membership.getClubName()).append("; "));
         }
         return sb.toString();
     }

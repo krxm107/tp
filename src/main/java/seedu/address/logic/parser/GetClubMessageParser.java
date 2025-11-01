@@ -46,7 +46,7 @@ public class GetClubMessageParser {
         }
         if (args.contains(MEMBER)) {
             club.getMemberships().stream().forEach(membership ->
-                    sb.append(membership.getPersonName()).append(" "));
+                    sb.append(membership.getPersonName()).append("; "));
         }
         return sb.toString();
     }
