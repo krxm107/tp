@@ -20,10 +20,10 @@ public class FindClubCommand extends Command {
             + "): Find clubs that match all of "
             + "the specified search conditions and display them in the list on the left.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Conditions: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag, "
-            + "m/ - by membership statuses (a, c, e, p)\n"
-            + "Example: " + COMMAND_WORD + " /n tennis basketball /t school t/NUS"
-            + " - searches for all clubs tagged with 'school' and 'NUS' that contain either 'tennis' or 'basketball'";
+            + "Search Conditions: a/ - by address, e/ - by email, n/ - by name, p/ - by phone, t/ - by tag, "
+            + "s/ - by membership statuses (a, c, e, p)\n"
+            + "Example: " + COMMAND_WORD + " n/ tennis basketball t/ school t/ evening"
+            + " - searches for clubs tagged with 'school' and 'evening' that contain either 'tennis' or 'basketball'";
 
     private final CombinedSearchPredicate<Club> predicate;
 

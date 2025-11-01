@@ -20,10 +20,10 @@ public class FindPersonCommand extends Command {
             + "): Find persons that match all of "
             + "the specified search conditions and display them in the list on the right.\n"
             + SearchParser.MESSAGE_USAGE
-            + "Search Conditions: a/ - by address, e/ - by email, /n - by name, p/ - by phone, t/ - by tag"
-            + "m/ - by membership statuses (a, c, e, p)\n"
-            + "Example: " + COMMAND_WORD + " /n alice bob /t friend /t NUS"
-            + " - searches for all persons tagged as 'friend' and 'NUS' with names containing 'alice' or 'bob'";
+            + "Search Conditions: a/ - by address, e/ - by email, n/ - by name, p/ - by phone, t/ - by tag "
+            + "s/ - by membership statuses (a, c, e, p)\n"
+            + "Example: " + COMMAND_WORD + " n/ alice bob t/ friend t/ paid"
+            + " - searches for persons tagged as 'friend' and 'paid' with names containing 'alice' or 'bob'";
 
     private final CombinedSearchPredicate<Person> predicate;
 
