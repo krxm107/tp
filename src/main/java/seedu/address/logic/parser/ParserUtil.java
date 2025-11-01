@@ -162,8 +162,8 @@ public class ParserUtil {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
-            if (tagSet.size() > 5) {
-                throw new ParseException("The number of tags cannot exceed 5.");
+            if (tagSet.size() > 10) {
+                throw new ParseException("The number of tags cannot exceed 10.");
             }
 
             if (tagName.length() > 20) {
