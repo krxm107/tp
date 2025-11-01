@@ -90,14 +90,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         setClubs(newData.getClubList());
         setMemberships(newData.getMembershipList());
 
-        if (!validatePersonList(newData.getPersonList())) {
+        if (!validatePersonList(newData.getPersonList()) || !validateClubList(newData.getClubList()) ) {
             clearAllData();
         }
-
-        if (!validateClubList(newData.getClubList())) {
-            clearAllData();
-        }
-
+        
         // resetToDummyData();
     }
 
@@ -107,11 +103,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         setMemberships(List.of());
     }
 
-    private boolean validatePersonList (List<Person> personList) {
+    private boolean validatePersonList(List<Person> personList) {
         return personList.stream().allMatch(Person::hasValidTagList);
     }
 
-    private boolean validateClubList (List<Club> clubList) {
+    private boolean validateClubList(List<Club> clubList) {
         return clubList.stream().allMatch(Club::hasValidTagList);
     }
 
