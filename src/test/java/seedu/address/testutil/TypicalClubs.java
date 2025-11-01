@@ -25,7 +25,7 @@ public class TypicalClubs {
 
     public static final Club ARCHERY = new ClubBuilder().withName("Archery Club")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("archery@example.com")
-            .withPhone("94351253")
+            .withPhone("+6594351253")
             .withTags("sports").build();
     public static final Club BALL = new ClubBuilder().withName("Balls Club")
             .withAddress("311, Clementi Ave 2, #02-25")
