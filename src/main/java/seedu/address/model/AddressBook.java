@@ -93,8 +93,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (!validatePersonList(newData.getPersonList()) || !validateClubList(newData.getClubList()) ) {
             clearAllData();
         }
-        
-        // resetToDummyData();
     }
 
     private void clearAllData() {
