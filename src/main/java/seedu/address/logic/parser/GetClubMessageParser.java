@@ -41,7 +41,8 @@ public class GetClubMessageParser {
 
     private static String getClubMemberships(Club club) {
         StringBuilder sb = new StringBuilder(club.getName().fullName).append(": ");
-        club.getMemberships().forEach(membership -> sb.append("\n").append(membership.getPersonName()));
+        club.getMemberships().stream().filter(membership -> !membership.getStatus().equals(CANCELLED))
+                .forEach(membership -> sb.append("\n").append(membership.getPersonName()));
         return sb.toString();
     }
 
