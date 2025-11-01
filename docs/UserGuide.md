@@ -7,7 +7,7 @@ ClubHub is a fast, keyboard-driven **contact & membership management app** desig
 
 Tired of juggling messy spreadsheets or address books? Want to keep track of who hasn't paid yet? ClubHub lets you create, view, search, and organize contacts and memberships across different groups - all without taking your hands off your keyboard.
 
-With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and effeciency. Stay organised and focus on what matters most - your members and your community.
+With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organised and focus on what matters most - your members and your community.
 
 * Table of Contents
 {:toc}
@@ -132,8 +132,8 @@ You only need to provide the essential information of name and email, and you ca
 **Format: `add_person n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]… [c/CLUB_INDEXES]​`**
 
 <div markdown="span" class="alert alert-info">
-ℹ️ **Info on Mandatory Fields:**  
-Name and email are both mandatory. 
+ℹ️ **Info on Mandatory and Optional Fields:**  
+Name and email are both mandatory. Phone and address are optional. The number of tags can range from 0 - 10, both inclusive.
 </div>
 
 <div markdown="span" class="alert alert-info">
@@ -142,13 +142,13 @@ Email is unique to a person.
 </div>
 
 <div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Number Inputs:**  
-Phone numbers are allowed to have letters and some special characters.
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
 </div>
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning on Duplicates:**  
-Persons can have the same name. Persons can share the same address or phone number.
+Persons can have the same name. Persons can share the same address or phone.
 </div>
 
 **Command examples:**
@@ -166,8 +166,8 @@ You only need to provide the essential information of name and email, and you ca
 **Format: `add_club n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [t/TAG]…​`**
 
 <div markdown="span" class="alert alert-info">
-ℹ️ **Info on Mandatory Fields:**  
-Name and email are both mandatory. 
+ℹ️ **Info on Mandatory and Optional Fields:**  
+Name and email are both mandatory. Phone and address are optional. The number of tags can range from 0 - 10, both inclusive.
 </div>
 
 <div markdown="span" class="alert alert-info">
@@ -176,13 +176,13 @@ Club name is unique to a club. Email is also unique to a club.
 </div>
 
 <div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Number Inputs:**  
-Phone numbers are allowed to have letters and some special characters.
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
 </div>
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning on Duplicates:**      
-Clubs can share the same address or phone number.
+Clubs can share the same address or phone.
 Club names that differ only by white spaces are allowed.
 </div>
 
@@ -313,7 +313,7 @@ If no condition is provided, `find_person` displays all persons. Possible search
 * `e/` - by email
 * `p/` - by phone
 * `t/` - by tag
-* `s/` - by membership status
+* `s/` - by current membership statuses
 
 Each search condition is to be supplied with one or more search keywords.
 
@@ -323,7 +323,7 @@ Each search condition is to be supplied with one or more search keywords.
 
 The find_person command can be used to locate persons using their basic fields, such as their name, address, email,
 phone and tags. To do so, use the matching search condition (as displayed in the previous section) followed
-by the keyword you wish to match for that condition (e.g. `findc n/ John`). **Do note that there should be
+by the keyword you wish to match for that condition (e.g. `findp n/ John`). **Do note that there should be
 a space before each search condition or keyword.**
 
 <div markdown="span" class="alert alert-info">
@@ -345,19 +345,12 @@ tagged with "friend" whose names contain both "John" and "Lee".
 
 <br>**Advanced Usage: Finding by membership status**
 
-The find_club command can be used to locate persons with memberships of a particular status, such as persons with
+The find_club command can be used to locate persons with memberships of particular statuses, such as persons with
 expired memberships. To do so, use the `s/` condition, **but only with the following keywords:**
 * `a` - for active memberships
 * `e` - for expired memberships
 * `p` - for memberships pending cancellation
 * `c` - for canceled memberships
-
-<div markdown="span" class="alert alert-warning">
-⚠️ Warning: 
-Unlike other search conditions, "s/" matches all identifiable keywords within a single string of letters.
-This means that "findp s/ active" will return all active, expired and canceled members, since the keywords
-"a", "c", and "e" are all present.
-</div>
 
 <br>**Command examples:**
 * `findp` displays all persons
@@ -378,7 +371,7 @@ If no condition is provided, `find_club` displays all clubs. Possible search con
 * `e/` - by email
 * `p/` - by phone
 * `t/` - by tag
-* `s/` - by membership status
+* `s/` - by existing member statuses
 
 Each search condition is to be supplied with one or more search keywords.
 
@@ -390,7 +383,9 @@ Each search condition is to be supplied with one or more search keywords.
 ℹ️ Info:  
 The find_club command is identical to the find_person command in its usage, the only difference being that it
 searches for clubs rather than persons. Hence, you may refer to the find_person command above for detailed guidance 
-on its usage.
+on its usage. 
+    
+Do note that the condition "s/" in the context of "findc" returns clubs containing members of the specified membership statuses.
 </div>
 
 <br>**Command examples**
@@ -467,17 +462,17 @@ All fields can be edited to a different case. However, name and email remain man
 </div>
 
 <div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Number Inputs:**  
-Phone numbers are allowed to have letters and some special characters.
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
 </div>
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning on Duplicates:**  
-Persons can have the same name. Persons can share the same address or phone number.
+Persons can have the same name. Persons can share the same address or phone.
 </div>
 
 Command examples:
-*  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone and email of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `editp 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Editing a club : `edit_club`  (or `editc`)
@@ -498,19 +493,19 @@ All fields can be edited to a different case. However, name and email remain man
 </div>
 
 <div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Number Inputs:**  
-Phone numbers are allowed to have letters and some special characters.
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
 </div>
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning on Duplicates:**  
-Clubs can share the same address or phone number. Club names that differ only by white spaces are allowed.
+Clubs can share the same address or phone. Club names that differ only by white spaces are allowed.
 </div>
 
 Example: "ClubHub" is considered a different club from "Club Hub".
 
 Command examples:
-*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone number and email address of the 1st club to be `91234567` and `dance@example.com` respectively.
+*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone and email of the 1st club to be `91234567` and `dance@example.com` respectively.
 *  `editc 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -520,21 +515,21 @@ Command examples:
 
 ### Getting a person's details : `get_person` (or `getp`)
 
-Copies the details of a person to the clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
+Copies the details of a person to the clipboard. By default, copies the name, phone, email, address and tags. One optional condition may be supplied to specify a particular detail to copy. Possible conditions are:
 * `n` - include name
 * `p` - include phone
 * `e` - include email
 * `a` - include address
-* `m` - include names of all clubs which this person is a member of
+* `m` - include names of all clubs which this person is a current (non-cancelled membership) member of
 
-**Format: `get_person INDEX [OPTIONAL_CONDITIONS]`**
+**Format: `get_person INDEX [OPTIONAL_CONDITION]`**
 
 Index refers to the index in the person list.
 
 <br>
 
 **Command examples:**
-* `get_person 1 p e` copies the phone and email of the 1st person in the right list.
+* `get_person 1 e` copies the email of the 1st person in the right list.
 * `get_person 2` copies the name, phone, email, address and tags of the 2nd person in the right list.<br>
   ![result for 'get_person 2'](images/getPersonResult.png)
   
@@ -542,22 +537,22 @@ Index refers to the index in the person list.
 
 ### Copying a club's details : `get_club` (or `getc`)
 
-Copies the details of a club to the clipboard. By default, copies the name, phone, email, address and tags. Any number of optional conditions may be supplied to specify which details to include in the copy. Possible conditions are:
+Copies the details of a club to the clipboard. By default, copies the name, phone, email, address and tags. One optional condition may be supplied to specify a particular detail to copy. Possible conditions are:
 * `n` - include name
 * `p` - include phone
 * `e` - include email
 * `a` - include address
-* `m` - include names of all persons which are members of this club
-* `*` - include the name, phone, email, address and tags of the club **and all its members**
+* `m` - include names of all persons which are current (non-cancelled membership) members of this club
+* `*` - include the name, phone, email, address and tags of the club **and all its current (non-cancelled membership) members**
 
-**Format: `get_club INDEX [OPTIONAL_CONDITIONS]` **
+**Format: `get_club INDEX [OPTIONAL_CONDITION]` **
 
 Index refers to the index in the club list.
 
 <br>
 
 **Command examples:**
-* `get_club 1 p e` copies the phone and email of the 1st club in the left list.
+* `get_club 1 e` copies the email of the 1st club in the left list.
 * `get_club 2` copies the name, phone, email, address and tags of the 2nd club in the left list.
 * `get_club 2 *` copies the name, phone, email, address and tags of the 2nd club (in the left list) and its members.<br>
   ![result for 'get_club 2 /*'](images/getClubFullResult.png)
@@ -616,7 +611,7 @@ Sorts the person list by the provided field(s) in ascending order.
 
 **Format: `sort_person [n/] [p/] [e/] [a/]`**
 
-* `n/` sorts the person list by name, `p/` by phone number, `e/` by email, and `a/` by address.
+* `n/` sorts the person list by name, `p/` by phone, `e/` by email, and `a/` by address.
 * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
 **Command examples:**
@@ -629,7 +624,7 @@ Sorts the club list in ascending order of the provided fields.
 
 **Format: `sort_club [n/] [p/] [e/] [a/]`**
 
-* `n/` sorts the club list by name, `p/` by phone number, `e/` by email, and `a/` by address.
+* `n/` sorts the club list by name, `p/` by phone, `e/` by email, and `a/` by address.
 * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
 **Command examples:**
