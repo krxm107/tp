@@ -67,7 +67,7 @@ public class Person implements Searchable {
         this.email = email;
         this.address = (address == null) ? new Address("") : address;
 
-        assert tags.size() <= 5;
+        assert tags.size() <= 10;
         assert tags.stream().allMatch(tag -> tag.tagName.length() <= 20);
 
         this.tags.addAll(tags);
