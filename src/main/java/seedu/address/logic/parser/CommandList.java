@@ -8,7 +8,7 @@ import java.util.List;
  * methods to retrieve previous or next commands for navigation.
  */
 public class CommandList {
-    private static final List<String> COMMAND_LIST = new ArrayList<>();
+    private static final List<String> commandList = new ArrayList<>();
     private static int currentCommand = 0;
 
     /**
@@ -17,8 +17,8 @@ public class CommandList {
      * @param args The command string to add.
      */
     public static void addCommand(String args) {
-        COMMAND_LIST.add(args);
-        currentCommand = COMMAND_LIST.size();
+        commandList.add(args);
+        currentCommand = commandList.size();
     }
 
     /**
@@ -27,13 +27,16 @@ public class CommandList {
      * @return The previous command string.
      */
     public static String getPrevCommand() {
+        if (commandList.size() == 0) {
+            return "";
+        }
         if (currentCommand > 0) {
             currentCommand--;
         } else if (currentCommand < 0) {
             return "";
         }
 
-        return COMMAND_LIST.get(currentCommand);
+        return commandList.get(currentCommand);
     }
 
     /**
@@ -42,12 +45,15 @@ public class CommandList {
      * @return The next command string.
      */
     public static String getNextCommand() {
-        if (currentCommand < COMMAND_LIST.size() - 1) {
+        if (commandList.size() == 0) {
+            return "";
+        }
+        if (currentCommand < commandList.size() - 1) {
             currentCommand++;
-        } else if (currentCommand > COMMAND_LIST.size() - 1) {
+        } else if (currentCommand > commandList.size() - 1) {
             return "";
         }
 
-        return COMMAND_LIST.get(currentCommand);
+        return commandList.get(currentCommand);
     }
 }
