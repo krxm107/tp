@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.GetPersonMessageParser.parse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.club.Club;
 import seedu.address.model.membership.Membership;
