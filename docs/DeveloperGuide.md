@@ -284,7 +284,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | 3  | user                             | search for persons                                       | quickly locate members' information                                  | ***   |
 | 4  | user                             | edit persons                                             | update personal details of members when the members change their contact information | ***   |
 | 5  | user                             | delete persons                                           | remove personal details of members who have left the club                     | ***   |
-| 6  | user                             | add multiple phone numbers                               | add all the person’s different phone numbers e.g. mobile, home, office      | **    |
+| 6  | user                             | add multiple tags to a person                             | label persons with extra identifiers     | **    |
 | 7  | user                             | download the address book data from a file               | forward the address book file to members in the management committee        | *     |
 | 8  | user                             | import address book data from a file                     | easily get the data that someone sent me into my app                        | *     |
 | 9  | user                             | add notes to a person                                    | record extra details about the person                                       | **    |
@@ -342,9 +342,7 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
     * 3b1. ClubHub shows an error message: "The person index provided is invalid".
         Use case resumes at step 1.
 * 3c. The user provides an invalid command format.
-    * 3c1. ClubHub shows an error message: <br> "Invalid command format! <br> `delete_person (deletep)`: Deletes the person identified by the index number used in the displayed person list. <br>
-Parameters: INDEX (must be a positive integer) <br>
-Example: `delete_person 1`". <br>
+    * 3c1. ClubHub shows an error message: <br> "Invalid command format...". <br>
         Use case resumes at step 1.
 
 #### **Use case: UC02 - Add a new club**
@@ -363,16 +361,11 @@ Example: `delete_person 1`". <br>
 * 1a. A club with the same name already exists in the address book.
     * 1a1. ClubHub shows the error message, "This club already exists in the address book".
         Use resumes at step 1.
-* 1b. One of the provided fields is invalid (e.g. name contains invalid characters, or email format is incorrect).
-    * 1b1. ClubHub displays the corresponding error message for the invalid field (e.g. "The name is invalid. Allowed characters: A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., 
-slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.
-Names should have at least 1 character and at most 75 characters.").
+* 1b. One of the provided fields is invalid (e.g. name contains invalid characters).
+    * 1b1. ClubHub displays the corresponding error message for the invalid field (e.g. "The name is invalid...").
         Use case resumes at step 1.
 * 1c. The user provides an invalid command format.
-    * 1c1. ClubHub displays an error message: <br> "Invalid command format!  <br>
-add_club (addc): Adds a club to the address book. <br> Parameters: n/NAME e/EMAIL [a/ADDRESS] [p/PHONE] [t/TAG]... <br> 
-Example: add_club n/Basketball e/basketball@example.com a/311, Clementi Ave 2, #02-25 p/98765432 t/advanced t/competitive <br> 
-Example: add_club n/Gymnastics e/gymnastics@abc.com ". <br> Use case resumes at step 1.
+    * 1c1. ClubHub displays an error message: <br> "Invalid command format..." <br> Use case resumes at step 1.
 
 #### **Use case: UC03 - Edit a club**
 
@@ -396,18 +389,13 @@ Example: add_club n/Gymnastics e/gymnastics@abc.com ". <br> Use case resumes at 
     * 2c1. ClubHub displays an error message (e.g. "A club with this name already exists.").
         Use case resumes at step 1.
 * 2d. The provided club name is invalid (e.g. invalid characters are used).
-    * 2d1. ClubHub displays an error message: "The name is invalid. Allowed characters: A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., 
-slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.
-Names should have at least 1 character and at most 75 characters."
+    * 2d1. ClubHub displays an error message: "The name is invalid..."
         Use case resumes at step 1.
 * 2e. No changes were made to the club.
     * 2e1. ClubHub displays the message: "There was no change to this club since the original and edited details are the same." Use case ends.
 * 2f. The command format is invalid.
     * 2f1. ClubHub displays an error message:<br>
-"Invalid command format! <br>
-edit_club (editc): Edits the details of the club identified by the index number used in the displayed club list. Existing values will be overwritten by the input values. <br>
-Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... <br>
-Example: edit_club 1 p/91234567 e/johndoe@example.com." <br>
+"Invalid command format..."<br>
         Use case resumes at step 1.
 
 #### **Use case: UC04 - Add a user as a member to a club**
@@ -434,10 +422,7 @@ Example: edit_club 1 p/91234567 e/johndoe@example.com." <br>
     * 3b1. For the invalid indexes, ClubHub shows an error message: "[INDEX] is an invalid person / club index." Valid indexes functions normally.
         Use case resumes at step 1.
 * 3c. The user provides an invalid command format.
-    * 3c1. ClubHub displays an error message: <br> "Invalid command format! <br>
-add_club (addc): Adds a club to the address book. Parameters: n/NAME e/EMAIL [a/ADDRESS] [p/PHONE] [t/TAG]... <br>
-Example: add_club n/Basketball e/basketball@example.com a/311, Clementi Ave 2, #02-25 p/98765432 t/advanced t/competitive <br>
-Example: add_club n/Gymnastics e/gymnastics@abc.com ". <br> Use case resumes at step 1.
+    * 3c1. ClubHub displays an error message: <br> "Invalid command format...". <br> Use case resumes at step 1.
 
 
 ### Non-Functional Requirements
