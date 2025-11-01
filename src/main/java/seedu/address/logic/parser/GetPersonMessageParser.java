@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.EMAIL;
 import static seedu.address.logic.parser.CliSyntax.MEMBER;
 import static seedu.address.logic.parser.CliSyntax.NAME;
 import static seedu.address.logic.parser.CliSyntax.PHONE;
+import static seedu.address.model.membership.MembershipStatus.CANCELLED;
 
 import java.util.function.Function;
 
@@ -37,7 +38,8 @@ public class GetPersonMessageParser {
 
     private static String getPersonMemberships(Person person) {
         StringBuilder sb = new StringBuilder(person.getName().fullName).append(": ");
-        person.getMemberships().forEach(membership -> sb.append("\n").append(membership.getClubName()));
+        person.getMemberships().stream().filter(membership -> !membership.getStatus().equals(CANCELLED))
+                .forEach(membership -> sb.append("\n").append(membership.getClubName()));
         return sb.toString();
     }
 
