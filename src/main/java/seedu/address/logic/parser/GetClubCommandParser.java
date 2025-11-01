@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.GetClubCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -28,9 +29,9 @@ public class GetClubCommandParser implements Parser<GetClubCommand> {
         }
 
         if (parts.length == 1) {
-            return new GetClubCommand(index, "");
+            return new GetClubCommand(index, Messages::format);
         } else {
-            return new GetClubCommand(index, parts[1]);
+            return new GetClubCommand(index, GetClubMessageParser.parse(parts[1]));
         }
     }
 

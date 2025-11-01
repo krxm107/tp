@@ -1,12 +1,16 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.format;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.EMAIL;
 import static seedu.address.logic.parser.CliSyntax.MEMBER;
 import static seedu.address.logic.parser.CliSyntax.NAME;
 import static seedu.address.logic.parser.CliSyntax.PHONE;
 
+import java.util.function.Function;
+
+import seedu.address.logic.commands.GetPersonCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 
 /**
@@ -15,35 +19,25 @@ import seedu.address.model.person.Person;
 public class GetPersonMessageParser {
 
     /**
-     * Parses a {@code person} into an appropriate string to be copied to the user's clipboard.
+     * Returns a <code>Function</code> that maps a person to the appropriate details to be copied.
      * {@code args} is used to specify what details to be included.
      */
-    public String parse(Person person, String args) {
-        if (args.isEmpty()) {
-            return format(person);
-        } else {
-            return getPersonDetails(person, args.toLowerCase());
-        }
+    public static Function<Person, String> parse(String args) throws ParseException {
+        args = args.trim().toLowerCase();
+        return switch (args) {
+        case NAME -> person -> person.getName().fullName;
+        case PHONE -> person -> person.getPhone().value;
+        case EMAIL -> person -> person.getEmail().value;
+        case ADDRESS -> person -> person.getAddress().value;
+        case MEMBER -> GetPersonMessageParser::getPersonMemberships;
+        default -> throw new ParseException(String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, GetPersonCommand.MESSAGE_USAGE));
+        };
     }
 
-    private String getPersonDetails(Person person, String args) {
-        StringBuilder sb = new StringBuilder();
-        if (args.contains(NAME)) {
-            sb.append(person.getName()).append(" ");
-        }
-        if (args.contains(PHONE)) {
-            sb.append(person.getPhone()).append(" ");
-        }
-        if (args.contains(EMAIL)) {
-            sb.append(person.getEmail()).append(" ");
-        }
-        if (args.contains(ADDRESS)) {
-            sb.append(person.getAddress()).append(" ");
-        }
-        if (args.contains(MEMBER)) {
-            person.getMemberships().stream().forEach(membership ->
-                    sb.append(membership.getClubName()).append(" "));
-        }
+    private static String getPersonMemberships(Person person) {
+        StringBuilder sb = new StringBuilder(person.getName().fullName).append(": ");
+        person.getMemberships().forEach(membership -> sb.append("\n").append(membership.getClubName()));
         return sb.toString();
     }
 
