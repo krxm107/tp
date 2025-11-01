@@ -28,14 +28,14 @@ public class GetClubMessageParser {
     public static Function<Club, String> parse(String args) throws ParseException {
         args = args.trim().toLowerCase();
         return switch (args) {
-            case "*" -> GetClubMessageParser::getFullClubDetails;
-            case NAME -> club -> club.getName().fullName;
-            case PHONE -> club -> club.getPhone().value;
-            case EMAIL -> club -> club.getEmail().value;
-            case ADDRESS -> club -> club.getAddress().value;
-            case MEMBER -> GetClubMessageParser::getClubMemberships;
-            default -> throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, GetClubCommand.MESSAGE_USAGE));
+        case "*" -> GetClubMessageParser::getFullClubDetails;
+        case NAME -> club -> club.getName().fullName;
+        case PHONE -> club -> club.getPhone().value;
+        case EMAIL -> club -> club.getEmail().value;
+        case ADDRESS -> club -> club.getAddress().value;
+        case MEMBER -> GetClubMessageParser::getClubMemberships;
+        default -> throw new ParseException(String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, GetClubCommand.MESSAGE_USAGE));
         };
     }
 
