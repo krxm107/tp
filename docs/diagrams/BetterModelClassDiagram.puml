@@ -16,14 +16,14 @@ UniquePersonList -right-> Person
 UniqueClubList -right-> Club
 UniqueMembershipList -right-> Membership
 
-Person -up-> "*" Tag
+Person -up-> "0..10" Tag
 
 Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
 
-Club -up-> "*" Tag
+Club -up-> "0..10" Tag
 
 Club *--> Name
 Club *--> Phone

@@ -69,7 +69,7 @@ Club *--> "0..10" Tag
 
 ' Association class relationship
 Person "*" -- "*" Club : member of >
-(Club, Person) ..x Membership
+(Club, Person) .. Membership
 
 UniqueMembershipList --> "~* all" Membership
 
