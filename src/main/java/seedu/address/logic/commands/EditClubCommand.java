@@ -121,7 +121,7 @@ public class EditClubCommand extends Command {
             if (c.equals(clubToEdit)) {
                 continue; // skip the club being edited
             }
-            if (c.getName().fullName.equalsIgnoreCase(editedClub.getName().fullName)) {
+            if (c.getName().isSameName(editedClub.getName())) {
                 throw new CommandException(MESSAGE_DUPLICATE_CLUB_NAME);
             }
             if (c.getEmail().value.equalsIgnoreCase(editedClub.getEmail().value)) {

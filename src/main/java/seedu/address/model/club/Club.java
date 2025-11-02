@@ -103,7 +103,7 @@ public class Club implements Searchable {
             return false;
         }
 
-        return name.fullName.equalsIgnoreCase(otherClub.name.fullName)
+        return name.isSameName(otherClub.name)
                 || email.value.equalsIgnoreCase(otherClub.email.value);
     }
 
