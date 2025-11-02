@@ -69,13 +69,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `ClubListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -86,7 +86,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -116,7 +116,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddPersonCommandParser`, `DeletePersonCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -129,16 +129,10 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
-
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -322,108 +316,267 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
 #### **Use case: UC01 - Delete a person**
 
-**Scope:** The user wants to remove a person from the contact book. The `delete_person` command allows deletion by the person's index.
-
 **MSS**
 
-1.  The user requests to list persons using the `findp` command to find the name of the person to be deleted.
+1.  The user requests to list all persons to find the name of the person to be deleted.
 2.  ClubHub displays a list of all persons.
-3.  The user issues the `delete_person INDEX` command with the index of an existing person.
-4.  ClubHub deletes the person from the system and all associated clubs, displaying a confirmation message: "Deleted person: [NAME]; Phone: [PHONE_NUMBER]; Email: [EMAIL]"; Address: [ADDRESS]; Tags: [TAGS].
+3.  The user issues the command to delete a person with the index of an existing person.
+4.  ClubHub deletes the person from the system and all associated clubs, displaying a confirmation message.
 
     Use case ends.
 
 **Extensions**
 
-* 3a. The person list is empty.<br>
-    * 3a1. ClubHub shows the message: "The person index provided is invalid".
-        Use case ends.
+* 3a. The user provides an index that is not a positive integer.
+    * 3a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
 * 3b. The index provided is not currently displayed in the person list.
-    * 3b1. ClubHub shows an error message: "The person index provided is invalid".
-        Use case resumes at step 1.
-* 3c. The user provides an invalid command format.
-    * 3c1. ClubHub shows an error message: <br> "Invalid command format...". <br>
-        Use case resumes at step 1.
+    * 3b1. ClubHub shows a message for invalid index.
+    * 3b2. The user amends the command with a valid index. <br>
+        Use case resumes at step 4.
 
 #### **Use case: UC02 - Add a new club**
 
-**Scope:** The user wants to add a new club to the address book.
-
 **MSS**
 
-1.  The user issues the command `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2`. Note that there can be any number of tags, including 0.
-2.  ClubHub creates the new club, then displays a success message: "New club added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: [TAG1] [TAG2]". 
+1.  The user requests to add a new club to the list.
+2.  ClubHub creates the new club, then displays a success message. 
     
     Use case ends.
 
 **Extensions**
 
-* 1a. A club with the same name already exists in the address book.
-    * 1a1. ClubHub shows the error message, "This club already exists in the address book".
-        Use resumes at step 1.
-* 1b. One of the provided fields is invalid (e.g. name contains invalid characters).
-    * 1b1. ClubHub displays the corresponding error message for the invalid field (e.g. "The name is invalid...").
-        Use case resumes at step 1.
-* 1c. The user provides an invalid command format.
-    * 1c1. ClubHub displays an error message: <br> "Invalid command format..." <br> Use case resumes at step 1.
+* 1a. A club with the same name/email already exists in ClubHub.
+    * 1a1. ClubHub shows an error message for duplicate club.
+    * 1a2. The user amends the command with a valid name/email. <br>
+        Use case resumes at step 2.
+* 1b. Some of the provided parameters are invalid (e.g. name contains invalid characters).
+    * 1b1. ClubHub displays the corresponding error message for the invalid parameters.
+    * 1b2. The user amends the command with valid parameters. <br>
+        Use case resumes at step 2.
+* 1c. The command is missing required parameters.
+    * 1c1. ClubHub displays an error message for invalid command format.
+    * 1c2. The user amends the command with valid parameters. <br>
+        Use case resumes at step 2.
+* 1d. The command format is invalid.
+    * 1d1. ClubHub displays an error message for invalid command format.
+    Use case ends.
 
 #### **Use case: UC03 - Edit a club**
 
-**Scope:** The user wants to edit the contact details of an existing club in the address book.
-
 **MSS**
 1. The user creates a club (UC02).
-2.  The user issues the `edit_club INDEX n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2` command with valid details. 
-3.  ClubHub edits the club details and displays a success message: "Edited Club: Chess Club, Phone: 12345679; Address: 53 Chess Street; Tags: [advanced] [mindsport]".
+2.  The user issues the command to edit a club with the index of an existing club and valid details. 
+3.  ClubHub edits the club details and displays a success message.
 
     Use case ends.
 
 **Extensions**
-* 2a. The person list is empty.<br>
-    * 2a1. ClubHub shows the message: "The club index provided is invalid".
-        Use case ends.
-* 2b. The index provided is not currently displayed in the club list.
-    * 2b1. ClubHub shows an error message: "The club index provided is invalid".
-        Use case resumes at step 1.
-* 2c. There already exists another club with the specified name/email.
-    * 2c1. ClubHub displays an error message (e.g. "A club with this name already exists.").
-        Use case resumes at step 1.
-* 2d. The provided club name is invalid (e.g. invalid characters are used).
-    * 2d1. ClubHub displays an error message: "The name is invalid..."
-        Use case resumes at step 1.
-* 2e. No changes were made to the club.
-    * 2e1. ClubHub displays the message: "There was no change to this club since the original and edited details are the same." Use case ends.
-* 2f. The command format is invalid.
-    * 2f1. ClubHub displays an error message:<br>
-"Invalid command format..."<br>
-        Use case resumes at step 1.
+
+* 2a. A club with the same name/email already exists in ClubHub.
+    * 2a1. ClubHub shows an error message for duplicate club.
+    * 2a2. The user amends the command with a valid name/email. <br>
+        Use case resumes at step 3.
+* 2b. Some of the provided parameters are invalid (e.g. name contains invalid characters).
+    * 2b1. ClubHub displays the corresponding error message for the invalid parameters.
+    * 2b2. The user amends the command with valid parameters. <br>
+        Use case resumes at step 3.
+* 2c. No changes were made to the club.
+    * 2c1. ClubHub displays the message to inform the user that there were no changes made. Use case ends.
+* 2d. The index provided is not currently displayed in the club list.
+    * 2d1. ClubHub shows a message for invalid index.
+    * 2d2. The user amends the command with a valid index. <br>
+        Use case resumes at step 3.
+* 2e. The command format is invalid.
+    * 2e1. ClubHub displays an error message for invalid command format.
+    Use case ends.
 
 #### **Use case: UC04 - Add a user as a member to a club**
-
-**Scope:** The user wants add an existing person as a member to an existing club.
 
 **Preconditions:** At least 1 club and 1 person has been added to ClubHub.
 
 **MSS**
 
-1.  The user requests to list all clubs and persons using the `list` command.
+1.  The user requests to list all clubs and persons.
 2.  ClubHub displays a list of all existing clubs and persons.
-3.  The user issues the `add_membership m/PERSON_INDEXES c/CLUB_INDEXES` command with the indexes of some clubs and persons from the lists.
-4.  For each of the specified person, ClubHub creates a new memberships for them to each of the specified club. For each membership added, ClubHub appends a line to the output message: "[PERSON_NAME] added to [CLUB_NAME]".
+3.  The user issues the command to add persons as members to clubs with the indexes of some clubs and persons from the lists.
+4.  For each of the specified person, ClubHub creates a new memberships for them to each of the specified club, then displays a success message for each successful membership created.
 
     Use case ends.
 
 **Extensions**
 
-* 3a. The person list / club list is empty.<br>
-    * 3a1. ClubHub shows the message: "[INDEX] is an invalid person / club index."
+* 3a. Any of the indexes provided are not a positive integer.
+    * 3a1. ClubHub displays an error message for invalid command format.
         Use case ends.
 * 3b. Some of the indexes provided are not currently displayed in the person / club list.
-    * 3b1. For the invalid indexes, ClubHub shows an error message: "[INDEX] is an invalid person / club index." Valid indexes functions normally.
-        Use case resumes at step 1.
-* 3c. The user provides an invalid command format.
-    * 3c1. ClubHub displays an error message: <br> "Invalid command format...". <br> Use case resumes at step 1.
+    * 3b1. For the invalid indexes, ClubHub shows a message for invalid index.
+    * 3b2. For the valid indexes, ClubHub proceeds with membership creation as in step 4. <br>
+        Use case ends.
+* 3c. Some of the memberships to be added already exists. <br>
+    * 3c1. For the memberships that already exist, ClubHub shows a message informing that the person is already part of the club.
+    * 3c2. For the new memberships, ClubHub proceeds with membership creation as in step 4. <br>
+    Use case ends.
+* 3d. The user provides an invalid command format.
+    * 3d1. ClubHub displays an error message for invalid command format. Use case resumes at step 1.
 
+#### **Use case: UC05 - Renewing a membership**
+
+**Preconditions:** At least 1 membership exists between a club and person in ClubHub.
+
+**MSS**
+
+1.  The user requests to list all clubs and persons.
+2.  ClubHub displays a list of all existing clubs and persons.
+3.  The user issues the command to renew a certain membership by providing the indexes of the club and person in the respective lists, and the duration in months to extend by.
+4.  ClubHub extends the membership’s expiry date by the given duration (in months), then displays a success message.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Any of the provided indexes are not a positive integer.
+    * 3a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
+* 3b. Any of the indexes provided are not currently displayed in the person list.
+    * 3b1. ClubHub shows a message for invalid index.
+    * 3b2. The user amends the command with a valid index. <br>
+        Use case resumes at step 4.
+        
+* 3c. The provided duration is not an integer.
+    * 3c1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
+* 3d. The provided duration is not within the allowed range.
+    * 3d1. ClubHub shows a message informing the user of the valid duration range.
+    * 3d2. The user amends the command with a valid duration. <br>
+        Use case resumes at step 4.
+* 3e. The membership does not exist.
+    * 3e1. ClubHub displays an error message for non-existent membership.
+        Use case ends.
+* 3f. The membership is cancelled, expired or is pending cancellation.
+    * 3f1. ClubHub displays a message for cancelled/expired/pending cancellation membership.
+        Use case ends.
+* 3g. The command format is invalid.
+    * 3g1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+    
+#### **Use case: UC06 - Cancelling a membership**
+
+**Preconditions:** At least 1 membership exists between a club and person in ClubHub.
+
+**MSS**
+
+1.  The user requests to list all clubs and persons.
+2.  ClubHub displays a list of all existing clubs and persons.
+3.  The user issues the command to cancel a certain membership by providing the indexes of the club and person in the respective lists.
+4.  If the membership is active, ClubHub sets the membership to pending cancellation. If the membership is expired, ClubHub sets the membership to cancelled. ClubHub then displays a success message.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Any of the provided indexes are not a positive integer.
+    * 3a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
+* 3b. Any of the indexes provided are not currently displayed in the person list.
+    * 3b1. ClubHub shows a message for invalid index.
+    * 3b2. The user amends the command with a valid index. <br>
+        Use case resumes at step 4.
+* 3c. The membership does not exist.
+    * 3c1. ClubHub displays an error message for non-existent membership.
+        Use case ends.
+* 3d. The membership is already cancelled/pending cancellation.
+    * 3d1. ClubHub displays a message for already cancelled membership.
+        Use case ends.
+* 3e. The command format is invalid.
+    * 3e1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+    
+#### **Use case: UC07 - Reactivating a membership**
+
+**Preconditions:** At least 1 membership exists between a club and person in ClubHub.
+
+**MSS**
+
+1.  The user requests to list all clubs and persons.
+2.  ClubHub displays a list of all existing clubs and persons.
+3.  The user issues the command to reactivate a certain membership by providing the indexes of the club and person in the respective lists, and the duration in months to extend by.
+4.  ClubHub reactivates and extends the membership’s expiry date by the given duration (in months), then displays a success message.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Any of the provided indexes are not a positive integer.
+    * 3a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
+* 3b. Any of the indexes provided are not currently displayed in the person list.
+    * 3b1. ClubHub shows a message for invalid index.
+    * 3b2. The user amends the command with a valid index. <br>
+        Use case resumes at step 4.
+        
+* 3c. The provided duration is not an integer.
+    * 3c1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+
+* 3d. The provided duration is not within the allowed range.
+    * 3d1. ClubHub shows a message informing the user of the valid duration range.
+    * 3d2. The user amends the command with a valid duration. <br>
+        Use case resumes at step 4.
+* 3e. The membership does not exist.
+    * 3e1. ClubHub displays an error message for non-existent membership.
+        Use case ends.
+* 3f. The membership is active.
+    * 3f1. ClubHub displays a message that only cancelled/pending cancellation/expired memberships can be reactivated.
+        Use case ends.
+* 3g. The command format is invalid.
+    * 3g1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+    
+#### **Use case: UC08 - Finding persons**
+
+**Preconditions:** Several persons are in the person list.
+
+**MSS**
+
+1.  The user requests to find persons whose fields contain all of their corresponding provided parameters and have a membership which has the same status as the specified status.
+2.  ClubHub displays a list of persons that matches the specified search conditions and displays a success message.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The command format is invalid.
+    * 1a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+* 1b. The membership status provided is invalid.
+    * 1b1. ClubHub displays an error message for invalid command format and shows valid statuses to search by.
+    Use case ends.
+
+#### **Use case: UC09 - Sorting persons**
+
+**Preconditions:** Several persons are in the person list.
+
+**MSS**
+
+1.  The user requests to sort the person list based on a number of parameters (name, phone number, email, address).
+2. TODO
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The command format is invalid.
+    * 1a1. ClubHub displays an error message for invalid command format.
+    Use case ends.
+* 1b. The membership status provided is invalid.
+    * 1b1. ClubHub displays an error message for invalid command format and shows valid statuses to search by.
+    Use case ends.
 
 ### Non-Functional Requirements
 
@@ -489,7 +642,7 @@ testers are expected to do more *exploratory* testing.
     
 ### Adding persons and clubs
     
-Prerequisites: None
+**Prerequisites**: None
 
 1. Adding a person <br> Test case: `add_person n/John Doe e/john@example.com p/91234567 a/123 Clementi Rd`<br> Expected: A new person is created in the list. Details of the created person shown in the status message. 
 
@@ -501,7 +654,7 @@ Prerequisites: None
     
 ### Managing memberships
     
-Prerequisites: Multiple persons and clubs in the app.
+**Prerequisites**: Multiple persons and clubs in the app.
     
 1. Adding memberships <br> Test case: `add_membership m/1 2 c/1 2 d/6` <br> Expected: Persons at indexes 1 and 2 added to clubs at indexes 1 and 2 with expiry 6 months from today.
 
@@ -515,7 +668,7 @@ Prerequisites: Multiple persons and clubs in the app.
     
 ### Listing and Finding
     
-Prerequisites: Have multiple clubs and persons with memberships in the app.
+**Prerequisites**: Have multiple clubs and persons with memberships in the app.
 
 
 1. Finding persons by name and phone number <br> Test case: `find_person n/John p/91234567` <br> Expected: Persons with "John" in name and phonen number 91234567 displayed in person list.
@@ -530,7 +683,7 @@ Prerequisites: Have multiple clubs and persons with memberships in the app.
     
 ### Editing persons and clubs
     
-Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
+**Prerequisites**: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
 
 1. Editing a person <br> Test case: `edit_person 1 p/98761234 e/johndoe@example.com` <br> Expected: Person at index 1 of the currently displayed list has phone number and email updated. Memberships of the person remains the same.
 
@@ -542,7 +695,7 @@ Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs 
     
 ### Getting person and club info
     
-Prerequisites: Have multiple clubs and persons with memberships in the app.
+**Prerequisites**: Have multiple clubs and persons with memberships in the app.
 
 1. Getting person details <br> Test case: `get_person 1 p e` <br> Expected: Person 1’s phone and email copied to clipboard.
 
@@ -555,7 +708,7 @@ Prerequisites: Have multiple clubs and persons with memberships in the app.
 
 ### Deleting persons and clubs
     
-Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
+**Prerequisites**: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
 
 1. Deleting a person <br> Test case: `delete_person 1`<br> Expected: Person at index 1 of the currently displayed list is deleted from the list. Details of the deleted person shown in the status message.
 
@@ -582,8 +735,18 @@ Total members: 5
     
 **1. Make error messages more error-specific for contact details.** <br> Currently all errors in contact details (name, email, phone and address) have corresponding error messages but some messages can be made more specific. For example, adding a person with an invalid email address displays an error message. However, the error message does not specify whether it is the local part or the domain part of the email address which has thrown an error. 
 
-## Appendix: Feature NotInScope
+**2. Improve the editing of tags.** <br>
+Currently, the editing of tags to only 1 new tag causes the new tag to be saved, and all existing tags to be deleted. If the user wanted to edit the *i*th tag, the user needs to retype all other tags and the edited *i*th tag for all the existing tags and new tag to be saved. This is an inconvenience to the user. This feature can be enhanced by indexing the tags [t1], [t2], [t3] etc. This will allow the addition of new tags, editing existing tags, or deleting existing tags by index.
 
-**1. Duplicate / near-duplicate  detection** <br>
-For duplicates / near-duplicates, only the user is able to determine if the entered name is correctly typed or a mistype (eg. whether "ClubHub" and "Club Hub" are 2 distinct entities when entered into the address book). Duplicates and near-duplicates in name can have a second layer of confirmation from the user before being added to the app, but this is not in the scope of this project. 
+**3. Duplicate / near-duplicate  detection** <br>
+For duplicates / near-duplicates, only the user is able to determine if the entered name is correctly typed or a mistype (eg. whether "ClubHub" and "Club Hub" are 2 distinct entities when entered into the address book). Duplicates and near-duplicates in name can have a second layer of confirmation from the user before being added to the app.
+
+**4. Allow deletion of multiple persons or clubs** <br>
+Currently, the app allows an existing person or club to be deleted with the delete command. This can be enhanced to allow multiple persons or clubs to be deleted in one command, rather than needing to retype the delete command several times.
+
+**5. Allow sorting in descending order.** <br>
+Currently, the user can only sort clubs and persons by name, phone number, email and address in ascending order. We plan to also allow sorting in descending order as well.
+
+
+
 
