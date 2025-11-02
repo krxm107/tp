@@ -58,7 +58,7 @@ public class MembershipClubCommand extends Command {
         Club clubToDisplay = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredClubList(club -> club.equals(clubToDisplay));
         Predicate<Person> isInClub = person -> person.getMemberships().stream().filter(predicate)
-                .map(Membership::getClub).anyMatch(club -> club.equals(clubToDisplay));
+                .map(Membership::getClub).anyMatch(club -> club.isSameClub(clubToDisplay));
         model.updateFilteredPersonList(isInClub);
         return new CommandResult(MESSAGE_SUCCESS);
     }
