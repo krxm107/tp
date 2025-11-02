@@ -30,7 +30,13 @@ public class ClubListPanel extends UiPart<Region> {
         clubListView.setItems(clubList);
         clubListView.setCellFactory(listView -> new ClubListViewCell());
         clubListView.getItems().addListener((ListChangeListener<Club>) change -> {
-            Platform.runLater(() -> clubListView.scrollTo(change.getFrom()));
+            while (change.next()) {
+                // Dumb down auto scroll to only when items are added or removed and not on every change
+                if (change.wasAdded() || change.wasRemoved()) {
+                    logger.info("Club list changed: " + change);
+                    Platform.runLater(() -> clubListView.scrollTo(change.getFrom()));
+                }
+            }
         });
     }
 

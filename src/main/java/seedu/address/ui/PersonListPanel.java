@@ -30,7 +30,13 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         personListView.getItems().addListener((ListChangeListener<Person>) change -> {
-            Platform.runLater(() -> personListView.scrollTo(change.getFrom()));
+            while (change.next()) {
+                // Dumb down auto scroll to only when items are added or removed and not on every change
+                if (change.wasAdded() || change.wasRemoved()) {
+                    logger.info("Person list changed: " + change);
+                    Platform.runLater(() -> personListView.scrollTo(change.getFrom()));
+                }
+            }
         });
     }
 
