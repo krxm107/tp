@@ -48,26 +48,18 @@
                   <Insets />
                </VBox.margin>
         </StackPane>
-            <SplitPane dividerPositions="0.5" prefHeight="0.0" prefWidth="690.0" style="-fx-background-color: #22242c;">
-               <items>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Label style="-fx-font-size: 18; -fx-text-fill: white;" text="Club" />
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <Label style="-fx-font-size: 18; -fx-text-fill: white;" text="Person" />
-                     </children>
-                  </StackPane>
-               </items>
-            </SplitPane>
+            <SplitPane prefHeight="0.0" prefWidth="690.0" style="-fx-background-color: #22242c;" />
 
         <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
           <VBox fx:id="clubList" minWidth="340" prefWidth="340" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
+                  <StackPane prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: #22242c;">
+                     <children>
+                        <Label style="-fx-font-size: 18; -fx-text-fill: white;" text="Club" />
+                     </children>
+                  </StackPane>
             <StackPane fx:id="clubListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
 
@@ -75,6 +67,11 @@
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
+                  <StackPane prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: #22242c;">
+                     <children>
+                        <Label style="-fx-font-size: 18; -fx-text-fill: white;" text="Person" />
+                     </children>
+                  </StackPane>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
         </SplitPane>
