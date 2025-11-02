@@ -9,7 +9,8 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* We adapted the existing AB3 code base for our project. Code was also adapted from our individual project submissions. ChatGPT was used to augment selected test cases and its use was acknowledged in the code. 
+* We also adapted the existing AB3 Developer Guide and User Guide for this project. 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F15b-4/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -72,7 +73,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/se-
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `ClubListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -91,17 +92,17 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete_person 1")` API call as an example.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete_person 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeletePersonCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeletePersonCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
@@ -112,7 +113,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 
 How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddPersonCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddPersonCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddPersonCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* All `XYZCommandParser` classes (e.g., `AddPersonCommandParser`, `DeletePersonCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -124,6 +125,7 @@ The `Model` component,
 
 * stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores `Club` and `Membership` in a similar manner as `Person`.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -239,9 +241,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -263,10 +262,10 @@ _{Explain here how the data archiving feature will be implemented}_
 **Target user profile**:
 
 * manages multiple clubs
-* has a need to manage a significant number of persons
+* has a need to manage a significant number of club members' contact information
+* wants to keep track of club members' membership expiry dates and history
 * prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
+* can type fast and prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
@@ -281,11 +280,11 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | #  | As a …                           | I can …                                                  | So that I can …                                                             | Notes |
 |----|----------------------------------|----------------------------------------------------------|-----------------------------------------------------------------------------|-------|
 | 1  | potential user exploring the app | see the app populated with sample data                   | easily see how the app will look like when it is in use                     | ***   |
-| 2  | user                             | add persons                                              | add person details of fellow members                                        | ***   |
-| 3  | user                             | search for persons                                       | quickly locate them from their information                                  | ***   |
-| 4  | user                             | edit persons                                             | update person details of members when the members change their phone number | ***   |
-| 5  | user                             | delete persons                                           | remove person details of members who have left the club                     | ***   |
-| 6  | user                             | add multiple phone numbers                               | add all the person’s different phone numbers e.g. mobile, home, office      | **    |
+| 2  | user                             | add persons                                              | add person details of members                                        | ***   |
+| 3  | user                             | search for persons                                       | quickly locate members' information                                  | ***   |
+| 4  | user                             | edit persons                                             | update personal details of members when the members change their contact information | ***   |
+| 5  | user                             | delete persons                                           | remove personal details of members who have left the club                     | ***   |
+| 6  | user                             | add multiple tags to a person                             | label persons with extra identifiers     | **    |
 | 7  | user                             | download the address book data from a file               | forward the address book file to members in the management committee        | *     |
 | 8  | user                             | import address book data from a file                     | easily get the data that someone sent me into my app                        | *     |
 | 9  | user                             | add notes to a person                                    | record extra details about the person                                       | **    |
@@ -297,119 +296,134 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | 15 | user                             | delete a club                                            | remove clubs that no longer exist                                           | ***   |
 | 16 | user                             | record when someone joined a club                        | track how long they have been in the club                                   | **    |
 | 17 | user                             | search for a club by name                                | look up a club quickly                                                      | ***   |
-| 18 | user                             | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where the club takes place   | **    |
+| 18 | user                             | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where events takes place   | **    |
 | 19 | user                             | tag a person as a club committee member                  | know that this person is a committee member of a certain club               | **    |
-| 20 | user                             | view all committee members of a club                     | quickly find their information when I need to person them about their clubs | **    |
+| 20 | user                             | view all committee members of a club                     | quickly find their information when I need to contact them about their club | **    |
 | 21 | user                             | sort persons by name                                     | view my persons in an order that is intuitive                               | **    |
 | 22 | user                             | sort club members by join date                           | see new and old members more easily                                         | **    |
 | 23 | user                             | delete multiple persons at once                          | delete faster                                                               | **    |
 | 24 | user                             | create a profile photo for persons                       | easily identify people, even if they share names                            | **    |
-| 25 | user                             | bookmark or save important persons                       | easily access them                                                          | **    |
-| 26 | user                             | quickly copy a person to my clipboard                    | more quickly access persons                                                 | **    |
-| 27 | user                             | create events and tag persons                            | attach person details to real world club events                             | **    |
+| 25 | user                             | bookmark or save important persons                       | easily access their details                                                          | **    |
+| 26 | user                             | quickly copy a person to my clipboard                    | more quickly access personal details                                                 | **    |
+| 27 | user                             | create events and tag persons                            | attach personal details to real world club events                             | **    |
 | 28 | user                             | tag multiple persons at once                             | speed up tagging                                                            | **    |
 | 29 | user                             | search by multiple fields at once                        | more precisely find persons                                                 | **    |
 | 30 | user                             | undo my last action                                      | easily go back on my mistakes                                               | **    |
+| 31 | user                             | add membership | track who belongs to which club | ***    |
+| 32 | user                             | delete membership | remove a member from a club | ***    |
+| 33 | user                             | renew membership | extend an active membership duration | ***    |
+| 34 | user                             | cancel membership | cancel a membership | ***    |
+| 35 | user                             | reactivate membership | reactivate an expired, pending cancellation or cancelled membership | ***    |
+| 36 | user                             | get membership history | improve business strategy | **    |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `ClubHub` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `ClubHub` and the **Actor** is the `user`, unless specified otherwise)
 
-#### **Use case: Delete a person**
+#### **Use case: UC01 - Delete a person**
 
-**Scope:** The user wants to remove a person from the contact book. The `delete_person` command allows deletion by the person's name.
+**Scope:** The user wants to remove a person from the contact book. The `delete_person` command allows deletion by the person's index.
 
 **MSS**
 
-1.  The user requests to list persons using the `list_persons` command to find the name of the person to be deleted.
-2.  The contact book app displays a list of all persons.
+1.  The user requests to list persons using the `findp` command to find the name of the person to be deleted.
+2.  ClubHub displays a list of all persons.
 3.  The user issues the `delete_person INDEX` command with the index of an existing person.
-4.  The contact book app deletes the person from the system and all associated clubs, displaying a confirmation message: "person deleted: <NAME>; Phone: <PHONE_NUMBER>; Email: <EMAIL>".
+4.  ClubHub deletes the person from the system and all associated clubs, displaying a confirmation message: "Deleted person: [NAME]; Phone: [PHONE_NUMBER]; Email: [EMAIL]"; Address: [ADDRESS]; Tags: [TAGS].
 
     Use case ends.
 
 **Extensions**
 
-*   2a. The person list is empty.
-    *   2a1. The contact book app shows the message: "You do not have any persons saved."
+* 3a. The person list is empty.<br>
+    * 3a1. ClubHub shows the message: "The person index provided is invalid".
         Use case ends.
-*   3a. The person name provided does not exist in the contact book.
-    *   3a1. The contact book app shows an error message: "person not found".
+* 3b. The index provided is not currently displayed in the person list.
+    * 3b1. ClubHub shows an error message: "The person index provided is invalid".
         Use case resumes at step 1.
-*   3b. The user provides an invalid command format.
-    *   3b1. The contact book app shows an error message: "Invalid command format. Usage: `del_person NAME`".
+* 3c. The user provides an invalid command format.
+    * 3c1. ClubHub shows an error message: <br> "Invalid command format...". <br>
         Use case resumes at step 1.
 
-#### **Use case: Add a new person**
+#### **Use case: UC02 - Add a new club**
 
-**Scope:** The user wants to add a new person to the address book.
+**Scope:** The user wants to add a new club to the address book.
 
 **MSS**
 
-1.  The user issues the command `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`. Note that there can be any number of tags, including 0.
-2.  The app creates the new person, then displays a success message: "New person added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
-
+1.  The user issues the command `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2`. Note that there can be any number of tags, including 0.
+2.  ClubHub creates the new club, then displays a success message: "New club added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: [TAG1] [TAG2]". 
+    
     Use case ends.
 
 **Extensions**
 
-*   2a. A person with the same name already exists in the address book.
-    *   2a1. The contact book app shows a relevant error message, such as "This person already exists in the address book"
-        Use case ends.
-*   2b. One of the provided fields is invalid (e.g., name is too long, phone number has non-digit characters, or email format is incorrect).
-    *   2b1. The contact book app shows the corresponding error message for the invalid parameter (e.g., "Name too long (70 characters)").
-        Use case ends.
-*   2c. The user provides an invalid command format.
-    *   2c1. The contact book app shows an error message: (e.g. "Invalid command format. Usage: `add_person n/NAME p/PHONE_NUMBER e/EMAIL a/address t/TAG1 t/TAG2 ...`").
-        Use case ends.
+* 1a. A club with the same name already exists in the address book.
+    * 1a1. ClubHub shows the error message, "This club already exists in the address book".
+        Use resumes at step 1.
+* 1b. One of the provided fields is invalid (e.g. name contains invalid characters).
+    * 1b1. ClubHub displays the corresponding error message for the invalid field (e.g. "The name is invalid...").
+        Use case resumes at step 1.
+* 1c. The user provides an invalid command format.
+    * 1c1. ClubHub displays an error message: <br> "Invalid command format..." <br> Use case resumes at step 1.
 
-#### **Use case: Add a new club**
+#### **Use case: UC03 - Edit a club**
 
-**Scope:** The user wants to create a new club in the address book.
+**Scope:** The user wants to edit the contact details of an existing club in the address book.
+
+**MSS**
+1. The user creates a club (UC02).
+2.  The user issues the `edit_club INDEX n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2` command with valid details. 
+3.  ClubHub edits the club details and displays a success message: "Edited Club: Chess Club, Phone: 12345679; Address: 53 Chess Street; Tags: [advanced] [mindsport]".
+
+    Use case ends.
+
+**Extensions**
+* 2a. The person list is empty.<br>
+    * 2a1. ClubHub shows the message: "The club index provided is invalid".
+        Use case ends.
+* 2b. The index provided is not currently displayed in the club list.
+    * 2b1. ClubHub shows an error message: "The club index provided is invalid".
+        Use case resumes at step 1.
+* 2c. There already exists another club with the specified name/email.
+    * 2c1. ClubHub displays an error message (e.g. "A club with this name already exists.").
+        Use case resumes at step 1.
+* 2d. The provided club name is invalid (e.g. invalid characters are used).
+    * 2d1. ClubHub displays an error message: "The name is invalid..."
+        Use case resumes at step 1.
+* 2e. No changes were made to the club.
+    * 2e1. ClubHub displays the message: "There was no change to this club since the original and edited details are the same." Use case ends.
+* 2f. The command format is invalid.
+    * 2f1. ClubHub displays an error message:<br>
+"Invalid command format..."<br>
+        Use case resumes at step 1.
+
+#### **Use case: UC04 - Add a user as a member to a club**
+
+**Scope:** The user wants add an existing person as a member to an existing club.
+
+**Preconditions:** At least 1 club and 1 person has been added to ClubHub.
 
 **MSS**
 
-1.  The user issues the `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...` command with a valid and unique club name. Note that there can be any number of tags, including 0.
-2.  The address book app creates the new club and displays a success message: "New club added: NAME; Phone: PHONE_NUMBER; Email: EMAIL; Address: ADDRESS; Tags: \[TAG1\]\[TAG2\]...".
+1.  The user requests to list all clubs and persons using the `list` command.
+2.  ClubHub displays a list of all existing clubs and persons.
+3.  The user issues the `add_membership m/PERSON_INDEXES c/CLUB_INDEXES` command with the indexes of some clubs and persons from the lists.
+4.  For each of the specified person, ClubHub creates a new memberships for them to each of the specified club. For each membership added, ClubHub appends a line to the output message: "[PERSON_NAME] added to [CLUB_NAME]".
 
     Use case ends.
 
 **Extensions**
 
-*   2a. The specified club name already exists in the address book.
-    *   2a1. The contact book app shows an error message (e.g "This club already exists in the address book")
+* 3a. The person list / club list is empty.<br>
+    * 3a1. ClubHub shows the message: "[INDEX] is an invalid person / club index."
         Use case ends.
-*   2b. The provided club name is invalid (e.g., it is blank)
-    *   2b1. The contact book app shows the relevant error message (e.g., "Name cannot be blank").
-        Use case ends.
-*   2c. The command format is invalid.
-    *   2c1. The contact book app shows an error message: "Invalid command format. Usage: `add_club n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/TAG1 t/TAG2 ...`".
-        Use case ends.
-
-#### **Use case: Delete a club**
-
-**Scope:** The user wants to delete an existing club from the contact book.
-
-**MSS**
-
-1.  The user requests to list all clubs using the `list_clubs` command.
-2.  The contact book app displays a list of all existing clubs.
-3.  The user issues the `delete_club INDEX` command with the index of a club from the list.
-4.  The contact book app deletes the specified club and shows a success message: "Club deleted: <NAME>".
-
-    Use case ends.
-
-**Extensions**
-
-*   2a. The list of clubs is empty.
-    *   2a1. The contact book app shows an error message: "You do not have any clubs saved."
-        Use case ends.
-*   3a. The specified club name does not exist.
-    *   3a1. The contact book app shows an error message: "Club not found".
+* 3b. Some of the indexes provided are not currently displayed in the person / club list.
+    * 3b1. For the invalid indexes, ClubHub shows an error message: "[INDEX] is an invalid person / club index." Valid indexes functions normally.
         Use case resumes at step 1.
-*   3b. The command format is invalid.
-    *   3b1. The contact book app shows an error message: "Invalid command format. Usage: `del_club CLUB_NAME`".
-        Use case resumes at step 1.
+* 3c. The user provides an invalid command format.
+    * 3c1. ClubHub displays an error message: <br> "Invalid command format...". <br> Use case resumes at step 1.
+
 
 ### Non-Functional Requirements
 
@@ -419,27 +433,26 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 4. The software should work without requiring an installer.
 5. The GUI should work well (i.e., should not cause any resolution-related inconveniences to the user) for standard screen resolutions 1920x1080 and higher and for screen scales 100% and 125%. In addition, the GUI should be usable (i.e., all functions can be used even if the user experience is not optimal) for resolutions 1280x720 and higher and for screen scales 150%.
 6. Text and other UI elements should not overflow if too long and should still be displayed properly in full, perhaps in a scroll view.
-7. Every command failures should display an appropriate error message.
-8. Error messages should be clear, specific, and give suggestions on how to fix the error.
-9. Loading and saving to file should be fast, user should not see a noticeable freeze.
-10. Loading and saving to file should never crash, even if file is corrupted/invalid.
-11. Application should never corrupt save file.
-12. Data should be saved up to the latest action even if the app is not exited conventionally.
-13. Save file should not be encrypted and should be in a human editable text file.
-14. Command syntax should be consistent and predictable, especially between commands for persons and commands for clubs.
-15. The application should be optimized to run smoothly on _standard hardware._
-16. The application size should be less than 100MB to facilitate easy distribution and storage.
-17. The application does not need to support multi-user operations.
+7. Every command failure should display an appropriate error message.
+8. Loading and saving to file should be fast and users should not encounter a noticeable freeze.
+9. Loading and saving to file should not crash, even if the file is corrupted or invalid.
+10. The application should never corrupt a saved file.
+11. Data should be saved up to the latest action even if the app is not exited conventionally.
+12. The saved file should not be encrypted and should be in a human editable text file.
+13. Command syntax should be consistent and predictable, especially between commands for persons and commands for clubs.
+14. The application should be optimized to run smoothly on _standard hardware._
+15. The application size should be less than 100MB to facilitate easy distribution and storage.
+16. The application does not need to support multi-user operations.
 
 ### Glossary
 
 * **CLI**: Command Line Interface, a text-only interface for using the program
 * **(G)UI**: (Graphical) User Interface, a visual interface for using the program, with elements like menus and buttons
-* **Club**: Association of people, minimally requires a name, description and owner
+* **Club**: Association of people, minimally requires a name and email address
 * **Command**: Text instruction for using the program via CLI
 * **Mainstream OS**: Windows, Linux, Unix, MacOS that is up to date (version within the past year)
 * **Standard hardware**: Any modern, store-bought laptop or personal computer (not including mobile devices)
-* **Private person detail**: A person detail that is not meant to be shared with others
+* **MSS**: Main Success Scenario, the typical flow of steps in a use case where the user's goal is achieved without errors or exceptions. 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -458,38 +471,119 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample persons. The window size may not be optimum.
+   2. Double-click the jar file.<br> Expected: Shows the GUI with a set of sample persons and clubs. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+    
+### Clearing sample data
 
-1. _{ more test cases …​ }_
+1. Test case: `clear` <br> Expected: A warning message is displayed, prompting the user to enter `clear YES` to confirm the clear.
+    
+2. Test case: `clear YES` <br> Expected: All data is cleared from the app.
+    
+    
+### Adding persons and clubs
+    
+Prerequisites: None
 
-### Deleting a person
+1. Adding a person <br> Test case: `add_person n/John Doe e/john@example.com p/91234567 a/123 Clementi Rd`<br> Expected: A new person is created in the list. Details of the created person shown in the status message. 
 
-1. Deleting a person while all persons are being shown
+2. Adding an invalid person <br> Test case: `add_person e/alex@example.com t/friend` <br> Expected: No new person is created as named not provided. Error message is displayed to the user.
+    
+3. Adding a club <br> Test case: `add_club n/Basketball e/basket@example.com p/98765432` <br> Expected: A new club is created in the list. Details of the created club shown in the status message. 
+    
+5. Adding an invalid club <br> Test case: `add_club n/Reading Club e/reading t/hobby` <br> Expected: No new club is created due to invalid email. Error message is displayed to the user.
+    
+### Managing memberships
+    
+Prerequisites: Multiple persons and clubs in the app.
+    
+1. Adding memberships <br> Test case: `add_membership m/1 2 c/1 2 d/6` <br> Expected: Persons at indexes 1 and 2 added to clubs at indexes 1 and 2 with expiry 6 months from today.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+2. Deleting memberships <br> Test case: `delete_membership m/1 2 3 c/1 2 3` <br> Expected: Existing memberships between these persons and clubs removed. The result message contains a line for each successful deletion and a line for each unsuccessful deletion (invalid indexes, no memberships to delete).
+    
+3. Renewing membership <br> Test case: `renew m/1 c/1 d/3` <br> Expected: Membership of person 1 for club 1 extended by 3 months.
 
-   1. Test case: `delete+person 1`<br>
-      Expected: First person is deleted from the list. Details of the deleted person shown in the status message. Timestamp in the status bar is updated.
+4. Canceling membership <br> Test case: `cancel m/1 c/1` <br> Expected: Membership badge of person 1 for club 1 changes to yellow, signifying cancelled and valid until expiry.
 
-   1. Test case: `delete_person 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+5. Reactivating membership <br> Test case: `reactivate m/1 c/1 d/12` <br> Expected: Membership of person 1 for club 1 reactivated if previously cancelled/expired; expiry set 12 months ahead. Otherwise, membership duration remains the same and error message is displayed.
+    
+### Listing and Finding
+    
+Prerequisites: Have multiple clubs and persons with memberships in the app.
 
-   1. Other incorrect delete commands to try: `delete_person`, `delete_person x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Finding persons by name and phone number <br> Test case: `find_person n/John p/91234567` <br> Expected: Persons with "John" in name and phonen number 91234567 displayed in person list.
 
-### Saving data
+2. Finding clubs by name <br> Test case: `find_club n/Club` <br> Expected: Clubs with name containing "Club" displayed in club list.
 
-1. Dealing with missing/corrupted data files
+4. Displaying memberships for a person <br> Test case: `membership_person 1` <br> Expected: Person at index 1 and all the clubs who they are a member of are displayed.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+5. Displaying memberships for a club <br> Test case: `membership_club 2` <br> Expected: Club at index 2 and all its members are displayed.
+    
+6. List all entries <br> Test case: `list` <br> Expected: Full lists of persons and clubs displayed.
+    
+### Editing persons and clubs
+    
+Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
 
-1. _{ more test cases …​ }_
+1. Editing a person <br> Test case: `edit_person 1 p/98761234 e/johndoe@example.com` <br> Expected: Person at index 1 of the currently displayed list has phone number and email updated. Memberships of the person remains the same.
+
+2. Editing tags <br> Test case: `editp 2 t/vip` <br> Expected: 'vip' becomes the only tag for person 2. All previously existing tags cleared. Memberships of the person remains the same.
+
+3. Editing a club <br> Test case: `edit_club 1 n/CS Club e/cs@example.com p/` <br> Expected: Club at index 1 has phone number and email updated, phone number removed. Member count of the club remains the same.
+    
+4. Editing with no changes <br> Test case: `editc 1 n/CS Club` <br> Expected: Error message displayed: "There was no change to this club since the original and edited details are the same." Member count of the club remains the same.
+    
+### Getting person and club info
+    
+Prerequisites: Have multiple clubs and persons with memberships in the app.
+
+1. Getting person details <br> Test case: `get_person 1 p e` <br> Expected: Person 1’s phone and email copied to clipboard.
+
+2. Getting all person info <br> Test case: `getp 2` <br> Expected: All details of person 2 copied to clipboard.
+
+3. Getting club details with members <br> Test case: `get_club 1 *` <br> Expected: Club 1’s details and its members copied to clipboard.
+
+4. Getting membership history <br> Test case: `get_history 1` <br> Expected: Person 1’s full membership history copied to clipboard.
+
+
+### Deleting persons and clubs
+    
+Prerequisites: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
+
+1. Deleting a person <br> Test case: `delete_person 1`<br> Expected: Person at index 1 of the currently displayed list is deleted from the list. Details of the deleted person shown in the status message.
+
+2. Invalid deletion <br> Test case: `delete_person 0`<br> Expected: No person is deleted. Error message shown.
+
+### Data Saving
+
+1. Data persistence <br> Test case: Add a person → close → reopen app. <br> Expected: Added person still present.
+
+2. Missing data file <br> Test case: Delete data/addressbook.json → relaunch app. <br> Expected: App recreates data file with sample data.
+
+3. Corrupted data file <br> Test case: Edit addressbook.json and remove closing brace → relaunch. <br> Expected: App regenerates empty save file, starts with no data.
+
+### Keyboard Navigation and Auto-Scroll
+
+1. Command history <br> Test case: Enter several commands → press ↑ / ↓ arrows. <br> Expected: Previous commands reappear in input box.
+
+2. Auto-scroll <br> Test case: `add_membership m/1 2 c/1 3` <br> Expected: Lists scroll automatically to the last updated entry.
+
+    
+    
+## Appendix: Planned Enhancements
+Total members: 5
+    
+**1. Make error messages more error-specific for contact details.** <br> Currently all errors in contact details (name, email, phone and address) have corresponding error messages but some messages can be made more specific. For example, adding a person with an invalid email address displays an error message. However, the error message does not specify whether it is the local part or the domain part of the email address which has thrown an error. 
+
+## Appendix: Feature NotInScope
+
+**1. Duplicate / near-duplicate  detection** <br>
+For duplicates / near-duplicates, only the user is able to determine if the entered name is correctly typed or a mistype (eg. whether "ClubHub" and "Club Hub" are 2 distinct entities when entered into the address book). Duplicates and near-duplicates in name can have a second layer of confirmation from the user before being added to the app, but this is not in the scope of this project. 
+

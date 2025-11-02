@@ -3,13 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.function.Function;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CopyUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.get.GetClubMessageParser;
 import seedu.address.model.Model;
 import seedu.address.model.club.Club;
 
@@ -19,28 +19,31 @@ import seedu.address.model.club.Club;
 public class GetClubCommand extends Command {
 
     public static final String COMMAND_WORD = "get_club";
+    public static final String COMMAND_SHORT = "getc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Copies all details of a club identified by the index number to the user's clipboard.\n"
-            + "Optional keywords may be added to copy specified fields only\n"
-            + "Keywords: n - name, p - phone, e - email, a - address, m - members\n"
-            + "Parameters: INDEX (must be a positive integer) /[OPTIONAL KEYWORDS]\n"
-            + "Example: " + COMMAND_WORD + " 1 - copies all details fully labeled\n"
-            + "Example: " + COMMAND_WORD + " 1 /p - copies phone number only";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Copies details of a club identified by the index number to the user's clipboard.\n"
+            + "Parameters: INDEX (must be a positive integer) [OPTIONAL_KEYWORD]\n"
+            + "An optional keyword may be added to specify what to copy.\n"
+            + "Keywords: n - name, p - phone, e - email, a - address, m - members, * - full details\n"
+            + "The '*' keyword specifies all club details to be copied "
+            + "along with existing (non-canceled) members' details.\n"
+            + "Example: " + COMMAND_WORD + " 1 - copies name, phone, email, address and tags\n"
+            + "Example: " + COMMAND_WORD + " 1 p - copies phone number\n"
+            + "Example: " + COMMAND_WORD + " 1 * - copies full club and member details";
 
     public static final String MESSAGE_GET_CLUB_SUCCESS = "Copied: %1$s";
     public static final String MESSAGE_GET_CLUB_FAILURE = "Failed to copy club to clipboard";
 
     private final Index targetIndex;
-    private final String keywords;
+    private final Function<Club, String> mapper;
 
     /**
-     * {@code keywords} refer to optional words used to specify what fields to copy.
-     * Is an empty string if no words were entered by the user.
+     * {@code mapper} Is the function that maps the club to the copied string.
      */
-    public GetClubCommand(Index targetIndex, String keywords) {
+    public GetClubCommand(Index targetIndex, Function<Club, String> mapper) {
         this.targetIndex = targetIndex;
-        this.keywords = keywords;
+        this.mapper = mapper;
     }
 
     @Override
@@ -53,14 +56,21 @@ public class GetClubCommand extends Command {
         }
 
         Club clubToCopy = lastShownList.get(targetIndex.getZeroBased());
-        String details = new GetClubMessageParser().parse(clubToCopy, keywords);
+        String details = mapper.apply(clubToCopy);
+        copyToClipboard(details);
+
+        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
+    }
+
+    /**
+     * Logic for copying text to clipboard. Extracted to allow testing.
+     */
+    public void copyToClipboard(String details) throws CommandException {
         try {
             CopyUtil.copyTextToClipboard(details);
         } catch (Exception e) {
             throw new CommandException(MESSAGE_GET_CLUB_FAILURE);
         }
-
-        return new CommandResult(String.format(MESSAGE_GET_CLUB_SUCCESS, details));
     }
 
     @Override

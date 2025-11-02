@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.GetPersonCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -17,7 +18,7 @@ public class GetPersonCommandParser implements Parser<GetPersonCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public GetPersonCommand parse(String args) throws ParseException {
-        String[] parts = args.split("/");
+        String[] parts = args.trim().split(" ", 2);
         Index index;
 
         try {
@@ -28,9 +29,9 @@ public class GetPersonCommandParser implements Parser<GetPersonCommand> {
         }
 
         if (parts.length == 1) {
-            return new GetPersonCommand(index, "");
+            return new GetPersonCommand(index, Messages::format);
         } else {
-            return new GetPersonCommand(index, parts[1]);
+            return new GetPersonCommand(index, GetPersonMessageParser.parse(parts[1]));
         }
     }
 

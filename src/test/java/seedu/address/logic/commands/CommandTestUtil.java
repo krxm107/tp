@@ -75,10 +75,20 @@ public class CommandTestUtil {
     public static final String TAG_DESC_BIG = " " + PREFIX_TAG + VALID_TAG_BIG;
     public static final String TAG_DESC_CASUAL = " " + PREFIX_TAG + VALID_TAG_CASUAL;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
+    //=========== Membership related fields =============================================================
+    public static final int VALID_DURATION_AMY = 12;
+    public static final String MEMBER_DESC_AMY = " " + PREFIX_MEMBER + "1";
+    public static final String MEMBER_DESC_BOB = " " + PREFIX_MEMBER + "2";
+    public static final String CLUB_DESC_AMY = " " + PREFIX_CLUB + "1";
+    public static final String DURATION_DESC_AMY = " " + PREFIX_DURATION + VALID_DURATION_AMY;
+    public static final String INVALID_MEMBER_DESC = " " + PREFIX_MEMBER + "a"; // 'a' is not an integer
+    public static final String INVALID_CLUB_DESC = " " + PREFIX_CLUB + "99a"; // 'a' is not an integer
+    // Note: INVALID_DURATION_DESC is already defined below, so we don't need to redefine it.
+
+    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James!"; // '!' not allowed by Name regex
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS + "Blk 123 ! Road"; // '!' not allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

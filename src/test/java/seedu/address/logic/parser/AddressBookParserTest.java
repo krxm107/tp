@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -23,9 +24,9 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindPersonCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.logic.parser.search.PersonNameParser;
+import seedu.address.logic.search.CombinedSearchPredicate;
+import seedu.address.logic.search.predicates.NameMatchesPredicate;
 import seedu.address.model.club.Club;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.ClubBuilder;
 import seedu.address.testutil.ClubUtil;
@@ -85,10 +86,10 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommandPredicate<Person> predicate = new FindCommandPredicate<>();
-        predicate.add(new NameContainsKeywordsPredicate(keywords));
+        CombinedSearchPredicate<Person> predicate = new CombinedSearchPredicate<>();
+        predicate.add(new NameMatchesPredicate<>(keywords));
         FindPersonCommand command = (FindPersonCommand) parser.parseCommand(
-                FindPersonCommand.COMMAND_WORD + " " + PersonNameParser.KEYWORD + "/ " + keywords.stream()
+                FindPersonCommand.COMMAND_WORD + " " + PREFIX_NAME + keywords.stream()
                         .collect(Collectors.joining(" ")));
         assertEquals(new FindPersonCommand(predicate), command);
     }

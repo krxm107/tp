@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddMembershipCommand.MESSAGE_ADDED_TO_CLUB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -30,8 +31,10 @@ import seedu.address.model.person.Person;
 public class AddPersonCommand extends Command {
 
     public static final String COMMAND_WORD = "add_person";
+    public static final String COMMAND_SHORT = "addp";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
@@ -78,11 +81,32 @@ public class AddPersonCommand extends Command {
         this.clubIndexes = clubIndexes;
     }
 
-    private void addMembershipToAll(Model model, Person personToAdd, Club club) {
-        Membership membershipToAdd = new Membership(personToAdd, club);
-        club.addMembership(membershipToAdd);
-        personToAdd.addMembership(membershipToAdd);
-        model.addMembership(membershipToAdd);
+    private String addMembershipToAll(Model model, Person personToAdd) {
+        StringBuilder sb = new StringBuilder();
+        List<Club> lastShownClubList = model.getFilteredClubList();
+        StringBuilder validClubs = new StringBuilder();
+        for (Index clubIndex : clubIndexes) {
+            if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
+                sb.append(String.format(Messages.MESSAGE_INVALID_CLUB_DISPLAYED_INDEX_DETAILED,
+                        clubIndex.getOneBased()));
+                sb.append(System.lineSeparator());
+                continue; // Skip to the next club index
+            }
+
+            Club club = lastShownClubList.get(clubIndex.getZeroBased());
+            Membership membershipToAdd = new Membership(personToAdd, club);
+            club.addMembership(membershipToAdd);
+            personToAdd.addMembership(membershipToAdd);
+            model.addMembership(membershipToAdd);
+            validClubs.append(club.getName()).append(", ");
+        }
+        if (validClubs.length() > 2) {
+            // Remove trailing comma and space
+            validClubs.setLength(validClubs.length() - 2);
+            assert validClubs.length() > 2;
+            sb.append(String.format(MESSAGE_ADDED_TO_CLUB, personToAdd.getName(), validClubs));
+        }
+        return sb.toString();
     }
 
     @Override
@@ -106,20 +130,26 @@ public class AddPersonCommand extends Command {
             model.addPerson(personToAdd);
             logger.info(() -> "Person added: " + personToAdd);
 
+            String addMembershipResult = "";
             if (clubIndexes != null) {
-                List<Club> lastShownClubList = model.getFilteredClubList();
-                for (Index clubIndex : clubIndexes) {
-                    if (clubIndex.getZeroBased() >= lastShownClubList.size()) {
-                        continue; // Skip to the next club index
-                    }
-                    Club club = lastShownClubList.get(clubIndex.getZeroBased());
-                    addMembershipToAll(model, personToAdd, club);
-                }
+                addMembershipResult = addMembershipToAll(model, personToAdd);
             }
 
-            CommandResult result = new CommandResult(
-                    String.format("New person added: %s",
-                            Messages.format(personToAdd)));
+            CommandResult result = null;
+            String addPersonResult;
+
+            if (personToAdd.phoneHasNonNumericNonSpaceCharacter()) {
+                addPersonResult = String.format("WARNING: The phone number added, '%s', contains characters "
+                        + "other than digits and spaces", personToAdd.getPhone());
+            } else {
+                addPersonResult = String.format("New person added: %s", Messages.format(personToAdd));
+            }
+            String finalResultMessage = addPersonResult;
+            if (!addMembershipResult.isEmpty()) {
+                addMembershipResult = "\nMembership addition result:\n" + addMembershipResult;
+                finalResultMessage += addMembershipResult;
+            }
+            result = new CommandResult(finalResultMessage);
             logger.exiting(cls, mtd, result);
             return result;
 

@@ -2,8 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -13,6 +15,7 @@ import seedu.address.model.field.Address;
 import seedu.address.model.field.Email;
 import seedu.address.model.field.Name;
 import seedu.address.model.field.Phone;
+import seedu.address.model.field.validator.PhoneValidator;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,6 +24,20 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+
+    /**
+     * Parses a {@code String flag} into a boolean.
+     * Leading and trailing whitespaces will be stripped.
+     * @throws ParseException if the given {@code flag} is invalid.
+     */
+    public static boolean parseClearFlag(String flag) throws ParseException {
+        String strippedFlag = flag.strip();
+        if (strippedFlag.equals("YES")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -44,11 +61,17 @@ public class ParserUtil {
     public static Index[] parseIndexes(String oneBasedIndexes) throws ParseException {
         requireNonNull(oneBasedIndexes);
         String[] splitIndexes = oneBasedIndexes.trim().split("\\s+");
-        Index[] indexes = new Index[splitIndexes.length];
+        List<Index> indexes = new ArrayList<>();
+        Set<Index> uniqueIndexes = new HashSet<>();
         for (int i = 0; i < splitIndexes.length; i++) {
-            indexes[i] = parseIndex(splitIndexes[i]);
+            Index index = parseIndex(splitIndexes[i]);
+            if (uniqueIndexes.contains(index)) {
+                continue;
+            }
+            uniqueIndexes.add(index);
+            indexes.add(index);
         }
-        return indexes;
+        return indexes.toArray(new Index[0]); // to avoid class cast exception
     }
     /**
      * Parses a {@code String name} into a {@code Name}.
@@ -75,7 +98,7 @@ public class ParserUtil {
         requireNonNull(phone);
         String strippedPhone = phone.strip();
         if (!Phone.isValidPhone(strippedPhone)) {
-            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+            throw new ParseException(PhoneValidator.INVALID_PHONE_WARNING);
         }
         return new Phone(strippedPhone);
     }
@@ -139,7 +162,15 @@ public class ParserUtil {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
+            if (tagSet.size() > 10) {
+                throw new ParseException("The number of tags cannot exceed 10.");
+            }
+
+            if (tagName.length() > 20) {
+                throw new ParseException("Each tag should not be longer than 20 characters.");
+            }
         }
+
         return tagSet;
     }
 }

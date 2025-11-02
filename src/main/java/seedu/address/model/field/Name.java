@@ -9,12 +9,15 @@ import seedu.address.model.field.validator.NameValidator;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name implements Comparable<Name> {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain letters A–Z, a–z, digits 0–9, "
-                    + "spaces, hyphens, apostrophes, periods, and slashes (/).\n\n"
-                    + NameValidator.LENGTH_BOUND_WARNING;
+            "The name is invalid.\n"
+            + "Allowed characters: "
+            + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
+            + "\nslash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.\n"
+                    + NameValidator.LENGTH_BOUND_WARNING
+            + "\nThe name must contain at least 1 letter (A-Z, a-z).";
 
     public final String fullName;
 
@@ -41,6 +44,10 @@ public class Name {
         return fullName;
     }
 
+    public boolean isSameName(Name other) {
+        return NameValidator.normalize(fullName).equalsIgnoreCase(NameValidator.normalize(other.fullName));
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -61,4 +68,8 @@ public class Name {
         return fullName.hashCode();
     }
 
+    @Override
+    public int compareTo(Name name) {
+        return this.fullName.toLowerCase().compareTo(name.fullName.toLowerCase());
+    }
 }

@@ -29,7 +29,7 @@
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+                <Label fx:id="name" wrapText="true" styleClass="cell_big_label" text="\$first">
                <font>
                   <Font size="16.0" />
                </font></Label>
@@ -60,7 +60,7 @@
                         <Image url="@/images/email.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="email" styleClass="cell_small_label" />
+                <Label fx:id="email" styleClass="cell_small_label" wrapText="true" />
             </HBox>
         </VBox>
       <rowConstraints>

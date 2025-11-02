@@ -28,8 +28,6 @@ Package Model as ModelPackage <<Rectangle>>{
         - status: MembershipStatus
     }
 
-    Enum MembershipStatus
-
     Class Address
     Class Email
     Class Name
@@ -60,14 +58,14 @@ Person *--> "1" Name
 Person *--> "0..1" Phone
 Person *--> "1" Email
 Person *--> "0..1" Address
-Person *--> "*" Tag
+Person *--> "0..10" Tag
 
 UniqueClubList --> "~* all" Club
 Club *--> "1" Name
 Club *--> "0..1" Phone
 Club *--> "1" Email
 Club *--> "0..1" Address
-Club *--> "*" Tag
+Club *--> "0..10" Tag
 
 ' Association class relationship
 Person "*" -- "*" Club : member of >

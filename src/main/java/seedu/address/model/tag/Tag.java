@@ -32,6 +32,10 @@ public class Tag {
         return test.matches(VALIDATION_REGEX);
     }
 
+    public boolean isValid() {
+        return isValidTagName(tagName) && tagName.length() <= 20;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

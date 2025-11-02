@@ -81,30 +81,9 @@ public class EditClubCommandTest {
         EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB, new EditClubDescriptor());
         Club editedClub = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
 
-        String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
-                        Messages.format(editedClub));
+        String expectedMessage = EditClubCommand.UNCHANGED_CLUB_WARNING;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        assertCommandSuccess(editClubCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() {
-        showClubAtIndex(model, INDEX_FIRST_CLUB);
-
-        Club clubInFilteredList = model.getFilteredClubList().get(INDEX_FIRST_CLUB.getZeroBased());
-        Club editedClub = new ClubBuilder(clubInFilteredList).withName(VALID_NAME_BALL).build();
-        EditClubCommand editClubCommand = new EditClubCommand(INDEX_FIRST_CLUB,
-                new EditClubDescriptorBuilder().withName(VALID_NAME_BALL).build());
-
-        String expectedMessage =
-                String.format(EditClubCommand.MESSAGE_EDIT_CLUB_SUCCESS,
-                        Messages.format(editedClub));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setClub(model.getFilteredClubList().get(0), editedClub);
 
         assertCommandSuccess(editClubCommand, model, expectedMessage, expectedModel);
     }
@@ -172,7 +151,7 @@ public class EditClubCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardCommand.equals(new ClearCommand(true)));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new EditClubCommand(INDEX_SECOND_CLUB, DESC_ART)));

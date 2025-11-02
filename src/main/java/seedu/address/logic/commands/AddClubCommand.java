@@ -23,8 +23,10 @@ import seedu.address.model.club.Club;
 public class AddClubCommand extends Command {
 
     public static final String COMMAND_WORD = "add_club";
+    public static final String COMMAND_SHORT = "addc";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a club to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
+            + "): Adds a club to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_EMAIL + "EMAIL "
@@ -64,6 +66,12 @@ public class AddClubCommand extends Command {
         }
 
         model.addClub(toAdd);
+
+        if (toAdd.phoneHasNonNumericNonSpaceCharacter()) {
+            return new CommandResult(String.format("WARNING: The phone number added, '%s', contains characters "
+                    + "other than digits and spaces", toAdd.getPhone()));
+        }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

@@ -25,7 +25,7 @@ public class TypicalClubs {
 
     public static final Club ARCHERY = new ClubBuilder().withName("Archery Club")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("archery@example.com")
-            .withPhone("94351253")
+            .withPhone("+6594351253")
             .withTags("sports").build();
     public static final Club BALL = new ClubBuilder().withName("Balls Club")
             .withAddress("311, Clementi Ave 2, #02-25")
@@ -63,6 +63,16 @@ public class TypicalClubs {
     }
 
     public static List<Club> getTypicalClubs() {
-        return new ArrayList<>(Arrays.asList(ARCHERY, BALL, CHESS, DANCE, ENGLISH, FRENCH, GAME));
+        // return a copy to prevent modification of the original list
+        // prevent test leak
+        return new ArrayList<>(Arrays.asList(
+                new ClubBuilder(ARCHERY).build(),
+                new ClubBuilder(BALL).build(),
+                new ClubBuilder(CHESS).build(),
+                new ClubBuilder(DANCE).build(),
+                new ClubBuilder(ENGLISH).build(),
+                new ClubBuilder(FRENCH).build(),
+                new ClubBuilder(GAME).build()
+        ));
     }
 }
