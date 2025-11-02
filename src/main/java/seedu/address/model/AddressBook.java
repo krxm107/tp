@@ -90,7 +90,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         setClubs(newData.getClubList());
         setMemberships(newData.getMembershipList());
 
-        // resetToDummyData();
+        if (!validatePersonList(newData.getPersonList()) || !validateClubList(newData.getClubList()) ) {
+            clearAllData();
+        }
+    }
+
+    private void clearAllData() {
+        setPersons(List.of());
+        setClubs(List.of());
+        setMemberships(List.of());
+    }
+
+    private boolean validatePersonList(List<Person> personList) {
+        return personList.stream().allMatch(Person::hasValidTagList);
+    }
+
+    private boolean validateClubList(List<Club> clubList) {
+        return clubList.stream().allMatch(Club::hasValidTagList);
     }
 
     // This method is for private testing purposes, do not remove.
