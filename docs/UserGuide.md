@@ -5,9 +5,9 @@ title: User Guide
 
 ClubHub is a fast, keyboard-driven **contact & membership management app** designed for people *who run multiple groups or clubs* — from gym managers and volunteer coordinators to hobby group organizers. 
 
-Tired of juggling messy spreadsheets or address books? Want to keep track of who hasn't paid yet? ClubHub lets you create, view, search, and organize contacts and memberships across different groups - all without taking your hands off your keyboard.
+Tired of juggling messy spreadsheets or address books? Want to easily keep track of whose membership is expired? ClubHub lets you create, view, search, and organize contacts and memberships across different groups - all without taking your hands off your keyboard.
 
-With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organised and focus on what matters most - your members and your community.
+With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organized and focus on what matters most - your members and your community.
 
 * Table of Contents
 {:toc}
@@ -220,7 +220,7 @@ You can add a new person directly to existing clubs with add_person c/INDEXES!
 **Format: `add_membership m/PERSON_INDEXES c/CLUB_INDEXES [d/DURATION]`**
 
 > * `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
-> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
 > * The default duration is 12 months if not specified.
 > * Join date is set to today’s date.
 > * Expiry date is set to join date plus duration.
@@ -236,7 +236,7 @@ Deletes multiple persons' memberships from multiple clubs in the club manager.
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning:**      
-    `deletem` will delete the person's membership history as well. To keep the membership history, use `cancel` instead.
+    `deletem` will delete the person's membership history in the specified clubs as well. To keep the membership history, use `cancel` instead.
 </div>
 
 **Format: `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES`**
@@ -253,7 +253,7 @@ Renews the active membership of a person in a club with renewal duration given.
 **Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
 > * Only active memberships can be renewed.
-> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
  
 **Command examples:**
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
@@ -289,7 +289,7 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 
 **Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
-> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 12 inclusive.
+> * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
 > * If expiry date was in the past, setting new expiry date from today.
 > * If expiry date was in the future, extending from current expiry date.
  
@@ -350,7 +350,7 @@ expired memberships. To do so, use the `s/` condition, **but only with the follo
 * `a` - for active memberships
 * `e` - for expired memberships
 * `p` - for memberships pending cancellation
-* `c` - for canceled memberships
+* `c` - for cancelled memberships
 
 <br>**Command examples:**
 * `findp` displays all persons
@@ -560,7 +560,7 @@ Index refers to the index in the club list.
 <br>
 
 ### Getting a person's membership history: `get_history` (or `geth`)
-Copies the membership history of a person to the clipboard.
+Copies a person's membership history (excluding data from deleted clubs) to the clipboard
 
 **Format: `get_history INDEX`**
 
@@ -593,6 +593,11 @@ Deletes the specified person from ClubHub.
 
 **Format: `delete_club INDEX`**
 
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning:**      
+    `deletec` will permanently remove all associated membership history for this club. Members' records in other clubs will not be affected.
+</div>
+
 * Deletes the club at the specified `INDEX`.
 * The index refers to the index number shown in the displayed club list.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -604,6 +609,10 @@ Deletes the specified person from ClubHub.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Sorting 
+
+<div markdown="span" class="alert alert-info">
+ℹ️ **Note**: When you apply a sort, it is applied to the entire list (not jut the currently displayed list). The new order is saved and will stay the same on your next use until you select a different sort.
+</div>
 
 ### Sorting persons : `sort_person` (or `sortp`)
 
@@ -704,8 +713,6 @@ Action | Format                                                                 
 **List All** | `list` | |
 **Find Person** | `findp [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findp`    | `find_person n/ James Jake t/ friend`
 **Find Club** | `findc [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
-**Filter Person** | `filter_person [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterp` | `filter_person n/Alex`
-**Filter Club** | `filter_club [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` <br> | `filterc` | `filter_club t/sports`
 **Display Memberships for Person** | `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                        | `mp`   | `membership_person 1 a e`
 **Display Memberships for Club** | `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                            | `mc`   | `membership_club 1 a e`
 **Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
