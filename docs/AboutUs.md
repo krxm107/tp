@@ -13,11 +13,11 @@ You can reach us at the email `e1357170@u.nus.edu`
 
 <img src="images/djgmh9.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/djgmh9)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/djgmh9.md)]
 
-* Role: Project Advisor
+* Role: Team Lead
+* Responsibilities: coordination, design, feature development, and documentation
 
 ### Trinh Hoang Hai
 
@@ -26,8 +26,8 @@ You can reach us at the email `e1357170@u.nus.edu`
 [[github](http://github.com/hai0506)]
 [[portfolio](team/hai0506.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: design, feature development and documentation
 
 ### Kan Rui Xian Matthew
 
@@ -36,24 +36,24 @@ You can reach us at the email `e1357170@u.nus.edu`
 [[github](https://github.com/krxm107)] [[portfolio](team/krxm107.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: design, feature development and documentation
 
 ### Chen Ziming
 
 <img src="images/zmzzz3.png" width="200px">
 
 [[github](http://github.com/Zmzzz3)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/zmzzz3.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: design, feature development and documentation
 
 ### Yen Jun Jie Richard
 
 <img src="images/yjjr0.png" width="200px">
 
 [[github](http://github.com/yjjr0)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/yjjr0.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: design, feature development and documentation
