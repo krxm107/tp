@@ -5,11 +5,11 @@ title: User Guide
 
 ClubHub is a fast, keyboard-driven **contact & membership management app** designed for people *who run multiple groups or clubs* — from gym managers and volunteer coordinators to hobby group organizers. 
 
-Tired of juggling messy spreadsheets or address books? Want to easily keep track of whose membership is expired? ClubHub lets you create, view, search, and organize contacts and memberships across different groups - all without taking your hands off your keyboard.
+Tired of juggling messy spreadsheets or address books? Want to easily keep track of whose membership is expired? ClubHub lets you create, view, search, and organize contacts and memberships across different groups.
 
-With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organized and focus on what matters most - your members and your community.
+With its intuitive, keyboard-first workflow, ClubHub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organized and focus on what matters most - your members and your community.
 
-* Table of Contents
+## Table of Contents
 {:toc}
 
 
@@ -18,11 +18,11 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
 
 ## Quick start
 
-1. You can get Java 17 here  if you don't have it yet.<br>
+1. You can follow the following tutorial to get Java 17 if you don't have it yet.<br>
 [Java 17 for Windows](https://se-education.org/guides/tutorials/javaInstallationWindows.html)<br>
 [Java 17 for Linux](https://se-education.org/guides/tutorials/javaInstallationLinux.html)<br>
 
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+   **Mac users:** Ensure you have the precise JDK version prescribed in this tutorial [Java 17 for Mac](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest ClubHub app`.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-4/tp/releases).
   
@@ -36,32 +36,32 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
 <div markdown="span" class="alert alert-info">
 **If you're using Windows:**
     
-1) Press Windows key + R on your keyboard.
+1) Press Windows key + R on your keyboard. <br>
     
-2) A small box will pop up. Type cmd inside it.   Press Enter. 
+2) A small box will pop up. Type cmd inside it. Press Enter. <br>    
 
-3) A black window will appear — that’s the command terminal.  
+3) A black window will appear — that’s the command terminal. <br> 
 </div>
  
 <div markdown="span" class="alert alert-info">
 **If you're using macOS:**
     
-1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search).
+1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search). <br>
     
-2) Type Terminal and press Enter.
-
-3) A window with text will open — that’s the command terminal.
+2) Type Terminal and press Enter. <br>
+    
+3) A window with text will open — that’s the command terminal. <br>
 </div>
 
 <div markdown="span" class="alert alert-info">
 **If you're using Linux:**
     
-1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications.
-
-2) A terminal window will open.
+1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications. <br>
+    
+2) A terminal window will open. <br>
 </div>
 
-5. `cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
+5. `cd` into the folder you put the jar file in, and use the `java -jar ClubHub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
@@ -78,12 +78,12 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
    * `clear` : Deletes all data.
 
    * `exit` : Exits the app.
-
-7. Refer to the [Command formats](#command formats) below for details of each command.
+7. For details on the general command format, see [Command formats](#command-formats).
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command formats
+<p style="text-align: right;">[TOC](#table-of-contents)</p>
 
 <div markdown="block" class="alert alert-info">
 
@@ -102,7 +102,7 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -205,7 +205,7 @@ Example: "ClubHub" is considered a different club from "Club Hub".
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about membership status:**<br>
+**:information_source: Notes on membership status:**<br>
     
 * There are 4 membership status: **Active, Expired, Pending Cancellation, and Cancelled**.
     
@@ -241,7 +241,7 @@ Deletes multiple persons' memberships from multiple clubs in the club manager.
 
 <div markdown="span" class="alert alert-warning">
 ⚠️ **Warning:**      
-    `deletem` will delete the person's membership history in the specified clubs as well. To keep the membership history, use `cancel` instead.
+    `deletem` will delete the person's membership history in the specified clubs as well. To keep the membership history, use [cancel](#cancel-membership-of-a-person-in-a-club--cancel) instead.
 </div>
 
 **Format: `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES`**
@@ -256,6 +256,11 @@ Deletes multiple persons' memberships from multiple clubs in the club manager.
 
 Renews the active membership of a person in a club with renewal duration given.
 
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+    Membership expired, pending cancellation or cancelled? See [reactivate](#reactivating-membership-of-a-person-in-a-club--reactivate) to extend an active membership.
+</div>
+
 **Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
 > * Only active memberships can be renewed.
@@ -269,16 +274,16 @@ Renews the active membership of a person in a club with renewal duration given.
 
 Cancels the membership of a person in a club.
 
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+The membership will not be deleted. To remove the person and his membership history from the club, use [delete_membership](#delete-memberships-of-multiple-persons-from-multiple-clubs--delete_membership--or-deletem).
+</div>
+
 **Format: `cancel m/PERSON_INDEX c/CLUB_INDEX`**
 
 > * The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
 > * The membership status will change from **Pending Cancellation** to **Cancelled** when the expiry date has passed.
 > * The index **must be a positive integer** 1, 2, 3, …​
-
-<div markdown="span" class="alert alert-info">
-ℹ️ **Info:**  
-The membership will not be deleted. To remove the person and his membership history from the club, use `delete_membership`.
-</div>
 
 
 **Command examples:**
@@ -292,7 +297,7 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
-    Membership still active? See `renew` to extend an active membership.
+    Membership still active? See [renew](#renew-membership-of-a-person-in-a-club--renew) to extend an active membership.
 </div>
 
 **Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
@@ -317,7 +322,7 @@ details up to date without having to create a new entry.
 **Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
 
 > * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-> * At least one of the optional fields must be provided.
+> * At least one of the fields must be provided.
 > * Existing values will be updated to the input values.
 > * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 > * You can remove all the person’s tags by typing `t/` without
@@ -349,7 +354,7 @@ Editing a club in ClubHub helps you keep club details up to date without having 
 **Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
 
 > * Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
-> * At least one of the optional fields must be provided.
+> * At least one of the fields must be provided.
 > * Existing values will be updated to the input values.
 > * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
 > * You can remove all the club’s tags by typing `t/` without specifying any tags after it.
@@ -723,13 +728,13 @@ Action | Format                                                                 
 **Renew Membership** | `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                                  |            | `renew m/1 c/2 d/6`
 **Cancel Membership** | `cancel m/PERSON_INDEX c/CLUB_INDEX` <br>                                                                                            |            | `cancel m/1 c/2`
 **Reactivate Membership** | `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION` <br>                                                                             |            | `reactivate m/1 c/2 d/6`
+**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
+**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                      | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
 **List All** | `list` | |
 **Find Person** | `findp [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findp`    | `find_person n/ James Jake t/ friend`
 **Find Club** | `findc [SEARCH_CONDITION SEARCH_KEYWORDS]...`<br> | `findc`    | `find_club n/ Dance Guitar t/ monday`
 **Display Memberships for Person** | `membership_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                        | `mp`   | `membership_person 1 a e`
 **Display Memberships for Club** | `membership_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                                            | `mc`   | `membership_club 1 a e`
-**Edit Person** | `edit_person INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                    | `editp`    |`edit_person 2 n/James Lee e/jameslee@example.com`
-**Edit Club** | `edit_club INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br>                                                      | `editc`    |`edit_club 2 n/Tennis e/tennis@example.com`
 **Get Person** | `get_person INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                       | `getp`     | `get_person 2 p a e`
 **Get Club** | `get_club INDEX [OPTIONAL_CONDITIONS]`<br>                                                                                         | `getc`     | `get_club 2 *`
 **Get History** | `get_history INDEX` <br>                                                                                                             | `geth`     | `get_history 2`
