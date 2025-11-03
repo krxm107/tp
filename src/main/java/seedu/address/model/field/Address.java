@@ -19,7 +19,7 @@ public class Address implements Comparable<Address> {
     public static final String MESSAGE_CONSTRAINTS = "The address is invalid.\n"
             + "Address must consist of "
             + "only letters A-Z a-z, digits, whitespace, \n"
-            + "hyphens, apostrophes, periods, slashes, hash signs #, \n"
+            + "hyphens, apostrophes, periods, hash signs #, \n"
             + "commas, ampersands, parentheses, semicolons, colons, "
             + "or at signs @."
             + "\nAn Address must be at most 150 characters long.";

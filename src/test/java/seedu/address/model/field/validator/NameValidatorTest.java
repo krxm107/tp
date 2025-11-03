@@ -23,8 +23,6 @@ public final class NameValidatorTest {
         "Dr. Jane A. Doe",
         "O'Connor", // curly apostrophe
         "Jean-Luc Picard",
-        "Ali s/o Ahmad", // slash allowed
-        "Tan / Koh", // slash with spaces
         "  John   Doe  ", // extra spaces
         "Jr.", // suffix with period,
     })

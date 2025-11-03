@@ -54,8 +54,6 @@ public final class NameTest {
         "Dr. Jane A. Doe",
         "O'Connor",
         "Jean-Luc Picard",
-        "Ali s/o Ahmad", // forward slash allowed
-        "Tan / Koh", // slash with spaces
         "  John   Doe  ",
         "Jr."
     })

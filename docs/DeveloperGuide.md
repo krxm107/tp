@@ -549,34 +549,6 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 
     Use case ends.
 
-**Extensions**
-
-* 1a. The command format is invalid.
-    * 1a1. ClubHub displays an error message for invalid command format.
-    Use case ends.
-* 1b. The membership status provided is invalid.
-    * 1b1. ClubHub displays an error message for invalid command format and shows valid statuses to search by.
-    Use case ends.
-
-#### **Use case: UC09 - Sorting persons**
-
-**Preconditions:** Several persons are in the person list.
-
-**MSS**
-
-1.  The user requests to sort the person list based on a number of parameters (name, phone number, email, address).
-2. TODO
-
-    Use case ends.
-
-**Extensions**
-
-* 1a. The command format is invalid.
-    * 1a1. ClubHub displays an error message for invalid command format.
-    Use case ends.
-* 1b. The membership status provided is invalid.
-    * 1b1. ClubHub displays an error message for invalid command format and shows valid statuses to search by.
-    Use case ends.
 
 ### Non-Functional Requirements
 
@@ -665,13 +637,27 @@ testers are expected to do more *exploratory* testing.
 4. Canceling membership <br> Test case: `cancel m/1 c/1` <br> Expected: Membership badge of person 1 for club 1 changes to yellow, signifying cancelled and valid until expiry.
 
 5. Reactivating membership <br> Test case: `reactivate m/1 c/1 d/12` <br> Expected: Membership of person 1 for club 1 reactivated if previously cancelled/expired; expiry set 12 months ahead. Otherwise, membership duration remains the same and error message is displayed.
+
+
+### Editing persons and clubs
     
+**Prerequisites**: Person(s) and club(s) in the app. 
+
+1. Editing a person <br> Test case: `edit_person 1 p/98761234 e/johndoe@example.com` <br> Expected: Person at index 1 of the currently displayed list has phone and email updated. Memberships of the person remain the same.
+
+2. Editing tags <br> Test case: `editp 2 t/vip` <br> Expected: 'vip' becomes the only tag for person 2. All previously existing tags cleared. Memberships of the person remain the same.
+
+3. Editing a club <br> Test case: `edit_club 1 n/CS Club e/cs@example.com p/` <br> Expected: Club at index 1 has phone and email updated, and phone removed. Member count of the club remains the same.
+    
+4. Editing with no changes <br> Test case: `editc 1 n/CS Club` <br> Expected: Error message displayed: "There was no change to this club since the original and edited details are the same." Member count of the club remains the same.
+    
+
 ### Listing and Finding
     
 **Prerequisites**: Have multiple clubs and persons with memberships in the app.
 
 
-1. Finding persons by name and phone number <br> Test case: `find_person n/John p/91234567` <br> Expected: Persons with "John" in name and phonen number 91234567 displayed in person list.
+1. Finding persons by name and phone <br> Test case: `find_person n/John p/91234567` <br> Expected: Persons with "John" in name and phonen number 91234567 displayed in person list.
 
 2. Finding clubs by name <br> Test case: `find_club n/Club` <br> Expected: Clubs with name containing "Club" displayed in club list.
 
@@ -681,18 +667,7 @@ testers are expected to do more *exploratory* testing.
     
 6. List all entries <br> Test case: `list` <br> Expected: Full lists of persons and clubs displayed.
     
-### Editing persons and clubs
-    
-**Prerequisites**: Multiple persons and clubs in the app. Not all persons and clubs must be on display in the app.
 
-1. Editing a person <br> Test case: `edit_person 1 p/98761234 e/johndoe@example.com` <br> Expected: Person at index 1 of the currently displayed list has phone number and email updated. Memberships of the person remains the same.
-
-2. Editing tags <br> Test case: `editp 2 t/vip` <br> Expected: 'vip' becomes the only tag for person 2. All previously existing tags cleared. Memberships of the person remains the same.
-
-3. Editing a club <br> Test case: `edit_club 1 n/CS Club e/cs@example.com p/` <br> Expected: Club at index 1 has phone number and email updated, phone number removed. Member count of the club remains the same.
-    
-4. Editing with no changes <br> Test case: `editc 1 n/CS Club` <br> Expected: Error message displayed: "There was no change to this club since the original and edited details are the same." Member count of the club remains the same.
-    
 ### Getting person and club info
     
 **Prerequisites**: Have multiple clubs and persons with memberships in the app.
@@ -730,7 +705,7 @@ testers are expected to do more *exploratory* testing.
 
     
     
-## Appendix: Planned Enhancements
+## **Appendix: Planned Enhancements**
 Total members: 5
     
 **1. Make error messages more error-specific for contact details.** <br> Currently all errors in contact details (name, email, phone and address) have corresponding error messages but some messages can be made more specific. For example, adding a person with an invalid email address displays an error message. However, the error message does not specify whether it is the local part or the domain part of the email address which has thrown an error. 
@@ -745,8 +720,15 @@ For duplicates / near-duplicates, only the user is able to determine if the ente
 Currently, the app allows an existing person or club to be deleted with the delete command. This can be enhanced to allow multiple persons or clubs to be deleted in one command, rather than needing to retype the delete command several times.
 
 **5. Allow sorting in descending order.** <br>
-Currently, the user can only sort clubs and persons by name, phone number, email and address in ascending order. We plan to also allow sorting in descending order as well.
+Currently, the user can only sort clubs and persons by name, phone, email and address in ascending order. We plan to also allow sorting in descending order as well.
 
+**6. Prevent UI flickering when list cells are selected** <br> 
+When the user switch between cells in the person and club lists, the cell flickers for a brief moment. This can be a mild annoyance for the user. We plan to fix this in the future.
 
+**7. Include forward slash as an allowed character in the name field** <br>
+We plan to include the forward slash as an allowed character in the name field, so that the user can enter in valid names such as Ali s/o Ahmad. 
+
+**8. Enable Day-Based membership duration setting** <br>
+We plan to introduce this feature to give users greater control over their membership management.
 
 

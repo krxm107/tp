@@ -22,8 +22,8 @@ public final class AddressValidatorTest {
             assertTrue(AddressValidator.isValid("123 Main Street"));
             assertTrue(AddressValidator.isValid("Blk 123 #05-67, Orchard Road"));
             assertTrue(AddressValidator.isValid("Apt. 3-2 (Tower B)"));
-            assertTrue(AddressValidator.isValid("No. 10-1/2 King's Rd: Unit #07-01 & #07-02"));
-            assertTrue(AddressValidator.isValid("Road-Name'with.mixed/Chars#123, City"));
+            assertTrue(AddressValidator.isValid("No. 10-12 King's Rd: Unit #07-01 & #07-02"));
+            assertTrue(AddressValidator.isValid("Road-Name'with.mixedChars#123, City"));
         }
 
         @Test
