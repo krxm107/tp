@@ -705,7 +705,7 @@ testers are expected to do more *exploratory* testing.
 
     
     
-## Appendix: Planned Enhancements
+## **Appendix: Planned Enhancements**
 Total members: 5
     
 **1. Make error messages more error-specific for contact details.** <br> Currently all errors in contact details (name, email, phone and address) have corresponding error messages but some messages can be made more specific. For example, adding a person with an invalid email address displays an error message. However, the error message does not specify whether it is the local part or the domain part of the email address which has thrown an error. 
@@ -722,8 +722,13 @@ Currently, the app allows an existing person or club to be deleted with the dele
 **5. Allow sorting in descending order.** <br>
 Currently, the user can only sort clubs and persons by name, phone, email and address in ascending order. We plan to also allow sorting in descending order as well.
 
-**6. Prevent UI flickering when list cells are selected** <br> When the user switch between cells in the person and club lists, the cell flickers for a brief moment. This can be a mild annoyance for the user. We plan to fix this in the future.
+**6. Prevent UI flickering when list cells are selected** <br> 
+When the user switch between cells in the person and club lists, the cell flickers for a brief moment. This can be a mild annoyance for the user. We plan to fix this in the future.
 
+**7. Include forward slash as an allowed character in the name field** <br>
+We plan to include the forward slash as an allowed character in the name field, so that the user can enter in valid names such as Ali s/o Ahmad. 
 
+**8. Enable Day-Based membership duration setting** <br>
+We plan to introduce this feature to give users greater control over their membership management.
 
 
