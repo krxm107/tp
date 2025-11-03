@@ -26,12 +26,10 @@ public class AddMembershipCommand extends Command {
     public static final String MESSAGE_ADDED_TO_CLUB = "%1$s added to %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): Adds multiple persons to multiple clubs with membership duration\n"
-            + "Person identified by the index number used in the displayed person list.\n"
-            + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: \n"
-            + PREFIX_MEMBER + "Person INDEXES (must be positive integers separated by space)\n"
-            + PREFIX_CLUB + "Club INDEXES (must be positive integers separated by space)\n"
-            + PREFIX_DURATION + "Duration in months (must be an integer between 1 and 24, optional, default is 12)\n"
+            + PREFIX_MEMBER + "INDEXES (space-separated positive integers)\n"
+            + PREFIX_CLUB + "INDEXES (space-separated positive integers)\n"
+            + PREFIX_DURATION + "DURATION in months (between 1 and 24, optional, default is 12)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3 "
