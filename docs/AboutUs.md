@@ -24,7 +24,7 @@ You can reach us at the email `e1357170@u.nus.edu`
 <img src="images/hai0506.png" width="200px">
 
 [[github](http://github.com/hai0506)]
-[[portfolio](team/hai.md)]
+[[portfolio](team/hai0506.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
@@ -33,7 +33,7 @@ You can reach us at the email `e1357170@u.nus.edu`
 
 <img src="images/krxm107.png" width="200px">
 
-[[github](https://github.com/krxm107)] [[portfolio](team/matthew.md)]
+[[github](https://github.com/krxm107)] [[portfolio](team/krxm107.md)]
 
 * Role: Developer
 * Responsibilities: Data
