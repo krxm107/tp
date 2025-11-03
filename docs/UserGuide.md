@@ -33,36 +33,40 @@ With its intuitive, keyboard-first workflow, Clubhub lets you manage memberships
 
 4. Open a command terminal.
 
-If you're using Windows:
-
-    Press Windows key + R on your keyboard.
+<div markdown="span" class="alert alert-info">
+**If you're using Windows:**
     
-    A small box will pop up. Type cmd inside it.
+1) Press Windows key + R on your keyboard.
     
-    Press Enter. A black window will appear — that’s the command terminal. 
+2) A small box will pop up. Type cmd inside it.   Press Enter. 
 
-If you're using macOS:
-
-    Click the magnifying glass 🔍 in the top-right corner (Spotlight Search).
+3) A black window will appear — that’s the command terminal.  
+</div>
+ 
+<div markdown="span" class="alert alert-info">
+**If you're using macOS:**
     
-    Type Terminal and press Enter.
+1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search).
     
-    A window with text will open — that’s the command terminal.
+2) Type Terminal and press Enter.
 
-If you're using Linux:
+3) A window with text will open — that’s the command terminal.
+</div>
 
-    Press Ctrl + Alt + T together.
+<div markdown="span" class="alert alert-info">
+**If you're using Linux:**
     
-    Or search for “Terminal” in your applications.
-    
-    A terminal window will open.
+1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications.
 
-`cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
+2) A terminal window will open.
+</div>
+
+5. `cd` into the folder you put the jar file in, and use the `java -jar clubhub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts and clubs.
@@ -75,7 +79,7 @@ Type the command in the command box and press Enter to execute it. e.g. typing *
 
    * `exit` : Exits the app.
 
-5. Refer to the [Command Formats](#command formats) below for details of each command.
+7. Refer to the [Command formats](#command formats) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -224,6 +228,7 @@ You can add a new person directly to existing clubs with add_person c/INDEXES!
 > * The default duration is 12 months if not specified.
 > * Join date is set to today’s date.
 > * Expiry date is set to join date plus duration.
+> * The index **must be a positive integer** 1, 2, 3, …​
 
 **Command examples:**
 * `add_membership m/1 3 c/2 4 d/6` Adds the membership of the 1st and 3rd persons in the 2nd and 4th clubs with expiry date 6 months from today.
@@ -242,6 +247,7 @@ Deletes multiple persons' memberships from multiple clubs in the club manager.
 **Format: `delete_membership m/PERSON_INDEXES c/CLUB_INDEXES`**
 
 > * `PERSON_INDEXES` and `CLUB_INDEXES` are space-separated lists of indexes.
+> * The index **must be a positive integer** 1, 2, 3, …​
 
 **Command examples:**
 * `delete_membership m/1 3 c/2 4` Removes the membership of the 1st and 3rd persons in the 2nd and 4th clubs.
@@ -254,6 +260,7 @@ Renews the active membership of a person in a club with renewal duration given.
 
 > * Only active memberships can be renewed.
 > * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
+> * The index **must be a positive integer** 1, 2, 3, …​
  
 **Command examples:**
 * `renew m/1 c/2 d/6` Renews the membership of the 1st person in the 2nd club by 6 months.
@@ -266,6 +273,7 @@ Cancels the membership of a person in a club.
 
 > * The membership **remains valid until the expiry date**. This is called **Pending Cancellation** status. The membership cannot be renewed but can be reactivated.
 > * The membership status will change from **Pending Cancellation** to **Cancelled** when the expiry date has passed.
+> * The index **must be a positive integer** 1, 2, 3, …​
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
@@ -292,11 +300,83 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 > * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
 > * If expiry date was in the past, setting new expiry date from today.
 > * If expiry date was in the future, extending from current expiry date.
+> * The index **must be a positive integer** 1, 2, 3, …​
  
 **Command examples:**
 * `reactivate m/1 c/2 d/6` Reactivates the membership of the 1st person in the 2nd club by 6 months.
 
 --------------------------------------------------------------------------------------------------------------------
+
+## Editing
+
+### Editing a person : `edit_person`  (or `editp`)
+
+Editing a person in ClubHub helps you keep their
+details up to date without having to create a new entry.
+
+**Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
+
+> * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+> * At least one of the optional fields must be provided.
+> * Existing values will be updated to the input values.
+> * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+> * You can remove all the person’s tags by typing `t/` without
+>   specifying any tags after it.
+  
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+All fields can be edited to a different case. However, name and email remain mandatory. 
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning on Duplicates:**  
+Persons can have the same name. Persons can share the same address or phone.
+</div>
+
+**Command examples:**
+*  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone and email of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `editp 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+### Editing a club : `edit_club`  (or `editc`)
+
+Editing a club in ClubHub helps you keep club details up to date without having to create a new entry.
+
+**Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
+
+> * Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
+> * At least one of the optional fields must be provided.
+> * Existing values will be updated to the input values.
+> * When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
+> * You can remove all the club’s tags by typing `t/` without specifying any tags after it.
+
+<div markdown="span" class="alert alert-info">
+ℹ️ **Info:**  
+All fields can be edited to a different case. However, name and email remain mandatory.  
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning on Phone Inputs:**  
+Phones are allowed to have letters and some special characters.
+</div>
+
+<div markdown="span" class="alert alert-warning">
+⚠️ **Warning on Duplicates:**  
+Clubs can share the same address or phone. Club names that differ only by white spaces are allowed.
+</div>
+
+Example: "ClubHub" is considered a different club from "Club Hub".
+
+**Command examples:**
+*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone and email of the 1st club to be `91234567` and `dance@example.com` respectively.
+*  `editc 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
+
+--------------------------------------------------------------------------------------------------------------------
+
 
 ## Listing and Finding
 
@@ -441,75 +521,6 @@ Suppose Archery is the second club in the current list. Archery has an active me
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Editing
-
-### Editing a person : `edit_person`  (or `editp`)
-
-Editing a person in ClubHub helps you keep their
-details up to date without having to create a new entry.
-
-**Format: `edit_person INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-  specifying any tags after it.
-  
-<div markdown="span" class="alert alert-info">
-ℹ️ **Info:**  
-All fields can be edited to a different case. However, name and email remain mandatory. 
-</div>
-
-<div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Inputs:**  
-Phones are allowed to have letters and some special characters.
-</div>
-
-<div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Duplicates:**  
-Persons can have the same name. Persons can share the same address or phone.
-</div>
-
-Command examples:
-*  `edit_person 1 p/91234567 e/johndoe@example.com` Edits the phone and email of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `editp 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-### Editing a club : `edit_club`  (or `editc`)
-
-Editing a club in ClubHub helps you keep club details up to date without having to create a new entry.
-
-**Format: `edit_club INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`**
-
-* Edits the club at the specified `INDEX`. The index refers to the index number shown in the displayed club list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the club will be removed i.e adding of tags is not cumulative.
-* You can remove all the club’s tags by typing `t/` without specifying any tags after it.
-
-<div markdown="span" class="alert alert-info">
-ℹ️ **Info:**  
-All fields can be edited to a different case. However, name and email remain mandatory.  
-</div>
-
-<div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Phone Inputs:**  
-Phones are allowed to have letters and some special characters.
-</div>
-
-<div markdown="span" class="alert alert-warning">
-⚠️ **Warning on Duplicates:**  
-Clubs can share the same address or phone. Club names that differ only by white spaces are allowed.
-</div>
-
-Example: "ClubHub" is considered a different club from "Club Hub".
-
-Command examples:
-*  `edit_club 1 p/91234567 e/dance@example.com` Edits the phone and email of the 1st club to be `91234567` and `dance@example.com` respectively.
-*  `editc 2 n/Bowling t/` Edits the name of the 2nd club to be `Bowling` and clears all existing tags.
-
---------------------------------------------------------------------------------------------------------------------
-
 ## Getting (Copying to clipboard)
 
 
@@ -581,9 +592,9 @@ Deletes the specified person from ClubHub.
 
 **Format: `delete_person INDEX`**
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+> * Deletes the person at the specified `INDEX`.
+> * The index refers to the index number shown in the displayed person list.
+> * The index **must be a positive integer** 1, 2, 3, …​
 
 **Command examples:**
 * `find_person` followed by `delete_person 2` deletes the 2nd person in the contact list.
@@ -598,9 +609,9 @@ Deletes the specified person from ClubHub.
     `deletec` will permanently remove all associated membership history for this club. Members' records in other clubs will not be affected.
 </div>
 
-* Deletes the club at the specified `INDEX`.
-* The index refers to the index number shown in the displayed club list.
-* The index **must be a positive integer** 1, 2, 3, …​
+> * Deletes the club at the specified `INDEX`.
+> * The index refers to the index number shown in the displayed club list.
+> * The index **must be a positive integer** 1, 2, 3, …​
 
 **Command examples:**
 * `find_club` followed by `delete_club 2` deletes the 2nd club in the club list.
@@ -620,8 +631,8 @@ Sorts the person list by the provided field(s) in ascending order.
 
 **Format: `sort_person [n/] [p/] [e/] [a/]`**
 
-* `n/` sorts the person list by name, `p/` by phone, `e/` by email, and `a/` by address.
-* 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
+> * `n/` sorts the person list by name, `p/` by phone, `e/` by email, and `a/` by address.
+> * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
 **Command examples:**
 * `sort_person n/` sorts the person list by their names in ascending alphabetical order.
@@ -633,8 +644,8 @@ Sorts the club list in ascending order of the provided fields.
 
 **Format: `sort_club [n/] [p/] [e/] [a/]`**
 
-* `n/` sorts the club list by name, `p/` by phone, `e/` by email, and `a/` by address.
-* 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
+> * `n/` sorts the club list by name, `p/` by phone, `e/` by email, and `a/` by address.
+> * 1 or more fields can be included. The app will sort the list based on the first field provided, with the subsequent field(s) used as a tiebreaker.
 
 **Command examples:**
 * `sort_club n/` sorts the club list by their names in ascending alphabetical order.
@@ -648,7 +659,11 @@ Sorts the club list in ascending order of the provided fields.
 
 Clears all entries from ClubHub.
 
-Need to confirm with a capitalized YES.
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+    This is useful to remove all sample data after you have tried out ClubHub!
+</div>
+
+> Need to confirm with a capitalized YES.
 
 **Format: `clear YES`**
 
@@ -678,9 +693,7 @@ Furthermore, certain edits can cause ClubHub to behave in unexpected ways (e.g.,
 
 ### Auto scroll
 
-When a person, club, or membership is changed, the person list or club list will automatically scroll to show the newly changed entry.
-
-If there are multiple entries changed (e.g. when using `add_membership`, `delete_membership`), the list will scroll to show the last entry in the list of edited entries.
+When a person, club, or membership is added, deleted or edited, the person list or club list will automatically scroll to show the newly changed entry.
 
 --------------------------------------------------------------------------------------------------------------------
 
