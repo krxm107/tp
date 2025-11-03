@@ -16,7 +16,7 @@ public final class AddressValidator {
     /**
      * Allowed characters:
      *  A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period .,
-     *  slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @
+     *  hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @
      *
      * IMPORTANT: This is the exact pattern requested.
      */
@@ -67,7 +67,7 @@ public final class AddressValidator {
                     "Invalid address. Must be <= " + MAX_LENGTH + " chars and contain only the allowed characters. "
                             + "Allowed characters: "
                             + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
-                            + "slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @"
+                            + "hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @"
                             + ". (length=" + actualLen + ")"
             );
         }

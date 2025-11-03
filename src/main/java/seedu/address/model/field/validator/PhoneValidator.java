@@ -25,7 +25,7 @@ public final class PhoneValidator {
                     + LENGTH_CONSTRAINTS
                     + "\nPhone must consist of "
                     + "only letters A-Z a-z, digits, whitespace, \n"
-                    + "plus signs, hyphens, apostrophes, periods, slashes, hash signs #, \n"
+                    + "plus signs, hyphens, apostrophes, periods, hash signs #, \n"
                     + "commas, ampersands, parentheses, semicolons, colons, "
                     + "or at signs @.";
 
