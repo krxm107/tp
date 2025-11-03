@@ -15,7 +15,7 @@ public class Name implements Comparable<Name> {
             "The name is invalid.\n"
             + "Allowed characters: "
             + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
-            + "\nslash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.\n"
+            + "\nhash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @.\n"
                     + NameValidator.LENGTH_BOUND_WARNING
             + "\nThe name must contain at least 1 letter (A-Z, a-z).";
 

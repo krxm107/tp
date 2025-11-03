@@ -13,16 +13,16 @@ import java.util.regex.Pattern;
  *
  *  - Allowed characters:
  *        A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period .,
- *        slash /, hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @
+ *        hash #, comma ',', ampersand &, parentheses (), colon :, semicolon ;, at sign @
  *
  *  - Collapse internal whitespace to single spaces.
  *  - Name key is case-insensitive and space-collapsed; useful for duplicate detection.
  */
 public final class NameValidator {
 
-    // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period, slash.
+    // Letters (\p{L}), marks (\p{M}), space, hyphen, apostrophe, period.
     private static final Pattern ALLOWED =
-            Pattern.compile("^[A-Za-z0-9\\s\\-'.#/,&():;@]+$");
+            Pattern.compile("^[A-Za-z0-9\\s\\-'.#,&():;@]+$");
 
     private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
     private static final int MIN_LEN = 1;
@@ -67,7 +67,7 @@ public final class NameValidator {
             return ValidationResult.fail(
                     "Name contains invalid characters. Allowed characters: "
                             + "A–Z, a–z, digits 0–9, spaces, hyphen -, apostrophe ', period ., "
-                            + "slash /, hash #, comma ',', ampersand &, parentheses (), "
+                            + "hash #, comma ',', ampersand &, parentheses (), "
                             + "colon :, semicolon ;, at sign @.\n"
                             + "Name must contain at least 1 letter (A-Z, a-z).");
         }
