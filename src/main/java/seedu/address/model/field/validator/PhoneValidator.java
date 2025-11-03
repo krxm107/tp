@@ -35,7 +35,7 @@ public final class PhoneValidator {
     private static final Pattern WS = Pattern.compile("\\s+");
 
     // Accept empty string OR 6–30 characters (digits, spaces, plus, hyphens, etc.)
-    private static final Pattern VALIDATION_REGEX = Pattern.compile("^$|^[A-Za-z+0-9\\s\\-'.#/,&():;@]{6,30}$");
+    private static final Pattern VALIDATION_REGEX = Pattern.compile("^$|^[A-Za-z+0-9\\s\\-'.#,&():;@]{6,30}$");
 
     private PhoneValidator() {
 

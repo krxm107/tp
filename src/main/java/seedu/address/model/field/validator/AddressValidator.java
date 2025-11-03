@@ -20,7 +20,7 @@ public final class AddressValidator {
      *
      * IMPORTANT: This is the exact pattern requested.
      */
-    public static final String ADDRESS_ALLOWED_CHARS_REGEX = "^[A-Za-z0-9\\s\\-'.#/,&():;@]*$";
+    public static final String ADDRESS_ALLOWED_CHARS_REGEX = "^[A-Za-z0-9\\s\\-'.#,&():;@]*$";
 
     private static final Pattern ALLOWED = Pattern.compile(ADDRESS_ALLOWED_CHARS_REGEX);
 
