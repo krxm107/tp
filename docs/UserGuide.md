@@ -34,29 +34,6 @@ With its intuitive, keyboard-first workflow, ClubHub lets you manage memberships
 
 4. Open a command terminal.
 
-<div markdown="span" class="alert alert-info">
-**If you're using Windows:** 
-    
-1) Press Windows key + R on your keyboard. <br>    
-2) A small box will pop up. Type cmd inside it. Press Enter. <br> 
-3) A black window will appear — that’s the command terminal. <br> 
-</div>
- 
-<div markdown="span" class="alert alert-info">
-**If you're using macOS:**
-    
-1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search). <br>    
-2) Type Terminal and press Enter. <br>    
-3) A window with text will open — that’s the command terminal. <br>
-</div>
-
-<div markdown="span" class="alert alert-info">
-**If you're using Linux:**
-    
-1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications. <br>    
-2) A terminal window will open. <br>
-</div>
-
 5. `cd` into the folder you put the jar file in, and use the `java -jar ClubHub.jar` command to run the application. Click [here](https://tutoringcenter.cs.usfca.edu/resources/windows_via_commandline.html) if you don't know how to. <br>
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -249,7 +226,7 @@ Deletes multiple persons' memberships from multiple clubs in the club manager.
 
 ### Renew membership of a person in a club : `renew`
 
-Renews the active membership of a person in a club with renewal duration given.
+Renews active membership of a person in a club with renewal duration given.
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
@@ -258,7 +235,6 @@ Renews the active membership of a person in a club with renewal duration given.
 
 **Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
 
-> * Only active memberships can be renewed.
 > * `DURATION` is the duration to extend the expiry date by in months. The duration must be an integer between 1 and 24 inclusive.
 > * The index **must be a positive integer** 1, 2, 3, …​
  
