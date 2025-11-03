@@ -10,6 +10,7 @@ Tired of juggling messy spreadsheets or address books? Want to easily keep track
 With its intuitive, keyboard-first workflow, ClubHub lets you manage memberships, roles, and clubs with unmatched speed and efficiency. Stay organized and focus on what matters most - your members and your community.
 
 ## Table of Contents
+* Table of Contents
 {:toc}
 
 
@@ -34,30 +35,25 @@ With its intuitive, keyboard-first workflow, ClubHub lets you manage memberships
 4. Open a command terminal.
 
 <div markdown="span" class="alert alert-info">
-**If you're using Windows:**
+**If you're using Windows:** 
     
-1) Press Windows key + R on your keyboard. <br>
-    
-2) A small box will pop up. Type cmd inside it. Press Enter. <br>    
-
+1) Press Windows key + R on your keyboard. <br>    
+2) A small box will pop up. Type cmd inside it. Press Enter. <br> 
 3) A black window will appear — that’s the command terminal. <br> 
 </div>
  
 <div markdown="span" class="alert alert-info">
 **If you're using macOS:**
     
-1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search). <br>
-    
-2) Type Terminal and press Enter. <br>
-    
+1) Click the magnifying glass 🔍 in the top-right corner (Spotlight Search). <br>    
+2) Type Terminal and press Enter. <br>    
 3) A window with text will open — that’s the command terminal. <br>
 </div>
 
 <div markdown="span" class="alert alert-info">
 **If you're using Linux:**
     
-1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications. <br>
-    
+1) Press Ctrl + Alt + T together. Alternatively, search for “Terminal” in your applications. <br>    
 2) A terminal window will open. <br>
 </div>
 
@@ -83,7 +79,6 @@ With its intuitive, keyboard-first workflow, ClubHub lets you manage memberships
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command formats
-<p style="text-align: right;">[TOC](#table-of-contents)</p>
 
 <div markdown="block" class="alert alert-info">
 
@@ -258,7 +253,7 @@ Renews the active membership of a person in a club with renewal duration given.
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
-    Membership expired, pending cancellation or cancelled? See [reactivate](#reactivating-membership-of-a-person-in-a-club--reactivate) to extend an active membership.
+    Membership expired, pending cancellation or cancelled? See [reactivate](#reactivating-membership-of-a-person-in-a-club--reactivate) to extend the membership.
 </div>
 
 **Format: `renew m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
@@ -297,7 +292,7 @@ Reactivates expired, pending cancellation, or cancelled membership of a person i
 
 <div markdown="span" class="alert alert-info">
 ℹ️ **Info:**  
-    Membership still active? See [renew](#renew-membership-of-a-person-in-a-club--renew) to extend an active membership.
+    Membership still active? See [renew](#renew-membership-of-a-person-in-a-club--renew) to extend the membership.
 </div>
 
 **Format: `reactivate m/PERSON_INDEX c/CLUB_INDEX d/DURATION`**
