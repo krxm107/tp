@@ -24,11 +24,9 @@ public class DeleteMembershipCommand extends Command {
     public static final String MESSAGE_REMOVED_FROM_CLUB = "%1$s removed from %2$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (" + COMMAND_SHORT
             + "): Removes a person from a club\n"
-            + "Person identified by the index number used in the displayed person list.\n"
-            + "Club identified by the index number used in the displayed person list.\n"
             + "Parameters: \n"
-            + PREFIX_MEMBER + "Person INDEXES (must be positive integers separated by space)\n"
-            + PREFIX_CLUB + "Club INDEXES (must be positive integers separated by space)\n"
+            + PREFIX_MEMBER + "INDEXES (space-separated positive integers)\n"
+            + PREFIX_CLUB + "INDEXES (space-separated positive integers)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3";
