@@ -278,36 +278,23 @@ Priorities: High (must have) - `***`, Medium (nice to have / good to have) - `**
 | 4  | user                             | edit persons                                             | update personal details of members when the members change their contact information | ***   |
 | 5  | user                             | delete persons                                           | remove personal details of members who have left the club                     | ***   |
 | 6  | user                             | add multiple tags to a person                             | label persons with extra identifiers     | **    |
-| 7  | user                             | download the address book data from a file               | forward the address book file to members in the management committee        | *     |
-| 8  | user                             | import address book data from a file                     | easily get the data that someone sent me into my app                        | *     |
-| 9  | user                             | add notes to a person                                    | record extra details about the person                                       | **    |
-| 10 | user                             | view a person’s full profile in a screen                 | easily see all the info about a person                                      | **    |
-| 11 | user                             | create a club with management                            | group members together                                                      | ***   |
-| 12 | user                             | assign a person to multiple clubs                        | know which clubs they belong to                                             | ***   |
-| 13 | user                             | view all members of a club                               | get the full list of members of a club                                      | ***   |
-| 14 | user                             | edit a club                                              | update club details                                                         | ***   |
-| 15 | user                             | delete a club                                            | remove clubs that no longer exist                                           | ***   |
-| 16 | user                             | record when someone joined a club                        | track how long they have been in the club                                   | **    |
-| 17 | user                             | search for a club by name                                | look up a club quickly                                                      | ***   |
-| 18 | user                             | add more club info such as descriptions, timings, venues | keep track of what each club does and when and where events takes place   | **    |
-| 19 | user                             | tag a person as a club committee member                  | know that this person is a committee member of a certain club               | **    |
-| 20 | user                             | view all committee members of a club                     | quickly find their information when I need to contact them about their club | **    |
-| 21 | user                             | sort persons by name                                     | view my persons in an order that is intuitive                               | **    |
-| 22 | user                             | sort club members by join date                           | see new and old members more easily                                         | **    |
-| 23 | user                             | delete multiple persons at once                          | delete faster                                                               | **    |
-| 24 | user                             | create a profile photo for persons                       | easily identify people, even if they share names                            | **    |
-| 25 | user                             | bookmark or save important persons                       | easily access their details                                                          | **    |
-| 26 | user                             | quickly copy a person to my clipboard                    | more quickly access personal details                                                 | **    |
-| 27 | user                             | create events and tag persons                            | attach personal details to real world club events                             | **    |
-| 28 | user                             | tag multiple persons at once                             | speed up tagging                                                            | **    |
-| 29 | user                             | search by multiple fields at once                        | more precisely find persons                                                 | **    |
-| 30 | user                             | undo my last action                                      | easily go back on my mistakes                                               | **    |
-| 31 | user                             | add membership | track who belongs to which club | ***    |
-| 32 | user                             | delete membership | remove a member from a club | ***    |
-| 33 | user                             | renew membership | extend an active membership duration | ***    |
-| 34 | user                             | cancel membership | cancel a membership | ***    |
-| 35 | user                             | reactivate membership | reactivate an expired, pending cancellation or cancelled membership | ***    |
-| 36 | user                             | get membership history | improve business strategy | **    |
+| 7 | user                             | view a person’s full profile in a screen                 | easily see all the info about a person                                      | **    |
+| 8 | user                             | create a club with management                            | group members together                                                      | ***   |
+| 9 | user                             | assign a person to multiple clubs                        | know which clubs they belong to                                             | ***   |
+| 10 | user                             | view all members of a club                               | get the full list of members of a club                                      | ***   |
+| 11 | user                             | edit a club                                              | update club details                                                         | ***   |
+| 12 | user                             | delete a club                                            | remove clubs that no longer exist                                           | ***   |
+| 13 | user                             | record when someone joined a club                        | track how long they have been in the club                                   | **    |
+| 14 | user                             | search for a club by name                                | look up a club quickly                                                      | ***   |
+| 15 | user                             | sort persons by name                                     | view my persons in an order that is intuitive                               | **    |
+| 16 | user                             | quickly copy a person to my clipboard                    | more quickly access personal details                                                 | **    |
+| 17 | user                             | search by multiple fields at once                        | more precisely find persons                                                 | **    |
+| 18 | user                             | add membership | track who belongs to which club | ***    |
+| 19 | user                             | delete membership | remove a member from a club | ***    |
+| 20 | user                             | renew membership | extend an active membership duration | ***    |
+| 21 | user                             | cancel membership | cancel a membership | ***    |
+| 22 | user                             | reactivate membership | reactivate an expired, pending cancellation or cancelled membership | ***    |
+| 23 | user                             | get membership history | improve business strategy | **    |
 
 ### Use cases
 
