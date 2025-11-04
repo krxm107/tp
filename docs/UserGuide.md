@@ -522,7 +522,7 @@ Index refers to the index in the person list.
   
 <br>
 
-### Copying a club's details : `get_club` (or `getc`)
+### Getting a club's details : `get_club` (or `getc`)
 
 Copies the details of a club to the clipboard. By default, copies the name, phone, email, address and tags. One optional condition may be supplied to specify a particular detail to copy. Possible conditions are:
 * `n` - include name
