@@ -27,8 +27,8 @@ public class CancelMembershipCommand extends Command {
             + "Current membership is still valid until expiry date.\n"
             + "Cancelled membership cannot be renewed but can be reactivated.\n"
             + "Parameters: "
-            + PREFIX_MEMBER + "PERSON_INDEX "
-            + PREFIX_CLUB + "CLUB_INDEX "
+            + PREFIX_MEMBER + "INDEX "
+            + PREFIX_CLUB + "INDEX "
             + "Example: " + COMMAND_WORD + " m/1 c/2";
 
     private final Index personIndex;

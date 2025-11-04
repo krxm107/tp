@@ -29,7 +29,7 @@ public class AddMembershipCommand extends Command {
             + "Parameters: \n"
             + PREFIX_MEMBER + "INDEXES (space-separated positive integers)\n"
             + PREFIX_CLUB + "INDEXES (space-separated positive integers)\n"
-            + PREFIX_DURATION + "DURATION in months (between 1 and 24, optional, default is 12)\n"
+            + "[" + PREFIX_DURATION + "DURATION] in months (between 1 and 24, default is 12)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MEMBER + "1 2 4 "
             + PREFIX_CLUB + "1 3 "

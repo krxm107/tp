@@ -26,9 +26,9 @@ public class RenewMembershipCommand extends Command {
             + ": Renews a person's membership in a club "
             + "by extending the expiry date by the specified duration in months.\n"
             + "Parameters: "
-            + PREFIX_MEMBER + "PERSON_INDEX "
-            + PREFIX_CLUB + "CLUB_INDEX "
-            + PREFIX_DURATION + "Duration in months (must be between 1 and 24)\n"
+            + PREFIX_MEMBER + "INDEX "
+            + PREFIX_CLUB + "INDEX "
+            + PREFIX_DURATION + "DURATION in months (between 1 and 24)\n"
             + "Example: " + COMMAND_WORD + " m/1 c/2 d/12";
 
     private final Index personIndex;
