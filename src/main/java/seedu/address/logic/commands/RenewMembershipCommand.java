@@ -28,7 +28,7 @@ public class RenewMembershipCommand extends Command {
             + "Parameters: "
             + PREFIX_MEMBER + "INDEX "
             + PREFIX_CLUB + "INDEX "
-            + PREFIX_DURATION + "Duration in months (must be between 1 and 24)\n"
+            + PREFIX_DURATION + "DURATION in months (between 1 and 24)\n"
             + "Example: " + COMMAND_WORD + " m/1 c/2 d/12";
 
     private final Index personIndex;
