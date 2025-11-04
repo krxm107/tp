@@ -702,23 +702,24 @@ Currently, the editing of tags to only 1 new tag causes the new tag to be saved,
 **3. Check for duplicate tages when adding or editing tags.** <br>
 We plan to check for duplicate tags when adding or editing tags, so that within a person (or club), the person (or club) does not have duplicate tags.
 
-**4. Duplicate / near-duplicate  detection** <br>
+**4. Duplicate / near-duplicate  detection.** <br>
 For duplicates / near-duplicates, only the user is able to determine if the entered name is correctly typed or a mistype (eg. whether "ClubHub" and "Club Hub" are 2 distinct entities when entered into the address book). Duplicates and near-duplicates in name can have a second layer of confirmation from the user before being added to the app.
 
-**5. Allow deletion of multiple persons or clubs** <br>
+**5. Allow deletion of multiple persons or clubs.** <br>
 Currently, the app allows an existing person or club to be deleted with the delete command. This can be enhanced to allow multiple persons or clubs to be deleted in one command, rather than needing to retype the delete command several times.
 
 **6. Allow sorting in descending order.** <br>
 Currently, the user can only sort clubs and persons by name, phone, email and address in ascending order. We plan to also allow sorting in descending order as well.
 
-**7. Prevent UI flickering when list cells are selected** <br> 
+**7. Prevent UI flickering when list cells are selected.** <br> 
 When the user switch between cells in the person and club lists, the cell flickers for a brief moment. This can be a mild annoyance for the user. We plan to fix this in the future.
 
-**8. Include forward slash as an allowed character in the name field** <br>
+**8. Include forward slash as an allowed character in the name field.** <br>
 We plan to include the forward slash as an allowed character in the name field, so that the user can enter in valid names such as Ali s/o Ahmad. 
 
-**9. Enable Day-Based membership duration setting** <br>
+**9. Enable Day-Based membership duration setting.** <br>
 We plan to introduce this feature to give users greater control over their membership management.
 
-**10. Recover corrupted data file**
+**10. Recover corrupted data file.** <br>
 Currently, our app supports data file editing and basic corruption handling, similar to AB3. However, certain edits can cause ClubHub to behave unexpectedly. We plan to improve this by implementing a better data corruption strategy: recovering valid data segments and ignoring the rest.
+
