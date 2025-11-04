@@ -10,7 +10,6 @@ title: Developer Guide
 ## **Acknowledgements**
 
 * We adapted the existing AB3 code base for our project. Code was also adapted from our individual project submissions. ChatGPT was used to augment selected test cases and its use was acknowledged in the code. 
-* We also adapted the existing AB3 Developer Guide and User Guide for this project. 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -125,7 +124,7 @@ The `Model` component,
 
 * stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores `Club` and `Membership` in a similar manner as `Person`.
+* stores `Club` and `Membership` objects in a similar manner as `Person` objects.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
